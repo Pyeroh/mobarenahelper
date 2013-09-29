@@ -1,0 +1,21 @@
+package view.cells;
+
+import model.enums.EAbilities;
+
+public class CellListAbility extends CellListCaracs {
+
+	private static final long serialVersionUID = 145152984998921330L;
+	private EAbilities ability;
+	
+	public CellListAbility(EAbilities ability) {
+		super();
+		
+		this.ability = ability;
+		lib_desc.setText(" "+this.ability.getNom());
+	}
+	
+	public EAbilities getAbility() {
+		return ability;
+	}
+
+}

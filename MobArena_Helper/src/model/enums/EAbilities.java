@@ -1,0 +1,72 @@
+package model.enums;
+
+public enum EAbilities {
+	arrows("Arrows"),
+	fireballs("Fireballs"),
+	fire_aura("Fire-aura"),
+	lightning_aura("Lightning Aura"),
+	living_bomb("Living Bomb"),
+	obsidian_bomb("Obsidian Bomb"),
+	chain_lightning("Chain Lightning"),
+	disorient_target("Disorient Target"),
+	disorient_nearby("Disorient Nearby"),
+	disorient_distant("Disorient Distant"),
+	root_target("Root Target"),
+	warp_to_player("Warp to Player"),
+	shuffle_positions("Shuffle Positions"),
+	flood("Flood"),
+	throw_target("Throw Target"),
+	throw_nearby("Throw Nearby"),
+	throw_distant("Throw Distant"),
+	pull_target("Pull Target"),
+	pull_nearby("Pull Nearby"),
+	pull_distant("Pull Distant");
+
+	private String nom;
+
+	EAbilities(String nom){
+		this.nom = nom;
+	}
+
+	public String getNom() {
+		return nom;
+	}
+
+	public static String[] namevalues(){
+
+		EAbilities[] values = values();
+		String[] namevalues = new String[values.length];
+		for (int i=0;i<namevalues.length;i++) {
+			namevalues[i] = values[i].getNom();
+		}
+		return namevalues;
+	}
+	
+	public static EAbilities getByName(String name) {
+
+		if (name!=null) {
+			EAbilities[] values = values();
+			int i = 0;
+			while (i < values.length && !values[i].getNom().equals(name)) {
+				i++;
+			}
+			if (i < values.length) {
+				return values[i];
+			} else {
+				IllegalArgumentException e = new IllegalArgumentException(
+						"No enum constant "
+								+ EMonsters.angry_wolf.getDeclaringClass()
+								.getName() + "." + name);
+				e.printStackTrace();
+			}
+		}
+		else {
+			NullPointerException e = new NullPointerException("Name is null");
+			e.printStackTrace();
+		}
+
+		return null;
+
+	}
+
+}
