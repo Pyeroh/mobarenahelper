@@ -190,8 +190,8 @@ public abstract class Wave implements Comparable<Wave> {
 			}
 		}
 
-		System.out.println(toString());
-		System.out.println();
+		//System.out.println(toString());
+		//System.out.println();
 		return vague;
 	}
 
