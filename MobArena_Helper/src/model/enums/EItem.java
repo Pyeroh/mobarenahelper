@@ -35,7 +35,16 @@ public enum EItem {
 	}
 	
 	public ArrayList<EItem> getByCategory(EItemCat category) {
+		EItem[] values = values();
+		ArrayList<EItem> items = new ArrayList<>();
 		
+		for(int i=0;i<values.length;i++) {
+			EItem item = values[i];
+			if(item.getCategory()==category){
+				items.add(item);
+			}
+			
+		}
 		
 		return null;
 	}
