@@ -10,7 +10,7 @@ public enum EItemCat {
 	tool,
 	weapon,
 	potion,
-	stick1234;
+	materials;
 	
 	private EItemCat() {}
 }
