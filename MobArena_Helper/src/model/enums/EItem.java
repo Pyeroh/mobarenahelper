@@ -327,6 +327,11 @@ public enum EItem {
 	melonseed(0,0,null,null),
 	rawbeef(0,0,null,null),
 	cookbeef(0,0,null,null),
+	rawchicken(0,0,null,null),
+	cookchicken(0,0,null,null),
+	rottenflesh(0,0,null,null),
+	enderpearl(0,0,null,null),
+	blazerod(0,0,null,null),
 	
 	//Potions
 	
