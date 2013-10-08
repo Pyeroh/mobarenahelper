@@ -1,9 +1,10 @@
 package model.enums;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public enum EItem {
-	
+
 	//Blocks
 	stone(1,0,"STONE",EItemCat.block),
 	grass(0,0,"GRASS",null),
@@ -199,7 +200,7 @@ public enum EItem {
 	carpetblack(0,0,"CARPET",null),
 	hard_clay(0,0,"CARPET",null),
 	coal_block(0,0,"CARPET",null),
-	
+
 	//Items
 	iron_spade(0,0,"IRON_SPADE",null),
 	iron_pickaxe(0,0,"IRON_PICKAXE",null),
@@ -384,7 +385,7 @@ public enum EItem {
 	zombie_skull(0,0,"SKULL_ITEM",null),
 	human_skull(0,0,"SKULL_ITEM",null),
 	creeper_skull(0,0,"SKULL_ITEM",null),
-	CARROT_STICK(0,0,"CARROT_STICK",null),
+	carrot_stick(0,0,"CARROT_STICK",null),
 	nether_star(0,0,"NETHER_STAR",null),
 	pumpkin_pie(0,0,"PUMPKIN_PIE",null),
 	firework(0,0,"FIREWORK",null),
@@ -412,16 +413,16 @@ public enum EItem {
 	record_10(0,0,"RECORD_10",null),
 	record_11(0,0,"RECORD_11",null),
 	record_12(0,0,"RECORD_12",null),
-	
+
 	//Potions
-	
+
 	;
-	
+
 	private int id;
 	private int meta;
 	private String realname;
 	private EItemCat category;
-	
+
 	private EItem(int id, int meta, String realname, EItemCat category) {
 		this.id = id;
 		this.meta = meta;
@@ -444,20 +445,62 @@ public enum EItem {
 	public EItemCat getCategory() {
 		return category;
 	}
-	
-	public ArrayList<EItem> getByCategory(EItemCat category) {
+
+	public static ArrayList<EItem> getByCategory(EItemCat category) {
 		EItem[] values = values();
 		ArrayList<EItem> items = new ArrayList<>();
-		
+
 		for(int i=0;i<values.length;i++) {
 			EItem item = values[i];
 			if(item.getCategory()==category){
 				items.add(item);
 			}
-			
+
 		}
-		
+
 		return items;
 	}
-	
+
+	private static EItem getByName(String name) {
+
+		if (name!=null) {
+			EItem[] values = values();
+			int i = 0;
+			while (i < values.length && !values[i].getRealName().equalsIgnoreCase(name)) {
+				i++;
+			}
+			if (i < values.length) {
+				return values[i];
+			} else {
+				IllegalArgumentException e = new IllegalArgumentException(
+						"No enum constant EItem." + name);
+				e.printStackTrace();
+			}
+		}
+		else {
+			NullPointerException e = new NullPointerException("Name is null");
+			e.printStackTrace();
+		}
+
+		return null;
+
+	}
+
+	public static EItem searchBy(String name, int meta) {
+		ArrayList<EItem> values = (ArrayList<EItem>) Arrays.asList(values());
+
+		EItem item = EItem.getByName(name);
+		if(item!=null){
+			while(item.getMeta()!=meta) {
+
+				item = values.get(values.indexOf(item)+1);
+
+			}
+			return item;
+		}
+		else {
+			return null;
+		}
+
+	}
 }

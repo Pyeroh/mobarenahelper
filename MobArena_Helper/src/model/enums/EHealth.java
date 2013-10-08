@@ -44,9 +44,7 @@ public enum EHealth {
 				return values[i];
 			} else {
 				IllegalArgumentException e = new IllegalArgumentException(
-						"No enum constant "
-								+ EMonsters.angry_wolf.getDeclaringClass()
-								.getName() + "." + name);
+						"No enum constant EHealth." + name);
 				e.printStackTrace();
 			}
 		}

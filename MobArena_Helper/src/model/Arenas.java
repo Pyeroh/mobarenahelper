@@ -40,11 +40,18 @@ public class Arenas {
 	}
 	
 	private void load(){
-		GestYaml g = new GestYaml(listarenas);
+		GestYaml gclasse = new GestYaml(listclasses);
+		//Extraction des classes
+		for (Iterator<String> it = listclasses.keySet().iterator(); it.hasNext();) {
+			String nomclasse = (String) it.next();
+			classes.add(new Classe(nomclasse, gclasse.getMap(nomclasse)));
+		}
+		
+		GestYaml garena = new GestYaml(listarenas);
 		//Extraction des arènes
 		for (Iterator<String> it = listarenas.keySet().iterator(); it.hasNext();) {
 			String arena = (String) it.next();
-			arraylistarenas.add(new Arena(arena, g.getMap(arena)));
+			arraylistarenas.add(new Arena(arena, garena.getMap(arena)));
 		}
 	}
 	

@@ -54,9 +54,7 @@ public enum EAbilities {
 				return values[i];
 			} else {
 				IllegalArgumentException e = new IllegalArgumentException(
-						"No enum constant "
-								+ EMonsters.angry_wolf.getDeclaringClass()
-								.getName() + "." + name);
+						"No enum constant EAbilities." + name);
 				e.printStackTrace();
 			}
 		}

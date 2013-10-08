@@ -59,14 +59,14 @@ public class GestYaml {
 		data = (LinkedHashMap<String, Object>) map;
 	}
 
-	public GestYaml(ArrayList<Wave> map) {
+	/*public GestYaml(ArrayList<Wave> map) {
 
 		data = new LinkedHashMap<String, Object>();
 		for(int i=0;i<map.size();i++) {
 
 		}
 
-	}
+	}*/
 
 	@SuppressWarnings("unchecked")
 	private Object get(String key) {
@@ -94,6 +94,11 @@ public class GestYaml {
 	@SuppressWarnings("unchecked")
 	public LinkedHashMap<String, Object> getMap(String key) {
 		return (LinkedHashMap<String, Object>) get(key);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public ArrayList<String> getList(String key) {
+		return (ArrayList<String>) get(key);
 	}
 
 	public String dump() {

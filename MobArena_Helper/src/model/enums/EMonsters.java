@@ -77,9 +77,7 @@ public enum EMonsters {
 				return values[i];
 			} else {
 				IllegalArgumentException e = new IllegalArgumentException(
-						"No enum constant "
-								+ EMonsters.angry_wolf.getDeclaringClass()
-										.getName() + "." + name);
+						"No enum constant EMonsters." + name);
 				e.printStackTrace();
 			}
 		}

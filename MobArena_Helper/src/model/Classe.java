@@ -7,22 +7,62 @@ import model.enums.EItem;
 
 public class Classe {
 
+	private LinkedHashMap<String, Object> classe;
+	
 	private String name;
-	private ArrayList<EItem> items = new ArrayList<>();
-	private ArrayList<EItem> armor = new ArrayList<EItem>();
+	private ArrayList<Item> items = new ArrayList<>();
+	private ArrayList<Item> armor = new ArrayList<>();
 	private LinkedHashMap<String, Object> permissions = new LinkedHashMap<String, Object>();
 	private LinkedHashMap<String, Object> lobby_permissions = new LinkedHashMap<String, Object>();
 	private boolean unbreakable_weapons = true;
 	private boolean unbreakable_armor = true;
 	
-	public Classe (String name) {
+	public Classe (String name, LinkedHashMap<String, Object> classe) {
 		this.name = name;
+		this.classe = classe;
+		load();
 	}
 	
-	public Classe (String name, ArrayList<EItem> items, ArrayList<EItem> armor) {
-		this(name);
-		this.items = items;
-		this.armor = armor;
+	private void load() {
+		GestYaml g = new GestYaml(classe);
+		String[] sItems = g.getString("items").split("[,]");
+		for(int i=0;i<sItems.length;i++) {
+			String[] item = sItems[i].trim().split("[:]");
+			int data = 0;
+			int quantity = 1;
+			switch (item.length) {
+			case 2:
+				quantity = Integer.parseInt(item[1]);
+				break;
+			case 3:
+				data = Integer.parseInt(item[1]);
+				quantity = Integer.parseInt(item[2]);
+				break;
+			default:
+				break;
+			}
+			items.add(new Item(EItem.searchBy(item[0], data),quantity));
+		}
+		
+		String[] sArmor = g.getString("armor").split("[,]");
+		for(int i=0;i<sArmor.length;i++) {
+			String[] armor = sArmor[i].trim().split("[:]");
+			int data = 0;
+			int quantity = 1;
+			switch (armor.length) {
+			case 2:
+				quantity = Integer.parseInt(armor[1]);
+				break;
+			case 3:
+				data = Integer.parseInt(armor[1]);
+				quantity = Integer.parseInt(armor[2]);
+				break;
+			default:
+				break;
+			}
+			items.add(new Item(EItem.searchBy(armor[0], data),quantity));
+		}
+		
 	}
 
 	public String getName() {
@@ -33,11 +73,11 @@ public class Classe {
 		this.name = name;
 	}
 
-	public ArrayList<EItem> getItems() {
+	public ArrayList<Item> getItems() {
 		return items;
 	}
 
-	public ArrayList<EItem> getArmor() {
+	public ArrayList<Item> getArmor() {
 		return armor;
 	}
 
