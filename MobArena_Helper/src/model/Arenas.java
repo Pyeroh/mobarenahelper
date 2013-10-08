@@ -8,8 +8,9 @@ import java.util.LinkedHashMap;
 public class Arenas {
 	
 	private LinkedHashMap<String, Object> globalsettings;
-	private LinkedHashMap<String, Object> classes;
+	private LinkedHashMap<String, Object> listclasses;
 	private LinkedHashMap<String, Object> listarenas;
+	private ArrayList<Classe> classes = new ArrayList<Classe>();
 	private ArrayList<Arena> arraylistarenas = new ArrayList<Arena>();
 	
 	/**
@@ -19,11 +20,15 @@ public class Arenas {
 	 * @param globalsettings les settings généraux du fichier
 	 * @param classes les classes dans les settings du fichier
 	 */
-	public Arenas(LinkedHashMap<String, Object> listarenas, LinkedHashMap<String, Object> globalsettings, LinkedHashMap<String, Object> classes) {
+	public Arenas(LinkedHashMap<String, Object> listarenas, LinkedHashMap<String, Object> globalsettings, LinkedHashMap<String, Object> listclasses) {
 		this.listarenas = listarenas;
 		this.globalsettings = globalsettings;
-		this.classes = classes;
+		this.listclasses = listclasses;
 		load();
+	}
+
+	public LinkedHashMap<String, Object> getListclasses() {
+		return listclasses;
 	}
 
 	public LinkedHashMap<String, Object> getListarenas() {
@@ -52,7 +57,10 @@ public class Arenas {
 		
 		LinkedHashMap<String, Object> file = new LinkedHashMap<>();
 		file.put("global-settings", globalsettings);
+		
+		//TODO Modifier la gestion de l'ajout des classes
 		file.put("classes", classes);
+		
 		file.put("arenas", arenas);
 		
 		return file;
