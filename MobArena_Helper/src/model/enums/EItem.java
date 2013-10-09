@@ -391,7 +391,6 @@ public enum EItem {
 	nether_star(399,0,"NETHER_STAR",null),
 	pumpkin_pie(400,0,"PUMPKIN_PIE",null),
 	firework(401,0,"FIREWORK",null),
-	firework_charge(402,0,"FIREWORK_CHARGE",null),
 	redstone_comparator(404,0,"REDSTONE_COMPARATOR",null),
 	nether_brick_(405,0,"NETHER_BRICK_ITEM",null),
 	quartz(406,0,"QUARTZ",null),
