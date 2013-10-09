@@ -493,13 +493,13 @@ public enum EItem {
 			imagepath.append("s_"+name().substring(4).split("[_]")[0]);
 		}
 		else if(name().startsWith("p_")){
-			imagepath.append(name().substring(4).split("[_]")[0]);
+			imagepath.append(name().substring(2).split("[_]")[0]);
 		}
 		else {
 			imagepath.append(meta);
 		}
 		imagepath.append(".png");
-		
+		System.out.println(imagepath.toString());
 		this.image = Toolkit.getDefaultToolkit().getImage(getClass().getResource(imagepath.toString()));
 	}
 
