@@ -43,12 +43,12 @@ public enum EItem {
 	note_block(25,0,"NOTE_BLOCK",null),
 	powered_rail(27,0,"POWERED_RAIL",null),
 	detector_rail(28,0,"DETECTOR_RAIL",null),
-	piston_sticky_base(29,0,"PISTON_STICKY_BASE",null),
+	sticky_piston(29,0,"PISTON_STICKY_BASE",null),
 	cobweb(30,0,"WEB",null),
 	long_grass(31,1,"LONG_GRASS",null),
 	fern(31,2,"LONG_GRASS",null),
 	dead_bush(32,0,"DEAD_BUSH",null),
-	piston_base(33,0,"PISTON_BASE",null),
+	piston(33,0,"PISTON_BASE",null),
 	white_wool(35,0,"WOOL",null),
 	orange_wool(35,1,"WOOL",null),
 	magenta_wool(35,2,"WOOL",null),
@@ -72,7 +72,7 @@ public enum EItem {
 	gold_block(41,0,"GOLD_BLOCK",null),
 	iron_block(42,0,"IRON_BLOCK",null),
 	stone_slab(44,0,"STEP",null),
-	sand_slab(44,1,"STEP",null),
+	sandstone_slab(44,1,"STEP",null),
 	cobble_slab(44,2,"STEP",null),
 	brick_slab(44,3,"STEP",null),
 	stonebrick_slab(44,4,"STEP",null),
@@ -158,13 +158,13 @@ public enum EItem {
 	gold_plate(147,0,"GOLD_PLATE",null),
 	iron_plate(148,0,"IRON_PLATE",null),
 	daylight_detector(151,0,"DAYLIGHT_DETECTOR",null),
-	redstone_block(151,0,"REDSTONE_BLOCK",null),
+	redstone_block(152,0,"REDSTONE_BLOCK",null),
 	quartz_ore(153,0,"QUARTZ_ORE",null),
 	hopper(154,0,"HOPPER",null),
 	quartz_block(155,0,"QUARTZ_BLOCK",null),
 	chiseled_quartz_block(155,1,"QUARTZ_BLOCK",null),
 	pillar_quartz_block(155,2,"QUARTZ_BLOCK",null),
-	quartz_stairs(154,0,"QUARTZ_STAIRS",null),
+	quartz_stairs(156,0,"QUARTZ_STAIRS",null),
 	activator_rail(157,0,"ACTIVATOR_RAIL",null),
 	dropper(158,0,"DROPPER",null),
 	white_stained_clay(159,0,"STAINED_CLAY",null),
@@ -487,7 +487,18 @@ public enum EItem {
 		this.realname = realname;
 		this.category = category;
 		
-		StringBuffer imagepath = new StringBuffer("/gui/"+id+"_");
+		
+		String dossier;
+		if(id<256){
+			dossier = "blocks";
+		}
+		else if(id==373){
+			dossier = "potions";
+		}
+		else {
+			dossier = "items";
+		}
+		StringBuffer imagepath = new StringBuffer("/gui/eitems/"+dossier+"/"+id+"_");
 		if(name().startsWith("s_p_")){
 			imagepath.append("s_"+name().substring(4).split("[_]")[0]);
 		}
