@@ -24,4 +24,8 @@ public class Item {
 		this.quantity = quantity;
 	}
 	
+	public String toString() {
+		return quantity+" "+item.getName();
+	}
+	
 }

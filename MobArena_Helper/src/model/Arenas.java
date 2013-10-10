@@ -10,7 +10,7 @@ public class Arenas {
 	private LinkedHashMap<String, Object> globalsettings;
 	private LinkedHashMap<String, Object> listclasses;
 	private LinkedHashMap<String, Object> listarenas;
-	private ArrayList<Classe> classes = new ArrayList<Classe>();
+	private ArrayList<Classe> arraylistclasses = new ArrayList<Classe>();
 	private ArrayList<Arena> arraylistarenas = new ArrayList<Arena>();
 	
 	/**
@@ -18,7 +18,7 @@ public class Arenas {
 	 * chaque Arena ayant un nom et des vagues (voir description Arena)
 	 * @param listarenas la liste des arènes
 	 * @param globalsettings les settings généraux du fichier
-	 * @param classes les classes dans les settings du fichier
+	 * @param arraylistclasses les classes dans les settings du fichier
 	 */
 	public Arenas(LinkedHashMap<String, Object> listarenas, LinkedHashMap<String, Object> globalsettings, LinkedHashMap<String, Object> listclasses) {
 		this.listarenas = listarenas;
@@ -44,7 +44,7 @@ public class Arenas {
 		//Extraction des classes
 		for (Iterator<String> it = listclasses.keySet().iterator(); it.hasNext();) {
 			String nomclasse = (String) it.next();
-			classes.add(new Classe(nomclasse, gclasse.getMap(nomclasse)));
+			arraylistclasses.add(new Classe(nomclasse, gclasse.getMap(nomclasse)));
 		}
 		
 		GestYaml garena = new GestYaml(listarenas);
@@ -56,19 +56,25 @@ public class Arenas {
 	}
 	
 	public LinkedHashMap<String, Object> getMap() {
-		LinkedHashMap<String, Object> arenas = new LinkedHashMap<>();
+		listarenas = new LinkedHashMap<>();
 		for(int i=0;i<arraylistarenas.size();i++) {
 			Arena lArene = arraylistarenas.get(i);
-			arenas.put(lArene.getNom(), lArene.getMap());
+			listarenas.put(lArene.getNom(), lArene.getMap());
+		}
+		
+		listclasses = new LinkedHashMap<>();
+		for(int i=0;i<arraylistclasses.size();i++) {
+			Classe classe = arraylistclasses.get(i);
+			listclasses.put(classe.getName(), classe.getMap());
 		}
 		
 		LinkedHashMap<String, Object> file = new LinkedHashMap<>();
 		file.put("global-settings", globalsettings);
 		
 		//TODO Modifier la gestion de l'ajout des classes
-		file.put("classes", classes);
+		file.put("classes", arraylistclasses);
 		
-		file.put("arenas", arenas);
+		file.put("arenas", listarenas);
 		
 		return file;
 	}

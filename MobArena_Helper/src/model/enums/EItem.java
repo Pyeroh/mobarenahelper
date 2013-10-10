@@ -21,6 +21,7 @@ public enum EItem {
 	birch_sapling(6,2,"SAPLING",null),
 	jungle_sapling(6,3,"SAPLING",null),
 	sand(12,0,"SAND",null),
+	//redsand(12,1,"SAND",null),
 	gravel(13,0,"GRAVEL",null),
 	gold_ore(14,0,"GOLD_ORE",null),
 	iron_ore(15,0,"IRON_ORE",null),
@@ -509,7 +510,6 @@ public enum EItem {
 			imagepath.append(meta);
 		}
 		imagepath.append(".png");
-		System.out.println(imagepath.toString());
 		this.image = Toolkit.getDefaultToolkit().getImage(getClass().getResource(imagepath.toString()));
 	}
 
@@ -595,11 +595,55 @@ public enum EItem {
 		return null;
 
 	}
+	
+	private static EItem getById(int id) {
+		
+		if(id!=0) {
+			EItem[] values = values();
+			int i = 0;
+			while(i < values.length && values[i].getId()!=id) {
+				i++;
+			}
+			if(i < values.length) {
+				return values[i];
+			}
+			else {
+				IllegalArgumentException e = new IllegalArgumentException(
+						"No enum constant EItem for id " + id);
+				e.printStackTrace();
+			}
+		}
+		else {
+			NullPointerException e = new NullPointerException("ID equals 0");
+			e.printStackTrace();
+		}
+		
+		return null;
+		
+	}
 
 	public static EItem searchBy(String name, int meta) {
-		ArrayList<EItem> values = (ArrayList<EItem>) Arrays.asList(values());
+		ArrayList<EItem> values = new ArrayList<EItem>(Arrays.asList(values()));
 
 		EItem item = EItem.getByName(name);
+		if(item!=null){
+			while(item.getMeta()!=meta) {
+
+				item = values.get(values.indexOf(item)+1);
+
+			}
+			return item;
+		}
+		else {
+			return null;
+		}
+
+	}
+	
+	public static EItem searchBy(int id, int meta) {
+		ArrayList<EItem> values = new ArrayList<EItem>(Arrays.asList(values()));
+
+		EItem item = EItem.getById(id);
 		if(item!=null){
 			while(item.getMeta()!=meta) {
 

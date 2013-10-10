@@ -1,15 +1,15 @@
 package view;
 
-import model.enums.EItem;
+import javax.swing.UIManager;
 
 
 public class Launch {
 
 	public static void main(String[] args) throws Exception {
-		/*UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
-		new MenuPrincipal();*/
+		UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+		new MenuPrincipal();
 		
-		EItem[] values = EItem.values();
+		/*EItem[] values = EItem.values();
 		for(int i=0;i<values.length;i++){
 			System.out.println(values[i].getName()+" : "+values[i].getImage().toString());
 		}

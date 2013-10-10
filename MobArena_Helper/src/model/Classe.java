@@ -25,42 +25,46 @@ public class Classe {
 	
 	private void load() {
 		GestYaml g = new GestYaml(classe);
+		//TODO Ajouter la gestion des éléments uniques, des différentes possibilités (nombre
+		
+		//Gestion des items
 		String[] sItems = g.getString("items").split("[,]");
 		for(int i=0;i<sItems.length;i++) {
-			String[] item = sItems[i].trim().split("[:]");
+			String[] tab_item = sItems[i].trim().split("[:]");
 			int data = 0;
 			int quantity = 1;
-			switch (item.length) {
+			switch (tab_item.length) {
 			case 2:
-				quantity = Integer.parseInt(item[1]);
+				quantity = Integer.parseInt(tab_item[1]);
 				break;
 			case 3:
-				data = Integer.parseInt(item[1]);
-				quantity = Integer.parseInt(item[2]);
+				data = Integer.parseInt(tab_item[1]);
+				quantity = Integer.parseInt(tab_item[2]);
 				break;
 			default:
 				break;
 			}
-			items.add(new Item(EItem.searchBy(item[0], data),quantity));
+			items.add(new Item(EItem.searchBy(tab_item[0], data),quantity));
 		}
 		
+		//Gestion des pièces d'armure
 		String[] sArmor = g.getString("armor").split("[,]");
 		for(int i=0;i<sArmor.length;i++) {
-			String[] armor = sArmor[i].trim().split("[:]");
+			String[] tab_armor = sArmor[i].trim().split("[:]");
 			int data = 0;
 			int quantity = 1;
-			switch (armor.length) {
+			switch (tab_armor.length) {
 			case 2:
-				quantity = Integer.parseInt(armor[1]);
+				quantity = Integer.parseInt(tab_armor[1]);
 				break;
 			case 3:
-				data = Integer.parseInt(armor[1]);
-				quantity = Integer.parseInt(armor[2]);
+				data = Integer.parseInt(tab_armor[1]);
+				quantity = Integer.parseInt(tab_armor[2]);
 				break;
 			default:
 				break;
 			}
-			items.add(new Item(EItem.searchBy(armor[0], data),quantity));
+			armor.add(new Item(EItem.searchBy(Integer.parseInt(tab_armor[0]), data),quantity));
 		}
 		
 	}
@@ -103,6 +107,15 @@ public class Classe {
 
 	public void setUnbreakable_armor(boolean unbreakable_armor) {
 		this.unbreakable_armor = unbreakable_armor;
+	}
+	
+	public String toString() {
+		return name+"\n"+armor.toString()+"\n"+items.toString()+"\n";
+	}
+
+	protected LinkedHashMap<String, Object> getMap() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }
