@@ -4,33 +4,33 @@ public enum EEnchantment {
 
 	//Armor
 	protection(0,4),
-	fire_protection(1,0),
-	feather_falling(2,0),
-	blast_protection(3,0),
-	projectile_protection(4,0),
-	respiration(5,0),
-	aqua_affinity(6,0),
-	thorns(7,0),
+	fire_protection(1,4),
+	feather_falling(2,4),
+	blast_protection(3,4),
+	projectile_protection(4,4),
+	respiration(5,3),
+	aqua_affinity(6,1),
+	thorns(7,3),
 	
 	//Weapons
-	sharpness(16,0),
-	smite(17,0),
-	bane_of_arthropods(18,0),
-	knockback(19,0),
-	fire_aspect(20,0),
-	looting(21,0),
+	sharpness(16,5),
+	smite(17,5),
+	bane_of_arthropods(18,5),
+	knockback(19,2),
+	fire_aspect(20,2),
+	looting(21,3),
 	
 	//Tools
-	efficiency(32,0),
-	silk_touch(33,0),
-	unbreaking(34,0),
-	fortune(35,0),
+	efficiency(32,5),
+	silk_touch(33,1),
+	unbreaking(34,3),
+	fortune(35,3),
 	
 	//Bow
-	power(48,0),
-	punch(49,0),
-	flame(50,0),
-	infinity(51,0),
+	power(48,5),
+	punch(49,2),
+	flame(50,1),
+	infinity(51,1);
 	;
 
 	private int eid;
