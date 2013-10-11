@@ -199,10 +199,12 @@ public class MenuPrincipal extends JFrame {
 				if(e.getButton() == MouseEvent.BUTTON1) {
 
 					if (source!=list_carac_wave) {
-						Wave vague = jList.getSelectedValue().getWave();
-						setVisibleComponents(vague);
-						loadData(vague);
-						deselectWaveLists(jList);
+						if (jList.getModel().getSize() != 0) {
+							Wave vague = jList.getSelectedValue().getWave();
+							setVisibleComponents(vague);
+							loadData(vague);
+							deselectWaveLists(jList);
+						}
 					}
 
 				}

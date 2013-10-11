@@ -25,10 +25,10 @@ public class Classe {
 	
 	private void load() {
 		GestYaml g = new GestYaml(classe);
-		//TODO Ajouter la gestion des éléments uniques, des différentes possibilités (nombre
+		//TODO Ajouter la gestion des éléments uniques, des différentes possibilités (nombre, chaine)
 		
 		//Gestion des items
-		String[] sItems = g.getString("items").split("[,]");
+		String[] sItems = g.getString("items").replace('\'', ' ').split("[,]");
 		for(int i=0;i<sItems.length;i++) {
 			String[] tab_item = sItems[i].trim().split("[:]");
 			int data = 0;
@@ -44,11 +44,14 @@ public class Classe {
 			default:
 				break;
 			}
-			items.add(new Item(EItem.searchBy(tab_item[0], data),quantity));
+			if(tab_item[0].matches("(\\d)+")){
+				System.out.println("item Nombre");
+			}
+			items.add(new Item(EItem.searchBy(tab_item[0], data),quantity,null));
 		}
 		
 		//Gestion des pièces d'armure
-		String[] sArmor = g.getString("armor").split("[,]");
+		String[] sArmor = g.getString("armor").replace('\'', ' ').split("[,]");
 		for(int i=0;i<sArmor.length;i++) {
 			String[] tab_armor = sArmor[i].trim().split("[:]");
 			int data = 0;
@@ -64,7 +67,10 @@ public class Classe {
 			default:
 				break;
 			}
-			armor.add(new Item(EItem.searchBy(Integer.parseInt(tab_armor[0]), data),quantity));
+			if(tab_armor[0].matches("(\\d)+")){
+				System.out.println("armor Nombre");
+			}
+			armor.add(new Item(EItem.searchBy(Integer.parseInt(tab_armor[0]), data),quantity,null));
 		}
 		
 	}
