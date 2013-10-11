@@ -1,11 +1,14 @@
 package model;
 
+import java.util.ArrayList;
+
 import model.enums.EItem;
 
 public class Item {
 
 	private EItem item;
 	private int quantity = 1;
+	private ArrayList<Enchantment> enchantements = new ArrayList<>();
 	
 	public Item(EItem item, int quantity) {
 		this.item = item;
