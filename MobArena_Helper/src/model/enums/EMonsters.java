@@ -76,17 +76,13 @@ public enum EMonsters {
 			if (i < values.length) {
 				return values[i];
 			} else {
-				IllegalArgumentException e = new IllegalArgumentException(
+				throw new IllegalArgumentException(
 						"No enum constant EMonsters." + name);
-				e.printStackTrace();
 			}
 		}
 		else {
-			NullPointerException e = new NullPointerException("Name is null");
-			e.printStackTrace();
+			throw new NullPointerException("Name is null");
 		}
-		
-		return null;
 		
 	}
 	

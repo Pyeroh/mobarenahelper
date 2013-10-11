@@ -11,6 +11,4 @@ public enum EItemCat {
 	weapon,
 	potion,
 	materials;
-	
-	private EItemCat() {}
 }

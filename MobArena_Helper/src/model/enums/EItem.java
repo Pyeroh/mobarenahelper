@@ -582,17 +582,13 @@ public enum EItem {
 			if (i < values.length) {
 				return values[i];
 			} else {
-				IllegalArgumentException e = new IllegalArgumentException(
+				throw new IllegalArgumentException(
 						"No enum constant EItem." + name);
-				e.printStackTrace();
 			}
 		}
 		else {
-			NullPointerException e = new NullPointerException("Name is null");
-			e.printStackTrace();
+			throw new NullPointerException("Name is null");
 		}
-
-		return null;
 
 	}
 	
@@ -608,17 +604,13 @@ public enum EItem {
 				return values[i];
 			}
 			else {
-				IllegalArgumentException e = new IllegalArgumentException(
+				throw new IllegalArgumentException(
 						"No enum constant EItem for id " + id);
-				e.printStackTrace();
 			}
 		}
 		else {
-			NullPointerException e = new NullPointerException("ID equals 0");
-			e.printStackTrace();
+			throw new NullPointerException("ID equals 0");
 		}
-		
-		return null;
 		
 	}
 
