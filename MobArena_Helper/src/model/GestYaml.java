@@ -70,7 +70,7 @@ public class GestYaml {
 
 	@SuppressWarnings("unchecked")
 	private Object get(String key) {
-		String[] arbokey = key.split("[.]");
+		String[] arbokey = key.split(".");
 		Map<String, Object> mapvalue = data;
 		for (int i=0;i<arbokey.length-1;i++) {
 			mapvalue = (Map<String, Object>)mapvalue.get(arbokey[i]);

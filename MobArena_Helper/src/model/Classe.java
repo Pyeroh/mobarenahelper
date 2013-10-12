@@ -25,52 +25,49 @@ public class Classe {
 	
 	private void load() {
 		GestYaml g = new GestYaml(classe);
-		//TODO Ajouter la gestion des éléments uniques, des différentes possibilités (nombre, chaine)
 		
-		//Gestion des items
-		String[] sItems = g.getString("items").replace('\'', ' ').split("[,]");
-		for(int i=0;i<sItems.length;i++) {
-			String[] tab_item = sItems[i].trim().split("[:]");
-			int data = 0;
-			int quantity = 1;
-			switch (tab_item.length) {
-			case 2:
-				quantity = Integer.parseInt(tab_item[1]);
-				break;
-			case 3:
-				data = Integer.parseInt(tab_item[1]);
-				quantity = Integer.parseInt(tab_item[2]);
-				break;
-			default:
-				break;
-			}
-			if(tab_item[0].matches("(\\d)+")){
-				System.out.println("item Nombre");
-			}
-			items.add(new Item(EItem.searchBy(tab_item[0], data),quantity,null));
-		}
+		String[] tab_cat = {"armor", "items"};
 		
-		//Gestion des pièces d'armure
-		String[] sArmor = g.getString("armor").replace('\'', ' ').split("[,]");
-		for(int i=0;i<sArmor.length;i++) {
-			String[] tab_armor = sArmor[i].trim().split("[:]");
-			int data = 0;
-			int quantity = 1;
-			switch (tab_armor.length) {
-			case 2:
-				quantity = Integer.parseInt(tab_armor[1]);
-				break;
-			case 3:
-				data = Integer.parseInt(tab_armor[1]);
-				quantity = Integer.parseInt(tab_armor[2]);
-				break;
-			default:
-				break;
+		for (int j = 0; j < tab_cat.length; j++) {
+			ArrayList<Item> alItems = tab_cat[j].equals("armor") ? armor : items;
+			
+			String[] sItem = g.getString(tab_cat[j]).replace('\'', ' ')
+					.split(",");
+			for (int i = 0; i < sItem.length; i++) {
+				//SE : sans espace --> test d'enchantement
+				String sItemSE[] = sItem[i].trim().split(" ");
+
+				String[] tab_item = sItemSE[0].split(":");
+				int data = 0;
+				int quantity = 1;
+				switch (tab_item.length) {
+				case 1:
+					break;
+				case 2:
+					quantity = Integer.parseInt(tab_item[1]);
+					break;
+				case 3:
+					data = Integer.parseInt(tab_item[1]);
+					quantity = Integer.parseInt(tab_item[2]);
+					break;
+				default:
+					break;
+				}
+
+				String[] enchantments = null;
+				if (sItemSE.length == 2) {
+					enchantments = sItemSE[1].split(";");
+				}
+
+				if (tab_item[0].matches("(\\d)+")) {
+					alItems.add(new Item(EItem.searchBy(
+							Integer.parseInt(tab_item[0]), data), quantity,
+							enchantments));
+				} else {
+					alItems.add(new Item(EItem.searchBy(tab_item[0], data),
+							quantity, enchantments));
+				}
 			}
-			if(tab_armor[0].matches("(\\d)+")){
-				System.out.println("armor Nombre");
-			}
-			armor.add(new Item(EItem.searchBy(Integer.parseInt(tab_armor[0]), data),quantity,null));
 		}
 		
 	}
@@ -120,7 +117,8 @@ public class Classe {
 	}
 
 	protected LinkedHashMap<String, Object> getMap() {
-		// TODO Auto-generated method stub
+		// TODO getMap() pour Classe
+		
 		return null;
 	}
 	

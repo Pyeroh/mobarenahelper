@@ -170,7 +170,7 @@ public abstract class Wave implements Comparable<Wave> {
 				}
 				vague.put("monsters", mapmonstres);
 			}
-
+			
 			if(this instanceof DefaultW) {
 				DefaultW wave = (DefaultW) this;
 				if(wave.getGrowth()!=EGrowth.old) vague.put("growth", wave.getGrowth().name());
@@ -191,7 +191,6 @@ public abstract class Wave implements Comparable<Wave> {
 		}
 
 		//System.out.println(toString());
-		//System.out.println();
 		return vague;
 	}
 
