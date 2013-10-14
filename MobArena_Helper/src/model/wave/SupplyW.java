@@ -20,7 +20,7 @@ public class SupplyW extends Wave {
 		return drops;
 	}
 	
-	protected LinkedHashMap<String, Object> getMap() {
+	public LinkedHashMap<String, Object> getMap() {
 		
 		return null;
 	}

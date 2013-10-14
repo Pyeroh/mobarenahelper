@@ -40,7 +40,7 @@ public class SpecialW extends Wave {
 		return wave;
 	}
 	
-	protected LinkedHashMap<String, Object> getMap() {
+	public LinkedHashMap<String, Object> getMap() {
 
 		return null;
 	}

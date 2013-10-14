@@ -12,7 +12,7 @@ public class UpgradeW extends Wave {
 		super(nom, ETypeW.Upgrade);
 	}
 
-	protected LinkedHashMap<String, Object> getMap() {
+	public LinkedHashMap<String, Object> getMap() {
 
 		return null;
 	}

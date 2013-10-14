@@ -149,7 +149,7 @@ public abstract class Wave implements Comparable<Wave> {
 		return ret;
 	}
 
-	protected LinkedHashMap<String, Object> getMap() {
+	public LinkedHashMap<String, Object> getMap() {
 		LinkedHashMap<String, Object> vague = new LinkedHashMap<>();
 		if(this instanceof OtherW) {
 			vague = (LinkedHashMap<String, Object>) ((OtherW) this).getDefvague();
