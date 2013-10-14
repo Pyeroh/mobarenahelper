@@ -117,8 +117,15 @@ public class BossW extends Wave{
 	}
 	
 	public LinkedHashMap<String, Object> getMap() {
-
-		return null;
+		LinkedHashMap<String, Object> vague = super.getMap();
+		
+		if(!this.getBossName().equals(""))vague.put("name", this.getBossName());
+		if(this.getHealth()!=EHealth.medium)vague.put("health", this.getHealth().name());
+		vague.put("abilities", this.getAbilities().toString());
+		if(!this.isAbility_announce())vague.put("ability-announce", this.isAbility_announce());
+		if(this.getAbility_interval()!=3)vague.put("ability-interval", this.getAbility_interval());
+		
+		return vague;
 	}
 
 }

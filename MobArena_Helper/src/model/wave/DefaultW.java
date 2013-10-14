@@ -50,6 +50,14 @@ public class DefaultW extends Wave{
 		return ret;
 	}
 
+	public LinkedHashMap<String, Object> getMap() {
+		LinkedHashMap<String, Object> vague = super.getMap();
+		if(this.getGrowth()!=EGrowth.old) vague.put("growth", this.getGrowth().name());
+		if(this.isFixed())vague.put("fixed", this.isFixed());
+		
+		return vague;
+	}
+
 	public static DefaultW setWave(String nom, Map<String, Object> map){
 		DefaultW wave = new DefaultW(nom);
 		GestYaml g = new GestYaml(map);
@@ -77,11 +85,6 @@ public class DefaultW extends Wave{
 		}
 
 		return wave;
-	}
-	
-	public LinkedHashMap<String, Object> getMap() {
-
-		return null;
 	}
 
 }

@@ -53,8 +53,10 @@ public class SwarmW extends Wave{
 	}
 	
 	public LinkedHashMap<String, Object> getMap() {
-
-		return null;
+		LinkedHashMap<String, Object> vague = super.getMap();		
+		if(this.getAmount()==EAmount.low)vague.put("amount", this.getAmount().getName());
+		
+		return vague;
 	}
 
 }

@@ -3,15 +3,13 @@ package model;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import model.enums.EAmount;
 import model.enums.ECatW;
-import model.enums.EGrowth;
-import model.enums.EHealth;
 import model.enums.ETypeW;
 import model.wave.BossW;
 import model.wave.DefaultW;
 import model.wave.OtherW;
 import model.wave.SpecialW;
+import model.wave.SupplyW;
 import model.wave.SwarmW;
 
 public abstract class Wave implements Comparable<Wave> {
@@ -176,24 +174,6 @@ public abstract class Wave implements Comparable<Wave> {
 				vague.put("monsters", mapmonstres);
 			}
 			
-			//TODO à décentraliser dans un getMap() pour chaque classe fille
-			if(this instanceof DefaultW) {
-				DefaultW wave = (DefaultW) this;
-				if(wave.getGrowth()!=EGrowth.old) vague.put("growth", wave.getGrowth().name());
-				if(wave.isFixed())vague.put("fixed", wave.isFixed());
-			}
-			else if(this instanceof SwarmW) {
-				SwarmW wave = (SwarmW) this;
-				if(wave.getAmount()==EAmount.low)vague.put("amount", wave.getAmount().getName());
-			}
-			else if(this instanceof BossW) {
-				BossW wave = (BossW) this;
-				if(!wave.getBossName().equals(""))vague.put("name", wave.getBossName());
-				if(wave.getHealth()!=EHealth.medium)vague.put("health", wave.getHealth().name());
-				vague.put("abilities", wave.getAbilities().toString());
-				if(!wave.isAbility_announce())vague.put("ability-announce", wave.isAbility_announce());
-				if(wave.getAbility_interval()!=3)vague.put("ability-interval", wave.getAbility_interval());
-			}
 		}
 
 		return vague;
@@ -216,9 +196,12 @@ public abstract class Wave implements Comparable<Wave> {
 		case Boss:
 			wave = BossW.setWave(nom, map);
 			break;
+		case Supply:
+			wave = SupplyW.setWave(nom, map);
+			break;
 		default:
 			wave = new OtherW(nom, map, ETypeW.valueOf(type.toString()));
-			System.out.println("Les vagues Upgrade et Supply ne sont pas encore gérées !");
+			System.out.println("Les vagues Upgrade ne sont pas encore gérées !");
 			break;
 		}
 

@@ -42,7 +42,7 @@ public class SpecialW extends Wave {
 	
 	public LinkedHashMap<String, Object> getMap() {
 
-		return null;
+		return super.getMap();
 	}
 
 }
