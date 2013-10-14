@@ -1,8 +1,12 @@
-package model;
+package model.wave;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
+import model.GestYaml;
+import model.Monstre;
+import model.Wave;
 import model.enums.EAbilities;
 import model.enums.EHealth;
 import model.enums.EMonsterAliases;
@@ -110,6 +114,11 @@ public class BossW extends Wave{
 		wave.getMonstres().add(new Monstre(EMonsterAliases.valueOf(g.getString("monster")).getMonstre(),0));
 
 		return wave;
+	}
+	
+	protected LinkedHashMap<String, Object> getMap() {
+
+		return null;
 	}
 
 }

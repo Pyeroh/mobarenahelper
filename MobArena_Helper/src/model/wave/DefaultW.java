@@ -1,9 +1,13 @@
-package model;
+package model.wave;
 
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import model.GestYaml;
+import model.Monstre;
+import model.Wave;
 import model.enums.ECatW;
 import model.enums.EGrowth;
 import model.enums.EMonsterAliases;
@@ -73,6 +77,11 @@ public class DefaultW extends Wave{
 		}
 
 		return wave;
+	}
+	
+	protected LinkedHashMap<String, Object> getMap() {
+
+		return null;
 	}
 
 }

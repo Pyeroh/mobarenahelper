@@ -1,7 +1,8 @@
-package model;
+package model.wave;
 
 import java.util.Map;
 
+import model.Wave;
 import model.enums.ETypeW;
 
 public class OtherW extends Wave {
@@ -15,10 +16,6 @@ public class OtherW extends Wave {
 
 	public Map<String, Object> getDefvague() {
 		return defvague;
-	}
-
-	public void setDefvague(Map<String, Object> defvague) {
-		this.defvague = defvague;
 	}
 
 }

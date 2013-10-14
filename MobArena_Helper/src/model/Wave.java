@@ -8,6 +8,11 @@ import model.enums.ECatW;
 import model.enums.EGrowth;
 import model.enums.EHealth;
 import model.enums.ETypeW;
+import model.wave.BossW;
+import model.wave.DefaultW;
+import model.wave.OtherW;
+import model.wave.SpecialW;
+import model.wave.SwarmW;
 
 public abstract class Wave implements Comparable<Wave> {
 
@@ -171,6 +176,7 @@ public abstract class Wave implements Comparable<Wave> {
 				vague.put("monsters", mapmonstres);
 			}
 			
+			//TODO à décentraliser dans un getMap() pour chaque classe fille
 			if(this instanceof DefaultW) {
 				DefaultW wave = (DefaultW) this;
 				if(wave.getGrowth()!=EGrowth.old) vague.put("growth", wave.getGrowth().name());
@@ -190,7 +196,6 @@ public abstract class Wave implements Comparable<Wave> {
 			}
 		}
 
-		//System.out.println(toString());
 		return vague;
 	}
 

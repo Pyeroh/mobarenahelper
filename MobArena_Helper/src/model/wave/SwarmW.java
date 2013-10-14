@@ -1,7 +1,11 @@
-package model;
+package model.wave;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
+import model.GestYaml;
+import model.Monstre;
+import model.Wave;
 import model.enums.EAmount;
 import model.enums.EMonsterAliases;
 import model.enums.ETypeW;
@@ -46,6 +50,11 @@ public class SwarmW extends Wave{
 		wave.getMonstres().add(new Monstre(EMonsterAliases.valueOf(g.getString("monster")).getMonstre(),0));
 
 		return wave;
+	}
+	
+	protected LinkedHashMap<String, Object> getMap() {
+
+		return null;
 	}
 
 }

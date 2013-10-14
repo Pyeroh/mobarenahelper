@@ -1,9 +1,13 @@
-package model;
+package model.wave;
 
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import model.GestYaml;
+import model.Monstre;
+import model.Wave;
 import model.enums.EMonsterAliases;
 import model.enums.ETypeW;
 
@@ -34,6 +38,11 @@ public class SpecialW extends Wave {
 		}
 
 		return wave;
+	}
+	
+	protected LinkedHashMap<String, Object> getMap() {
+
+		return null;
 	}
 
 }
