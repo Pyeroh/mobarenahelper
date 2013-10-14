@@ -11,7 +11,7 @@ public enum EEnchantment {
 	respiration(5,3),
 	aqua_affinity(6,1),
 	thorns(7,3),
-	
+
 	//Weapons
 	sharpness(16,5),
 	smite(17,5),
@@ -19,13 +19,13 @@ public enum EEnchantment {
 	knockback(19,2),
 	fire_aspect(20,2),
 	looting(21,3),
-	
+
 	//Tools
 	efficiency(32,5),
 	silk_touch(33,1),
 	unbreaking(34,3),
 	fortune(35,3),
-	
+
 	//Bow
 	power(48,5),
 	punch(49,2),
@@ -46,7 +46,7 @@ public enum EEnchantment {
 	}
 
 	public String getName() {
-		
+
 		return null;
 	}
 
@@ -77,23 +77,19 @@ public enum EEnchantment {
 
 	public static EEnchantment getById(int id) {
 
-		if(id!=0) {
-			EEnchantment[] values = values();
-			int i = 0;
-			while(i < values.length && values[i].getEid()!=id) {
-				i++;
-			}
-			if(i < values.length) {
-				return values[i];
-			}
-			else {
-				throw new IllegalArgumentException(
-						"No enum constant EEnchantment for id " + id);
-			}
+		EEnchantment[] values = values();
+		int i = 0;
+		while(i < values.length && values[i].getEid()!=id) {
+			i++;
+		}
+		if(i < values.length) {
+			return values[i];
 		}
 		else {
-			throw new NullPointerException("EID invalid");
+			throw new IllegalArgumentException(
+					"No enum constant EEnchantment for id " + id);
 		}
+
 
 	}
 

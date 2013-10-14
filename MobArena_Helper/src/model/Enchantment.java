@@ -28,4 +28,8 @@ public class Enchantment {
 		this.lvl = lvl;
 	}
 	
+	public String toString() {
+		return enchantement.getEid()+":"+lvl;
+	}
+	
 }
