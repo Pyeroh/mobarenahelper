@@ -71,7 +71,7 @@ public class Arena {
 		this.nom = nom;
 	}
 
-	protected LinkedHashMap<String, Object> getMap() {
+	public LinkedHashMap<String, Object> getMap() {
 		LinkedHashMap<String, Object> arena = new LinkedHashMap<>();
 		arena.put("settings", settings);
 		

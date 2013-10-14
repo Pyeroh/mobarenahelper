@@ -47,7 +47,7 @@ public class Item {
 		return enchantements;
 	}
 	
-	protected String getMap() {
+	public String getMap() {
 
 		StringBuffer item = new StringBuffer(this.item.getRealName().toLowerCase());
 		
@@ -81,7 +81,7 @@ class Armor extends Item {
 		return getItem().getName();
 	}
 	
-	protected String getMap() {
+	public String getMap() {
 
 		EItem thisitem = getItem();
 		int thisquantity = getQuantity();
