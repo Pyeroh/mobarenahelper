@@ -195,107 +195,117 @@ public class MenuPrincipal extends JFrame {
 				//et en tant que liste de vagues pour le travail sur les données
 				JList<CellListCaracs> source = (JList<CellListCaracs>) e.getSource();
 				JList<CellListWave> jList = (JList<CellListWave>) e.getSource();
-				//Clic gauche (sélection)
-				if(e.getButton() == MouseEvent.BUTTON1) {
+				if (source.getModel().getSize()!=0) {
+					//Clic gauche (sélection)
+					if (e.getButton() == MouseEvent.BUTTON1) {
 
-					if (source!=list_carac_wave) {
-						if (jList.getModel().getSize() != 0) {
+						if (source != list_carac_wave) {
 							Wave vague = jList.getSelectedValue().getWave();
 							setVisibleComponents(vague);
 							loadData(vague);
 							deselectWaveLists(jList);
 						}
+
 					}
+					//Clic molette (suppression)
+					else if (e.getButton() == MouseEvent.BUTTON2) {
 
-				}
-				//Clic molette (suppression)
-				else if(e.getButton() == MouseEvent.BUTTON2) {
+						int hoverIndex = ((HoverListCellRenderer) jList
+								.getCellRenderer()).getHoverIndex();
 
-					int hoverIndex = ((HoverListCellRenderer) jList
-							.getCellRenderer()).getHoverIndex();
+						if (hoverIndex != -1) {
+							if (source != list_carac_wave) {
 
-					if(hoverIndex!=-1){
-						if (source!=list_carac_wave) {
+								setInvisibleComponents();
 
-							setInvisibleComponents();
-
-							Wave hoverWave = jList.getModel()
-									.getElementAt(hoverIndex).getWave();
-							int reponse = JOptionPane.showConfirmDialog(null,
-									"Are you sure you want to delete the "
-											+ hoverWave.getCategory().getNom()
-											.toLowerCase() + " wave named "
-											+ hoverWave.getNom() + " ?",
-											"Confirmation", JOptionPane.YES_NO_OPTION,
-											JOptionPane.QUESTION_MESSAGE);
-							switch (reponse) {
-							case 0:
-								//Récupération de l'arène en cours
-								Arena lArene = arenas.getALarenas().get(
-										combo_arena.getSelectedIndex());
-								//Suppression de la vague voulue
-								lArene.getWavesType(hoverWave.getCategory())
-								.remove(hoverIndex);
-								//Rechargement
-								loadListCaracs(lArene.getWavesType(hoverWave
-										.getCategory()), jList);
-								break;
-							default:
-								break;
-							}
-							deselectWaveLists(list_recurrent);
-							deselectWaveLists(list_single);
-
-						}
-						else {
-
-							CellListCaracs cellcarac = source.getModel().getElementAt(hoverIndex);
-							CellListMonster cellmonster = null;
-							CellListAbility cellabi = null;
-							JList<CellListWave> list_wave =list_recurrent.getSelectedIndex()!=-1 ? list_recurrent : list_single;
-							Wave wave = list_wave.getSelectedValue().getWave();
-							String toDelete = "";
-							String name = "";
-							if(cellcarac instanceof CellListMonster) {
-								toDelete = "monster";
-								cellmonster = (CellListMonster) cellcarac;
-								name = cellmonster.getMonstre().getMonstre().getNom();
-							}
-							else {
-								toDelete = "ability";
-								cellabi = (CellListAbility) cellcarac;
-								name = cellabi.getAbility().getNom();
-							}
-
-							int reponse = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete the "+toDelete+" "+name+"?","Confirmation", JOptionPane.YES_NO_OPTION,
-									JOptionPane.QUESTION_MESSAGE);
-							@SuppressWarnings("rawtypes")
-							ArrayList listdata = null;
-							switch (reponse) {
-							case 0:
-								if (cellcarac instanceof CellListAbility) {
-
-									BossW bwave = (BossW) wave;
-									listdata = bwave.getAbilities();
-									listdata.remove(cellabi.getAbility());
-
+								Wave hoverWave = jList.getModel()
+										.getElementAt(hoverIndex).getWave();
+								int reponse = JOptionPane.showConfirmDialog(
+										null,
+										"Are you sure you want to delete the "
+												+ hoverWave.getCategory()
+														.getNom().toLowerCase()
+												+ " wave named "
+												+ hoverWave.getNom() + " ?",
+										"Confirmation",
+										JOptionPane.YES_NO_OPTION,
+										JOptionPane.QUESTION_MESSAGE);
+								switch (reponse) {
+								case 0:
+									//Récupération de l'arène en cours
+									Arena lArene = arenas.getALarenas().get(
+											combo_arena.getSelectedIndex());
+									//Suppression de la vague voulue
+									lArene.getWavesType(hoverWave.getCategory())
+											.remove(hoverIndex);
+									//Rechargement
+									loadListCaracs(
+											lArene.getWavesType(hoverWave
+													.getCategory()), jList);
+									break;
+								default:
+									break;
 								}
-								else {
-									listdata = wave.getMonstres();
-									listdata.remove(cellmonster.getMonstre());
+								deselectWaveLists(list_recurrent);
+								deselectWaveLists(list_single);
+
+							} else {
+
+								CellListCaracs cellcarac = source.getModel()
+										.getElementAt(hoverIndex);
+								CellListMonster cellmonster = null;
+								CellListAbility cellabi = null;
+								JList<CellListWave> list_wave = list_recurrent
+										.getSelectedIndex() != -1 ? list_recurrent
+										: list_single;
+								Wave wave = list_wave.getSelectedValue()
+										.getWave();
+								String toDelete = "";
+								String name = "";
+								if (cellcarac instanceof CellListMonster) {
+									toDelete = "monster";
+									cellmonster = (CellListMonster) cellcarac;
+									name = cellmonster.getMonstre()
+											.getMonstre().getNom();
+								} else {
+									toDelete = "ability";
+									cellabi = (CellListAbility) cellcarac;
+									name = cellabi.getAbility().getNom();
 								}
-								break;
-							default:
-								break;
-							}
 
-							if (listdata!=null) {
-								loadListCaracs(listdata, source);
-							}
+								int reponse = JOptionPane.showConfirmDialog(
+										null,
+										"Are you sure you want to delete the "
+												+ toDelete + " " + name + "?",
+										"Confirmation",
+										JOptionPane.YES_NO_OPTION,
+										JOptionPane.QUESTION_MESSAGE);
+								@SuppressWarnings("rawtypes")
+								ArrayList listdata = null;
+								switch (reponse) {
+								case 0:
+									if (cellcarac instanceof CellListAbility) {
 
+										BossW bwave = (BossW) wave;
+										listdata = bwave.getAbilities();
+										listdata.remove(cellabi.getAbility());
+
+									} else {
+										listdata = wave.getMonstres();
+										listdata.remove(cellmonster
+												.getMonstre());
+									}
+									break;
+								default:
+									break;
+								}
+
+								if (listdata != null) {
+									loadListCaracs(listdata, source);
+								}
+							}
 						}
 					}
-
 				}
 			}
 		};
@@ -873,10 +883,10 @@ public class MenuPrincipal extends JFrame {
 
 		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
-		
+
 		JMenu mnPlanned = new JMenu("Planned");
 		menuBar.add(mnPlanned);
-		
+
 		JMenuItem mntmTodoList = new JMenuItem("ToDo List");
 		mntmTodoList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

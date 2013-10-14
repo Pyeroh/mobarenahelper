@@ -10,6 +10,8 @@ import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 import javax.swing.JWindow;
+import javax.swing.JLabel;
+import javax.swing.border.LineBorder;
 
 public class Todo extends JWindow {
 
@@ -17,6 +19,7 @@ public class Todo extends JWindow {
 	private MenuPrincipal menu;
 	private JTextArea lib_todo;
 	private JButton btn_ok;
+	private JLabel border;
 	
 	public Todo(MenuPrincipal menu) {
 		getContentPane().setBackground(new Color(255, 255, 255));
@@ -41,6 +44,11 @@ public class Todo extends JWindow {
 		});
 		btn_ok.setBounds(353, 233, 47, 23);
 		getContentPane().add(btn_ok);
+		
+		border = new JLabel("");
+		border.setBounds(0, 0, 422, 264);
+		border.setBorder(new LineBorder(new Color(0, 0, 0)));
+		getContentPane().add(border);
 		this.menu = menu;
 		
 		setSize(422,264);

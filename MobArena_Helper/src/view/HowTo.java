@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextPane;
 import javax.swing.JWindow;
+import javax.swing.border.LineBorder;
 
 public class HowTo extends JWindow {
 	
@@ -20,6 +21,7 @@ public class HowTo extends JWindow {
 	
 	private MenuPrincipal menu;
 	private JButton btn_ok;
+	private JLabel border;
 	
 	public HowTo(MenuPrincipal menu) {
 		
@@ -50,6 +52,11 @@ public class HowTo extends JWindow {
 		});
 		btn_ok.setBounds(377, 284, 47, 23);
 		getContentPane().add(btn_ok);
+		
+		border = new JLabel("");
+		border.setBounds(0, 0, 437, 317);
+		border.setBorder(new LineBorder(new Color(0, 0, 0)));
+		getContentPane().add(border);
 		
 		setSize(437,317);
 		Rectangle d = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();

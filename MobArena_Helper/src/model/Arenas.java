@@ -71,9 +71,7 @@ public class Arenas {
 		LinkedHashMap<String, Object> file = new LinkedHashMap<>();
 		file.put("global-settings", globalsettings);
 		
-		//TODO Modifier la gestion de l'ajout des classes
-		file.put("classes", arraylistclasses);
-		
+		file.put("classes", listclasses);
 		file.put("arenas", listarenas);
 		
 		return file;

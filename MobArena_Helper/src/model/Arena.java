@@ -74,6 +74,7 @@ public class Arena {
 	protected LinkedHashMap<String, Object> getMap() {
 		LinkedHashMap<String, Object> arena = new LinkedHashMap<>();
 		arena.put("settings", settings);
+		
 		LinkedHashMap<String, Object> mapwaves = new LinkedHashMap<>();
 		String[] catvague = {"recurrent", "single"};
 		for(int i=0;i<2;i++){
@@ -91,12 +92,9 @@ public class Arena {
 
 		arena.put("waves", mapwaves);
 		arena.put("rewards", rewards);
-		if (classlimits!=null) {
-			arena.put("class-limits", classlimits);
-		}
-		if(coords!=null){
-			arena.put("coords", coords);
-		}
+		if (classlimits!=null) arena.put("class-limits", classlimits);
+		if(coords!=null) arena.put("coords", coords);
+		
 		return arena;
 	}
 }

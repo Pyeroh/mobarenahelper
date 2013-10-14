@@ -20,6 +20,7 @@ import javax.swing.JTextPane;
 import javax.swing.JWindow;
 
 import view.cells.CellListWave;
+import javax.swing.border.LineBorder;
 
 public class About extends JWindow {
 
@@ -29,6 +30,7 @@ public class About extends JWindow {
 	private JLabel lib_link;
 
 	private MenuPrincipal menu;
+	private JLabel border;
 
 	public About(MenuPrincipal menu) {
 		setAlwaysOnTop(true);
@@ -93,6 +95,11 @@ public class About extends JWindow {
 		});
 		btn_ok.setBounds(368, 285, 59, 23);
 		getContentPane().add(btn_ok);
+		
+		border = new JLabel("");
+		border.setBounds(0, 140, 437, 195);
+		border.setBorder(new LineBorder(new Color(0, 0, 0)));
+		getContentPane().add(border);
 
 		this.menu = menu;
 
@@ -106,5 +113,4 @@ public class About extends JWindow {
 	private void activate() {
 		menu.setEnabled(true);
 	}
-
 }
