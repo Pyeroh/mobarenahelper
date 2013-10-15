@@ -14,8 +14,12 @@ public class Classe {
 	private LinkedHashMap<String, Object> lobby_permissions = new LinkedHashMap<String, Object>();
 	private boolean unbreakable_weapons = true;
 	private boolean unbreakable_armor = true;
+	
+	public static ArrayList<Classe> classe_list = new ArrayList<>();
 
 	public Classe (String name, LinkedHashMap<String, Object> classe) {
+		classe_list.add(this);
+		
 		this.name = name;
 		this.classe = classe;
 		load();

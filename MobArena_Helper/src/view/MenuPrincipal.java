@@ -44,6 +44,7 @@ import javax.swing.event.ListSelectionListener;
 
 import model.Arena;
 import model.Arenas;
+import model.Classe;
 import model.GestYaml;
 import model.MonsterList;
 import model.Monstre;
@@ -187,7 +188,7 @@ public class MenuPrincipal extends JFrame {
 		btn_newrecurrent.setBounds(167, 49, 91, 23);
 		getContentPane().add(btn_newrecurrent);
 
-		MouseAdapter mouseAdapter = new MouseAdapter() {
+		MouseAdapter cellmouseadapter = new MouseAdapter() {
 			@SuppressWarnings("unchecked")
 			public void mouseReleased(MouseEvent e) {
 
@@ -311,7 +312,7 @@ public class MenuPrincipal extends JFrame {
 		};
 
 		list_recurrent = new JList<CellListWave>();
-		list_recurrent.addMouseListener(mouseAdapter);
+		list_recurrent.addMouseListener(cellmouseadapter);
 		list_recurrent.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrpan_recurrent = new JScrollPane(list_recurrent);
 		scrpan_recurrent.setBounds(10, 82, 252, 165);
@@ -329,7 +330,7 @@ public class MenuPrincipal extends JFrame {
 		getContentPane().add(btn_newsingle);
 
 		list_single = new JList<CellListWave>();
-		list_single.addMouseListener(mouseAdapter);
+		list_single.addMouseListener(cellmouseadapter);
 		list_single.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrpan_single = new JScrollPane(list_single);
 		scrpan_single.setBounds(10, 290, 252, 165);
@@ -584,7 +585,7 @@ public class MenuPrincipal extends JFrame {
 				list_carac_wave.clearSelection();
 			}
 		});
-		list_carac_wave.addMouseListener(mouseAdapter);
+		list_carac_wave.addMouseListener(cellmouseadapter);
 		list_carac_wave.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		scrpan_carac_wave = new JScrollPane(list_carac_wave);
@@ -825,6 +826,7 @@ public class MenuPrincipal extends JFrame {
 		btn_load = new JButton("Load Config");
 		btn_load.addMouseListener(new MouseAdapter() {
 			public void mouseReleased(MouseEvent e) {
+				Classe.classe_list.clear();
 				YmlJFileChooser fchoose = new YmlJFileChooser();
 				fchoose.showOpenDialog(null);
 				file = fchoose.getSelectedFile();

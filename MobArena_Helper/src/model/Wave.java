@@ -11,6 +11,7 @@ import model.wave.OtherW;
 import model.wave.SpecialW;
 import model.wave.SupplyW;
 import model.wave.SwarmW;
+import model.wave.UpgradeW;
 
 public abstract class Wave implements Comparable<Wave> {
 
@@ -97,6 +98,14 @@ public abstract class Wave implements Comparable<Wave> {
 	
 	public BossW getBossW() {
 		return (BossW) getWave(new BossW(nom));
+	}
+	
+	public SupplyW getSupplyW() {
+		return (SupplyW) getWave(new SupplyW(nom));
+	}
+	
+	public UpgradeW getUpgradeW() {
+		return (UpgradeW) getWave(new UpgradeW(nom));
 	}
 	
 	private Wave getWave(Wave wave) {
