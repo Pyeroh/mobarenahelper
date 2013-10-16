@@ -3,7 +3,6 @@ package model;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,20 +10,28 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.nodes.Tag;
 
 public class GestYaml {
 	private LinkedHashMap<String, Object> data;
-	private Yaml yaml = new Yaml();
-	private File file;
+	private Yaml yaml;
 	public static GestYaml S_gestionnaire;
 
+	private GestYaml() {
+		DumperOptions options = new DumperOptions();
+		options.setIndent(4);
+		yaml = new Yaml(options);
+	}
+	
 	/**
 	 * Instancie un gestionnaire Yaml avec un objet InputStream
 	 * @param io
 	 */
 	@SuppressWarnings("unchecked")
 	public GestYaml(InputStream io) {
+		this();
 		data = (LinkedHashMap<String, Object>) yaml.load(io);
 	}
 
@@ -34,9 +41,9 @@ public class GestYaml {
 	 */
 	@SuppressWarnings("unchecked")
 	public GestYaml(File file) {
+		this();
 		try {
 			data = (LinkedHashMap<String, Object>) yaml.load(new FileInputStream(file));
-			this.file = file;
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -48,10 +55,10 @@ public class GestYaml {
 	 */
 	@SuppressWarnings("unchecked")
 	public GestYaml(String chemin) {
+		this();
 		try {
 			File file = new File(chemin);
 			data = (LinkedHashMap<String, Object>) yaml.load(new FileInputStream(file));
-			this.file = file;
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -62,6 +69,7 @@ public class GestYaml {
 	 * @param map
 	 */
 	public GestYaml(Map<String, Object> map) {
+		this();
 		data = (LinkedHashMap<String, Object>) map;
 	}
 
@@ -105,6 +113,10 @@ public class GestYaml {
 	@SuppressWarnings("unchecked")
 	public ArrayList<String> getList(String key) {
 		return (ArrayList<String>) get(key);
+	}
+	
+	public Tag getTag(String key) {
+		return yaml.represent(getMap(key)).getTag();
 	}
 
 	public String dump() {

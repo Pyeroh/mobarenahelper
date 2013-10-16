@@ -31,6 +31,10 @@ public enum EAbilities {
 	public String getNom() {
 		return nom;
 	}
+	
+	public String toString() {
+		return name().replace('_', '-');
+	}
 
 	public static String[] namevalues(){
 

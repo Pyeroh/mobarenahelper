@@ -53,7 +53,9 @@ public class ItemList extends ArrayList<Item> {
 	public String getMap() {
 		StringBuffer sItems = new StringBuffer();
 		if(this.size()==1){
-			sItems.append("'"+this.get(0).getMap()+"'");
+			String item = this.get(0).getMap();
+			if(item.matches("(\\d)+")) sItems.append("'"+item+"'");
+			else sItems.append(item);
 		}
 		else {
 			for(int i=0;i<this.size();i++) {

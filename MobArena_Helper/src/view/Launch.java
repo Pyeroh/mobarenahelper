@@ -2,6 +2,8 @@ package view;
 
 import java.util.LinkedHashMap;
 
+import javax.swing.UIManager;
+
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.nodes.MappingNode;
 
@@ -10,8 +12,8 @@ import org.yaml.snakeyaml.nodes.MappingNode;
 public class Launch {
 
 	public static void main(String[] args) throws Exception {
-		/*UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
-		new MenuPrincipal();*/
+		UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+		new MenuPrincipal();
 		
 		LinkedHashMap<String, Object> data = new LinkedHashMap<String, Object>();
 		data.put("classes", "Knight : bidule, machin");

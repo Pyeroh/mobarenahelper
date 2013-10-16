@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import model.GestYaml;
+import model.ItemList;
 import model.Monstre;
 import model.Wave;
 import model.enums.EAbilities;
@@ -29,6 +30,7 @@ public class BossW extends Wave{
 			return ret;
 		}
 	};
+	private ItemList reward = new ItemList();
 
 	public BossW(String nom) {
 		super(nom, ETypeW.Boss);
@@ -70,6 +72,11 @@ public class BossW extends Wave{
 		return abilities;
 	}
 	
+	//TODO Gérer la possibilité d'avoir une récompense pour avoir tué le boss
+		public ItemList getReward() {
+		return reward;
+	}
+	
 	public String toString() {
 		String ret = super.toString()
 				+"\nbossname : "+bossname
@@ -100,7 +107,7 @@ public class BossW extends Wave{
 			wave.setHealth(EHealth.valueOf(g.getString("health")));
 		}
 		if(map.containsKey("ability-interval")){
-			wave.setNumwave(g.getInt("ability-interval"));
+			wave.setAbility_interval(g.getInt("ability-interval"));
 		}
 		if(map.containsKey("ability-announce")){
 			wave.setAbility_announce(g.getBool("ability-announce"));
@@ -112,6 +119,9 @@ public class BossW extends Wave{
 			}
 		}
 		wave.getMonstres().add(new Monstre(EMonsterAliases.valueOf(g.getString("monster")).getMonstre(),0));
+		if(map.containsKey("reward")){
+			wave.getReward().fill(g.getString("reward"));
+		}
 
 		return wave;
 	}
@@ -124,6 +134,7 @@ public class BossW extends Wave{
 		vague.put("abilities", this.getAbilities().toString());
 		if(!this.isAbility_announce())vague.put("ability-announce", this.isAbility_announce());
 		if(this.getAbility_interval()!=3)vague.put("ability-interval", this.getAbility_interval());
+		if(reward.size()!=0)vague.put("reward", reward.getMap());
 		
 		return vague;
 	}

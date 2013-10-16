@@ -167,7 +167,7 @@ public abstract class Wave implements Comparable<Wave> {
 			if(category==ECatW.recurrent){
 				vague.put("priority", priority);
 				vague.put("frequency", frequency);
-				if(numwave!=0)vague.put("wave", numwave);
+				if(numwave!=0||numwave!=1)vague.put("wave", numwave);
 			}
 			else {
 				vague.put("wave", numwave);
