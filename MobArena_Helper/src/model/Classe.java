@@ -15,7 +15,13 @@ public class Classe {
 	private boolean unbreakable_weapons = true;
 	private boolean unbreakable_armor = true;
 	
-	public static ArrayList<Classe> classe_list = new ArrayList<>();
+	public static ArrayList<Classe> classe_list = new ArrayList<Classe>(){
+		private static final long serialVersionUID = -5427655124441902011L;
+		public void clear() {
+			super.clear();
+			this.add(new Classe("all"));
+		}
+	};
 
 	public Classe (String name, LinkedHashMap<String, Object> classe) {
 		classe_list.add(this);
@@ -24,7 +30,11 @@ public class Classe {
 		this.classe = classe;
 		load();
 	}
-
+	
+	private Classe(String name) {
+		this.name = name;
+	}
+	
 	private void load() {
 		GestYaml g = new GestYaml(classe);
 

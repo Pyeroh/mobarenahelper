@@ -1,7 +1,10 @@
 package model.wave;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import org.yaml.snakeyaml.Yaml;
 
 import model.ArmorList;
 import model.Classe;
@@ -11,7 +14,7 @@ import model.enums.ETypeW;
 
 public class UpgradeW extends Wave {
 
-	
+	private ArrayList<UpgradeSet> upgrades;
 	
 	public UpgradeW(String nom) {
 		super(nom, ETypeW.Upgrade);
@@ -35,6 +38,10 @@ class UpgradeSet {
 	private Classe classe;
 	private ItemList items;
 	private ArmorList armor;
+	
+	public UpgradeSet() {
+		
+	}
 	
 }
 

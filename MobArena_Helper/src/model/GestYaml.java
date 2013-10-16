@@ -3,6 +3,7 @@ package model;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,6 +16,8 @@ import org.yaml.snakeyaml.Yaml;
 public class GestYaml {
 	private LinkedHashMap<String, Object> data;
 	private Yaml yaml = new Yaml();
+	private File file;
+	public static GestYaml S_gestionnaire;
 
 	/**
 	 * Instancie un gestionnaire Yaml avec un objet InputStream
@@ -33,6 +36,7 @@ public class GestYaml {
 	public GestYaml(File file) {
 		try {
 			data = (LinkedHashMap<String, Object>) yaml.load(new FileInputStream(file));
+			this.file = file;
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -45,7 +49,9 @@ public class GestYaml {
 	@SuppressWarnings("unchecked")
 	public GestYaml(String chemin) {
 		try {
-			data = (LinkedHashMap<String, Object>) yaml.load(new FileInputStream(new File(chemin)));
+			File file = new File(chemin);
+			data = (LinkedHashMap<String, Object>) yaml.load(new FileInputStream(file));
+			this.file = file;
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}

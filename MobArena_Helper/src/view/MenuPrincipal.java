@@ -831,7 +831,8 @@ public class MenuPrincipal extends JFrame {
 				fchoose.showOpenDialog(null);
 				file = fchoose.getSelectedFile();
 				if (file!=null) {
-					g = new GestYaml(file);
+					GestYaml.S_gestionnaire = new GestYaml(file);
+					g = GestYaml.S_gestionnaire;
 					arenas = new Arenas(g.getMap("arenas"),g.getMap("global-settings"),g.getMap("classes"));
 					ArrayList<Arena> alArenas = arenas.getALarenas();
 					for(int i=0;i<alArenas.size();i++){
