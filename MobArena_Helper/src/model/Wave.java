@@ -189,7 +189,7 @@ public abstract class Wave implements Comparable<Wave> {
 	}
 
 	public static Wave setWave(String nom, ECatW category, Map<String, Object> map){
-		Wave wave;
+		Wave wave = null;
 		StringBuffer type = new StringBuffer(map.get("type").toString());
 		type.replace(0, 1, type.substring(0, 1).toUpperCase());
 		switch (ETypeW.valueOf(type.toString())) {
@@ -208,9 +208,8 @@ public abstract class Wave implements Comparable<Wave> {
 		case Supply:
 			wave = SupplyW.setWave(nom, map);
 			break;
-		default:
-			wave = new OtherW(nom, map, ETypeW.valueOf(type.toString()));
-			System.out.println("Les vagues Upgrade ne sont pas encore gérées !");
+		case Upgrade:
+			wave = UpgradeW.setWave(nom, map);
 			break;
 		}
 
