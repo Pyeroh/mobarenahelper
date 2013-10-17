@@ -21,6 +21,9 @@ classes:
     Oddjob:
         items: stone_sword, flint_and_steel, netherrack:2, tnt:4, potion:8197:3
         armor: 298,299,300,301
+    Wizard:
+        items: stick
+        armor: 302,303,304,305
 arenas:
     default:
         settings:
