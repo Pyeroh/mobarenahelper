@@ -102,7 +102,7 @@ public class GestYaml {
 	}
 
 	public boolean getBool(String key) {
-		return Boolean.parseBoolean((String) get(key));
+		return Boolean.parseBoolean(get(key).toString());
 	}
 
 	@SuppressWarnings("unchecked")
@@ -116,7 +116,7 @@ public class GestYaml {
 	}
 	
 	public Tag getTag(String key) {
-		return yaml.represent(getMap(key)).getTag();
+		return yaml.represent(get(key)).getTag();
 	}
 	
 	public Tag getTag() {
