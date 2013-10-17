@@ -70,7 +70,6 @@ public class Item implements Comparable<Item> {
 	}
 
 	public int compareTo(Item o) {
-		// TODO Auto-generated method stub
 		int oid, tid;
 		EItem oitem, titem;
 		oitem = o.getItem();
