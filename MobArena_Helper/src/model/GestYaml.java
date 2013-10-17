@@ -118,6 +118,10 @@ public class GestYaml {
 	public Tag getTag(String key) {
 		return yaml.represent(getMap(key)).getTag();
 	}
+	
+	public Tag getTag() {
+		return yaml.represent(data).getTag();
+	}
 
 	public String dump() {
 		return yaml.dumpAsMap(data);
