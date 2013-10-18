@@ -66,6 +66,7 @@ import view.cells.CellListCaracs;
 import view.cells.CellListMonster;
 import view.cells.CellListWave;
 import view.cells.HoverListCellRenderer;
+import javax.swing.JTabbedPane;
 
 public class MenuPrincipal extends JFrame {
 
@@ -124,6 +125,8 @@ public class MenuPrincipal extends JFrame {
 	private GestYaml g;
 	private Arenas arenas = null;
 	private File file = null;
+	private JPanel pan_arena_wave;
+	private JTabbedPane tabpan_config;
 
 	public MenuPrincipal(){
 		super("MobArena Helper v1");
@@ -131,16 +134,6 @@ public class MenuPrincipal extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
 		getContentPane().setLayout(null);
-
-		lib_arena = new JLabel("Arena");
-		lib_arena.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lib_arena.setBounds(10, 11, 46, 17);
-		getContentPane().add(lib_arena);
-
-		combo_arena = new JComboBox<String>();
-		combo_arena.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		combo_arena.setBounds(66, 11, 192, 20);
-		getContentPane().add(combo_arena);
 
 		MouseAdapter newWave = new MouseAdapter() {
 			public void mouseReleased(MouseEvent e) {
@@ -176,17 +169,6 @@ public class MenuPrincipal extends JFrame {
 
 			}
 		};
-
-		lib_recurrent = new JLabel("Recurrent Waves");
-		lib_recurrent.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lib_recurrent.setBounds(10, 50, 132, 17);
-		getContentPane().add(lib_recurrent);
-
-		btn_newrecurrent = new JButton("New Wave");
-		btn_newrecurrent.addMouseListener(newWave);
-		btn_newrecurrent.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btn_newrecurrent.setBounds(167, 49, 91, 23);
-		getContentPane().add(btn_newrecurrent);
 
 		MouseAdapter cellmouseadapter = new MouseAdapter() {
 			@SuppressWarnings("unchecked")
@@ -225,12 +207,12 @@ public class MenuPrincipal extends JFrame {
 										null,
 										"Are you sure you want to delete the "
 												+ hoverWave.getCategory()
-														.getNom().toLowerCase()
+												.getNom().toLowerCase()
 												+ " wave named "
 												+ hoverWave.getNom() + " ?",
-										"Confirmation",
-										JOptionPane.YES_NO_OPTION,
-										JOptionPane.QUESTION_MESSAGE);
+												"Confirmation",
+												JOptionPane.YES_NO_OPTION,
+												JOptionPane.QUESTION_MESSAGE);
 								switch (reponse) {
 								case 0:
 									//Récupération de l'arène en cours
@@ -238,7 +220,7 @@ public class MenuPrincipal extends JFrame {
 											combo_arena.getSelectedIndex());
 									//Suppression de la vague voulue
 									lArene.getWavesType(hoverWave.getCategory())
-											.remove(hoverIndex);
+									.remove(hoverIndex);
 									//Rechargement
 									loadListCaracs(
 											lArene.getWavesType(hoverWave
@@ -258,7 +240,7 @@ public class MenuPrincipal extends JFrame {
 								CellListAbility cellabi = null;
 								JList<CellListWave> list_wave = list_recurrent
 										.getSelectedIndex() != -1 ? list_recurrent
-										: list_single;
+												: list_single;
 								Wave wave = list_wave.getSelectedValue()
 										.getWave();
 								String toDelete = "";
@@ -278,9 +260,9 @@ public class MenuPrincipal extends JFrame {
 										null,
 										"Are you sure you want to delete the "
 												+ toDelete + " " + name + "?",
-										"Confirmation",
-										JOptionPane.YES_NO_OPTION,
-										JOptionPane.QUESTION_MESSAGE);
+												"Confirmation",
+												JOptionPane.YES_NO_OPTION,
+												JOptionPane.QUESTION_MESSAGE);
 								@SuppressWarnings("rawtypes")
 								ArrayList listdata = null;
 								switch (reponse) {
@@ -311,35 +293,175 @@ public class MenuPrincipal extends JFrame {
 			}
 		};
 
+		KeyAdapter mask_numeric = new KeyAdapter() {
+			public void keyReleased(KeyEvent e) {
+
+				JTextField source = (JTextField) e.getSource();
+				String orig = source.getText();
+				if (orig.length()>0) {
+					int modif = -1;
+					try {
+						modif = Integer.parseInt(orig);
+					} catch (NumberFormatException e1) {}
+					String sModif = Integer.toString(modif);
+					if (!orig.equals(sModif)) {
+						source.setText(orig.substring(0, orig.length() - 1));
+					}
+				}
+				majData(e);
+
+			}
+		};
+
+		ItemListener itemListener_monster_amount = new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+
+				//la clause isFocusOwner() est spécifiée car la combo Amount change de valeur à l'initialisation
+				if (e.getStateChange() == ItemEvent.DESELECTED && ((JComponent) e.getSource()).isFocusOwner()) {
+					JList<CellListWave> list_sel = combo_category.getSelectedItem().equals("Recurrent") ? list_recurrent : list_single;
+
+					@SuppressWarnings("unchecked")
+					JComboBox<String> combo_sel = (JComboBox<String>) e.getSource();
+
+					Wave wave = list_sel.getSelectedValue().getWave();
+					String type = (String) combo_sel.getSelectedItem();
+
+					if (combo_sel == combo_monster) {
+
+						MonsterList monstres = wave.getMonstres();
+						monstres.clear();
+						monstres.add(new Monstre(EMonsters.getByName(type), 0));
+
+					}
+					else {
+
+						SwarmW swwave = (SwarmW) wave;
+						swwave.setAmount(EAmount.getByName(type));
+
+					}
+
+				}
+
+			}
+		};
+
+		btn_load = new JButton("Load Config");
+		btn_load.addMouseListener(new MouseAdapter() {
+			public void mouseReleased(MouseEvent e) {
+				Classe.classe_list.clear();
+				YmlJFileChooser fchoose = new YmlJFileChooser();
+				fchoose.showOpenDialog(null);
+				file = fchoose.getSelectedFile();
+				if (file!=null) {
+					GestYaml.S_gestionnaire = new GestYaml(file);
+					g = GestYaml.S_gestionnaire;
+					arenas = new Arenas(g.getMap("arenas"),g.getMap("global-settings"),g.getMap("classes"));
+					ArrayList<Arena> alArenas = arenas.getALarenas();
+					for(int i=0;i<alArenas.size();i++){
+						combo_arena.addItem(alArenas.get(i).getNom());
+					}
+					loadArena(0);
+				}
+			}
+		});
+		btn_load.setForeground(new Color(255, 255, 255));
+		btn_load.setBackground(new Color(100, 149, 237));
+		btn_load.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btn_load.setBounds(531, 490, 97, 23);
+		getContentPane().add(btn_load);
+
+		btn_save = new JButton("Save Config As");
+		btn_save.addMouseListener(new MouseAdapter() {
+			public void mouseReleased(MouseEvent e) {
+				if(arenas!=null){
+
+					YmlJFileChooser fchoose = new YmlJFileChooser(file.getPath());
+					fchoose.showOpenDialog(null);
+					File f = fchoose.getSelectedFile();
+					f.delete();
+					try {
+						f.createNewFile();
+						FileWriter fw = new FileWriter(f);
+						GestYaml dumper = new GestYaml(arenas.getMap());
+						dumper.dumpAsFile(fw);
+						JOptionPane.showMessageDialog(null, "Finished saving","",JOptionPane.INFORMATION_MESSAGE);
+
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "You must load a file before saving it !","Saving error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+		btn_save.setForeground(Color.WHITE);
+		btn_save.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btn_save.setBackground(new Color(100, 149, 237));
+		btn_save.setBounds(638, 490, 115, 23);
+		getContentPane().add(btn_save);
+		
+		tabpan_config = new JTabbedPane(JTabbedPane.TOP);
+		tabpan_config.setBounds(0, 6, 754, 484);
+		//tabpan_config.setVisible(true);
+		getContentPane().add(tabpan_config);
+
+		pan_arena_wave = new JPanel();
+		pan_arena_wave.setBounds(43, 54, 732, 443);
+		//getContentPane().add(pan_arena_wave);
+		pan_arena_wave.setLayout(null);
+
+		lib_arena = new JLabel("Arena");
+		lib_arena.setBounds(9, 8, 46, 17);
+		pan_arena_wave.add(lib_arena);
+		lib_arena.setFont(new Font("Tahoma", Font.BOLD, 14));
+
+		combo_arena = new JComboBox<String>();
+		combo_arena.setBounds(66, 6, 192, 20);
+		pan_arena_wave.add(combo_arena);
+		combo_arena.setFont(new Font("Tahoma", Font.PLAIN, 14));
+
+		lib_recurrent = new JLabel("Recurrent Waves");
+		lib_recurrent.setBounds(9, 55, 132, 17);
+		pan_arena_wave.add(lib_recurrent);
+		lib_recurrent.setFont(new Font("Tahoma", Font.BOLD, 14));
+
+		btn_newrecurrent = new JButton("New Wave");
+		btn_newrecurrent.setBounds(167, 49, 91, 23);
+		pan_arena_wave.add(btn_newrecurrent);
+		btn_newrecurrent.addMouseListener(newWave);
+		btn_newrecurrent.setFont(new Font("Tahoma", Font.BOLD, 11));
+
 		list_recurrent = new JList<CellListWave>();
 		list_recurrent.addMouseListener(cellmouseadapter);
 		list_recurrent.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrpan_recurrent = new JScrollPane(list_recurrent);
-		scrpan_recurrent.setBounds(10, 82, 252, 165);
-		getContentPane().add(scrpan_recurrent);
+		scrpan_recurrent.setBounds(6, 74, 252, 165);
+		pan_arena_wave.add(scrpan_recurrent);
 
 		lib_single = new JLabel("Single Waves");
+		lib_single.setBounds(9, 261, 132, 17);
+		pan_arena_wave.add(lib_single);
 		lib_single.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lib_single.setBounds(10, 264, 132, 17);
-		getContentPane().add(lib_single);
 
 		btn_newsingle = new JButton("New Wave");
+		btn_newsingle.setBounds(167, 255, 91, 23);
+		pan_arena_wave.add(btn_newsingle);
 		btn_newsingle.addMouseListener(newWave);
 		btn_newsingle.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btn_newsingle.setBounds(167, 258, 91, 23);
-		getContentPane().add(btn_newsingle);
 
 		list_single = new JList<CellListWave>();
 		list_single.addMouseListener(cellmouseadapter);
 		list_single.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrpan_single = new JScrollPane(list_single);
-		scrpan_single.setBounds(10, 290, 252, 165);
-		getContentPane().add(scrpan_single);
+		scrpan_single.setBounds(9, 280, 252, 165);
+		pan_arena_wave.add(scrpan_single);
 
 		pan_conf = new JPanel();
+		pan_conf.setBounds(267, 8, 474, 437);
+		pan_arena_wave.add(pan_conf);
 		pan_conf.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
-		pan_conf.setBounds(268, 11, 474, 410);
-		getContentPane().add(pan_conf);
 		pan_conf.setLayout(null);
 
 		lib_name = new JLabel("Name :");
@@ -489,26 +611,6 @@ public class MenuPrincipal extends JFrame {
 		lib_wave.setBounds(10, 104, 69, 20);
 		pan_conf.add(lib_wave);
 
-		KeyAdapter mask_numeric = new KeyAdapter() {
-			public void keyReleased(KeyEvent e) {
-
-				JTextField source = (JTextField) e.getSource();
-				String orig = source.getText();
-				if (orig.length()>0) {
-					int modif = -1;
-					try {
-						modif = Integer.parseInt(orig);
-					} catch (NumberFormatException e1) {}
-					String sModif = Integer.toString(modif);
-					if (!orig.equals(sModif)) {
-						source.setText(orig.substring(0, orig.length() - 1));
-					}
-				}
-				majData(e);
-
-			}
-		};
-
 		sai_wave = new JTextField();
 		sai_wave.addKeyListener(mask_numeric);
 		sai_wave.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -589,45 +691,13 @@ public class MenuPrincipal extends JFrame {
 		list_carac_wave.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		scrpan_carac_wave = new JScrollPane(list_carac_wave);
-		scrpan_carac_wave.setBounds(219, 42, 245, 328);
+		scrpan_carac_wave.setBounds(219, 42, 245, 357);
 		pan_conf.add(scrpan_carac_wave);
 
 		lib_monster = new JLabel("Monster :");
 		lib_monster.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lib_monster.setBounds(10, 228, 84, 20);
 		pan_conf.add(lib_monster);
-
-		ItemListener itemListener_monster_amount = new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-
-				//la clause isFocusOwner() est spécifiée car la combo Amount change de valeur à l'initialisation
-				if (e.getStateChange() == ItemEvent.DESELECTED && ((JComponent) e.getSource()).isFocusOwner()) {
-					JList<CellListWave> list_sel = combo_category.getSelectedItem().equals("Recurrent") ? list_recurrent : list_single;
-
-					@SuppressWarnings("unchecked")
-					JComboBox<String> combo_sel = (JComboBox<String>) e.getSource();
-
-					Wave wave = list_sel.getSelectedValue().getWave();
-					String type = (String) combo_sel.getSelectedItem();
-
-					if (combo_sel == combo_monster) {
-
-						MonsterList monstres = wave.getMonstres();
-						monstres.clear();
-						monstres.add(new Monstre(EMonsters.getByName(type), 0));
-
-					}
-					else {
-
-						SwarmW swwave = (SwarmW) wave;
-						swwave.setAmount(EAmount.getByName(type));
-
-					}
-
-				}
-
-			}
-		};
 
 		combo_monster = new JWideComboBox();
 		combo_monster.addItemListener(itemListener_monster_amount);
@@ -782,25 +852,25 @@ public class MenuPrincipal extends JFrame {
 			}
 		});
 		btn_add.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btn_add.setBounds(219, 381, 58, 23);
+		btn_add.setBounds(219, 408, 58, 23);
 		pan_conf.add(btn_add);
 
 		combo_carac_wave = new JWideComboBox();
 		combo_carac_wave.setFont(new Font("SansSerif", Font.PLAIN, 12));
-		combo_carac_wave.setBounds(287, 382, 105, 20);
+		combo_carac_wave.setBounds(287, 409, 105, 20);
 		pan_conf.add(combo_carac_wave);
 
 		sai_nb_carac_wave = new JTextField();
 		sai_nb_carac_wave.addKeyListener(mask_numeric);
 		sai_nb_carac_wave.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		sai_nb_carac_wave.setBounds(402, 382, 62, 22);
+		sai_nb_carac_wave.setBounds(402, 409, 62, 22);
 		pan_conf.add(sai_nb_carac_wave);
 		sai_nb_carac_wave.setColumns(10);
 
 		btn_set = new JButton("Set");
 		btn_set.addMouseListener(new MouseAdapter() {
 			public void mouseReleased(MouseEvent e) {
-
+				//TODO Changer la gestion du nom du boss pour un JTextField, plus simple
 				String name = JOptionPane.showInputDialog(null, "Set the new boss name for the current boss wave :", "Setting the name", JOptionPane.QUESTION_MESSAGE);
 				if (name!=null) {
 					JList<CellListWave> list_sel = combo_category
@@ -814,75 +884,18 @@ public class MenuPrincipal extends JFrame {
 			}
 		});
 		btn_set.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btn_set.setBounds(300, 11, 92, 23);
+		btn_set.setBounds(10, 401, 84, 23);
 		pan_conf.add(btn_set);
 
 		lib_set = new JLabel("");
 		lib_set.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lib_set.setBorder(new LineBorder(new Color(0, 0, 0)));
-		lib_set.setBounds(397, 11, 67, 20);
+		lib_set.setBounds(104, 401, 105, 20);
 		pan_conf.add(lib_set);
-
-		btn_load = new JButton("Load Config");
-		btn_load.addMouseListener(new MouseAdapter() {
-			public void mouseReleased(MouseEvent e) {
-				Classe.classe_list.clear();
-				YmlJFileChooser fchoose = new YmlJFileChooser();
-				fchoose.showOpenDialog(null);
-				file = fchoose.getSelectedFile();
-				if (file!=null) {
-					GestYaml.S_gestionnaire = new GestYaml(file);
-					g = GestYaml.S_gestionnaire;
-					arenas = new Arenas(g.getMap("arenas"),g.getMap("global-settings"),g.getMap("classes"));
-					ArrayList<Arena> alArenas = arenas.getALarenas();
-					for(int i=0;i<alArenas.size();i++){
-						combo_arena.addItem(alArenas.get(i).getNom());
-					}
-					loadArena(0);
-				}
-			}
-		});
-		btn_load.setForeground(new Color(255, 255, 255));
-		btn_load.setBackground(new Color(100, 149, 237));
-		btn_load.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btn_load.setBounds(268, 432, 97, 23);
-		getContentPane().add(btn_load);
-
-		btn_save = new JButton("Save Config As");
-		btn_save.addMouseListener(new MouseAdapter() {
-			public void mouseReleased(MouseEvent e) {
-				if(arenas!=null){
-
-					YmlJFileChooser fchoose = new YmlJFileChooser(file.getPath());
-					fchoose.showOpenDialog(null);
-					File f = fchoose.getSelectedFile();
-					f.delete();
-					try {
-						f.createNewFile();
-						FileWriter fw = new FileWriter(f);
-						GestYaml dumper = new GestYaml(arenas.getMap());
-						dumper.dumpAsFile(fw);
-						JOptionPane.showMessageDialog(null, "Finished saving","",JOptionPane.INFORMATION_MESSAGE);
-
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
-
-				}
-				else {
-					JOptionPane.showMessageDialog(null, "You must load a file before saving it !","Saving error", JOptionPane.ERROR_MESSAGE);
-				}
-			}
-		});
-		btn_save.setForeground(Color.WHITE);
-		btn_save.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btn_save.setBackground(new Color(100, 149, 237));
-		btn_save.setBounds(375, 432, 115, 23);
-		getContentPane().add(btn_save);
 
 		setInvisibleComponents();
 
-		setSize(756,515);
+		setSize(760,573);
 
 		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -918,6 +931,8 @@ public class MenuPrincipal extends JFrame {
 			}
 		});
 		mnHelp.add(mntmAbout);
+		
+		tabpan_config.addTab("Arenas and waves configuration", pan_arena_wave);
 
 		Rectangle d = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
 		setLocation((d.width-getWidth())/2, (d.height-getHeight())/2);
