@@ -653,4 +653,17 @@ public enum EItem {
 		}
 
 	}
+	
+	public static ArrayList<EItem> searchBy(String name) {
+		ArrayList<EItem> ret = new ArrayList<>();
+		EItem[] values = values();
+		
+		for(int i=0;i<values.length;i++) {
+			if(values[i].getName().toLowerCase().contains(name.toLowerCase())){
+				ret.add(values[i]);
+			}
+		}
+		
+		return ret;
+	}
 }
