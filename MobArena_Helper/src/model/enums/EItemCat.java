@@ -21,5 +21,15 @@ public enum EItemCat {
 	public String getGui_name() {
 		return gui_name;
 	}
+	
+	public static String[] namevalues(){
+
+		EItemCat[] values = values();
+		String[] namevalues = new String[values.length];
+		for (int i=0;i<namevalues.length;i++) {
+			namevalues[i] = values[i].getGui_name();
+		}
+		return namevalues;
+	}
 
 }

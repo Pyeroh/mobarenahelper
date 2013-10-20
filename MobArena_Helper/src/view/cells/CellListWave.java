@@ -18,7 +18,6 @@ public class CellListWave extends CellListCaracs {
 	public CellListWave(Wave wave) {
 
 		this.wave = wave;
-		setSize(245,30);
 
 		image = new JLabel();
 		image.setBounds(3, 3, 48, 24);
@@ -26,8 +25,6 @@ public class CellListWave extends CellListCaracs {
 		
 		lib_desc.setText(wave.getNom());
 		lib_desc.setBounds(61, 3, 181, 24);
-		
-		setLayout(null);
 
 		add(image);
 

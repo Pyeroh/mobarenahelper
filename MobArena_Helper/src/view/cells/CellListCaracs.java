@@ -1,6 +1,5 @@
 package view.cells;
 
-import java.awt.BorderLayout;
 import java.awt.Font;
 
 import javax.swing.JLabel;
@@ -13,10 +12,11 @@ public abstract class CellListCaracs extends JPanel {
 
 	public CellListCaracs() {
 
-		setSize(238,25);
-		setLayout(new BorderLayout(0, 0));
+		setSize(220,30);
+		setLayout(null);
 
 		lib_desc = new JLabel("");
+		lib_desc.setBounds(3, 3, 218, 26);
 		lib_desc.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		add(lib_desc);
 

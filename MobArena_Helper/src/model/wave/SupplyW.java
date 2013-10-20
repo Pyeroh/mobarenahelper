@@ -24,6 +24,10 @@ public class SupplyW extends Wave {
 		return drops;
 	}
 
+	public void setDrops(ItemList drops) {
+		this.drops = drops;		
+	}
+
 	public LinkedHashMap<String, Object> getMap() {
 		LinkedHashMap<String, Object> vague = super.getMap();
 

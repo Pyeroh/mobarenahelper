@@ -16,6 +16,7 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -25,6 +26,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -34,6 +36,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -44,11 +47,13 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.text.MaskFormatter;
 
 import model.Arena;
 import model.Arenas;
 import model.Classe;
 import model.GestYaml;
+import model.ItemList;
 import model.MonsterList;
 import model.Monstre;
 import model.Wave;
@@ -63,6 +68,7 @@ import model.wave.BossW;
 import model.wave.DefaultW;
 import model.wave.OtherW;
 import model.wave.SpecialW;
+import model.wave.SupplyW;
 import model.wave.SwarmW;
 import view.cells.CellListAbility;
 import view.cells.CellListCaracs;
@@ -73,6 +79,18 @@ import view.cells.HoverListCellRenderer;
 public class MenuPrincipal extends JFrame {
 
 	private static final long serialVersionUID = 7504976316824014595L;
+	
+	private JMenuItem mntmAbout;
+	private JMenuBar menuBar;
+	private JMenu mnHelp;
+	private JMenuItem mntmHowToUse;
+	private GestYaml g;
+	private Arenas arenas = null;
+	private File file = null;
+	
+	private JTabbedPane tabpan_config;
+	
+	private JPanel pan_arena_wave;
 	private JLabel lib_arena;
 	private JComboBox<String> combo_arena;
 	private JLabel lib_recurrent;
@@ -110,42 +128,34 @@ public class MenuPrincipal extends JFrame {
 	private JLabel lib_health;
 	private JComboBox<String> combo_health;
 	private JTextArea lib_abi_announce;
-	private JComboBox<String> combo_abi_announce;
+	private JCheckBox chk_abi_announce;
 	private JTextArea lib_abi_interval;
 	private JTextField sai_abi_interval;
 	private JButton btn_add;
 	private JWideComboBox combo_carac_wave;
 	private JTextField sai_nb_carac_wave;
-	private JButton btn_set;
 	private JLabel lib_set;
+	private JButton btn_set;
 
-	private JMenuItem mntmAbout;
-	private JMenuBar menuBar;
-	private JMenu mnHelp;
-	private JMenuItem mntmHowToUse;
-
-	private GestYaml g;
-	private Arenas arenas = null;
-	private File file = null;
-	private JPanel pan_arena_wave;
-	private JTabbedPane tabpan_config;
+	private JPanel pan_caracs_class;
 	private JLabel lib_dogs;
 	private JTextField sai_dogs;
 	private JLabel lib_horse;
 	private JLabel lib_classes;
 	private JScrollPane scrpan_classes;
 	private JList<String> list_classes;
-	private JPanel pan_caracs_class;
 	private JLabel lib_class;
 	private JLabel lib_items;
 	private JButton btn_items;
 	private JLabel lib_armor;
 	private JButton btn_armor;
-	private JTextField sai_class;
+	private JFormattedTextField sai_class;
 	private JComboBox<String> combo_horse;
 	private JPanel pan_classes;
 	private JLabel lib_hArmor;
 	private JComboBox<String> combo_hArmor;
+	
+	private JPanel pan_arena_settings;
 	private JCheckBox chk_enabled;
 	private JCheckBox chk_protect;
 	private JLabel lib_entry;
@@ -156,12 +166,10 @@ public class MenuPrincipal extends JFrame {
 	private JCheckBox chk_clear_wave_boss;
 	private JCheckBox chk_lightning;
 	private JCheckBox chk_auto_equip;
-	private JPanel pan_arena_settings;
 	private JCheckBox chk_soft_restore;
 	private JCheckBox chk_soft_restore_drops;
 	private JCheckBox chk_require_inv_join;
-	private JCheckBox chckbxRequireEmptyInventory;
-	private JLabel separateur_vert_1;
+	private JCheckBox chk_require_inv_spec;
 	private JCheckBox chk_hellhounds;
 	private JCheckBox chk_pvp;
 	private JCheckBox chk_monster_infight;
@@ -179,7 +187,6 @@ public class MenuPrincipal extends JFrame {
 	private JTextField sai_first_delay;
 	private JLabel lib_interval;
 	private JTextField sai_interval;
-	private JLabel separateur_vert_2;
 	private JLabel lib_final_wave;
 	private JTextField sai_final_wave;
 	private JLabel lib_monster_limit;
@@ -199,13 +206,17 @@ public class MenuPrincipal extends JFrame {
 	private JCheckBox chk_display_timer;
 	private JCheckBox chk_auto_ready;
 	private JCheckBox chk_scoreboard;
-
-	public MenuPrincipal(){
-		super("MobArena Helper v1");
+	private JLabel lib_boss_name;
+	private JTextField sai_boss_name;
+	
+	public MenuPrincipal() throws ParseException{
+		super("MobArena Helper v2");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(MenuPrincipal.class.getResource("/gui/mobarena.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
 		getContentPane().setLayout(null);
+		
+		//TODO Ajouter la gestion (ajout/suppression) des arènes
 
 		MouseAdapter newWave = new MouseAdapter() {
 			public void mouseReleased(MouseEvent e) {
@@ -251,6 +262,9 @@ public class MenuPrincipal extends JFrame {
 				JList<CellListCaracs> source = (JList<CellListCaracs>) e.getSource();
 				JList<CellListWave> jList = (JList<CellListWave>) e.getSource();
 				if (source.getModel().getSize()!=0) {
+					
+					jList.ensureIndexIsVisible(jList.getSelectedIndex());
+					
 					//Clic gauche (sélection)
 					if (e.getButton() == MouseEvent.BUTTON1) {
 
@@ -367,16 +381,7 @@ public class MenuPrincipal extends JFrame {
 
 		KeyAdapter mask_numeric = new KeyAdapter() {
 			public void keyReleased(KeyEvent e) {
-
-				JTextField source = (JTextField) e.getSource();
-				String orig = source.getText();
-				if (orig.length()>0) {
-					if (!orig.matches("(\\d)+")) {
-						source.setText(orig.substring(0, orig.length() - 1));
-					}
-				}
 				majData(e);
-
 			}
 		};
 
@@ -643,7 +648,7 @@ public class MenuPrincipal extends JFrame {
 					case Default:
 						nextWave = wave.getDefaultW();
 						combo_growth.setSelectedItem(EGrowth.old.getNom());
-						combo_abi_announce.setSelectedItem("false");
+						chk_abi_announce.setSelected(false);
 						break;
 					case Special:
 						nextWave = wave.getSpecialW();
@@ -678,7 +683,8 @@ public class MenuPrincipal extends JFrame {
 		lib_wave.setBounds(10, 104, 69, 20);
 		pan_conf.add(lib_wave);
 
-		sai_wave = new JTextField();
+		sai_wave = new JFormattedTextField(new MaskFormatter("###"));
+		sai_wave.setBackground(new Color(255, 255, 255));
 		sai_wave.addKeyListener(mask_numeric);
 		sai_wave.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		sai_wave.setBounds(104, 104, 105, 20);
@@ -691,7 +697,8 @@ public class MenuPrincipal extends JFrame {
 		lib_priority.setBounds(10, 135, 69, 20);
 		pan_conf.add(lib_priority);
 
-		sai_priority = new JTextField();
+		sai_priority = new JFormattedTextField(new MaskFormatter("###"));
+		sai_priority.setBackground(new Color(255, 255, 255));
 		sai_priority.addKeyListener(mask_numeric);
 		sai_priority.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		sai_priority.setColumns(10);
@@ -704,7 +711,8 @@ public class MenuPrincipal extends JFrame {
 		lib_frequency.setBounds(10, 166, 84, 20);
 		pan_conf.add(lib_frequency);
 
-		sai_frequency = new JTextField();
+		sai_frequency = new JFormattedTextField(new MaskFormatter("###"));
+		sai_frequency.setBackground(new Color(255, 255, 255));
 		sai_frequency.addKeyListener(mask_numeric);
 		sai_frequency.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		sai_frequency.setColumns(10);
@@ -820,16 +828,16 @@ public class MenuPrincipal extends JFrame {
 		lib_abi_announce.setBounds(10, 321, 84, 36);
 		pan_conf.add(lib_abi_announce);
 
-		//TODO Changer la combo (très compliquée à gérer) par une checkbox
-		combo_abi_announce = new JComboBox<String>();
-		combo_abi_announce.addItemListener(new ItemListener() {
+		chk_abi_announce = new JCheckBox();
+		chk_abi_announce.setHorizontalAlignment(SwingConstants.CENTER);
+		chk_abi_announce.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 
 				//la clause isFocusOwner() est spécifiée car la combo Amount change de valeur à l'initialisation
-				if(e.getStateChange() == ItemEvent.DESELECTED && combo_abi_announce.isFocusOwner()) {
+				if(chk_abi_announce.isFocusOwner()) {
 
 					JList<CellListWave> list_sel = combo_category.getSelectedItem().equals("Recurrent") ? list_recurrent : list_single;
-					boolean b = new Boolean((String) combo_abi_announce.getSelectedItem());
+					boolean b = chk_abi_announce.isSelected();
 					Wave wave = list_sel.getSelectedValue().getWave();
 					//Cas d'une vague Default
 					if(lib_abi_announce.getText().equals("Fixed :")){
@@ -848,10 +856,8 @@ public class MenuPrincipal extends JFrame {
 
 			}
 		});
-		combo_abi_announce.setModel(new DefaultComboBoxModel<String>(new String[] {"true", "false"}));
-		combo_abi_announce.setSelectedIndex(0);
-		combo_abi_announce.setBounds(104, 322, 105, 20);
-		pan_conf.add(combo_abi_announce);
+		chk_abi_announce.setBounds(104, 322, 105, 20);
+		pan_conf.add(chk_abi_announce);
 
 		lib_abi_interval = new JTextArea("Ability Interval :");
 		lib_abi_interval.setWrapStyleWord(true);
@@ -863,7 +869,8 @@ public class MenuPrincipal extends JFrame {
 		lib_abi_interval.setBounds(10, 363, 84, 36);
 		pan_conf.add(lib_abi_interval);
 
-		sai_abi_interval = new JTextField();
+		sai_abi_interval = new JFormattedTextField(new MaskFormatter("###"));
+		sai_abi_interval.setBackground(new Color(255, 255, 255));
 		sai_abi_interval.addKeyListener(mask_numeric);
 		sai_abi_interval.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		sai_abi_interval.setColumns(10);
@@ -928,38 +935,45 @@ public class MenuPrincipal extends JFrame {
 		combo_carac_wave.setBounds(287, 409, 105, 20);
 		pan_conf.add(combo_carac_wave);
 
-		sai_nb_carac_wave = new JTextField();
+		sai_nb_carac_wave = new JFormattedTextField(new MaskFormatter("###"));
+		sai_nb_carac_wave.setBackground(new Color(255, 255, 255));
 		sai_nb_carac_wave.addKeyListener(mask_numeric);
 		sai_nb_carac_wave.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		sai_nb_carac_wave.setBounds(402, 409, 62, 22);
 		pan_conf.add(sai_nb_carac_wave);
 		sai_nb_carac_wave.setColumns(10);
 
+		lib_boss_name = new JLabel("Boss name :");
+		lib_boss_name.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lib_boss_name.setBounds(10, 401, 88, 20);
+		pan_conf.add(lib_boss_name);
+
+		sai_boss_name = new JTextField();
+		sai_boss_name.setBounds(104, 401, 105, 20);
+		sai_boss_name.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		pan_conf.add(sai_boss_name);
+		sai_boss_name.setColumns(10);
+		
+		lib_set = new JLabel("Set");
+		lib_set.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lib_set.setBounds(312, 11, 58, 20);
+		pan_conf.add(lib_set);
+		
 		btn_set = new JButton("Set");
 		btn_set.addMouseListener(new MouseAdapter() {
-			public void mouseReleased(MouseEvent e) {
-				//TODO Changer la gestion du nom du boss pour un JTextField, plus simple
-				String name = JOptionPane.showInputDialog(null, "Set the new boss name for the current boss wave :", "Setting the name", JOptionPane.QUESTION_MESSAGE);
-				if (name!=null) {
-					JList<CellListWave> list_sel = combo_category
-							.getSelectedItem().equals("Recurrent") ? list_recurrent
-									: list_single;
-					BossW bwave = (BossW) list_sel.getSelectedValue().getWave();
-					bwave.setBossName(name);
-					lib_set.setText(" "+name);
+			public void mouseClicked(MouseEvent e) {
+				JList<CellListWave> list_sel = combo_category.getSelectedItem().equals("Recurrent") ? list_recurrent : list_single;
+				Wave wave = list_sel.getSelectedValue().getWave();
+				
+				if(combo_type.getSelectedItem().equals("Supply")) {
+					SupplyW supw = (SupplyW) wave;
+					ItemList items = new ItemSelector(supw.getDrops(), 0).getItemList();
+					supw.setDrops(items);
 				}
-
 			}
 		});
-		btn_set.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btn_set.setBounds(10, 401, 84, 23);
+		btn_set.setBounds(374, 7, 90, 28);
 		pan_conf.add(btn_set);
-
-		lib_set = new JLabel("");
-		lib_set.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lib_set.setBorder(new LineBorder(new Color(0, 0, 0)));
-		lib_set.setBounds(104, 401, 105, 20);
-		pan_conf.add(lib_set);
 
 		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -1004,12 +1018,11 @@ public class MenuPrincipal extends JFrame {
 		lib_classes.setFont(new Font("Tahoma", Font.BOLD, 14));
 		pan_classes.add(lib_classes);
 
-		scrpan_classes = new JScrollPane();
+		list_classes = new JList<String>();
+
+		scrpan_classes = new JScrollPane(list_classes);
 		scrpan_classes.setBounds(7, 33, 276, 220);
 		pan_classes.add(scrpan_classes);
-
-		list_classes = new JList<String>();
-		scrpan_classes.setViewportView(list_classes);
 
 		pan_caracs_class = new JPanel();
 		pan_caracs_class.setBounds(295, 7, 276, 246);
@@ -1022,8 +1035,8 @@ public class MenuPrincipal extends JFrame {
 		pan_caracs_class.add(lib_class);
 		lib_class.setFont(new Font("Tahoma", Font.BOLD, 14));
 
-		//TODO Format chaine de caractères avec une majuscule au début obligatoire
-		sai_class = new JTextField();
+		sai_class = new JFormattedTextField(new MaskFormatter("U??????????????"));
+		sai_class.setBackground(new Color(255, 255, 255));
 		sai_class.setBounds(130, 7, 137, 28);
 		sai_class.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		pan_caracs_class.add(sai_class);
@@ -1052,7 +1065,8 @@ public class MenuPrincipal extends JFrame {
 		lib_dogs.setBounds(8, 126, 110, 28);
 		pan_caracs_class.add(lib_dogs);
 
-		sai_dogs = new JTextField();
+		sai_dogs = new JFormattedTextField(new MaskFormatter("###"));
+		sai_dogs.setBackground(new Color(255, 255, 255));
 		sai_dogs.addKeyListener(mask_numeric);
 		sai_dogs.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		sai_dogs.setColumns(10);
@@ -1102,8 +1116,9 @@ public class MenuPrincipal extends JFrame {
 		lib_entry.setBounds(6, 43, 73, 25);
 		pan_arena_settings.add(lib_entry);
 
-		//TODO format chiffre uniquement
-		sai_entry = new JTextField();
+		sai_entry = new JFormattedTextField(new MaskFormatter("###"));
+		sai_entry.setBackground(new Color(255, 255, 255));
+		sai_entry.addKeyListener(mask_numeric);
 		sai_entry.setBounds(91, 44, 50, 25);
 		sai_entry.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		pan_arena_settings.add(sai_entry);
@@ -1142,262 +1157,270 @@ public class MenuPrincipal extends JFrame {
 		chk_auto_equip.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_auto_equip.setBounds(6, 191, 144, 25);
 		pan_arena_settings.add(chk_auto_equip);
-		
+
 		chk_soft_restore = new JCheckBox("Soft restore");
 		chk_soft_restore.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_soft_restore.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_soft_restore.setBounds(161, 191, 105, 25);
 		pan_arena_settings.add(chk_soft_restore);
-		
+
 		chk_soft_restore_drops = new JCheckBox("Soft restore drops");
 		chk_soft_restore_drops.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_soft_restore_drops.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_soft_restore_drops.setBounds(6, 228, 149, 25);
 		pan_arena_settings.add(chk_soft_restore_drops);
-		
+
 		chk_require_inv_join = new JCheckBox("Require empty inventory to join");
 		chk_require_inv_join.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_require_inv_join.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_require_inv_join.setBounds(6, 263, 242, 28);
 		pan_arena_settings.add(chk_require_inv_join);
-		
-		chckbxRequireEmptyInventory = new JCheckBox("Require empty inventory to spectate");
-		chckbxRequireEmptyInventory.setHorizontalTextPosition(SwingConstants.LEFT);
-		chckbxRequireEmptyInventory.setFont(new Font("Tahoma", Font.BOLD, 14));
-		chckbxRequireEmptyInventory.setBounds(6, 299, 275, 28);
-		pan_arena_settings.add(chckbxRequireEmptyInventory);
-		
-		separateur_vert_1 = new JLabel("");
-		separateur_vert_1.setBounds(293, 0, 2, 455);
-		separateur_vert_1.setBorder(new LineBorder(new Color(0, 0, 0)));
-		pan_arena_settings.add(separateur_vert_1);
-		
+
+		chk_require_inv_spec = new JCheckBox("Require empty inventory to spectate");
+		chk_require_inv_spec.setHorizontalTextPosition(SwingConstants.LEFT);
+		chk_require_inv_spec.setFont(new Font("Tahoma", Font.BOLD, 14));
+		chk_require_inv_spec.setBounds(6, 299, 275, 28);
+		pan_arena_settings.add(chk_require_inv_spec);
+
 		chk_hellhounds = new JCheckBox("Hellhounds");
 		chk_hellhounds.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_hellhounds.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_hellhounds.setBounds(6, 339, 99, 25);
 		pan_arena_settings.add(chk_hellhounds);
-		
+
 		chk_pvp = new JCheckBox("PVP enabled");
 		chk_pvp.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_pvp.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_pvp.setBounds(6, 376, 108, 25);
 		pan_arena_settings.add(chk_pvp);
-		
+
 		chk_monster_infight = new JCheckBox("Monster infight");
 		chk_monster_infight.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_monster_infight.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_monster_infight.setBounds(6, 413, 127, 25);
 		pan_arena_settings.add(chk_monster_infight);
-		
+
 		chk_allow_tp = new JCheckBox("Allow teleporting");
 		chk_allow_tp.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_allow_tp.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_allow_tp.setBounds(307, 6, 139, 25);
 		pan_arena_settings.add(chk_allow_tp);
-		
+
 		chk_spectate_death = new JCheckBox("Spectate on death");
 		chk_spectate_death.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_spectate_death.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_spectate_death.setBounds(307, 43, 149, 25);
 		pan_arena_settings.add(chk_spectate_death);
-		
+
 		chk_auto_respawn = new JCheckBox("Auto respawn");
 		chk_auto_respawn.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_auto_respawn.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_auto_respawn.setBounds(307, 80, 119, 25);
 		pan_arena_settings.add(chk_auto_respawn);
-		
+
 		chk_share = new JCheckBox("Share items");
 		chk_share.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_share.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_share.setBounds(307, 117, 105, 25);
 		pan_arena_settings.add(chk_share);
-		
+
 		lib_min_players = new JLabel("Min players");
 		lib_min_players.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lib_min_players.setBounds(307, 154, 84, 25);
 		pan_arena_settings.add(lib_min_players);
-		
-		sai_min_players = new JTextField();
+
+		sai_min_players = new JFormattedTextField(new MaskFormatter("###"));
+		sai_min_players.setBackground(new Color(255, 255, 255));
 		sai_min_players.addKeyListener(mask_numeric);
 		sai_min_players.setColumns(10);
 		sai_min_players.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		sai_min_players.setBounds(438, 155, 50, 25);
 		pan_arena_settings.add(sai_min_players);
-		
+
 		lib_max_players = new JLabel("Max players");
 		lib_max_players.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lib_max_players.setBounds(307, 191, 84, 25);
 		pan_arena_settings.add(lib_max_players);
-		
-		sai_max_players = new JTextField();
+
+		sai_max_players = new JFormattedTextField(new MaskFormatter("###"));
+		sai_max_players.setBackground(new Color(255, 255, 255));
 		sai_max_players.addKeyListener(mask_numeric);
 		sai_max_players.setColumns(10);
 		sai_max_players.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		sai_max_players.setBounds(438, 192, 50, 25);
 		pan_arena_settings.add(sai_max_players);
-		
+
 		lib_max_join_distance = new JLabel("Max join distance");
 		lib_max_join_distance.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lib_max_join_distance.setBounds(307, 228, 119, 25);
 		pan_arena_settings.add(lib_max_join_distance);
-		
-		sai_max_join_distance = new JTextField();
+
+		sai_max_join_distance = new JFormattedTextField(new MaskFormatter("###"));
+		sai_max_join_distance.setBackground(new Color(255, 255, 255));
 		sai_max_join_distance.addKeyListener(mask_numeric);
 		sai_max_join_distance.setColumns(10);
 		sai_max_join_distance.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		sai_max_join_distance.setBounds(438, 229, 50, 25);
 		pan_arena_settings.add(sai_max_join_distance);
-		
+
 		lib_first_delay = new JLabel("First wave delay");
 		lib_first_delay.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lib_first_delay.setBounds(307, 265, 119, 25);
 		pan_arena_settings.add(lib_first_delay);
-		
-		sai_first_delay = new JTextField();
+
+		sai_first_delay = new JFormattedTextField(new MaskFormatter("###"));
+		sai_first_delay.setBackground(new Color(255, 255, 255));
 		sai_first_delay.addKeyListener(mask_numeric);
 		sai_first_delay.setColumns(10);
 		sai_first_delay.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		sai_first_delay.setBounds(438, 266, 50, 25);
 		pan_arena_settings.add(sai_first_delay);
-		
+
 		lib_interval = new JLabel("Wave interval");
 		lib_interval.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lib_interval.setBounds(307, 301, 119, 25);
 		pan_arena_settings.add(lib_interval);
-		
-		sai_interval = new JTextField();
+
+		sai_interval = new JFormattedTextField(new MaskFormatter("###"));
+		sai_interval.setBackground(new Color(255, 255, 255));
 		sai_interval.addKeyListener(mask_numeric);
 		sai_interval.setColumns(10);
 		sai_interval.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		sai_interval.setBounds(438, 302, 50, 25);
 		pan_arena_settings.add(sai_interval);
-		
-		separateur_vert_2 = new JLabel("");
-		separateur_vert_2.setBorder(new LineBorder(new Color(0, 0, 0)));
-		separateur_vert_2.setBounds(500, 0, 2, 455);
-		pan_arena_settings.add(separateur_vert_2);
-		
+
 		lib_final_wave = new JLabel("Final wave");
 		lib_final_wave.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lib_final_wave.setBounds(307, 338, 119, 25);
 		pan_arena_settings.add(lib_final_wave);
-		
-		sai_final_wave = new JTextField();
+
+		sai_final_wave = new JFormattedTextField(new MaskFormatter("###"));
+		sai_final_wave.setBackground(new Color(255, 255, 255));
 		sai_final_wave.addKeyListener(mask_numeric);
 		sai_final_wave.setColumns(10);
 		sai_final_wave.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		sai_final_wave.setBounds(438, 340, 50, 25);
 		pan_arena_settings.add(sai_final_wave);
-		
+
 		lib_monster_limit = new JLabel("Monster limit");
 		lib_monster_limit.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lib_monster_limit.setBounds(307, 376, 119, 25);
 		pan_arena_settings.add(lib_monster_limit);
-		
-		sai_monster_limit = new JTextField();
+
+		sai_monster_limit = new JFormattedTextField(new MaskFormatter("###"));
+		sai_monster_limit.setBackground(new Color(255, 255, 255));
 		sai_monster_limit.addKeyListener(mask_numeric);
 		sai_monster_limit.setColumns(10);
 		sai_monster_limit.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		sai_monster_limit.setBounds(438, 377, 50, 25);
 		pan_arena_settings.add(sai_monster_limit);
-		
+
 		chk_monster_xp = new JCheckBox("Monsters drop XP");
 		chk_monster_xp.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_monster_xp.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_monster_xp.setBounds(307, 413, 149, 25);
 		pan_arena_settings.add(chk_monster_xp);
-		
+
 		chk_keep_xp = new JCheckBox("Keep XP");
 		chk_keep_xp.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_keep_xp.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_keep_xp.setBounds(514, 6, 80, 25);
 		pan_arena_settings.add(chk_keep_xp);
-		
+
 		chk_food_regen = new JCheckBox("Food regeneration");
 		chk_food_regen.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_food_regen.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_food_regen.setBounds(514, 39, 150, 25);
 		pan_arena_settings.add(chk_food_regen);
-		
+
 		chk_lock_food = new JCheckBox("Lock food level");
 		chk_lock_food.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_lock_food.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_lock_food.setBounds(514, 76, 127, 25);
 		pan_arena_settings.add(chk_lock_food);
-		
+
 		lib_player_time = new JLabel("Player time of day");
 		lib_player_time.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lib_player_time.setBounds(514, 150, 127, 25);
 		pan_arena_settings.add(lib_player_time);
-		
+
 		combo_player_time = new JComboBox<String>();
 		combo_player_time.setModel(new DefaultComboBoxModel<String>(new String[] {"world", "dawn", "sunrise", "morning", "midday", "noon", "day", "afternoon", "evening", "sunset", "dusk", "night", "midnight"}));
 		combo_player_time.setBounds(653, 150, 95, 26);
 		pan_arena_settings.add(combo_player_time);
-		
+
 		lib_auto_start = new JLabel("Auto start timer");
 		lib_auto_start.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lib_auto_start.setBounds(514, 224, 119, 25);
 		pan_arena_settings.add(lib_auto_start);
-		
-		sai_auto_start = new JTextField();
+
+		sai_auto_start = new JFormattedTextField(new MaskFormatter("###"));
+		sai_auto_start.setBackground(new Color(255, 255, 255));
 		sai_auto_start.addKeyListener(mask_numeric);
 		sai_auto_start.setColumns(10);
 		sai_auto_start.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		sai_auto_start.setBounds(645, 225, 50, 25);
 		pan_arena_settings.add(sai_auto_start);
-		
+
 		chk_spout_class = new JCheckBox("Spout class select");
 		chk_spout_class.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_spout_class.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_spout_class.setBounds(514, 113, 149, 25);
 		pan_arena_settings.add(chk_spout_class);
-		
+
 		chk_auto_ignite = new JCheckBox("Auto ignite TNT");
 		chk_auto_ignite.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_auto_ignite.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_auto_ignite.setBounds(514, 187, 149, 25);
 		pan_arena_settings.add(chk_auto_ignite);
-		
+
 		chk_use_class_chest = new JCheckBox("Use class chests");
 		chk_use_class_chest.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_use_class_chest.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_use_class_chest.setBounds(514, 261, 131, 25);
 		pan_arena_settings.add(chk_use_class_chest);
-		
+
 		chk_display_waves = new JCheckBox("Display waves as level");
 		chk_display_waves.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_display_waves.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_display_waves.setBounds(514, 299, 170, 25);
 		pan_arena_settings.add(chk_display_waves);
-		
+
 		chk_display_timer = new JCheckBox("Display timer as level");
 		chk_display_timer.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_display_timer.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_display_timer.setBounds(514, 336, 170, 25);
 		pan_arena_settings.add(chk_display_timer);
-		
+
 		chk_auto_ready = new JCheckBox("Auto ready");
 		chk_auto_ready.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_auto_ready.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_auto_ready.setBounds(514, 373, 99, 25);
 		pan_arena_settings.add(chk_auto_ready);
-		
+
 		chk_scoreboard = new JCheckBox("Use scoreboards");
 		chk_scoreboard.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_scoreboard.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_scoreboard.setBounds(514, 413, 139, 25);
 		pan_arena_settings.add(chk_scoreboard);
-		
+
 		setInvisibleComponents();
 
 		setSize(760,573);
-		
+
 		tabpan_config.addTab("Arenas and waves configuration", pan_arena_wave);
 		tabpan_config.addTab("Classes configuration", pan_classes);
 		tabpan_config.addTab("Arena configuration", pan_arena_settings);
+		
+		JSeparator separator = new JSeparator();
+		separator.setOrientation(SwingConstants.VERTICAL);
+		separator.setBounds(293, 6, 2, 441);
+		pan_arena_settings.add(separator);
+		
+		JSeparator separator_1 = new JSeparator();
+		separator_1.setOrientation(SwingConstants.VERTICAL);
+		separator_1.setBounds(500, 6, 2, 441);
+		pan_arena_settings.add(separator_1);
 
 		Rectangle d = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
 		setLocation((d.width-getWidth())/2, (d.height-getHeight())/2);
@@ -1460,22 +1483,21 @@ public class MenuPrincipal extends JFrame {
 			combo_growth.setVisible(true);
 			lib_abi_announce.setVisible(true);
 
-			combo_abi_announce.setVisible(true);
+			chk_abi_announce.setVisible(true);
 			lib_abi_announce.setText("Fixed :");
 			lib_carac_wave.setText("Monsters");
 			combo_carac_wave.setModel(new DefaultComboBoxModel<String>(EMonsters.namevalues()));
 			combo_carac_wave.setSelectedIndex(-1);
 			break;
 		case Boss:
-			btn_set.setVisible(true);
-			btn_set.setText("Set Name");
-			lib_set.setVisible(true);
+			lib_boss_name.setVisible(true);
+			sai_boss_name.setVisible(true);
 			lib_monster.setVisible(true);
 			combo_monster.setVisible(true);
 			lib_health.setVisible(true);
 			combo_health.setVisible(true);
 			lib_abi_announce.setVisible(true);
-			combo_abi_announce.setVisible(true);
+			chk_abi_announce.setVisible(true);
 			lib_abi_interval.setVisible(true);
 			sai_abi_interval.setVisible(true);
 
@@ -1501,6 +1523,15 @@ public class MenuPrincipal extends JFrame {
 			btn_add.setVisible(false);
 			scrpan_carac_wave.setVisible(false);
 			sai_nb_carac_wave.setVisible(false);
+			break;
+		case Supply:
+			lib_carac_wave.setText("Monsters");
+			combo_carac_wave.setModel(new DefaultComboBoxModel<String>(EMonsters.namevalues()));
+			combo_carac_wave.setSelectedIndex(-1);
+			
+			lib_set.setVisible(true);
+			lib_set.setText("Drops :");
+			btn_set.setVisible(true);
 			break;
 		default:
 			break;
@@ -1543,19 +1574,22 @@ public class MenuPrincipal extends JFrame {
 		lib_health.setVisible(false);
 		combo_health.setVisible(false);
 		lib_abi_announce.setVisible(false);
-		combo_abi_announce.setVisible(false);
+		chk_abi_announce.setVisible(false);
 		lib_abi_interval.setVisible(false);
 		sai_abi_interval.setVisible(false);
+		lib_boss_name.setVisible(false);
+		sai_boss_name.setVisible(false);
 		btn_add.setVisible(false);
 		combo_carac_wave.setVisible(false);
 		sai_nb_carac_wave.setVisible(false);
-		btn_set.setVisible(false);
+		
 		lib_set.setVisible(false);
+		btn_set.setVisible(false);
 
 		lib_abi_announce.setText("Ability Announce :");
-		btn_set.setText("Set");
-		lib_set.setText("");
 		list_carac_wave.setModel(new DefaultListModel<CellListCaracs>());
+		lib_set.setText("Set");
+		btn_set.setText("Set");
 	}
 
 	public void deselectWaveLists(JList<CellListWave> jList){
@@ -1582,14 +1616,14 @@ public class MenuPrincipal extends JFrame {
 			StringBuffer growth = new StringBuffer(defwave.getGrowth().getNom());
 			growth.replace(0, 1, Character.toString(growth.charAt(0)).toUpperCase());
 			combo_growth.setSelectedItem(growth.toString());
-			combo_abi_announce.setSelectedItem(new Boolean(defwave.isFixed()).toString());
+			chk_abi_announce.setSelected(defwave.isFixed());
 			loadListCaracs(defwave.getMonstres(), list_carac_wave);
 			break;
 		case Boss:
 			BossW bwave = (BossW) wave;
-			lib_set.setText(" "+bwave.getBossName());
+			sai_boss_name.setText(bwave.getBossName());
 			combo_health.setSelectedItem(bwave.getHealth().getNom());
-			combo_abi_announce.setSelectedItem(new Boolean(bwave.isAbility_announce()).toString());
+			chk_abi_announce.setSelected(bwave.isAbility_announce());
 			sai_abi_interval.setText(bwave.getAbility_interval()+"");
 			combo_monster.setSelectedItem(bwave.getMonstres().get(0).getMonstre().getNom());
 			loadListCaracs(bwave.getAbilities(), list_carac_wave);
@@ -1606,6 +1640,11 @@ public class MenuPrincipal extends JFrame {
 		case Special:
 			SpecialW spwave = (SpecialW) wave;
 			loadListCaracs(spwave.getMonstres(), list_carac_wave);
+			break;
+		case Supply:
+			SupplyW supw = (SupplyW) wave;
+			
+			loadListCaracs(supw.getMonstres(), list_carac_wave);
 			break;
 		default:
 			break;
@@ -1677,6 +1716,7 @@ public class MenuPrincipal extends JFrame {
 		if(source==sai_wave){
 
 			int numwave = txtsource.equals("") ? 1 : Integer.parseInt(txtsource);
+
 			wave.setNumwave(numwave);
 
 			if (list_sel==list_single) {
