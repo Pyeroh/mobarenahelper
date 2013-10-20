@@ -961,10 +961,6 @@ public class MenuPrincipal extends JFrame {
 		lib_set.setBounds(104, 401, 105, 20);
 		pan_conf.add(lib_set);
 
-		setInvisibleComponents();
-
-		setSize(760,573);
-
 		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 
@@ -1146,10 +1142,6 @@ public class MenuPrincipal extends JFrame {
 		chk_auto_equip.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_auto_equip.setBounds(6, 191, 144, 25);
 		pan_arena_settings.add(chk_auto_equip);
-
-		tabpan_config.addTab("Arenas and waves configuration", pan_arena_wave);
-		tabpan_config.addTab("Classes configuration", pan_classes);
-		tabpan_config.addTab("Arena configuration", pan_arena_settings);
 		
 		chk_soft_restore = new JCheckBox("Soft restore");
 		chk_soft_restore.setHorizontalTextPosition(SwingConstants.LEFT);
@@ -1398,6 +1390,14 @@ public class MenuPrincipal extends JFrame {
 		chk_scoreboard.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_scoreboard.setBounds(514, 413, 139, 25);
 		pan_arena_settings.add(chk_scoreboard);
+		
+		setInvisibleComponents();
+
+		setSize(760,573);
+		
+		tabpan_config.addTab("Arenas and waves configuration", pan_arena_wave);
+		tabpan_config.addTab("Classes configuration", pan_classes);
+		tabpan_config.addTab("Arena configuration", pan_arena_settings);
 
 		Rectangle d = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
 		setLocation((d.width-getWidth())/2, (d.height-getHeight())/2);
