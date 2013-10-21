@@ -30,10 +30,10 @@ public enum ETypeW {
 	public static String[] namevalues(){
 
 		ETypeW[] values = values();
-		String[] namevalues = new String[values.length-2];
+		String[] namevalues = new String[values.length];
 		for (int i=0;i<namevalues.length;i++) {
-			StringBuffer nom = new StringBuffer(values[i].getNom());
-			nom.replace(0, 1, nom.substring(0, 1).toUpperCase());
+			StringBuffer nom = new StringBuffer(values[i].name());
+			//nom.replace(0, 1, nom.substring(0, 1).toUpperCase());
 			namevalues[i] = nom.toString();
 		}
 		return namevalues;
