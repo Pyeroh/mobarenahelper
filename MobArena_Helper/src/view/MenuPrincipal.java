@@ -476,12 +476,10 @@ public class MenuPrincipal extends JFrame {
 
 		tabpan_config = new JTabbedPane(JTabbedPane.TOP);
 		tabpan_config.setBounds(0, 6, 754, 484);
-		//tabpan_config.setVisible(true);
 		getContentPane().add(tabpan_config);
 
 		pan_arena_wave = new JPanel();
 		pan_arena_wave.setBounds(43, 54, 732, 443);
-		//getContentPane().add(pan_arena_wave);
 		pan_arena_wave.setLayout(null);
 
 		lib_arena = new JLabel("Arena");
@@ -659,6 +657,12 @@ public class MenuPrincipal extends JFrame {
 						break;
 					case Boss:
 						nextWave = wave.getBossW();
+						break;
+					case Supply:
+						nextWave = wave.getSupplyW();
+						break;
+					case Upgrade:
+						nextWave = wave.getUpgradeW();
 						break;
 					default:
 						break;
@@ -967,8 +971,8 @@ public class MenuPrincipal extends JFrame {
 				
 				if(combo_type.getSelectedItem().equals("Supply")) {
 					SupplyW supw = (SupplyW) wave;
-					ItemList items = supw.getDrops();
-					new ItemSelector(items, 0);
+					ItemList drops = new ItemSelector(supw.getDrops(), 0).getItemList();
+					supw.setDrops(drops);
 				}
 			}
 		});
