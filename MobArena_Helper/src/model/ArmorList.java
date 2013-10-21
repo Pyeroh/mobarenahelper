@@ -1,10 +1,8 @@
 package model;
 
-import java.util.ArrayList;
-
 import model.enums.EItem;
 
-public class ArmorList extends ArrayList<Armor> {
+public class ArmorList extends ItemList {
 
 	private static final long serialVersionUID = -6274717578188692826L;
 
