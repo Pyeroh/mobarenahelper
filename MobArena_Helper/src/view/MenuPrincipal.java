@@ -967,8 +967,8 @@ public class MenuPrincipal extends JFrame {
 				
 				if(combo_type.getSelectedItem().equals("Supply")) {
 					SupplyW supw = (SupplyW) wave;
-					ItemList items = new ItemSelector(supw.getDrops(), 0).getItemList();
-					supw.setDrops(items);
+					ItemList items = supw.getDrops();
+					new ItemSelector(items, 0);
 				}
 			}
 		});
@@ -1014,7 +1014,7 @@ public class MenuPrincipal extends JFrame {
 		pan_classes.setLayout(null);
 
 		lib_classes = new JLabel("Classes");
-		lib_classes.setBounds(7, 7, 357, 22);
+		lib_classes.setBounds(7, 7, 64, 22);
 		lib_classes.setFont(new Font("Tahoma", Font.BOLD, 14));
 		pan_classes.add(lib_classes);
 
@@ -1031,9 +1031,9 @@ public class MenuPrincipal extends JFrame {
 		pan_caracs_class.setLayout(null);
 
 		lib_class = new JLabel("Class name");
-		lib_class.setBounds(8, 6, 110, 28);
+		lib_class.setBounds(8, 6, 110, 25);
 		pan_caracs_class.add(lib_class);
-		lib_class.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lib_class.setFont(new Font("Tahoma", Font.BOLD, 13));
 
 		sai_class = new JFormattedTextField(new MaskFormatter("U??????????????"));
 		sai_class.setBackground(new Color(255, 255, 255));
@@ -1043,8 +1043,8 @@ public class MenuPrincipal extends JFrame {
 		sai_class.setColumns(10);
 
 		lib_items = new JLabel("Items");
-		lib_items.setBounds(8, 46, 110, 28);
-		lib_items.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lib_items.setBounds(8, 46, 110, 25);
+		lib_items.setFont(new Font("Tahoma", Font.BOLD, 13));
 		pan_caracs_class.add(lib_items);
 
 		btn_items = new JButton("Set Items");
@@ -1052,8 +1052,8 @@ public class MenuPrincipal extends JFrame {
 		pan_caracs_class.add(btn_items);
 
 		lib_armor = new JLabel("Armor");
-		lib_armor.setBounds(8, 86, 110, 28);
-		lib_armor.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lib_armor.setBounds(8, 86, 110, 25);
+		lib_armor.setFont(new Font("Tahoma", Font.BOLD, 13));
 		pan_caracs_class.add(lib_armor);
 
 		btn_armor = new JButton("Set Armor");
@@ -1061,8 +1061,8 @@ public class MenuPrincipal extends JFrame {
 		pan_caracs_class.add(btn_armor);
 
 		lib_dogs = new JLabel("Dogs");
-		lib_dogs.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lib_dogs.setBounds(8, 126, 110, 28);
+		lib_dogs.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lib_dogs.setBounds(8, 126, 110, 25);
 		pan_caracs_class.add(lib_dogs);
 
 		sai_dogs = new JFormattedTextField(new MaskFormatter("###"));
@@ -1074,7 +1074,7 @@ public class MenuPrincipal extends JFrame {
 		pan_caracs_class.add(sai_dogs);
 
 		lib_horse = new JLabel("Horse");
-		lib_horse.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lib_horse.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lib_horse.setBounds(8, 166, 110, 28);
 		pan_caracs_class.add(lib_horse);
 
@@ -1084,7 +1084,7 @@ public class MenuPrincipal extends JFrame {
 		pan_caracs_class.add(combo_horse);
 
 		lib_hArmor = new JLabel("with armor");
-		lib_hArmor.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lib_hArmor.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lib_hArmor.setBounds(8, 206, 110, 28);
 		pan_caracs_class.add(lib_hArmor);
 
