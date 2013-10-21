@@ -6,6 +6,7 @@ import java.awt.Toolkit;
 import java.text.ParseException;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
@@ -16,8 +17,11 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.text.MaskFormatter;
 
 import model.ItemList;
+import model.enums.EItem;
 import model.enums.EItemCat;
+import view.cells.CellListEItem;
 import view.cells.CellListItem;
+import view.cells.HoverListCellRenderer;
 
 public class ItemSelector extends JFrame {
 
@@ -32,7 +36,7 @@ public class ItemSelector extends JFrame {
 	private JWideComboBox combo_sort;
 	private JLabel lib_search;
 	private JFormattedTextField sai_search;
-	private JList<CellListItem> list_selectable;
+	private JList<CellListEItem> list_selectable;
 	private JButton btn_add;
 	private JButton btn_remove;
 	private JScrollPane scrpan_selected;
@@ -46,14 +50,14 @@ public class ItemSelector extends JFrame {
 	 * @param max le nombre d'items sélectionnable max
 	 * @throws ParseException 
 	 */
-	public ItemSelector(ItemList items, int max) throws ParseException {
+	public ItemSelector(ItemList items, int max) {
 		super("Item Selector - MobArena Helper v2");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ItemSelector.class.getResource("/gui/mobarena.png")));
 		setResizable(false);
 		this.items = items;
 		this.max = max;
 		
-		 setSize(623,356);
+		 setSize(850,356);
 		 getContentPane().setLayout(null);
 		 
 		 lib_selectable = new JLabel("Items selectable");
@@ -77,41 +81,63 @@ public class ItemSelector extends JFrame {
 		 lib_search.setBounds(6, 80, 55, 25);
 		 getContentPane().add(lib_search);
 		 
-		 sai_search = new JFormattedTextField(new MaskFormatter("LLLLLLLLLL"));
+		 try {
+			sai_search = new JFormattedTextField(new MaskFormatter("LLLLLLLLLL"));
+		} catch (ParseException e) {}
 		 sai_search.setBackground(new Color(255, 255, 255));
 		 sai_search.setBounds(73, 80, 122, 25);
 		 sai_search.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		 getContentPane().add(sai_search);
 		 sai_search.setColumns(10);
 		 
-		 list_selectable = new JList<CellListItem>();
-		 getContentPane().add(list_selectable);
+		 list_selectable = new JList<CellListEItem>();
+		 DefaultListModel<CellListEItem> mod_ItemsSelectable = new DefaultListModel<>();
+		 
+		 EItem[] values = EItem.values();
+		 for(int i=0;i<values.length;i++) {
+			 if(!items.containsItem(values[i]))  mod_ItemsSelectable.addElement(new CellListEItem(values[i]));
+		 }
+		 list_selectable.setModel(mod_ItemsSelectable);
+		 HoverListCellRenderer render1 = new HoverListCellRenderer(list_selectable);
+		 list_selectable.setCellRenderer(render1);
+		 list_selectable.addMouseListener(render1.getHandler());
+		 list_selectable.addMouseMotionListener(render1.getHandler());
 		 
 		 JScrollPane scrpan_selectable = new JScrollPane(list_selectable);
-		 scrpan_selectable.setBounds(6, 117, 240, 200);
+		 scrpan_selectable.setBounds(6, 117, 350, 200);
 		 getContentPane().add(scrpan_selectable);
 		 
 		 btn_add = new JButton("Add >>");
 		 btn_add.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		 btn_add.setBounds(258, 175, 101, 28);
+		 btn_add.setBounds(368, 170, 101, 28);
 		 getContentPane().add(btn_add);
 		 
 		 btn_remove = new JButton("<< Remove");
 		 btn_remove.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		 btn_remove.setBounds(258, 215, 101, 28);
+		 btn_remove.setBounds(368, 210, 101, 28);
 		 getContentPane().add(btn_remove);
-		 
-		 list_selected = new JList<CellListItem>();
-		 getContentPane().add(list_selected);
-		 
-		 scrpan_selected = new JScrollPane(list_selected);
-		 scrpan_selected.setBounds(371, 117, 240, 200);
-		 getContentPane().add(scrpan_selected);
 		 
 		 lib_selected = new JLabel("Items selected");
 		 lib_selected.setFont(new Font("Tahoma", Font.BOLD, 14));
-		 lib_selected.setBounds(371, 11, 121, 25);
+		 lib_selected.setBounds(481, 6, 121, 25);
 		 getContentPane().add(lib_selected);
+		 
+		 list_selected = new JList<CellListItem>();
+		 DefaultListModel<CellListItem> mod_ItemsSelected = new DefaultListModel<CellListItem>();
+		 for(int i=0;i<items.size();i++) {
+			 mod_ItemsSelected.addElement(new CellListItem(items.get(i)));
+		 }
+		 list_selected.setModel(mod_ItemsSelected);
+		 HoverListCellRenderer render2 = new HoverListCellRenderer(list_selected);
+		 list_selected.setCellRenderer(render2);
+		 list_selected.addMouseListener(render2.getHandler());
+		 list_selected.addMouseMotionListener(render2.getHandler());
+		 
+		 scrpan_selected = new JScrollPane(list_selected);
+		 scrpan_selected.setBounds(481, 112, 350, 200);
+		 getContentPane().add(scrpan_selected);
+		 
+		 setVisible(true);
 		 
 	}
 
