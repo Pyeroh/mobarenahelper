@@ -67,4 +67,19 @@ public class ItemList extends ArrayList<Item> {
 		
 		return sItems.toString();
 	}
+	
+	/**
+	 * Vérifie si l'EItem passé en paramètre a déjà un Item associé dans la liste
+	 * @param e
+	 * @return
+	 */
+	public boolean containsItem(EItem e) {
+		boolean contain = false;
+		for(int i=0;i<this.size();i++) {
+			if(get(i).getItem()==e) {
+				contain = true;
+			}
+		}
+		return contain;
+	}
 }
