@@ -1,6 +1,7 @@
 package model.enums;
 
 public enum EItemCat {
+	all("All"),
 	block("Building blocks"),
 	decoration("Decoration blocks"),
 	redstone("Redstone"),
@@ -30,6 +31,27 @@ public enum EItemCat {
 			namevalues[i] = values[i].getGui_name();
 		}
 		return namevalues;
+	}
+	
+	public static EItemCat getByName(String name) {
+
+		if (name!=null) {
+			EItemCat[] values = values();
+			int i = 0;
+			while (i < values.length && !values[i].getGui_name().equals(name)) {
+				i++;
+			}
+			if (i < values.length) {
+				return values[i];
+			} else {
+				throw new IllegalArgumentException(
+						"No enum constant EItemCat." + name);
+			}
+		}
+		else {
+			throw new NullPointerException("Name is null");
+		}
+
 	}
 
 }
