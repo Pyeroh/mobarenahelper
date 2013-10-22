@@ -549,6 +549,9 @@ public enum EItem {
 			name = name.replaceFirst("^s_p", "splash_potion_of");
 		}
 		
+		//Pour les potions
+		name = name.replaceFirst("_ext", "_extended");
+		
 		name = name.replace('_', ' ').trim();
 		String first = ""+name.charAt(0);
 		name = name.replaceFirst("^[a-z]", first.toUpperCase());
@@ -562,7 +565,7 @@ public enum EItem {
 
 	public static ArrayList<EItem> getByCategory(EItemCat category) {
 		EItem[] values = values();
-		ArrayList<EItem> items = new ArrayList<>();
+		ArrayList<EItem> items = new ArrayList<EItem>();
 
 		for(int i=0;i<values.length;i++) {
 			EItem item = values[i];
@@ -618,6 +621,12 @@ public enum EItem {
 		
 	}
 
+	/**
+	 * Cherche un objet par son nom Minecraft et sa méta-donnée
+	 * @param name
+	 * @param meta
+	 * @return l'EItem s'il existe, {@code null} sinon
+	 */
 	public static EItem searchBy(String name, int meta) {
 		ArrayList<EItem> values = new ArrayList<EItem>(Arrays.asList(values()));
 
@@ -636,6 +645,12 @@ public enum EItem {
 
 	}
 	
+	/**
+	 * Cherche un objet par son id et sa méta-donnée
+	 * @param id
+	 * @param meta
+	 * @return l'EItem s'il existe, {@code null} sinon
+	 */
 	public static EItem searchBy(int id, int meta) {
 		ArrayList<EItem> values = new ArrayList<EItem>(Arrays.asList(values()));
 
@@ -654,6 +669,11 @@ public enum EItem {
 
 	}
 	
+	/**
+	 * 
+	 * @param name
+	 * @return la liste des EItem correspondant au nom Minecraft passé en paramètre
+	 */
 	public static ArrayList<EItem> searchBy(String name) {
 		ArrayList<EItem> ret = new ArrayList<>();
 		EItem[] values = values();
