@@ -8,9 +8,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JWindow;
-import javax.swing.JLabel;
 import javax.swing.border.LineBorder;
 
 public class Todo extends JWindow {

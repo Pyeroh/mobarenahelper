@@ -18,9 +18,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextPane;
 import javax.swing.JWindow;
+import javax.swing.border.LineBorder;
 
 import view.cells.CellListWave;
-import javax.swing.border.LineBorder;
 
 public class About extends JWindow {
 
