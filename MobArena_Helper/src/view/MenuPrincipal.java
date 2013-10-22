@@ -971,8 +971,8 @@ public class MenuPrincipal extends JFrame {
 				
 				if(combo_type.getSelectedItem().equals("Supply")) {
 					SupplyW supw = (SupplyW) wave;
-					ItemList drops = new ItemSelector(supw.getDrops(), 0).getItemList();
-					supw.setDrops(drops);
+					ItemList drops = new ItemSelector(supw.getDrops(), 0, false).getItemList();
+					//supw.setDrops(drops);
 				}
 			}
 		});

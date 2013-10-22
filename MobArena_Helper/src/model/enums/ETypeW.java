@@ -33,7 +33,6 @@ public enum ETypeW {
 		String[] namevalues = new String[values.length];
 		for (int i=0;i<namevalues.length;i++) {
 			StringBuffer nom = new StringBuffer(values[i].name());
-			//nom.replace(0, 1, nom.substring(0, 1).toUpperCase());
 			namevalues[i] = nom.toString();
 		}
 		return namevalues;
