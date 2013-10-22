@@ -5,6 +5,8 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,8 +28,6 @@ import model.enums.EItemCat;
 import view.cells.CellListEItem;
 import view.cells.CellListItem;
 import view.cells.HoverListCellRenderer;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 public class ItemSelector extends JFrame {
 

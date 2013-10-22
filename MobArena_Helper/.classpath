@@ -2,6 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/Users/Pyeroh/VirtualBox VMs/Partage/Projets Java/Git/MobArena_Helper/src/snakeyaml-1.12.jar"/>
+	<classpathentry kind="lib" path="D:/Mes Projets/mobarenahelper/MobArena_Helper/src/snakeyaml-1.12.jar" sourcepath="D:/Perso/snakeyaml-2fc3f642a173/src/main/java"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
