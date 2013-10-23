@@ -141,49 +141,7 @@ public class ItemSelector extends JFrame {
 		btn_add.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				
-				if (!list_selectable.isSelectionEmpty()) {
-					int nb_items = list_selected.getModel().getSize();
-					if (nb_items == ItemSelector.this.max) {
-						JOptionPane.showMessageDialog(
-								rootPane,
-								"You can't add more items !", "Warning",
-								JOptionPane.WARNING_MESSAGE);
-					} else {
-						
-						EItem eitem = list_selectable.getSelectedValue().getEItem();
-						if(!isArmor()) {
-							
-							String input = JOptionPane.showInputDialog(rootPane, "How many items do you wish to add ?",1);
-							System.out.println(input);
-							if (input!=null) {
-								if (input.matches("(\\d)+")) {
-									ItemList il = ItemSelector.this.items;
-									il.add(new Item(eitem, Integer
-											.parseInt(input), null));
-									loadSelected(il);
-									ArrayList<EItem> values = switchValues();
-									ArrayList<EItem> val_search = new ArrayList<EItem>();
-									String search = sai_search.getText().trim();
-									if (!search.equals("")) {
-										val_search = EItem.searchBy(search);
-										values.retainAll(val_search);
-									}
-									
-									values.removeAll(ItemSelector.this.items);
-									loadSelectable(values);
-
-								}
-							}
-							
-						}
-						else {
-							
-							
-							
-						}
-						
-					}
-				}
+				addItem();
 				
 			}
 		});
@@ -221,12 +179,51 @@ public class ItemSelector extends JFrame {
 		return items;
 	}
 	
-	private int getMax() {
-		return max;
-	}
-	
 	private boolean isArmor() {
 		return isArmor;
+	}
+	
+	private void addItem() {
+		
+		if (!list_selectable.isSelectionEmpty()) {
+			int nb_items = list_selected.getModel().getSize();
+			if (nb_items == max) {
+				JOptionPane.showMessageDialog(
+						rootPane,
+						"You can't add more items !", "Warning",
+						JOptionPane.WARNING_MESSAGE);
+			} else {
+				
+				EItem eitem = list_selectable.getSelectedValue().getEItem();
+				if(!isArmor()) {
+					
+					String input = JOptionPane.showInputDialog(rootPane, "How many items do you wish to add ?",1);
+					System.out.println(input);
+					if (input!=null) {
+						if (input.matches("(\\d)+")) {
+
+							items.add(new Item(eitem, Integer.parseInt(input), null));
+							
+							loadSelected(items);
+							loadSelectable(crossSearch());
+
+						}
+					}
+					
+				}
+				else {
+					
+					
+					
+				}
+				
+			}
+		}
+		
+	}
+	
+	private void removeItem() {
+		
 	}
 	
 	private void loadSelectable(ArrayList<EItem> values) {
@@ -238,7 +235,7 @@ public class ItemSelector extends JFrame {
 	}
 	
 	private void loadSelected(ArrayList<Item> values) {
-		Collections.sort(values);
+		//Collections.sort(values);
 		DefaultListModel<CellListItem> mod_ItemsSelectable = new DefaultListModel<>();
 		for(int i=0;i<values.size();i++) {
 			mod_ItemsSelectable.addElement(new CellListItem(values.get(i)));
@@ -260,7 +257,7 @@ public class ItemSelector extends JFrame {
 		ArrayList<EItem> val_search = EItem.searchBy(sai_search.getText().trim());
 		
 		values.retainAll(val_search);
-		values.removeAll(items);
+		values.removeAll(items.getEItemList());
 		
 		return values;
 	}

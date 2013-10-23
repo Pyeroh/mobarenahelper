@@ -82,4 +82,12 @@ public class ItemList extends ArrayList<Item> {
 		}
 		return contain;
 	}
+	
+	public ArrayList<EItem> getEItemList() {
+		ArrayList<EItem> eitems = new ArrayList<>();
+		for(int i=0;i<size();i++){
+			eitems.add(get(i).getItem());
+		}
+		return eitems;
+	}
 }
