@@ -2,8 +2,6 @@ package view;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.GraphicsEnvironment;
-import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -972,7 +970,7 @@ public class MenuPrincipal extends JFrame {
 				if(combo_type.getSelectedItem().equals("Supply")) {
 					SupplyW supw = (SupplyW) wave;
 					ItemList drops = new ItemSelector(supw.getDrops(), 0, false).getItemList();
-					//supw.setDrops(drops);
+					supw.setDrops(drops);
 				}
 			}
 		});
@@ -1410,7 +1408,7 @@ public class MenuPrincipal extends JFrame {
 
 		setInvisibleComponents();
 
-		setSize(760,573);
+		setSize(760,580);
 
 		tabpan_config.addTab("Arenas and waves configuration", pan_arena_wave);
 		tabpan_config.addTab("Classes configuration", pan_classes);
@@ -1426,8 +1424,7 @@ public class MenuPrincipal extends JFrame {
 		separator_1.setBounds(500, 6, 2, 441);
 		pan_arena_settings.add(separator_1);
 
-		Rectangle d = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
-		setLocation((d.width-getWidth())/2, (d.height-getHeight())/2);
+		setLocationRelativeTo(null);
 		setVisible(true);
 	}
 
