@@ -448,7 +448,7 @@ public enum EItem {
 	p_slowness_ext(373,8266,"POTION",EItemCat.potion),
 	p_harming(373,8204,"POTION",EItemCat.potion),
 	p_harming_II(373,8236,"POTION",EItemCat.potion),
-	
+
 	//Splash potions
 	s_p_regeneration(373,16385,"POTION",EItemCat.potion),
 	s_p_regeneration_ext(373,16449,"POTION",EItemCat.potion),
@@ -491,8 +491,8 @@ public enum EItem {
 		this.meta = meta;
 		this.realname = realname;
 		this.category = category;
-		
-		
+
+
 		String dossier;
 		if(id<256){
 			dossier = "blocks";
@@ -536,7 +536,7 @@ public enum EItem {
 	public Image getImage() {
 		return image;
 	}
-	
+
 	public String getName() {
 		String name = name();
 		if(name.endsWith("wool") || name.endsWith("stained_clay") || name.endsWith("carpet") || name.endsWith("dye")) {
@@ -548,17 +548,17 @@ public enum EItem {
 		if(name.startsWith("s_p_")){
 			name = name.replaceFirst("^s_p", "splash_potion_of");
 		}
-		
+
 		//Pour les potions
 		name = name.replaceFirst("_ext", "_extended");
-		
+
 		name = name.replace('_', ' ').trim();
 		String first = ""+name.charAt(0);
 		name = name.replaceFirst("^[a-z]", first.toUpperCase());
-		
+
 		return name;
 	}
-	
+
 	public String toString() {
 		return name()+"("+id+","+meta+","+realname+","+category+")";
 	}
@@ -598,9 +598,9 @@ public enum EItem {
 		}
 
 	}
-	
+
 	private static EItem getById(int id) {
-		
+
 		if(id!=0) {
 			EItem[] values = values();
 			int i = 0;
@@ -618,7 +618,7 @@ public enum EItem {
 		else {
 			throw new NullPointerException("ID equals 0");
 		}
-		
+
 	}
 
 	/**
@@ -644,7 +644,7 @@ public enum EItem {
 		}
 
 	}
-	
+
 	/**
 	 * Cherche un objet par son id et sa méta-donnée
 	 * @param id
@@ -668,7 +668,7 @@ public enum EItem {
 		}
 
 	}
-	
+
 	/**
 	 * 
 	 * @param name
@@ -677,13 +677,14 @@ public enum EItem {
 	public static ArrayList<EItem> searchBy(String name) {
 		ArrayList<EItem> ret = new ArrayList<>();
 		EItem[] values = values();
-		
-		for(int i=0;i<values.length;i++) {
-			if(values[i].getName().toLowerCase().contains(name.toLowerCase())){
+
+		for (int i = 0; i < values.length; i++) {
+			if (values[i].getName().toLowerCase()
+					.contains(name.toLowerCase())) {
 				ret.add(values[i]);
 			}
 		}
-		
+
 		return ret;
 	}
 }
