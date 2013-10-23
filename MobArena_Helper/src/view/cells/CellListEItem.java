@@ -9,19 +9,23 @@ public class CellListEItem extends CellListCaracs{
 
 	private static final long serialVersionUID = -489871563289609199L;
 	private JLabel image = new JLabel();
-	private EItem item;
+	private EItem eitem;
 	
-	public CellListEItem(EItem item) {
-		this.item = item;
+	public CellListEItem(EItem eitem) {
+		this.eitem = eitem;
 		
 		lib_desc.setBounds(44, 0, 256, 30);
-		lib_desc.setText(this.item.getName());
+		lib_desc.setText(this.eitem.getName());
 
 		image.setBounds(3, 3, 24, 24);
-		image.setIcon(new ImageIcon(CellListWave.scaleImage(this.item.getImage(), image)));
+		image.setIcon(new ImageIcon(CellListWave.scaleImage(this.eitem.getImage(), image)));
 		add(image);
 		
 		setSize(300,30);
+	}
+	
+	public EItem getEItem() {
+		return eitem;
 	}
 	
 }
