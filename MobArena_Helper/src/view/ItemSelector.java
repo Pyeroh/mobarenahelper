@@ -7,9 +7,12 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
@@ -18,10 +21,12 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.border.EtchedBorder;
 import javax.swing.text.MaskFormatter;
 
+import model.Item;
 import model.ItemList;
 import model.enums.EItem;
 import model.enums.EItemCat;
@@ -66,6 +71,7 @@ public class ItemSelector extends JFrame {
 		this.isArmor = isArmor;
 
 		setSize(850,356);
+		setLocationRelativeTo(null);
 		getContentPane().setLayout(null);
 
 		lib_selectable = new JLabel("Items selectable");
@@ -84,17 +90,10 @@ public class ItemSelector extends JFrame {
 
 				if(e.getStateChange() == ItemEvent.DESELECTED && combo_sort.isFocusOwner()){
 
-					ArrayList<EItem> values;
-					String sort = (String) combo_sort.getSelectedItem();
-					if(sort.equals("All")) values = new ArrayList<EItem>(Arrays.asList(EItem.values()));
-					else values = EItem.getByCategory(EItemCat.getByName(sort));
-
-					DefaultListModel<CellListEItem> mod_ItemsSelectable = new DefaultListModel<>();
-					values.removeAll(getItemList());
-					for(int i=0;i<values.size();i++) {
-						mod_ItemsSelectable.addElement(new CellListEItem(values.get(i)));
-					}
-					list_selectable.setModel(mod_ItemsSelectable);
+					ArrayList<EItem> values = switchValues();
+					
+					values.removeAll(ItemSelector.this.items);
+					loadSelectable(values);
 
 				}
 
@@ -114,25 +113,7 @@ public class ItemSelector extends JFrame {
 			sai_search = new JFormattedTextField(new MaskFormatter("LLLLLLLLLL"));
 			sai_search.addKeyListener(new KeyAdapter() {
 				public void keyReleased(KeyEvent e) {
-					ArrayList<EItem> values;
-					ArrayList<EItem> val_search = EItem.searchBy(sai_search.getText().trim());
-					String sort = (String) combo_sort.getSelectedItem();
-					if (sort.equals("All"))
-						values = new ArrayList<EItem>(
-								Arrays.asList(EItem.values()));
-					else
-						values = EItem.getByCategory(EItemCat
-								.getByName(sort));
-					
-					values.retainAll(val_search);
-					values.removeAll(getItemList());
-					
-					DefaultListModel<CellListEItem> mod_ItemsSelectable = new DefaultListModel<>();
-					for(int i=0;i<values.size();i++) {
-						mod_ItemsSelectable.addElement(new CellListEItem(values.get(i)));
-					}
-					list_selectable.setModel(mod_ItemsSelectable);
-
+					loadSelectable(crossSearch());
 				}
 			});
 		} catch (ParseException e) {}
@@ -143,14 +124,10 @@ public class ItemSelector extends JFrame {
 		sai_search.setColumns(10);
 
 		list_selectable = new JList<CellListEItem>();
-		DefaultListModel<CellListEItem> mod_ItemsSelectable = new DefaultListModel<>();
 
 		ArrayList<EItem> values = new ArrayList<>(Arrays.asList(EItem.values()));
 		values.removeAll(items);
-		for(int i=0;i<values.size();i++) {
-			mod_ItemsSelectable.addElement(new CellListEItem(values.get(i)));
-		}
-		list_selectable.setModel(mod_ItemsSelectable);
+		loadSelectable(values);
 		HoverListCellRenderer render1 = new HoverListCellRenderer(list_selectable);
 		list_selectable.setCellRenderer(render1);
 		list_selectable.addMouseListener(render1.getHandler());
@@ -161,6 +138,55 @@ public class ItemSelector extends JFrame {
 		getContentPane().add(scrpan_selectable);
 
 		btn_add = new JButton("Add >>");
+		btn_add.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				
+				if (!list_selectable.isSelectionEmpty()) {
+					int nb_items = list_selected.getModel().getSize();
+					if (nb_items == ItemSelector.this.max) {
+						JOptionPane.showMessageDialog(
+								rootPane,
+								"You can't add more items !", "Warning",
+								JOptionPane.WARNING_MESSAGE);
+					} else {
+						
+						EItem eitem = list_selectable.getSelectedValue().getEItem();
+						if(!isArmor()) {
+							
+							String input = JOptionPane.showInputDialog(rootPane, "How many items do you wish to add ?",1);
+							System.out.println(input);
+							if (input!=null) {
+								if (input.matches("(\\d)+")) {
+									ItemList il = ItemSelector.this.items;
+									il.add(new Item(eitem, Integer
+											.parseInt(input), null));
+									loadSelected(il);
+									ArrayList<EItem> values = switchValues();
+									ArrayList<EItem> val_search = new ArrayList<EItem>();
+									String search = sai_search.getText().trim();
+									if (!search.equals("")) {
+										val_search = EItem.searchBy(search);
+										values.retainAll(val_search);
+									}
+									
+									values.removeAll(ItemSelector.this.items);
+									loadSelectable(values);
+
+								}
+							}
+							
+						}
+						else {
+							
+							
+							
+						}
+						
+					}
+				}
+				
+			}
+		});
 		btn_add.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btn_add.setBounds(368, 170, 101, 28);
 		getContentPane().add(btn_add);
@@ -176,11 +202,7 @@ public class ItemSelector extends JFrame {
 		getContentPane().add(lib_selected);
 
 		list_selected = new JList<CellListItem>();
-		DefaultListModel<CellListItem> mod_ItemsSelected = new DefaultListModel<CellListItem>();
-		for(int i=0;i<items.size();i++) {
-			mod_ItemsSelected.addElement(new CellListItem(items.get(i)));
-		}
-		list_selected.setModel(mod_ItemsSelected);
+		loadSelected(items);
 		HoverListCellRenderer render2 = new HoverListCellRenderer(list_selected);
 		list_selected.setCellRenderer(render2);
 		list_selected.addMouseListener(render2.getHandler());
@@ -197,5 +219,49 @@ public class ItemSelector extends JFrame {
 
 	public ItemList getItemList() {
 		return items;
+	}
+	
+	private int getMax() {
+		return max;
+	}
+	
+	private boolean isArmor() {
+		return isArmor;
+	}
+	
+	private void loadSelectable(ArrayList<EItem> values) {
+		DefaultListModel<CellListEItem> mod_ItemsSelectable = new DefaultListModel<>();
+		for(int i=0;i<values.size();i++) {
+			mod_ItemsSelectable.addElement(new CellListEItem(values.get(i)));
+		}
+		list_selectable.setModel(mod_ItemsSelectable);
+	}
+	
+	private void loadSelected(ArrayList<Item> values) {
+		Collections.sort(values);
+		DefaultListModel<CellListItem> mod_ItemsSelectable = new DefaultListModel<>();
+		for(int i=0;i<values.size();i++) {
+			mod_ItemsSelectable.addElement(new CellListItem(values.get(i)));
+		}
+		list_selected.setModel(mod_ItemsSelectable);
+	}
+	
+	private ArrayList<EItem> switchValues() {
+		ArrayList<EItem> values;
+		String sort = (String) combo_sort.getSelectedItem();
+		if(sort.equals("All")) values = new ArrayList<EItem>(Arrays.asList(EItem.values()));
+		else values = EItem.getByCategory(EItemCat.getByName(sort));
+		
+		return values;
+	}
+	
+	private ArrayList<EItem> crossSearch() {
+		ArrayList<EItem> values = switchValues();
+		ArrayList<EItem> val_search = EItem.searchBy(sai_search.getText().trim());
+		
+		values.retainAll(val_search);
+		values.removeAll(items);
+		
+		return values;
 	}
 }
