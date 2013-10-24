@@ -139,4 +139,8 @@ public class BossW extends Wave{
 		return vague;
 	}
 
+	public void setReward(ItemList reward) {
+		this.reward = reward;
+	}
+
 }
