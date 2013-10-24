@@ -12,7 +12,6 @@ import java.awt.event.MouseEvent;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
@@ -26,6 +25,7 @@ import javax.swing.JScrollPane;
 import javax.swing.border.EtchedBorder;
 import javax.swing.text.MaskFormatter;
 
+import model.Armor;
 import model.Item;
 import model.ItemList;
 import model.enums.EItem;
@@ -53,6 +53,7 @@ public class ItemSelector extends JFrame {
 	private JScrollPane scrpan_selected;
 	private JList<CellListItem> list_selected;
 	private JLabel lib_selected;
+	private JButton btn_enchant;
 
 	/**
 	 * Constructeur d'un sélecteur d'items à partir de la liste {@code items} et
@@ -91,7 +92,7 @@ public class ItemSelector extends JFrame {
 				if(e.getStateChange() == ItemEvent.DESELECTED && combo_sort.isFocusOwner()){
 
 					ArrayList<EItem> values = switchValues();
-					
+
 					values.removeAll(ItemSelector.this.items);
 					loadSelectable(values);
 
@@ -100,7 +101,10 @@ public class ItemSelector extends JFrame {
 			}
 		});
 		combo_sort.setFont(new Font("SansSerif", Font.PLAIN, 12));
-		combo_sort.setModel(new DefaultComboBoxModel<String>(EItemCat.namevalues()));
+
+		String[] tab = {EItemCat.weapon.getGui_name()};
+		if(!this.isArmor) tab = EItemCat.namevalues();
+		combo_sort.setModel(new DefaultComboBoxModel<String>(tab));
 		combo_sort.setBounds(73, 43, 121, 25);
 		getContentPane().add(combo_sort);
 
@@ -110,7 +114,7 @@ public class ItemSelector extends JFrame {
 		getContentPane().add(lib_search);
 
 		try {
-			sai_search = new JFormattedTextField(new MaskFormatter("LLLLLLLLLL"));
+			sai_search = new JFormattedTextField(new MaskFormatter("LLLLLLLLLLLLLLL"));
 			sai_search.addKeyListener(new KeyAdapter() {
 				public void keyReleased(KeyEvent e) {
 					loadSelectable(crossSearch());
@@ -125,7 +129,14 @@ public class ItemSelector extends JFrame {
 
 		list_selectable = new JList<CellListEItem>();
 
-		ArrayList<EItem> values = new ArrayList<>(Arrays.asList(EItem.values()));
+		ArrayList<EItem> values;
+		if(this.isArmor) {
+			values = new ArrayList<>();
+			for(int i=298;i<=317;i++){
+				values.add(EItem.searchBy(i, 0));
+			}
+		}
+		else values = new ArrayList<>(Arrays.asList(EItem.values()));
 		values.removeAll(items);
 		loadSelectable(values);
 		HoverListCellRenderer render1 = new HoverListCellRenderer(list_selectable);
@@ -139,10 +150,10 @@ public class ItemSelector extends JFrame {
 
 		btn_add = new JButton("Add >>");
 		btn_add.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				
+			public void mouseReleased(MouseEvent e) {
+
 				addItem();
-				
+
 			}
 		});
 		btn_add.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -150,6 +161,13 @@ public class ItemSelector extends JFrame {
 		getContentPane().add(btn_add);
 
 		btn_remove = new JButton("<< Remove");
+		btn_remove.addMouseListener(new MouseAdapter() {
+			public void mouseReleased(MouseEvent e) {
+
+				removeItem();
+
+			}
+		});
 		btn_remove.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btn_remove.setBounds(368, 210, 101, 28);
 		getContentPane().add(btn_remove);
@@ -166,6 +184,11 @@ public class ItemSelector extends JFrame {
 		list_selected.addMouseListener(render2.getHandler());
 		list_selected.addMouseMotionListener(render2.getHandler());
 
+		btn_enchant = new JButton("Enchant");
+		btn_enchant.setBounds(481, 78, 90, 28);
+		btn_enchant.setVisible(false);
+		getContentPane().add(btn_enchant);
+
 		scrpan_selected = new JScrollPane(list_selected);
 		scrpan_selected.setBounds(481, 112, 350, 200);
 		getContentPane().add(scrpan_selected);
@@ -178,13 +201,13 @@ public class ItemSelector extends JFrame {
 	public ItemList getItemList() {
 		return items;
 	}
-	
+
 	private boolean isArmor() {
 		return isArmor;
 	}
-	
+
 	private void addItem() {
-		
+
 		if (!list_selectable.isSelectionEmpty()) {
 			int nb_items = list_selected.getModel().getSize();
 			if (nb_items == max) {
@@ -193,39 +216,62 @@ public class ItemSelector extends JFrame {
 						"You can't add more items !", "Warning",
 						JOptionPane.WARNING_MESSAGE);
 			} else {
-				
+
 				EItem eitem = list_selectable.getSelectedValue().getEItem();
 				if(!isArmor()) {
-					
-					String input = JOptionPane.showInputDialog(rootPane, "How many items do you wish to add ?",1);
-					System.out.println(input);
+
+					String input = JOptionPane.showInputDialog(rootPane, "How many items do you wish to add ?",1).trim();
 					if (input!=null) {
-						if (input.matches("(\\d)+")) {
+						if (input.matches("^[1-9][0-9]{0,2}$")) {
 
 							items.add(new Item(eitem, Integer.parseInt(input), null));
-							
+
 							loadSelected(items);
 							loadSelectable(crossSearch());
 
 						}
+						else JOptionPane.showMessageDialog(rootPane,"Incorrect number format\nMust be a number, between 1 and 999","Error",JOptionPane.ERROR_MESSAGE);
 					}
-					
+
 				}
 				else {
-					
-					
-					
+
+					//TODO à tester
+					boolean present = false;
+					DefaultListModel<CellListItem> mod = (DefaultListModel<CellListItem>) list_selected.getModel();
+					for(int i=0;i<mod.size();i++) {
+						int id = mod.get(i).getEItem().getId();
+						float diff = Math.abs(id-eitem.getId())/4f;
+						if(diff==(int)diff){
+							present = true;
+						}
+					}
+					if(present) {
+						JOptionPane.showMessageDialog(rootPane, "You can't add the same armor type twice !", "Warning", JOptionPane.WARNING_MESSAGE);
+					}
+					else {
+						items.add(new Armor(eitem, null));
+
+						loadSelected(items);
+						loadSelectable(crossSearch());
+					}
 				}
-				
 			}
+		}
+	}
+
+	private void removeItem() {
+		
+		if(!list_selected.isSelectionEmpty()) {
+			
+			items.remove(list_selected.getSelectedValue().getItem());
+			loadSelected(items);
+			loadSelectable(crossSearch());
+			
 		}
 		
 	}
-	
-	private void removeItem() {
-		
-	}
-	
+
 	private void loadSelectable(ArrayList<EItem> values) {
 		DefaultListModel<CellListEItem> mod_ItemsSelectable = new DefaultListModel<>();
 		for(int i=0;i<values.size();i++) {
@@ -233,7 +279,7 @@ public class ItemSelector extends JFrame {
 		}
 		list_selectable.setModel(mod_ItemsSelectable);
 	}
-	
+
 	private void loadSelected(ArrayList<Item> values) {
 		//Collections.sort(values);
 		DefaultListModel<CellListItem> mod_ItemsSelectable = new DefaultListModel<>();
@@ -242,23 +288,23 @@ public class ItemSelector extends JFrame {
 		}
 		list_selected.setModel(mod_ItemsSelectable);
 	}
-	
+
 	private ArrayList<EItem> switchValues() {
 		ArrayList<EItem> values;
 		String sort = (String) combo_sort.getSelectedItem();
 		if(sort.equals("All")) values = new ArrayList<EItem>(Arrays.asList(EItem.values()));
 		else values = EItem.getByCategory(EItemCat.getByName(sort));
-		
+
 		return values;
 	}
-	
+
 	private ArrayList<EItem> crossSearch() {
 		ArrayList<EItem> values = switchValues();
 		ArrayList<EItem> val_search = EItem.searchBy(sai_search.getText().trim());
-		
+
 		values.retainAll(val_search);
 		values.removeAll(items.getEItemList());
-		
+
 		return values;
 	}
 }
