@@ -7,7 +7,15 @@ import model.enums.EItem;
 public class ItemList extends ArrayList<Item> {
 
 	private static final long serialVersionUID = -1822352239305240836L;
+	
+	public ItemList() {
+		super();
+	}
 
+	public ItemList(ArrayList<Item> list) {
+		super(list);
+	}
+	
 	public void fill(String items) {
 
 		String[] sItem = items.replace('\'', ' ')
