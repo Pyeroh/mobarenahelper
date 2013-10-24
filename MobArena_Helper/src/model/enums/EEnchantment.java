@@ -25,6 +25,8 @@ public enum EEnchantment {
 	silk_touch(33,1),
 	unbreaking(34,3),
 	fortune(35,3),
+	//luck_of_the_sea(61,3),
+	//lure(62,3),
 
 	//Bow
 	power(48,5),
@@ -46,8 +48,10 @@ public enum EEnchantment {
 	}
 
 	public String getName() {
-
-		return null;
+		String name = name().replace('_', ' ');
+		String first = ""+name.charAt(0);
+		name = name.replaceFirst("^[a-z]", first.toUpperCase());
+		return name;
 	}
 
 	public int getLvlmax() {
