@@ -957,8 +957,9 @@ public class MenuPrincipal extends JFrame {
 		sai_boss_name.setColumns(10);
 		
 		lib_set = new JLabel("Set");
+		lib_set.setHorizontalAlignment(SwingConstants.TRAILING);
 		lib_set.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lib_set.setBounds(312, 11, 58, 20);
+		lib_set.setBounds(300, 11, 70, 20);
 		pan_conf.add(lib_set);
 		
 		btn_set = new JButton("Set");
@@ -966,11 +967,17 @@ public class MenuPrincipal extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				JList<CellListWave> list_sel = combo_category.getSelectedItem().equals("Recurrent") ? list_recurrent : list_single;
 				Wave wave = list_sel.getSelectedValue().getWave();
+				String type = (String) combo_type.getSelectedItem();
 				
-				if(combo_type.getSelectedItem().equals("Supply")) {
+				if(type.equals("Supply")) {
 					SupplyW supw = (SupplyW) wave;
 					ItemList drops = new ItemSelector(supw.getDrops(), 0, false).getItemList();
 					supw.setDrops(drops);
+				}
+				else if (type.equals("Boss")) {
+					BossW bwave = (BossW) wave;
+					ItemList reward = new ItemSelector(bwave.getReward(), 1, false).getItemList();
+					bwave.setReward(reward);
 				}
 			}
 		});
@@ -1501,6 +1508,10 @@ public class MenuPrincipal extends JFrame {
 			chk_abi_announce.setVisible(true);
 			lib_abi_interval.setVisible(true);
 			sai_abi_interval.setVisible(true);
+			
+			lib_set.setText("Reward :");
+			lib_set.setVisible(true);
+			btn_set.setVisible(true);
 
 			lib_carac_wave.setText("Abilities");
 			combo_carac_wave.setModel(new DefaultComboBoxModel<String>(EAbilities.namevalues()));
