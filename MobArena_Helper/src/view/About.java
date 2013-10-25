@@ -45,7 +45,7 @@ public class About extends JWindow {
 		getContentPane().add(img_header);
 
 		lib_about = new JTextPane();
-		lib_about.setText("MobArena Helper v1 is currently a portage of the WaveEditor by Agnate.\r\nPyeroh's Dev Concept is the owner of this software, and the banner above is property of garbagemule.\r\nThis software is designed to edit and customize waves for the plugin MobArena, created by garbagemule.\r\nI'm French, so please excuse me for my mistakes ;)\r\nFeel free to visit my page on facebook at :");
+		lib_about.setText("MobArena Helper v1 is currently a portage of the WaveEditor by Agnate.\r\nPyeroh's Dev Concept is the owner of this software, and the banner above is property of garbagemule. Almost everything you can find here comes from his wiki on gitHub.\r\nThis software is designed to edit and customize waves for the plugin MobArena, created by garbagemule.\r\nI'm French, so please excuse me for my mistakes ;)\r\nFeel free to visit my page on facebook at :");
 		lib_about.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lib_about.setEditable(false);
 		lib_about.setBackground(this.getBackground());

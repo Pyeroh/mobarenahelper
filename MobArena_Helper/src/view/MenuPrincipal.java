@@ -68,6 +68,7 @@ import model.wave.OtherW;
 import model.wave.SpecialW;
 import model.wave.SupplyW;
 import model.wave.SwarmW;
+import model.wave.UpgradeW;
 import view.cells.CellListAbility;
 import view.cells.CellListCaracs;
 import view.cells.CellListMonster;
@@ -85,6 +86,9 @@ public class MenuPrincipal extends JFrame {
 	private GestYaml g;
 	private Arenas arenas = null;
 	private File file = null;
+	//TODO adapter le code pour utiliser cette Wave et pas chercher à chaque fois dans la liste
+	@SuppressWarnings("unused")
+	private Wave wave;
 	
 	private JTabbedPane tabpan_config;
 	
@@ -958,7 +962,7 @@ public class MenuPrincipal extends JFrame {
 		
 		lib_set = new JLabel("Set");
 		lib_set.setHorizontalAlignment(SwingConstants.TRAILING);
-		lib_set.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lib_set.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lib_set.setBounds(300, 11, 70, 20);
 		pan_conf.add(lib_set);
 		
@@ -969,15 +973,24 @@ public class MenuPrincipal extends JFrame {
 				Wave wave = list_sel.getSelectedValue().getWave();
 				String type = (String) combo_type.getSelectedItem();
 				
-				if(type.equals("Supply")) {
+				switch (type) {
+				case "Supply":
 					SupplyW supw = (SupplyW) wave;
 					ItemList drops = new ItemSelector(supw.getDrops(), 0, false).getItemList();
 					supw.setDrops(drops);
-				}
-				else if (type.equals("Boss")) {
+					break;
+				case "Boss":
 					BossW bwave = (BossW) wave;
 					ItemList reward = new ItemSelector(bwave.getReward(), 1, false).getItemList();
 					bwave.setReward(reward);
+					break;
+				case "Upgrade":
+					@SuppressWarnings("unused")
+					UpgradeW upw = (UpgradeW) wave;
+					//TODO créer une fenêtre de configuration des vagues upgrade
+					break;
+				default:
+					break;
 				}
 			}
 		});
@@ -1076,7 +1089,6 @@ public class MenuPrincipal extends JFrame {
 
 		sai_dogs = new JFormattedTextField(new MaskFormatter("###"));
 		sai_dogs.setBackground(new Color(255, 255, 255));
-		sai_dogs.addKeyListener(mask_numeric);
 		sai_dogs.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		sai_dogs.setColumns(10);
 		sai_dogs.setBounds(130, 127, 137, 28);
@@ -1109,12 +1121,14 @@ public class MenuPrincipal extends JFrame {
 		pan_arena_settings.setLayout(null);
 
 		chk_enabled = new JCheckBox("Enabled");
+		chk_enabled.setToolTipText("If false, players cannot join the arena.");
 		chk_enabled.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_enabled.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_enabled.setBounds(6, 6, 84, 25);
 		pan_arena_settings.add(chk_enabled);
 
 		chk_protect = new JCheckBox("Protect");
+		chk_protect.setToolTipText("If false, the arena will not be protected from explosions and players breaking the blocks.");
 		chk_protect.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_protect.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_protect.setBounds(91, 6, 73, 25);
@@ -1125,43 +1139,49 @@ public class MenuPrincipal extends JFrame {
 		lib_entry.setBounds(6, 43, 73, 25);
 		pan_arena_settings.add(lib_entry);
 
-		sai_entry = new JFormattedTextField(new MaskFormatter("###"));
+		sai_entry = new JFormattedTextField(new MaskFormatter("$###"));
+		sai_entry.setToolTipText("<html>Follows the exact same notation as the class items and rewards. $20 will subtract<br> 20 of whatever currency you use from the players upon joining. $5, stick:2 will <br>require the player to have 5 currency units and 2 sticks to join the arena. The <br>entry-fee will be refunded if the player leaves before the arena starts.");
 		sai_entry.setBackground(new Color(255, 255, 255));
-		sai_entry.addKeyListener(mask_numeric);
 		sai_entry.setBounds(91, 44, 50, 25);
 		sai_entry.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		pan_arena_settings.add(sai_entry);
 		sai_entry.setColumns(10);
 
 		btn_entry = new JButton("Set item");
+		btn_entry.setToolTipText("<html>Follows the exact same notation as the class items and rewards. $20 will subtract<br> 20 of whatever currency you use from the players upon joining. $5, stick:2 will <br>require the player to have 5 currency units and 2 sticks to join the arena. The <br>entry-fee will be refunded if the player leaves before the arena starts.");
 		btn_entry.setBounds(153, 44, 90, 25);
 		pan_arena_settings.add(btn_entry);
 
 		chk_clear_wave_next = new JCheckBox("Clear wave before next");
+		chk_clear_wave_next.setToolTipText("<html>If true, no monsters will spawn before all monsters of the previous wave<br> have been killed.");
 		chk_clear_wave_next.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_clear_wave_next.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_clear_wave_next.setBounds(6, 80, 182, 25);
 		pan_arena_settings.add(chk_clear_wave_next);
 
 		chk_clear_boss_next = new JCheckBox("Clear boss before next");
+		chk_clear_boss_next.setToolTipText("If true, no new waves will spawn before the current boss (if any) is dead.");
 		chk_clear_boss_next.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_clear_boss_next.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_clear_boss_next.setBounds(6, 117, 177, 25);
 		pan_arena_settings.add(chk_clear_boss_next);
 
 		chk_clear_wave_boss = new JCheckBox("Clear wave before boss");
+		chk_clear_wave_boss.setToolTipText("If true, a boss wave will not spawn until all previous monsters have been killed.");
 		chk_clear_wave_boss.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_clear_wave_boss.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_clear_wave_boss.setBounds(6, 154, 182, 25);
 		pan_arena_settings.add(chk_clear_wave_boss);
 
 		chk_lightning = new JCheckBox("Lightning");
+		chk_lightning.setToolTipText("If true, every spawnpoint will be struck by lightning (no damage) on special waves.");
 		chk_lightning.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_lightning.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_lightning.setBounds(176, 6, 90, 25);
 		pan_arena_settings.add(chk_lightning);
 
 		chk_auto_equip = new JCheckBox("Auto equip armor");
+		chk_auto_equip.setToolTipText("If true, armor pieces will automatically be equipped upon class selection. Note that this does not work if a class has more than 1 of an armor piece type.");
 		chk_auto_equip.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_auto_equip.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_auto_equip.setBounds(6, 191, 144, 25);
@@ -1240,7 +1260,6 @@ public class MenuPrincipal extends JFrame {
 
 		sai_min_players = new JFormattedTextField(new MaskFormatter("###"));
 		sai_min_players.setBackground(new Color(255, 255, 255));
-		sai_min_players.addKeyListener(mask_numeric);
 		sai_min_players.setColumns(10);
 		sai_min_players.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		sai_min_players.setBounds(438, 155, 50, 25);
@@ -1253,7 +1272,6 @@ public class MenuPrincipal extends JFrame {
 
 		sai_max_players = new JFormattedTextField(new MaskFormatter("###"));
 		sai_max_players.setBackground(new Color(255, 255, 255));
-		sai_max_players.addKeyListener(mask_numeric);
 		sai_max_players.setColumns(10);
 		sai_max_players.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		sai_max_players.setBounds(438, 192, 50, 25);
@@ -1266,7 +1284,6 @@ public class MenuPrincipal extends JFrame {
 
 		sai_max_join_distance = new JFormattedTextField(new MaskFormatter("###"));
 		sai_max_join_distance.setBackground(new Color(255, 255, 255));
-		sai_max_join_distance.addKeyListener(mask_numeric);
 		sai_max_join_distance.setColumns(10);
 		sai_max_join_distance.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		sai_max_join_distance.setBounds(438, 229, 50, 25);
@@ -1279,7 +1296,6 @@ public class MenuPrincipal extends JFrame {
 
 		sai_first_delay = new JFormattedTextField(new MaskFormatter("###"));
 		sai_first_delay.setBackground(new Color(255, 255, 255));
-		sai_first_delay.addKeyListener(mask_numeric);
 		sai_first_delay.setColumns(10);
 		sai_first_delay.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		sai_first_delay.setBounds(438, 266, 50, 25);
@@ -1292,7 +1308,6 @@ public class MenuPrincipal extends JFrame {
 
 		sai_interval = new JFormattedTextField(new MaskFormatter("###"));
 		sai_interval.setBackground(new Color(255, 255, 255));
-		sai_interval.addKeyListener(mask_numeric);
 		sai_interval.setColumns(10);
 		sai_interval.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		sai_interval.setBounds(438, 302, 50, 25);
@@ -1305,7 +1320,6 @@ public class MenuPrincipal extends JFrame {
 
 		sai_final_wave = new JFormattedTextField(new MaskFormatter("###"));
 		sai_final_wave.setBackground(new Color(255, 255, 255));
-		sai_final_wave.addKeyListener(mask_numeric);
 		sai_final_wave.setColumns(10);
 		sai_final_wave.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		sai_final_wave.setBounds(438, 340, 50, 25);
@@ -1318,7 +1332,6 @@ public class MenuPrincipal extends JFrame {
 
 		sai_monster_limit = new JFormattedTextField(new MaskFormatter("###"));
 		sai_monster_limit.setBackground(new Color(255, 255, 255));
-		sai_monster_limit.addKeyListener(mask_numeric);
 		sai_monster_limit.setColumns(10);
 		sai_monster_limit.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		sai_monster_limit.setBounds(438, 377, 50, 25);
@@ -1365,7 +1378,6 @@ public class MenuPrincipal extends JFrame {
 
 		sai_auto_start = new JFormattedTextField(new MaskFormatter("###"));
 		sai_auto_start.setBackground(new Color(255, 255, 255));
-		sai_auto_start.addKeyListener(mask_numeric);
 		sai_auto_start.setColumns(10);
 		sai_auto_start.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		sai_auto_start.setBounds(645, 225, 50, 25);
@@ -1517,7 +1529,6 @@ public class MenuPrincipal extends JFrame {
 			combo_carac_wave.setModel(new DefaultComboBoxModel<String>(EAbilities.namevalues()));
 			combo_carac_wave.setSelectedIndex(-1);
 			sai_nb_carac_wave.setVisible(false);
-
 			break;
 		case Special:
 			lib_carac_wave.setText("Monsters");
@@ -1544,6 +1555,20 @@ public class MenuPrincipal extends JFrame {
 			lib_set.setVisible(true);
 			lib_set.setText("Drops :");
 			btn_set.setVisible(true);
+			break;
+		case Upgrade:
+			lib_abi_announce.setVisible(true);
+			lib_abi_announce.setText("Give all  items :");
+			chk_abi_announce.setVisible(true);
+			lib_set.setVisible(true);
+			lib_set.setText("Configure :");
+			btn_set.setVisible(true);
+			
+			lib_carac_wave.setVisible(false);
+			combo_carac_wave.setVisible(false);
+			btn_add.setVisible(false);
+			scrpan_carac_wave.setVisible(false);
+			sai_nb_carac_wave.setVisible(false);
 			break;
 		default:
 			break;
@@ -1655,9 +1680,11 @@ public class MenuPrincipal extends JFrame {
 			break;
 		case Supply:
 			SupplyW supw = (SupplyW) wave;
-			
 			loadListCaracs(supw.getMonstres(), list_carac_wave);
 			break;
+		case Upgrade:
+			UpgradeW upw = (UpgradeW) wave;
+			chk_abi_announce.setSelected(upw.isGive_all_items());
 		default:
 			break;
 		}
@@ -1700,6 +1727,7 @@ public class MenuPrincipal extends JFrame {
 					}
 
 				}
+				
 			}
 
 		}
