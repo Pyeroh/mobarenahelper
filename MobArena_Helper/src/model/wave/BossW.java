@@ -72,7 +72,6 @@ public class BossW extends Wave{
 		return abilities;
 	}
 
-	//TODO Gérer la possibilité d'avoir une récompense pour avoir tué le boss
 	public ItemList getReward() {
 		return reward;
 	}

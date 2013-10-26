@@ -87,7 +87,6 @@ public class MenuPrincipal extends JFrame {
 	private Arenas arenas = null;
 	private File file = null;
 	//TODO adapter le code pour utiliser cette Wave et pas chercher à chaque fois dans la liste
-	@SuppressWarnings("unused")
 	private Wave wave;
 	
 	private JTabbedPane tabpan_config;
@@ -242,6 +241,7 @@ public class MenuPrincipal extends JFrame {
 							.getWavesType(category);
 					DefaultW defwave = new DefaultW(category);
 					waves.add(0, defwave);
+					wave = defwave;
 					loadListCaracs(waves, listToLoad);
 					setVisibleComponents(defwave);
 					loadData(defwave);
@@ -271,9 +271,9 @@ public class MenuPrincipal extends JFrame {
 					if (e.getButton() == MouseEvent.BUTTON1) {
 
 						if (source != list_carac_wave) {
-							Wave vague = jList.getSelectedValue().getWave();
-							setVisibleComponents(vague);
-							loadData(vague);
+							wave = jList.getSelectedValue().getWave();
+							setVisibleComponents(wave);
+							loadData(wave);
 							deselectWaveLists(jList);
 						}
 
@@ -289,15 +289,15 @@ public class MenuPrincipal extends JFrame {
 
 								setInvisibleComponents();
 
-								Wave hoverWave = jList.getModel()
+								wave = jList.getModel()
 										.getElementAt(hoverIndex).getWave();
 								int reponse = JOptionPane.showConfirmDialog(
 										null,
 										"Are you sure you want to delete the "
-												+ hoverWave.getCategory()
+												+ wave.getCategory()
 												.getNom().toLowerCase()
 												+ " wave named "
-												+ hoverWave.getNom() + " ?",
+												+ wave.getNom() + " ?",
 												"Confirmation",
 												JOptionPane.YES_NO_OPTION,
 												JOptionPane.QUESTION_MESSAGE);
@@ -307,11 +307,11 @@ public class MenuPrincipal extends JFrame {
 									Arena lArene = arenas.getALarenas().get(
 											combo_arena.getSelectedIndex());
 									//Suppression de la vague voulue
-									lArene.getWavesType(hoverWave.getCategory())
+									lArene.getWavesType(wave.getCategory())
 									.remove(hoverIndex);
 									//Rechargement
 									loadListCaracs(
-											lArene.getWavesType(hoverWave
+											lArene.getWavesType(wave
 													.getCategory()), jList);
 									break;
 								default:
@@ -329,7 +329,7 @@ public class MenuPrincipal extends JFrame {
 								JList<CellListWave> list_wave = list_recurrent
 										.getSelectedIndex() != -1 ? list_recurrent
 												: list_single;
-								Wave wave = list_wave.getSelectedValue()
+								wave = list_wave.getSelectedValue()
 										.getWave();
 								String toDelete = "";
 								String name = "";
@@ -397,7 +397,7 @@ public class MenuPrincipal extends JFrame {
 					@SuppressWarnings("unchecked")
 					JComboBox<String> combo_sel = (JComboBox<String>) e.getSource();
 
-					Wave wave = list_sel.getSelectedValue().getWave();
+					wave = list_sel.getSelectedValue().getWave();
 					String type = (String) combo_sel.getSelectedItem();
 
 					if (combo_sel == combo_monster) {
@@ -1114,7 +1114,6 @@ public class MenuPrincipal extends JFrame {
 		combo_hArmor.setBounds(130, 208, 137, 26);
 		pan_caracs_class.add(combo_hArmor);
 
-		//TODO Faire des tooltips
 		pan_arena_settings = new JPanel();
 		pan_arena_settings.setBorder(new LineBorder(new Color(0, 0, 0)));
 		pan_arena_settings.setBounds(6, 6, 567, 341);
@@ -1135,12 +1134,13 @@ public class MenuPrincipal extends JFrame {
 		pan_arena_settings.add(chk_protect);
 
 		lib_entry = new JLabel("Entry fee");
+		lib_entry.setToolTipText("<html>Follows the exact same notation as the class items and rewards. $20 will subtract<br> 20 of whatever currency you use from the players upon joining. $5, stick:2 will <br>require the player to have 5 currency units and 2 sticks to join the arena. The <br>entry-fee will be refunded if the player leaves before the arena starts.");
 		lib_entry.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lib_entry.setBounds(6, 43, 73, 25);
 		pan_arena_settings.add(lib_entry);
 
 		sai_entry = new JFormattedTextField(new MaskFormatter("$###"));
-		sai_entry.setToolTipText("<html>Follows the exact same notation as the class items and rewards. $20 will subtract<br> 20 of whatever currency you use from the players upon joining. $5, stick:2 will <br>require the player to have 5 currency units and 2 sticks to join the arena. The <br>entry-fee will be refunded if the player leaves before the arena starts.");
+		sai_entry.setToolTipText(lib_entry.getToolTipText());
 		sai_entry.setBackground(new Color(255, 255, 255));
 		sai_entry.setBounds(91, 44, 50, 25);
 		sai_entry.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -1148,7 +1148,7 @@ public class MenuPrincipal extends JFrame {
 		sai_entry.setColumns(10);
 
 		btn_entry = new JButton("Set item");
-		btn_entry.setToolTipText("<html>Follows the exact same notation as the class items and rewards. $20 will subtract<br> 20 of whatever currency you use from the players upon joining. $5, stick:2 will <br>require the player to have 5 currency units and 2 sticks to join the arena. The <br>entry-fee will be refunded if the player leaves before the arena starts.");
+		btn_entry.setToolTipText(lib_entry.getToolTipText());
 		btn_entry.setBounds(153, 44, 90, 25);
 		pan_arena_settings.add(btn_entry);
 
@@ -1181,84 +1181,97 @@ public class MenuPrincipal extends JFrame {
 		pan_arena_settings.add(chk_lightning);
 
 		chk_auto_equip = new JCheckBox("Auto equip armor");
-		chk_auto_equip.setToolTipText("If true, armor pieces will automatically be equipped upon class selection. Note that this does not work if a class has more than 1 of an armor piece type.");
+		chk_auto_equip.setToolTipText("<html>If true, armor pieces will automatically be equipped upon class selection. <br>Note that this does not work if a class has more than 1 of an armor piece type.");
 		chk_auto_equip.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_auto_equip.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_auto_equip.setBounds(6, 191, 144, 25);
 		pan_arena_settings.add(chk_auto_equip);
 
 		chk_soft_restore = new JCheckBox("Soft restore");
+		chk_soft_restore.setToolTipText("<html>If true, all destroyed blocks will be saved in a \"repair list\", which will be used to restore <br>blocks at arena end. No data is saved to the harddrive. Note that this setting, if true, <br>ignores the protect flag.");
 		chk_soft_restore.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_soft_restore.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_soft_restore.setBounds(161, 191, 105, 25);
 		pan_arena_settings.add(chk_soft_restore);
 
 		chk_soft_restore_drops = new JCheckBox("Soft restore drops");
+		chk_soft_restore_drops.setToolTipText("<html>If true, blocks destroyed by players will drop as items like they normally do (using<br> pickaxes, spades, etc.). Note that this makes it very easy for classes with pickaxes<br> to \"mine the arena\" and build forts.");
 		chk_soft_restore_drops.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_soft_restore_drops.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_soft_restore_drops.setBounds(6, 228, 149, 25);
 		pan_arena_settings.add(chk_soft_restore_drops);
 
 		chk_require_inv_join = new JCheckBox("Require empty inventory to join");
+		chk_require_inv_join.setToolTipText("If false, players' inventories will be saved upon joining, and restored upon death/leaving.");
 		chk_require_inv_join.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_require_inv_join.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_require_inv_join.setBounds(6, 263, 242, 28);
 		pan_arena_settings.add(chk_require_inv_join);
 
 		chk_require_inv_spec = new JCheckBox("Require empty inventory to spectate");
+		chk_require_inv_spec.setToolTipText("If false, players can spectate the arena without having to empty their inventories.");
 		chk_require_inv_spec.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_require_inv_spec.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_require_inv_spec.setBounds(6, 299, 275, 28);
 		pan_arena_settings.add(chk_require_inv_spec);
 
 		chk_hellhounds = new JCheckBox("Hellhounds");
+		chk_hellhounds.setToolTipText("<html>If true, all pet wolves in the arena will be in flames! This has no actual function, and is purely for the cool-factor. <br>Also useful for distinguishing enemy wolves and pet wolves.");
 		chk_hellhounds.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_hellhounds.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_hellhounds.setBounds(6, 339, 99, 25);
 		pan_arena_settings.add(chk_hellhounds);
 
 		chk_pvp = new JCheckBox("PVP enabled");
+		chk_pvp.setToolTipText("If true, players can damage each other in the arena.");
 		chk_pvp.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_pvp.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_pvp.setBounds(6, 376, 108, 25);
 		pan_arena_settings.add(chk_pvp);
 
 		chk_monster_infight = new JCheckBox("Monster infight");
+		chk_monster_infight.setToolTipText("If false, monsters will no longer damage each other.");
 		chk_monster_infight.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_monster_infight.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_monster_infight.setBounds(6, 413, 127, 25);
 		pan_arena_settings.add(chk_monster_infight);
 
 		chk_allow_tp = new JCheckBox("Allow teleporting");
+		chk_allow_tp.setToolTipText("<html>If false, all warping to and from the arena region is blocked. <br>Useful for preventing players from summoning other players into the arena for help.");
 		chk_allow_tp.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_allow_tp.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_allow_tp.setBounds(307, 6, 139, 25);
 		pan_arena_settings.add(chk_allow_tp);
 
 		chk_spectate_death = new JCheckBox("Spectate on death");
+		chk_spectate_death.setToolTipText("<html>If false, players will not get warped to the spectator area, but instead be \"kicked\" <br>from the arena (essentially a forced /ma leave).");
 		chk_spectate_death.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_spectate_death.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_spectate_death.setBounds(307, 43, 149, 25);
 		pan_arena_settings.add(chk_spectate_death);
 
 		chk_auto_respawn = new JCheckBox("Auto respawn");
+		chk_auto_respawn.setToolTipText("<html>If false, players will be greeted with the typical death screen upon dying in the <br>arena, and will have to click the respawn button to respawn. With this setting at false, <br>players will actually die in the arena, meaning plugins like Heroes and mcMMO will <br>properly trigger their resetting of internal data upon respawn.");
 		chk_auto_respawn.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_auto_respawn.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_auto_respawn.setBounds(307, 80, 119, 25);
 		pan_arena_settings.add(chk_auto_respawn);
 
 		chk_share = new JCheckBox("Share items");
+		chk_share.setToolTipText("If false, players will not be able to drop items in the arena.");
 		chk_share.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_share.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_share.setBounds(307, 117, 105, 25);
 		pan_arena_settings.add(chk_share);
 
 		lib_min_players = new JLabel("Min players");
+		lib_min_players.setToolTipText("<html>Gives a lower limit on how many players are required to start the arena. The default <br>of 0 is the same as 1, which means 1 or more players may start the arena.");
 		lib_min_players.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lib_min_players.setBounds(307, 154, 84, 25);
 		pan_arena_settings.add(lib_min_players);
 
 		sai_min_players = new JFormattedTextField(new MaskFormatter("###"));
+		sai_min_players.setToolTipText(lib_min_players.getToolTipText());
 		sai_min_players.setBackground(new Color(255, 255, 255));
 		sai_min_players.setColumns(10);
 		sai_min_players.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -1266,11 +1279,13 @@ public class MenuPrincipal extends JFrame {
 		pan_arena_settings.add(sai_min_players);
 
 		lib_max_players = new JLabel("Max players");
+		lib_max_players.setToolTipText("Gives an upper limit on how many players may join the arena. The default of 0 means no limit.");
 		lib_max_players.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lib_max_players.setBounds(307, 191, 84, 25);
 		pan_arena_settings.add(lib_max_players);
 
 		sai_max_players = new JFormattedTextField(new MaskFormatter("###"));
+		sai_max_players.setToolTipText(lib_max_players.getToolTipText());
 		sai_max_players.setBackground(new Color(255, 255, 255));
 		sai_max_players.setColumns(10);
 		sai_max_players.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -1278,11 +1293,13 @@ public class MenuPrincipal extends JFrame {
 		pan_arena_settings.add(sai_max_players);
 
 		lib_max_join_distance = new JLabel("Max join distance");
+		lib_max_join_distance.setToolTipText("<html>The maximum distance (in blocks) from which players can join or spectate the <br>arena. If 0 (default), there is no limit. Note that the distance is calculated from every <br>corner of the arena region, and that players not in the arena world won't be able to <br>join or spectate.");
 		lib_max_join_distance.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lib_max_join_distance.setBounds(307, 228, 119, 25);
 		pan_arena_settings.add(lib_max_join_distance);
 
 		sai_max_join_distance = new JFormattedTextField(new MaskFormatter("###"));
+		sai_max_join_distance.setToolTipText(lib_max_join_distance.getToolTipText());
 		sai_max_join_distance.setBackground(new Color(255, 255, 255));
 		sai_max_join_distance.setColumns(10);
 		sai_max_join_distance.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -1290,11 +1307,13 @@ public class MenuPrincipal extends JFrame {
 		pan_arena_settings.add(sai_max_join_distance);
 
 		lib_first_delay = new JLabel("First wave delay");
+		lib_first_delay.setToolTipText("The time (in seconds) before the first wave of monsters upon arena start.");
 		lib_first_delay.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lib_first_delay.setBounds(307, 265, 119, 25);
 		pan_arena_settings.add(lib_first_delay);
 
 		sai_first_delay = new JFormattedTextField(new MaskFormatter("###"));
+		sai_first_delay.setToolTipText(lib_first_delay.getToolTipText());
 		sai_first_delay.setBackground(new Color(255, 255, 255));
 		sai_first_delay.setColumns(10);
 		sai_first_delay.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -1302,11 +1321,13 @@ public class MenuPrincipal extends JFrame {
 		pan_arena_settings.add(sai_first_delay);
 
 		lib_interval = new JLabel("Wave interval");
+		lib_interval.setToolTipText("The time (in seconds) between each new wave of monsters. If clear-wave-before-next: true, this setting will be ignored.");
 		lib_interval.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lib_interval.setBounds(307, 301, 119, 25);
 		pan_arena_settings.add(lib_interval);
 
 		sai_interval = new JFormattedTextField(new MaskFormatter("###"));
+		sai_interval.setToolTipText(lib_interval.getToolTipText());
 		sai_interval.setBackground(new Color(255, 255, 255));
 		sai_interval.setColumns(10);
 		sai_interval.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -1314,11 +1335,13 @@ public class MenuPrincipal extends JFrame {
 		pan_arena_settings.add(sai_interval);
 
 		lib_final_wave = new JLabel("Final wave");
+		lib_final_wave.setToolTipText("<html>The number of the final wave before the arena is force ended. This is useful if you <br>want to set a cap on how many waves an arena will have.");
 		lib_final_wave.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lib_final_wave.setBounds(307, 338, 119, 25);
 		pan_arena_settings.add(lib_final_wave);
 
 		sai_final_wave = new JFormattedTextField(new MaskFormatter("###"));
+		sai_final_wave.setToolTipText(lib_final_wave.getToolTipText());
 		sai_final_wave.setBackground(new Color(255, 255, 255));
 		sai_final_wave.setColumns(10);
 		sai_final_wave.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -1326,11 +1349,13 @@ public class MenuPrincipal extends JFrame {
 		pan_arena_settings.add(sai_final_wave);
 
 		lib_monster_limit = new JLabel("Monster limit");
+		lib_monster_limit.setToolTipText("<html>The maximum amount of monsters MobArena is allowed to spawn for this arena. <br>The next wave, if any, will not spawn until there is room for more monsters.");
 		lib_monster_limit.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lib_monster_limit.setBounds(307, 376, 119, 25);
 		pan_arena_settings.add(lib_monster_limit);
 
 		sai_monster_limit = new JFormattedTextField(new MaskFormatter("###"));
+		sai_monster_limit.setToolTipText(lib_monster_limit.getToolTipText());
 		sai_monster_limit.setBackground(new Color(255, 255, 255));
 		sai_monster_limit.setColumns(10);
 		sai_monster_limit.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -1338,45 +1363,53 @@ public class MenuPrincipal extends JFrame {
 		pan_arena_settings.add(sai_monster_limit);
 
 		chk_monster_xp = new JCheckBox("Monsters drop XP");
+		chk_monster_xp.setToolTipText("<html>If true, monsters will drop experience orbs. This is useful if you wish to give players <br>the ability to spend the gathered experience on enchants or something else (using <br>different plugins) during the session.");
 		chk_monster_xp.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_monster_xp.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_monster_xp.setBounds(307, 413, 149, 25);
 		pan_arena_settings.add(chk_monster_xp);
 
 		chk_keep_xp = new JCheckBox("Keep XP");
+		chk_keep_xp.setToolTipText("<html>If true, players will keep the experience they gather in the arenas after death. This is <br>useful if you want to allow players to level up or gather experience in the arenas. <br>NOTE: If using display-waves-as-level or display-timer-as-level, set keep-exp to false.");
 		chk_keep_xp.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_keep_xp.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_keep_xp.setBounds(514, 6, 80, 25);
 		pan_arena_settings.add(chk_keep_xp);
 
 		chk_food_regen = new JCheckBox("Food regeneration");
+		chk_food_regen.setToolTipText("<html>If true, a full food bar will cause players to regenerate health while in the arena. <br>Note that this potentially makes tank-like classes extremely overpowered, since <br>diamond armor (by default) coupled with a full food bar will make a player very hard <br>to kill.");
 		chk_food_regen.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_food_regen.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_food_regen.setBounds(514, 39, 150, 25);
 		pan_arena_settings.add(chk_food_regen);
 
 		chk_lock_food = new JCheckBox("Lock food level");
+		chk_lock_food.setToolTipText("<html>If true, the food bar will be locked for all players in the arena, meaning they will not <br>end up starving, and they will be able to sprint around as they please.");
 		chk_lock_food.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_lock_food.setFont(new Font("Tahoma", Font.BOLD, 14));
-		chk_lock_food.setBounds(514, 76, 127, 25);
+		chk_lock_food.setBounds(514, 80, 127, 25);
 		pan_arena_settings.add(chk_lock_food);
 
 		lib_player_time = new JLabel("Player time of day");
+		lib_player_time.setToolTipText("<html>When set to anything but world, this setting will freeze the apparent world time for <br>players in the arena to whatever value you set. This is useful for making time-of-day <br>themed arenas (e.g. constant night time for a cemetery, broad daylight for a pirate <br>ship).");
 		lib_player_time.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lib_player_time.setBounds(514, 150, 127, 25);
 		pan_arena_settings.add(lib_player_time);
 
 		combo_player_time = new JComboBox<String>();
+		combo_player_time.setToolTipText(lib_player_time.getToolTipText());
 		combo_player_time.setModel(new DefaultComboBoxModel<String>(new String[] {"world", "dawn", "sunrise", "morning", "midday", "noon", "day", "afternoon", "evening", "sunset", "dusk", "night", "midnight"}));
 		combo_player_time.setBounds(653, 150, 95, 26);
 		pan_arena_settings.add(combo_player_time);
 
 		lib_auto_start = new JLabel("Auto start timer");
+		lib_auto_start.setToolTipText("<html>The time (in seconds) before the arena will be force started after the first player has <br>joined the lobby (the default of 0 means deactivated or infinite time). Non-ready <br>players will be removed from the lobby. This setting is useful to prevent ill-minded <br>players from delaying or preventing other players from starting the arena.");
 		lib_auto_start.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lib_auto_start.setBounds(514, 224, 119, 25);
 		pan_arena_settings.add(lib_auto_start);
 
 		sai_auto_start = new JFormattedTextField(new MaskFormatter("###"));
+		sai_auto_start.setToolTipText(lib_auto_start.getToolTipText());
 		sai_auto_start.setBackground(new Color(255, 255, 255));
 		sai_auto_start.setColumns(10);
 		sai_auto_start.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -1390,6 +1423,7 @@ public class MenuPrincipal extends JFrame {
 		pan_arena_settings.add(chk_spout_class);
 
 		chk_auto_ignite = new JCheckBox("Auto ignite TNT");
+		chk_auto_ignite.setToolTipText("<html>If true, TNT will be automatically ignited when placed. This is useful for preventing <br>Oddjob-like classes from forting.");
 		chk_auto_ignite.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_auto_ignite.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_auto_ignite.setBounds(514, 187, 149, 25);
@@ -1402,24 +1436,28 @@ public class MenuPrincipal extends JFrame {
 		pan_arena_settings.add(chk_use_class_chest);
 
 		chk_display_waves = new JCheckBox("Display waves as level");
+		chk_display_waves.setToolTipText("<html>When set to true, the players' level counter (above the experience bar) will be used <br>to display the current wave number. If the wave announcements in the <br>announcements-file are silenced, this can be used to make a much less \"spammy\" <br>MobArena experience. NOTE: Do not use this if keep-exp is set to true!");
 		chk_display_waves.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_display_waves.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_display_waves.setBounds(514, 299, 170, 25);
 		pan_arena_settings.add(chk_display_waves);
 
 		chk_display_timer = new JCheckBox("Display timer as level");
+		chk_display_timer.setToolTipText("<html>When set to true, the players' level counter (above the experience bar) will be used <br>to display the auto-start timer in the lobby. NOTE: Do not use this if keep-exp is set to <br>true!");
 		chk_display_timer.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_display_timer.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_display_timer.setBounds(514, 336, 170, 25);
 		pan_arena_settings.add(chk_display_timer);
 
 		chk_auto_ready = new JCheckBox("Auto ready");
+		chk_auto_ready.setToolTipText("<html>When set to true, players are automatically flagged as ready when they pick a class. <br>Useful for arenas with many players where hitting an iron block becomes difficult.");
 		chk_auto_ready.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_auto_ready.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_auto_ready.setBounds(514, 373, 99, 25);
 		pan_arena_settings.add(chk_auto_ready);
 
 		chk_scoreboard = new JCheckBox("Use scoreboards");
+		chk_scoreboard.setToolTipText("Whether to use scoreboards in MobArena or not.");
 		chk_scoreboard.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_scoreboard.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_scoreboard.setBounds(514, 413, 139, 25);
