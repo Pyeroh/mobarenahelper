@@ -68,7 +68,7 @@ public class ItemSelector extends JFrame {
 	 * @throws ParseException 
 	 */
 	public ItemSelector(JFrame frame, ItemList items, int max, boolean isArmor) {
-		super("Item Selector - MobArena Helper v2");
+		super("Item Selector - "+frame.getTitle());
 		
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
@@ -83,7 +83,7 @@ public class ItemSelector extends JFrame {
 		this.frame = frame;
 
 		setSize(850,356);
-		setLocationRelativeTo(null);
+		setLocationRelativeTo(frame);
 		setAlwaysOnTop(true);
 		this.frame.setEnabled(false);
 		getContentPane().setLayout(null);
