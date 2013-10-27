@@ -78,7 +78,7 @@ import view.cells.HoverListCellRenderer;
 public class MenuPrincipal extends JFrame {
 
 	private static final long serialVersionUID = 7504976316824014595L;
-	
+
 	private JMenuItem mntmAbout;
 	private JMenuBar menuBar;
 	private JMenu mnHelp;
@@ -88,9 +88,9 @@ public class MenuPrincipal extends JFrame {
 	private File file = null;
 	//TODO adapter le code pour utiliser cette Wave et pas chercher à chaque fois dans la liste
 	private Wave wave;
-	
+
 	private JTabbedPane tabpan_config;
-	
+
 	private JPanel pan_arena_wave;
 	private JLabel lib_arena;
 	private JComboBox<String> combo_arena;
@@ -155,7 +155,7 @@ public class MenuPrincipal extends JFrame {
 	private JPanel pan_classes;
 	private JLabel lib_hArmor;
 	private JComboBox<String> combo_hArmor;
-	
+
 	private JPanel pan_arena_settings;
 	private JCheckBox chk_enabled;
 	private JCheckBox chk_protect;
@@ -209,14 +209,14 @@ public class MenuPrincipal extends JFrame {
 	private JCheckBox chk_scoreboard;
 	private JLabel lib_boss_name;
 	private JTextField sai_boss_name;
-	
+
 	public MenuPrincipal() throws ParseException{
 		super("MobArena Helper v2");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(MenuPrincipal.class.getResource("/gui/mobarena.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
 		getContentPane().setLayout(null);
-		
+
 		//TODO Ajouter la gestion (ajout/suppression) des arènes
 
 		MouseAdapter newWave = new MouseAdapter() {
@@ -264,9 +264,9 @@ public class MenuPrincipal extends JFrame {
 				JList<CellListCaracs> source = (JList<CellListCaracs>) e.getSource();
 				JList<CellListWave> jList = (JList<CellListWave>) e.getSource();
 				if (source.getModel().getSize()!=0) {
-					
+
 					jList.ensureIndexIsVisible(jList.getSelectedIndex());
-					
+
 					//Clic gauche (sélection)
 					if (e.getButton() == MouseEvent.BUTTON1) {
 
@@ -295,7 +295,7 @@ public class MenuPrincipal extends JFrame {
 										null,
 										"Are you sure you want to delete the "
 												+ wave.getCategory()
-												.getNom().toLowerCase()
+												.name()
 												+ " wave named "
 												+ wave.getNom() + " ?",
 												"Confirmation",
@@ -427,14 +427,28 @@ public class MenuPrincipal extends JFrame {
 				fchoose.showOpenDialog(null);
 				file = fchoose.getSelectedFile();
 				if (file!=null) {
-					GestYaml.S_gestionnaire = new GestYaml(file);
-					g = GestYaml.S_gestionnaire;
-					arenas = new Arenas(g.getMap("arenas"),g.getMap("global-settings"),g.getMap("classes"));
-					ArrayList<Arena> alArenas = arenas.getALarenas();
-					for(int i=0;i<alArenas.size();i++){
-						combo_arena.addItem(alArenas.get(i).getNom());
+					try {
+						GestYaml.S_gestionnaire = new GestYaml(file);
+						g = GestYaml.S_gestionnaire;
+						arenas = new Arenas(g.getMap("arenas"),g.getMap("global-settings"),g.getMap("classes"));
+						ArrayList<Arena> alArenas = arenas.getALarenas();
+						for(int i=0;i<alArenas.size();i++){
+							combo_arena.addItem(alArenas.get(i).getNom());
+						}
+						loadArena(0);
+					} catch (Exception e1) {
+						e1.printStackTrace();
+						
+						Classe.classe_list.clear();
+						file = null;
+						list_recurrent.setModel(new DefaultListModel<CellListWave>());
+						list_single.setModel(new DefaultListModel<CellListWave>());
+						combo_arena.setModel(new DefaultComboBoxModel<String>());
+						setInvisibleComponents();
+						JOptionPane.showMessageDialog(rootPane, "Incorrect file format, please check it at\nhttp://yaml-online-parser.appspot.com/\nand verify everything is okay in your config file","Critical error",JOptionPane.ERROR_MESSAGE);
+						
 					}
-					loadArena(0);
+					
 				}
 			}
 		});
@@ -452,6 +466,9 @@ public class MenuPrincipal extends JFrame {
 					YmlJFileChooser fchoose = new YmlJFileChooser(file.getPath());
 					fchoose.showOpenDialog(null);
 					File f = fchoose.getSelectedFile();
+					if(!f.getPath().endsWith(".yml")) {
+						f = new File(f.getPath()+".yml");
+					}
 					f.delete();
 					try {
 						f.createNewFile();
@@ -546,15 +563,19 @@ public class MenuPrincipal extends JFrame {
 		sai_name.addKeyListener(new KeyAdapter() {
 			public void keyReleased(KeyEvent e) {
 
-				JList<CellListWave> list_sel = combo_category.getSelectedItem().equals("Recurrent") ? list_recurrent : list_single;
+				String category = wave.getCategory().name();
+				//JList<CellListWave> list_sel = combo_category.getSelectedItem().equals("Recurrent") ? list_recurrent : list_single;
+				JList<CellListWave> list_sel = category.equals("recurrent") ? list_recurrent : list_single;
 				int index_sel = list_sel.getSelectedIndex();
 				Arena lArene = arenas.getALarenas().get(combo_arena.getSelectedIndex());
-				String category = ((String) combo_category.getSelectedItem()).toLowerCase();
+				//String category = ((String) combo_category.getSelectedItem()).toLowerCase();
+				
 				ArrayList<Wave> waveList = lArene.getWavesType(ECatW.valueOf(category));
 
 				String wavename = sai_name.getText().equals("") ? "New_Wave" : sai_name.getText();
 
-				list_sel.getSelectedValue().getWave().setNom(wavename);
+				//list_sel.getSelectedValue().getWave().setNom(wavename);
+				wave.setNom(wavename);
 				loadListCaracs(waveList, list_sel);
 				list_sel.setSelectedIndex(index_sel);
 
@@ -578,11 +599,12 @@ public class MenuPrincipal extends JFrame {
 
 				if(e.getStateChange() == ItemEvent.DESELECTED && combo_category.isFocusOwner()) {
 
-					String scategory = combo_category.getSelectedItem().equals("Recurrent") ? "single" : "recurrent";
+					//String scategory = combo_category.getSelectedItem().equals("Recurrent") ? "single" : "recurrent";
+					String scategory = wave.getCategory().name();
 
 					JList<CellListWave> list_sel = scategory.equals("recurrent") ? list_recurrent : list_single;
 					JList<CellListWave> otherList_sel = list_sel==list_recurrent ? list_single : list_recurrent;
-					int index_sel = list_sel.getSelectedIndex();
+					//int index_sel = list_sel.getSelectedIndex();
 					Arena lArene = arenas.getALarenas().get(combo_arena.getSelectedIndex());
 
 					ECatW category = ECatW.valueOf(scategory);
@@ -591,7 +613,7 @@ public class MenuPrincipal extends JFrame {
 					ArrayList<Wave> waveList = lArene.getWavesType(category);
 					ArrayList<Wave> otherWaveList = lArene.getWavesType(othercat);
 
-					Wave wave = list_sel.getSelectedValue().getWave();
+					//Wave wave = list_sel.getSelectedValue().getWave();
 					waveList.remove(wave);
 					wave.setCategory(othercat);
 					otherWaveList.add(wave);
@@ -600,17 +622,20 @@ public class MenuPrincipal extends JFrame {
 					loadListCaracs(waveList, list_sel);
 					loadListCaracs(otherWaveList, otherList_sel);
 
-					int i=0;
-					int otherw=0;
-					while(i<otherWaveList.size() && otherWaveList.get(i)!=wave){
-						if(otherWaveList.get(i) instanceof OtherW){otherw++;}
-						i++;
-					}
-
-					index_sel = i-otherw;
 					list_sel.clearSelection();
-					otherList_sel.setSelectedIndex(index_sel);
+					otherList_sel.setSelectedIndex(otherWaveList.indexOf(wave));
 					setVisibleComponents(wave);
+					switch (wave.getType()) {
+					case Default: case Special: case Supply:
+						loadListCaracs(wave.getMonstres(), list_carac_wave);
+						break;
+					case Boss:
+						BossW bwave = (BossW) wave;
+						loadListCaracs(bwave.getAbilities(), list_carac_wave);
+						break;
+					default:
+						break;
+					}
 
 				}
 
@@ -635,12 +660,12 @@ public class MenuPrincipal extends JFrame {
 
 					ETypeW type = ETypeW.valueOf((String) combo_type.getSelectedItem());
 					Arena lArene = arenas.getALarenas().get(combo_arena.getSelectedIndex());
-					String category = combo_category.getSelectedItem().equals("Recurrent") ? "recurrent" : "single";
+					String category = wave.getCategory().name();
 					JList<CellListWave> list_sel = category.equals("recurrent") ? list_recurrent : list_single;
-					int index_sel = list_sel.getSelectedIndex();
-					ArrayList<Wave> waveList = lArene.getWavesType(ECatW.valueOf(category));
+					//int index_sel = list_sel.getSelectedIndex();
+					ArrayList<Wave> waveList = lArene.getWavesType(wave.getCategory());
 
-					Wave wave = list_sel.getSelectedValue().getWave();
+					//Wave wave = list_sel.getSelectedValue().getWave();
 					wave.setType(type);
 					waveList.remove(wave);
 
@@ -669,11 +694,12 @@ public class MenuPrincipal extends JFrame {
 					default:
 						break;
 					}
-					waveList.add(index_sel,nextWave);
+					waveList.add(nextWave);
+					wave = nextWave;
 
-					//Collections.sort(waveList);
+					Collections.sort(waveList);
 					loadListCaracs(waveList, list_sel);
-					list_sel.setSelectedIndex(index_sel);
+					list_sel.setSelectedIndex(waveList.indexOf(nextWave));
 					setVisibleComponents(nextWave);
 
 				}
@@ -738,16 +764,9 @@ public class MenuPrincipal extends JFrame {
 				if(e.getStateChange() == ItemEvent.DESELECTED && combo_growth.isFocusOwner()) {
 
 					EGrowth growth = EGrowth.valueOf(((String) combo_growth.getSelectedItem()).toLowerCase());
-					String category = combo_category.getSelectedItem().equals("Recurrent") ? "recurrent" : "single";
-					Arena lArene = arenas.getALarenas().get(combo_arena.getSelectedIndex());
-					JList<CellListWave> list_sel = category.equals("recurrent") ? list_recurrent : list_single;
-					ArrayList<Wave> waveList = lArene.getWavesType(ECatW.valueOf(category));
-					int index_sel = list_sel.getSelectedIndex();
-
-					DefaultW wave = (DefaultW) list_sel.getSelectedValue().getWave();
-					wave.setGrowth(growth);
-					loadListCaracs(waveList, list_sel);
-					list_sel.setSelectedIndex(index_sel);
+					
+					DefaultW defwave = (DefaultW) wave;
+					defwave.setGrowth(growth);
 
 				}
 
@@ -810,8 +829,7 @@ public class MenuPrincipal extends JFrame {
 				//la clause isFocusOwner() est spécifiée car la combo Amount change de valeur à l'initialisation
 				if(e.getStateChange() == ItemEvent.DESELECTED && combo_health.isFocusOwner()) {
 
-					JList<CellListWave> list_sel = combo_category.getSelectedItem().equals("Recurrent") ? list_recurrent : list_single;
-					BossW bwave = (BossW) list_sel.getSelectedValue().getWave();
+					BossW bwave = (BossW) wave;
 
 					bwave.setHealth(EHealth.getByName((String) combo_health.getSelectedItem()));
 
@@ -842,20 +860,20 @@ public class MenuPrincipal extends JFrame {
 				//la clause isFocusOwner() est spécifiée car la combo Amount change de valeur à l'initialisation
 				if(chk_abi_announce.isFocusOwner()) {
 
-					JList<CellListWave> list_sel = combo_category.getSelectedItem().equals("Recurrent") ? list_recurrent : list_single;
 					boolean b = chk_abi_announce.isSelected();
-					Wave wave = list_sel.getSelectedValue().getWave();
 					//Cas d'une vague Default
-					if(lib_abi_announce.getText().equals("Fixed :")){
+					if(wave instanceof DefaultW){
 						DefaultW defwave = (DefaultW) wave;
-
 						defwave.setFixed(b);
 					}
 					//Cas d'une vague Boss
-					else {
+					else if(wave instanceof BossW){
 						BossW bwave = (BossW) wave;
-
 						bwave.setAbility_announce(b);
+					}
+					else if(wave instanceof UpgradeW) {
+						UpgradeW upwave = (UpgradeW) wave;
+						upwave.setGive_all_items(b);
 					}
 
 				}
@@ -888,10 +906,8 @@ public class MenuPrincipal extends JFrame {
 		btn_add.addMouseListener(new MouseAdapter() {
 			public void mouseReleased(MouseEvent e) {
 
-				JList<CellListWave> list_sel = combo_category.getSelectedItem().equals("Recurrent") ? list_recurrent : list_single;
-				Wave wave = list_sel.getSelectedValue().getWave();
 				if (combo_carac_wave.getSelectedIndex()!=-1) {
-
+					
 					String name = (String) combo_carac_wave.getSelectedItem();
 					if (wave instanceof BossW) {
 						BossW bwave = (BossW) wave;
@@ -959,34 +975,33 @@ public class MenuPrincipal extends JFrame {
 		sai_boss_name.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		pan_conf.add(sai_boss_name);
 		sai_boss_name.setColumns(10);
-		
+
 		lib_set = new JLabel("Set");
 		lib_set.setHorizontalAlignment(SwingConstants.TRAILING);
 		lib_set.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lib_set.setBounds(300, 11, 70, 20);
 		pan_conf.add(lib_set);
-		
+
 		btn_set = new JButton("Set");
 		btn_set.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				JList<CellListWave> list_sel = combo_category.getSelectedItem().equals("Recurrent") ? list_recurrent : list_single;
-				Wave wave = list_sel.getSelectedValue().getWave();
-				String type = (String) combo_type.getSelectedItem();
+				String type = wave.getType().name();
 				
 				switch (type) {
 				case "Supply":
 					SupplyW supw = (SupplyW) wave;
-					ItemList drops = new ItemSelector(supw.getDrops(), 0, false).getItemList();
+					ItemList drops = new ItemSelector(MenuPrincipal.this,supw.getDrops(), 0, false).getItemList();
 					supw.setDrops(drops);
 					break;
 				case "Boss":
 					BossW bwave = (BossW) wave;
-					ItemList reward = new ItemSelector(bwave.getReward(), 1, false).getItemList();
+					ItemList reward = new ItemSelector(MenuPrincipal.this,bwave.getReward(), 1, false).getItemList();
 					bwave.setReward(reward);
 					break;
 				case "Upgrade":
 					@SuppressWarnings("unused")
 					UpgradeW upw = (UpgradeW) wave;
+					new UpgradeWaveChanger(upw, MenuPrincipal.this);
 					//TODO créer une fenêtre de configuration des vagues upgrade
 					break;
 				default:
@@ -1470,12 +1485,12 @@ public class MenuPrincipal extends JFrame {
 		tabpan_config.addTab("Arenas and waves configuration", pan_arena_wave);
 		tabpan_config.addTab("Classes configuration", pan_classes);
 		tabpan_config.addTab("Arena configuration", pan_arena_settings);
-		
+
 		JSeparator separator = new JSeparator();
 		separator.setOrientation(SwingConstants.VERTICAL);
 		separator.setBounds(293, 6, 2, 441);
 		pan_arena_settings.add(separator);
-		
+
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setOrientation(SwingConstants.VERTICAL);
 		separator_1.setBounds(500, 6, 2, 441);
@@ -1558,7 +1573,7 @@ public class MenuPrincipal extends JFrame {
 			chk_abi_announce.setVisible(true);
 			lib_abi_interval.setVisible(true);
 			sai_abi_interval.setVisible(true);
-			
+
 			lib_set.setText("Reward :");
 			lib_set.setVisible(true);
 			btn_set.setVisible(true);
@@ -1589,7 +1604,7 @@ public class MenuPrincipal extends JFrame {
 			lib_carac_wave.setText("Monsters");
 			combo_carac_wave.setModel(new DefaultComboBoxModel<String>(EMonsters.namevalues()));
 			combo_carac_wave.setSelectedIndex(-1);
-			
+
 			lib_set.setVisible(true);
 			lib_set.setText("Drops :");
 			btn_set.setVisible(true);
@@ -1601,7 +1616,7 @@ public class MenuPrincipal extends JFrame {
 			lib_set.setVisible(true);
 			lib_set.setText("Configure :");
 			btn_set.setVisible(true);
-			
+
 			lib_carac_wave.setVisible(false);
 			combo_carac_wave.setVisible(false);
 			btn_add.setVisible(false);
@@ -1657,7 +1672,7 @@ public class MenuPrincipal extends JFrame {
 		btn_add.setVisible(false);
 		combo_carac_wave.setVisible(false);
 		sai_nb_carac_wave.setVisible(false);
-		
+
 		lib_set.setVisible(false);
 		btn_set.setVisible(false);
 
@@ -1728,6 +1743,12 @@ public class MenuPrincipal extends JFrame {
 		}
 	}
 
+	
+	/**
+	 * Charge les informations d'une liste de données dans une liste graphique
+	 * @param listdata
+	 * @param listview
+	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void loadListCaracs(ArrayList listdata, JList listview) {
 
@@ -1765,7 +1786,7 @@ public class MenuPrincipal extends JFrame {
 					}
 
 				}
-				
+
 			}
 
 		}
