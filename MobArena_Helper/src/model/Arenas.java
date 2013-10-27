@@ -35,6 +35,10 @@ public class Arenas {
 		return listarenas;
 	}
 	
+	public ArrayList<Classe> getALclasses() {
+		return arraylistclasses;
+	}
+	
 	public ArrayList<Arena> getALarenas() {
 		return arraylistarenas;
 	}
