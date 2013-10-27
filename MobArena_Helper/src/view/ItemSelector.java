@@ -9,6 +9,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -41,6 +43,7 @@ public class ItemSelector extends JFrame {
 	private ItemList items;
 	private int max;
 	private boolean isArmor;
+	private JFrame frame;
 
 	private JLabel lib_selectable;
 	private JLabel lib_sort;
@@ -58,21 +61,31 @@ public class ItemSelector extends JFrame {
 	/**
 	 * Constructeur d'un sélecteur d'items à partir de la liste {@code items} et
 	 * permettant la sélection de {@code max} items.
+	 * @param frame 
 	 * @param items la liste d'entrée
 	 * @param max le nombre d'items sélectionnable max, non géré pour le moment 
 	 * @param isArmor si la fenêtre est un sélecteur d'armure, non géré pour le moment
 	 * @throws ParseException 
 	 */
-	public ItemSelector(ItemList items, int max, boolean isArmor) {
+	public ItemSelector(JFrame frame, ItemList items, int max, boolean isArmor) {
 		super("Item Selector - MobArena Helper v2");
+		
+		addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				ItemSelector.this.frame.setEnabled(true);
+			}
+		});
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ItemSelector.class.getResource("/gui/mobarena.png")));
 		setResizable(false);
 		this.items = items;
 		this.max = max;
 		this.isArmor = isArmor;
+		this.frame = frame;
 
 		setSize(850,356);
 		setLocationRelativeTo(null);
+		setAlwaysOnTop(true);
+		this.frame.setEnabled(false);
 		getContentPane().setLayout(null);
 
 		lib_selectable = new JLabel("Items selectable");
