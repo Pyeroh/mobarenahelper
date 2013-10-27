@@ -242,11 +242,11 @@ public class MenuPrincipal extends JFrame {
 					DefaultW defwave = new DefaultW(category);
 					waves.add(0, defwave);
 					wave = defwave;
-					loadListCaracs(waves, listToLoad);
-					setVisibleComponents(defwave);
-					loadData(defwave);
+					loadListCaracs_ArenaConfig(waves, listToLoad);
+					setVisibleComponents_ArenaConfig(defwave);
+					loadData_ArenaConfig(defwave);
 					listToLoad.setSelectedIndex(0);
-					deselectWaveLists(listToLoad);
+					deselectWaveLists_ArenaConfig(listToLoad);
 					sai_name.requestFocus();
 					sai_name.selectAll();
 
@@ -272,9 +272,9 @@ public class MenuPrincipal extends JFrame {
 
 						if (source != list_carac_wave) {
 							wave = jList.getSelectedValue().getWave();
-							setVisibleComponents(wave);
-							loadData(wave);
-							deselectWaveLists(jList);
+							setVisibleComponents_ArenaConfig(wave);
+							loadData_ArenaConfig(wave);
+							deselectWaveLists_ArenaConfig(jList);
 						}
 
 					}
@@ -287,7 +287,7 @@ public class MenuPrincipal extends JFrame {
 						if (hoverIndex != -1) {
 							if (source != list_carac_wave) {
 
-								setInvisibleComponents();
+								setInvisibleComponents_ArenaConfig();
 
 								wave = jList.getModel()
 										.getElementAt(hoverIndex).getWave();
@@ -310,15 +310,15 @@ public class MenuPrincipal extends JFrame {
 									lArene.getWavesType(wave.getCategory())
 									.remove(hoverIndex);
 									//Rechargement
-									loadListCaracs(
+									loadListCaracs_ArenaConfig(
 											lArene.getWavesType(wave
 													.getCategory()), jList);
 									break;
 								default:
 									break;
 								}
-								deselectWaveLists(list_recurrent);
-								deselectWaveLists(list_single);
+								deselectWaveLists_ArenaConfig(list_recurrent);
+								deselectWaveLists_ArenaConfig(list_single);
 
 							} else {
 
@@ -372,7 +372,7 @@ public class MenuPrincipal extends JFrame {
 								}
 
 								if (listdata != null) {
-									loadListCaracs(listdata, source);
+									loadListCaracs_ArenaConfig(listdata, source);
 								}
 							}
 						}
@@ -383,7 +383,7 @@ public class MenuPrincipal extends JFrame {
 
 		KeyAdapter mask_numeric = new KeyAdapter() {
 			public void keyReleased(KeyEvent e) {
-				majData(e);
+				majData_ArenaConfig(e);
 			}
 		};
 
@@ -444,7 +444,7 @@ public class MenuPrincipal extends JFrame {
 						list_recurrent.setModel(new DefaultListModel<CellListWave>());
 						list_single.setModel(new DefaultListModel<CellListWave>());
 						combo_arena.setModel(new DefaultComboBoxModel<String>());
-						setInvisibleComponents();
+						setInvisibleComponents_ArenaConfig();
 						JOptionPane.showMessageDialog(rootPane, "Incorrect file format, please check it at\nhttp://yaml-online-parser.appspot.com/\nand verify everything is okay in your config file","Critical error",JOptionPane.ERROR_MESSAGE);
 						
 					}
@@ -576,7 +576,7 @@ public class MenuPrincipal extends JFrame {
 
 				//list_sel.getSelectedValue().getWave().setNom(wavename);
 				wave.setNom(wavename);
-				loadListCaracs(waveList, list_sel);
+				loadListCaracs_ArenaConfig(waveList, list_sel);
 				list_sel.setSelectedIndex(index_sel);
 
 			}
@@ -619,19 +619,19 @@ public class MenuPrincipal extends JFrame {
 					otherWaveList.add(wave);
 					Collections.sort(otherWaveList);
 
-					loadListCaracs(waveList, list_sel);
-					loadListCaracs(otherWaveList, otherList_sel);
+					loadListCaracs_ArenaConfig(waveList, list_sel);
+					loadListCaracs_ArenaConfig(otherWaveList, otherList_sel);
 
 					list_sel.clearSelection();
 					otherList_sel.setSelectedIndex(otherWaveList.indexOf(wave));
-					setVisibleComponents(wave);
+					setVisibleComponents_ArenaConfig(wave);
 					switch (wave.getType()) {
 					case Default: case Special: case Supply:
-						loadListCaracs(wave.getMonstres(), list_carac_wave);
+						loadListCaracs_ArenaConfig(wave.getMonstres(), list_carac_wave);
 						break;
 					case Boss:
 						BossW bwave = (BossW) wave;
-						loadListCaracs(bwave.getAbilities(), list_carac_wave);
+						loadListCaracs_ArenaConfig(bwave.getAbilities(), list_carac_wave);
 						break;
 					default:
 						break;
@@ -698,9 +698,9 @@ public class MenuPrincipal extends JFrame {
 					wave = nextWave;
 
 					Collections.sort(waveList);
-					loadListCaracs(waveList, list_sel);
+					loadListCaracs_ArenaConfig(waveList, list_sel);
 					list_sel.setSelectedIndex(waveList.indexOf(nextWave));
-					setVisibleComponents(nextWave);
+					setVisibleComponents_ArenaConfig(nextWave);
 
 				}
 
@@ -917,7 +917,7 @@ public class MenuPrincipal extends JFrame {
 						}
 						else {
 							abilist.add(EAbilities.getByName(name));
-							loadListCaracs(abilist,list_carac_wave);
+							loadListCaracs_ArenaConfig(abilist,list_carac_wave);
 							combo_carac_wave.setSelectedIndex(-1);
 						}
 
@@ -934,7 +934,7 @@ public class MenuPrincipal extends JFrame {
 							}
 							else {
 								monsterlist.add(new Monstre(EMonsters.getByName(name),proba));
-								loadListCaracs(monsterlist, list_carac_wave);
+								loadListCaracs_ArenaConfig(monsterlist, list_carac_wave);
 								combo_carac_wave.setSelectedIndex(-1);
 								sai_nb_carac_wave.setText("");
 							}
@@ -999,7 +999,6 @@ public class MenuPrincipal extends JFrame {
 					bwave.setReward(reward);
 					break;
 				case "Upgrade":
-					@SuppressWarnings("unused")
 					UpgradeW upw = (UpgradeW) wave;
 					new UpgradeWaveChanger(upw, MenuPrincipal.this);
 					//TODO créer une fenêtre de configuration des vagues upgrade
@@ -1478,7 +1477,7 @@ public class MenuPrincipal extends JFrame {
 		chk_scoreboard.setBounds(514, 413, 139, 25);
 		pan_arena_settings.add(chk_scoreboard);
 
-		setInvisibleComponents();
+		setInvisibleComponents_ArenaConfig();
 
 		setSize(760,580);
 
@@ -1519,22 +1518,24 @@ public class MenuPrincipal extends JFrame {
 
 	public void loadArena(int numarena) {
 
-		setInvisibleComponents();
+		setInvisibleComponents_ArenaConfig();
 		Arena arena = arenas.getALarenas().get(numarena);
 
 		ArrayList<Wave> recW = arena.getWavesType(ECatW.recurrent);
-		loadListCaracs(recW, list_recurrent);
+		loadListCaracs_ArenaConfig(recW, list_recurrent);
 
 		ArrayList<Wave> singW = arena.getWavesType(ECatW.single);
-		loadListCaracs(singW, list_single);
+		loadListCaracs_ArenaConfig(singW, list_single);
+		
+		loadClasses_ClassConfig(arenas.getALclasses());
 
 	}
 
-	public void setVisibleComponents(Wave wave) {
+	public void setVisibleComponents_ArenaConfig(Wave wave) {
 		ETypeW typevague = wave.getType();
 		ECatW catvague = wave.getCategory();
 
-		setInvisibleComponents();
+		setInvisibleComponents_ArenaConfig();
 		lib_name.setVisible(true);
 		sai_name.setVisible(true);
 		lib_category.setVisible(true);
@@ -1640,7 +1641,7 @@ public class MenuPrincipal extends JFrame {
 
 	}
 
-	public void setInvisibleComponents() {
+	public void setInvisibleComponents_ArenaConfig() {
 		lib_name.setVisible(false);
 		sai_name.setVisible(false);
 		lib_category.setVisible(false);
@@ -1682,7 +1683,7 @@ public class MenuPrincipal extends JFrame {
 		btn_set.setText("Set");
 	}
 
-	public void deselectWaveLists(JList<CellListWave> jList){
+	public void deselectWaveLists_ArenaConfig(JList<CellListWave> jList){
 		if(jList==list_recurrent){
 			list_single.clearSelection();
 		}
@@ -1691,7 +1692,7 @@ public class MenuPrincipal extends JFrame {
 		}
 	}
 
-	public void loadData(Wave wave) {
+	public void loadData_ArenaConfig(Wave wave) {
 		sai_name.setText(wave.getNom());
 		combo_category.setSelectedItem(wave.getCategory().getNom());
 		combo_type.setSelectedItem(wave.getType().name());
@@ -1707,7 +1708,7 @@ public class MenuPrincipal extends JFrame {
 			growth.replace(0, 1, Character.toString(growth.charAt(0)).toUpperCase());
 			combo_growth.setSelectedItem(growth.toString());
 			chk_abi_announce.setSelected(defwave.isFixed());
-			loadListCaracs(defwave.getMonstres(), list_carac_wave);
+			loadListCaracs_ArenaConfig(defwave.getMonstres(), list_carac_wave);
 			break;
 		case Boss:
 			BossW bwave = (BossW) wave;
@@ -1716,7 +1717,7 @@ public class MenuPrincipal extends JFrame {
 			chk_abi_announce.setSelected(bwave.isAbility_announce());
 			sai_abi_interval.setText(bwave.getAbility_interval()+"");
 			combo_monster.setSelectedItem(bwave.getMonstres().get(0).getMonstre().getNom());
-			loadListCaracs(bwave.getAbilities(), list_carac_wave);
+			loadListCaracs_ArenaConfig(bwave.getAbilities(), list_carac_wave);
 			break;
 		case Swarm:
 			SwarmW swwave = (SwarmW) wave;
@@ -1729,11 +1730,11 @@ public class MenuPrincipal extends JFrame {
 			break;
 		case Special:
 			SpecialW spwave = (SpecialW) wave;
-			loadListCaracs(spwave.getMonstres(), list_carac_wave);
+			loadListCaracs_ArenaConfig(spwave.getMonstres(), list_carac_wave);
 			break;
 		case Supply:
 			SupplyW supw = (SupplyW) wave;
-			loadListCaracs(supw.getMonstres(), list_carac_wave);
+			loadListCaracs_ArenaConfig(supw.getMonstres(), list_carac_wave);
 			break;
 		case Upgrade:
 			UpgradeW upw = (UpgradeW) wave;
@@ -1750,7 +1751,7 @@ public class MenuPrincipal extends JFrame {
 	 * @param listview
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public void loadListCaracs(ArrayList listdata, JList listview) {
+	public void loadListCaracs_ArenaConfig(ArrayList listdata, JList listview) {
 
 		DefaultListModel modW = new DefaultListModel<>();
 
@@ -1803,7 +1804,7 @@ public class MenuPrincipal extends JFrame {
 	 * Met à jour les données numériques d'une vague avec le champ source passé en paramètre
 	 * @param e l'évènement source
 	 */
-	public void majData(KeyEvent e) {
+	public void majData_ArenaConfig(KeyEvent e) {
 
 		JTextField source = (JTextField) e.getSource();
 		JList<CellListWave> list_sel = list_recurrent.getSelectedIndex()!=-1 ? list_recurrent : list_single;
@@ -1829,7 +1830,7 @@ public class MenuPrincipal extends JFrame {
 					}
 					i++;
 				}
-				loadListCaracs(waveList, list_sel);
+				loadListCaracs_ArenaConfig(waveList, list_sel);
 				int index_sel = i - otherw;
 				list_sel.setSelectedIndex(index_sel);
 
@@ -1853,7 +1854,7 @@ public class MenuPrincipal extends JFrame {
 				}
 				i++;
 			}
-			loadListCaracs(waveList, list_sel);
+			loadListCaracs_ArenaConfig(waveList, list_sel);
 			int index_sel = i - otherw;
 			list_sel.setSelectedIndex(index_sel);
 
@@ -1865,5 +1866,19 @@ public class MenuPrincipal extends JFrame {
 
 		}
 
+	}
+
+	private void loadClasses_ClassConfig(ArrayList<Classe> aLclasses) {
+		// TODO Gestion des classes
+		DefaultListModel<String> mod_Class = new DefaultListModel<>();
+		for(int i=0;i<aLclasses.size();i++) {
+			mod_Class.addElement(aLclasses.get(i).getName());
+		}
+		list_classes.setModel(mod_Class);
+		//TODO Créer une celllist pour les classes
+		HoverListCellRenderer renderer = new HoverListCellRenderer(list_classes);
+		list_classes.setCellRenderer(renderer);
+		list_classes.addMouseListener(renderer.getHandler());
+		list_classes.addMouseMotionListener(renderer.getHandler());
 	}
 }
