@@ -87,7 +87,6 @@ public class MenuPrincipal extends JFrame {
 	private GestYaml g;
 	private Arenas arenas = null;
 	private File file = null;
-	//TODO adapter le code pour utiliser cette Wave et pas chercher à chaque fois dans la liste
 	private Wave wave;
 
 	private JTabbedPane tabpan_config;

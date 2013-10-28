@@ -5,7 +5,7 @@ import java.awt.Font;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public abstract class CellListCaracs extends JPanel {
+public class CellListCaracs extends JPanel {
 
 	private static final long serialVersionUID = 6617466786415092311L;
 	protected JLabel lib_desc;
@@ -21,5 +21,9 @@ public abstract class CellListCaracs extends JPanel {
 		add(lib_desc);
 
 
+	}
+	
+	public void setText(String text) {
+		lib_desc.setText(text);
 	}
 }

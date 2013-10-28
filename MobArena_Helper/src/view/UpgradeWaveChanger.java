@@ -14,6 +14,7 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.LineBorder;
 
 import model.wave.UpgradeW;
+import view.cells.CellListCaracs;
 import view.cells.CellListClass;
 
 import javax.swing.DefaultComboBoxModel;
@@ -21,6 +22,8 @@ import javax.swing.DefaultComboBoxModel;
 import model.wave.UpgradeSet.UpSetup;
 
 import javax.swing.JButton;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class UpgradeWaveChanger extends JFrame {
 
@@ -39,10 +42,18 @@ public class UpgradeWaveChanger extends JFrame {
 	private JButton btn_set_armor;
 	private JLabel lib_permissions;
 	private JScrollPane scrpan_permissions;
-	private JList<String> list_permissions;
+	private JList<CellListCaracs> list_permissions;
 
 	public UpgradeWaveChanger(UpgradeW upw, JFrame frame) {
 		super("Upgrade Wave modifier - "+frame.getTitle());
+		frame.setEnabled(false);
+		
+		addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				UpgradeWaveChanger.this.frame.setEnabled(true);
+			}
+		});
+		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(UpgradeWaveChanger.class.getResource("/gui/mobarena.png")));
 		setResizable(false);
 		this.upgradew = upw;
@@ -51,11 +62,12 @@ public class UpgradeWaveChanger extends JFrame {
 		setAlwaysOnTop(true);
 		setLocationRelativeTo(frame);
 		getContentPane().setLayout(null);
+		setSize(658, 296);
 		
 		list_classes = new JList<CellListClass>();
 		
 		scrpan_classes = new JScrollPane(list_classes);
-		scrpan_classes.setBounds(6, 43, 317, 173);
+		scrpan_classes.setBounds(6, 43, 317, 219);
 		scrpan_classes.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		getContentPane().add(scrpan_classes);
 		
@@ -102,7 +114,7 @@ public class UpgradeWaveChanger extends JFrame {
 		btn_set_armor.setBounds(66, 70, 114, 20);
 		pan_upgrade_config.add(btn_set_armor);
 		
-		list_permissions = new JList<String>();
+		list_permissions = new JList<CellListCaracs>();
 		
 		scrpan_permissions = new JScrollPane(list_permissions);
 		scrpan_permissions.setBounds(6, 123, 300, 127);
