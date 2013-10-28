@@ -71,6 +71,7 @@ import model.wave.SwarmW;
 import model.wave.UpgradeW;
 import view.cells.CellListAbility;
 import view.cells.CellListCaracs;
+import view.cells.CellListClass;
 import view.cells.CellListMonster;
 import view.cells.CellListWave;
 import view.cells.HoverListCellRenderer;
@@ -144,7 +145,7 @@ public class MenuPrincipal extends JFrame {
 	private JLabel lib_horse;
 	private JLabel lib_classes;
 	private JScrollPane scrpan_classes;
-	private JList<String> list_classes;
+	private JList<CellListClass> list_classes;
 	private JLabel lib_class;
 	private JLabel lib_items;
 	private JButton btn_items;
@@ -1054,7 +1055,7 @@ public class MenuPrincipal extends JFrame {
 		lib_classes.setFont(new Font("Tahoma", Font.BOLD, 14));
 		pan_classes.add(lib_classes);
 
-		list_classes = new JList<String>();
+		list_classes = new JList<CellListClass>();
 
 		scrpan_classes = new JScrollPane(list_classes);
 		scrpan_classes.setBounds(7, 33, 276, 220);
@@ -1869,13 +1870,11 @@ public class MenuPrincipal extends JFrame {
 	}
 
 	private void loadClasses_ClassConfig(ArrayList<Classe> aLclasses) {
-		// TODO Gestion des classes
-		DefaultListModel<String> mod_Class = new DefaultListModel<>();
+		DefaultListModel<CellListClass> mod_Class = new DefaultListModel<>();
 		for(int i=0;i<aLclasses.size();i++) {
-			mod_Class.addElement(aLclasses.get(i).getName());
+			mod_Class.addElement(new CellListClass(aLclasses.get(i)));
 		}
 		list_classes.setModel(mod_Class);
-		//TODO Créer une celllist pour les classes
 		HoverListCellRenderer renderer = new HoverListCellRenderer(list_classes);
 		list_classes.setCellRenderer(renderer);
 		list_classes.addMouseListener(renderer.getHandler());

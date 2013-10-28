@@ -16,7 +16,7 @@ public abstract class CellListCaracs extends JPanel {
 		setLayout(null);
 
 		lib_desc = new JLabel("");
-		lib_desc.setBounds(3, 3, 218, 26);
+		lib_desc.setBounds(4, 0, 216, 30);
 		lib_desc.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		add(lib_desc);
 
