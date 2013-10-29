@@ -8,10 +8,12 @@ public class CellListClass extends CellListCaracs {
 	private Classe classe;
 	
 	public CellListClass(Classe classe) {
-		super();
+		super(classe.getName());
 		this.classe = classe;
-		
-		lib_desc.setText(this.classe.getName());
+	}
+
+	public Classe getClasse() {
+		return classe;
 	}
 
 }

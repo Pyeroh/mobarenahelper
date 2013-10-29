@@ -16,14 +16,13 @@ public class CellListWave extends CellListCaracs {
 	private Wave wave;
 
 	public CellListWave(Wave wave) {
-
+		super(wave.getNom());
 		this.wave = wave;
 
 		image = new JLabel();
 		image.setBounds(3, 3, 48, 24);
 		image.setIcon(new ImageIcon(scaleImage(wave.getType().getImage(), image)));
 		
-		lib_desc.setText(wave.getNom());
 		lib_desc.setBounds(61, 3, 181, 24);
 
 		add(image);

@@ -564,17 +564,14 @@ public class MenuPrincipal extends JFrame {
 			public void keyReleased(KeyEvent e) {
 
 				String category = wave.getCategory().name();
-				//JList<CellListWave> list_sel = combo_category.getSelectedItem().equals("Recurrent") ? list_recurrent : list_single;
 				JList<CellListWave> list_sel = category.equals("recurrent") ? list_recurrent : list_single;
 				int index_sel = list_sel.getSelectedIndex();
 				Arena lArene = arenas.getALarenas().get(combo_arena.getSelectedIndex());
-				//String category = ((String) combo_category.getSelectedItem()).toLowerCase();
 				
 				ArrayList<Wave> waveList = lArene.getWavesType(ECatW.valueOf(category));
 
 				String wavename = sai_name.getText().equals("") ? "New_Wave" : sai_name.getText();
 
-				//list_sel.getSelectedValue().getWave().setNom(wavename);
 				wave.setNom(wavename);
 				loadListCaracs_ArenaConfig(waveList, list_sel);
 				list_sel.setSelectedIndex(index_sel);
@@ -599,12 +596,10 @@ public class MenuPrincipal extends JFrame {
 
 				if(e.getStateChange() == ItemEvent.DESELECTED && combo_category.isFocusOwner()) {
 
-					//String scategory = combo_category.getSelectedItem().equals("Recurrent") ? "single" : "recurrent";
 					String scategory = wave.getCategory().name();
 
 					JList<CellListWave> list_sel = scategory.equals("recurrent") ? list_recurrent : list_single;
 					JList<CellListWave> otherList_sel = list_sel==list_recurrent ? list_single : list_recurrent;
-					//int index_sel = list_sel.getSelectedIndex();
 					Arena lArene = arenas.getALarenas().get(combo_arena.getSelectedIndex());
 
 					ECatW category = ECatW.valueOf(scategory);
@@ -613,7 +608,6 @@ public class MenuPrincipal extends JFrame {
 					ArrayList<Wave> waveList = lArene.getWavesType(category);
 					ArrayList<Wave> otherWaveList = lArene.getWavesType(othercat);
 
-					//Wave wave = list_sel.getSelectedValue().getWave();
 					waveList.remove(wave);
 					wave.setCategory(othercat);
 					otherWaveList.add(wave);
@@ -662,10 +656,8 @@ public class MenuPrincipal extends JFrame {
 					Arena lArene = arenas.getALarenas().get(combo_arena.getSelectedIndex());
 					String category = wave.getCategory().name();
 					JList<CellListWave> list_sel = category.equals("recurrent") ? list_recurrent : list_single;
-					//int index_sel = list_sel.getSelectedIndex();
 					ArrayList<Wave> waveList = lArene.getWavesType(wave.getCategory());
 
-					//Wave wave = list_sel.getSelectedValue().getWave();
 					wave.setType(type);
 					waveList.remove(wave);
 

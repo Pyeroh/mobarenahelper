@@ -47,6 +47,10 @@ public class HoverListCellRenderer extends DefaultListCellRenderer {
 		return handler;  
 	}
 
+	/**
+	 * Donne l'index survolé par la souris
+	 * @return -1 s'il n'y a pas de survol, l'index survolé sinon
+	 */
 	public int getHoverIndex() {
 		return hoverIndex;
 	}

@@ -12,10 +12,10 @@ public class CellListEItem extends CellListCaracs{
 	private EItem eitem;
 	
 	public CellListEItem(EItem eitem) {
+		super(eitem.getName());
 		this.eitem = eitem;
 		
 		lib_desc.setBounds(44, 0, 256, 30);
-		lib_desc.setText(this.eitem.getName());
 
 		image.setBounds(3, 3, 24, 24);
 		image.setIcon(new ImageIcon(CellListWave.scaleImage(this.eitem.getImage(), image)));

@@ -10,7 +10,7 @@ public class CellListMonster extends CellListCaracs {
 	private Monstre monstre;
 	
 	public CellListMonster(MonsterList monsterlist, int index) {
-		super();
+		super("");
 		
 		monstre = monsterlist.get(index);
 		int proba = Math.round((((float)monstre.getProbability())/((float)monsterlist.getTotalNumber()))*100);

@@ -8,10 +8,9 @@ public class CellListAbility extends CellListCaracs {
 	private EAbilities ability;
 	
 	public CellListAbility(EAbilities ability) {
-		super();
+		super(" "+ability.getNom());
 		
 		this.ability = ability;
-		lib_desc.setText(" "+this.ability.getNom());
 	}
 	
 	public EAbilities getAbility() {
