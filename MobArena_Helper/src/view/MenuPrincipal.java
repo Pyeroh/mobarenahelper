@@ -14,6 +14,7 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -112,11 +113,11 @@ public class MenuPrincipal extends JFrame {
 	private JLabel lib_type;
 	private JComboBox<String> combo_type;
 	private JLabel lib_wave;
-	private JTextField sai_wave;
+	private JFormattedTextField sai_wave;
 	private JLabel lib_priority;
-	private JTextField sai_priority;
+	private JFormattedTextField sai_priority;
 	private JLabel lib_frequency;
-	private JTextField sai_frequency;
+	private JFormattedTextField sai_frequency;
 	private JLabel lib_growth;
 	private JComboBox<String> combo_growth;
 	private JLabel lib_carac_wave;
@@ -131,16 +132,16 @@ public class MenuPrincipal extends JFrame {
 	private JTextArea lib_abi_announce;
 	private JCheckBox chk_abi_announce;
 	private JTextArea lib_abi_interval;
-	private JTextField sai_abi_interval;
+	private JFormattedTextField sai_abi_interval;
 	private JButton btn_add;
 	private JWideComboBox combo_carac_wave;
-	private JTextField sai_nb_carac_wave;
+	private JFormattedTextField sai_nb_carac_wave;
 	private JLabel lib_set;
 	private JButton btn_set;
 
 	private JPanel pan_caracs_class;
 	private JLabel lib_dogs;
-	private JTextField sai_dogs;
+	private JFormattedTextField sai_dogs;
 	private JLabel lib_horse;
 	private JLabel lib_classes;
 	private JScrollPane scrpan_classes;
@@ -160,7 +161,7 @@ public class MenuPrincipal extends JFrame {
 	private JCheckBox chk_enabled;
 	private JCheckBox chk_protect;
 	private JLabel lib_entry;
-	private JTextField sai_entry;
+	private JFormattedTextField sai_entry;
 	private JCheckBox chk_clear_wave_next;
 	private JButton btn_entry;
 	private JCheckBox chk_clear_boss_next;
@@ -179,19 +180,19 @@ public class MenuPrincipal extends JFrame {
 	private JCheckBox chk_auto_respawn;
 	private JCheckBox chk_share;
 	private JLabel lib_min_players;
-	private JTextField sai_min_players;
-	private JTextField sai_max_players;
+	private JFormattedTextField sai_min_players;
+	private JFormattedTextField sai_max_players;
 	private JLabel lib_max_players;
 	private JLabel lib_max_join_distance;
-	private JTextField sai_max_join_distance;
+	private JFormattedTextField sai_max_join_distance;
 	private JLabel lib_first_delay;
-	private JTextField sai_first_delay;
+	private JFormattedTextField sai_first_delay;
 	private JLabel lib_interval;
-	private JTextField sai_interval;
+	private JFormattedTextField sai_interval;
 	private JLabel lib_final_wave;
-	private JTextField sai_final_wave;
+	private JFormattedTextField sai_final_wave;
 	private JLabel lib_monster_limit;
-	private JTextField sai_monster_limit;
+	private JFormattedTextField sai_monster_limit;
 	private JCheckBox chk_monster_xp;
 	private JCheckBox chk_keep_xp;
 	private JCheckBox chk_food_regen;
@@ -199,7 +200,7 @@ public class MenuPrincipal extends JFrame {
 	private JLabel lib_player_time;
 	private JComboBox<String> combo_player_time;
 	private JLabel lib_auto_start;
-	private JTextField sai_auto_start;
+	private JFormattedTextField sai_auto_start;
 	private JCheckBox chk_spout_class;
 	private JCheckBox chk_auto_ignite;
 	private JCheckBox chk_use_class_chest;
@@ -383,6 +384,12 @@ public class MenuPrincipal extends JFrame {
 
 		KeyAdapter mask_numeric = new KeyAdapter() {
 			public void keyReleased(KeyEvent e) {
+				JComponent component = (JComponent) e.getSource();
+				if(component instanceof JFormattedTextField){
+					try {
+						((JFormattedTextField)component).commitEdit();
+					} catch (ParseException e1) {}
+				}
 				majData_ArenaConfig(e);
 			}
 		};
@@ -707,7 +714,7 @@ public class MenuPrincipal extends JFrame {
 		lib_wave.setBounds(10, 104, 69, 20);
 		pan_conf.add(lib_wave);
 
-		sai_wave = new JFormattedTextField(new MaskFormatter("###"));
+		sai_wave = new JFormattedTextField(NumberFormat.getIntegerInstance());
 		sai_wave.setBackground(new Color(255, 255, 255));
 		sai_wave.addKeyListener(mask_numeric);
 		sai_wave.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -721,7 +728,7 @@ public class MenuPrincipal extends JFrame {
 		lib_priority.setBounds(10, 135, 69, 20);
 		pan_conf.add(lib_priority);
 
-		sai_priority = new JFormattedTextField(new MaskFormatter("###"));
+		sai_priority = new JFormattedTextField(NumberFormat.getIntegerInstance());
 		sai_priority.setBackground(new Color(255, 255, 255));
 		sai_priority.addKeyListener(mask_numeric);
 		sai_priority.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -735,7 +742,7 @@ public class MenuPrincipal extends JFrame {
 		lib_frequency.setBounds(10, 166, 84, 20);
 		pan_conf.add(lib_frequency);
 
-		sai_frequency = new JFormattedTextField(new MaskFormatter("###"));
+		sai_frequency = new JFormattedTextField(NumberFormat.getIntegerInstance());
 		sai_frequency.setBackground(new Color(255, 255, 255));
 		sai_frequency.addKeyListener(mask_numeric);
 		sai_frequency.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -885,7 +892,7 @@ public class MenuPrincipal extends JFrame {
 		lib_abi_interval.setBounds(10, 363, 84, 36);
 		pan_conf.add(lib_abi_interval);
 
-		sai_abi_interval = new JFormattedTextField(new MaskFormatter("###"));
+		sai_abi_interval = new JFormattedTextField(NumberFormat.getIntegerInstance());
 		sai_abi_interval.setBackground(new Color(255, 255, 255));
 		sai_abi_interval.addKeyListener(mask_numeric);
 		sai_abi_interval.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -914,12 +921,12 @@ public class MenuPrincipal extends JFrame {
 						}
 
 					} else if (wave instanceof DefaultW	|| wave instanceof SpecialW) {
-						if(sai_nb_carac_wave.getText().equals("")){
+						if(sai_nb_carac_wave.getValue().equals("")){
 							JOptionPane.showMessageDialog(null, "You must set a value for the spawn probability in order to add this monster to the list !","Invalid value",JOptionPane.WARNING_MESSAGE);
 						}
 						else {
 							MonsterList monsterlist = wave.getMonstres();
-							int proba = Integer.parseInt(sai_nb_carac_wave.getText());
+							int proba = Integer.parseInt((String) sai_nb_carac_wave.getValue());
 
 							if(monsterlist.contain(EMonsters.getByName(name))) {
 								JOptionPane.showMessageDialog(null, "You can't add the same monster twice !","Invalid value", JOptionPane.WARNING_MESSAGE);
@@ -928,7 +935,7 @@ public class MenuPrincipal extends JFrame {
 								monsterlist.add(new Monstre(EMonsters.getByName(name),proba));
 								loadListCaracs_ArenaConfig(monsterlist, list_carac_wave);
 								combo_carac_wave.setSelectedIndex(-1);
-								sai_nb_carac_wave.setText("");
+								sai_nb_carac_wave.setValue(null);
 							}
 						}
 					}
@@ -949,7 +956,7 @@ public class MenuPrincipal extends JFrame {
 		combo_carac_wave.setBounds(287, 409, 105, 20);
 		pan_conf.add(combo_carac_wave);
 
-		sai_nb_carac_wave = new JFormattedTextField(new MaskFormatter("###"));
+		sai_nb_carac_wave = new JFormattedTextField(NumberFormat.getIntegerInstance());
 		sai_nb_carac_wave.setBackground(new Color(255, 255, 255));
 		sai_nb_carac_wave.addKeyListener(mask_numeric);
 		sai_nb_carac_wave.setFont(new Font("Tahoma", Font.PLAIN, 11));
@@ -1140,12 +1147,12 @@ public class MenuPrincipal extends JFrame {
 		pan_arena_settings.add(chk_protect);
 
 		lib_entry = new JLabel("Entry fee");
-		lib_entry.setToolTipText("<html>Follows the exact same notation as the class items and rewards. $20 will subtract<br> 20 of whatever currency you use from the players upon joining. $5, stick:2 will <br>require the player to have 5 currency units and 2 sticks to join the arena. The <br>entry-fee will be refunded if the player leaves before the arena starts.");
+		lib_entry.setToolTipText("<html>Follows the exact same notation as the class items and rewards. 20 will subtract<br> 20 of whatever currency you use from the players upon joining. $5, stick:2 will <br>require the player to have 5 currency units and 2 sticks to join the arena. The <br>entry-fee will be refunded if the player leaves before the arena starts.");
 		lib_entry.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lib_entry.setBounds(6, 43, 73, 25);
 		pan_arena_settings.add(lib_entry);
 
-		sai_entry = new JFormattedTextField(new MaskFormatter("$###"));
+		sai_entry = new JFormattedTextField(NumberFormat.getIntegerInstance());
 		sai_entry.setToolTipText(lib_entry.getToolTipText());
 		sai_entry.setBackground(new Color(255, 255, 255));
 		sai_entry.setBounds(91, 44, 50, 25);
@@ -1276,7 +1283,7 @@ public class MenuPrincipal extends JFrame {
 		lib_min_players.setBounds(307, 154, 84, 25);
 		pan_arena_settings.add(lib_min_players);
 
-		sai_min_players = new JFormattedTextField(new MaskFormatter("###"));
+		sai_min_players = new JFormattedTextField(NumberFormat.getIntegerInstance());
 		sai_min_players.setToolTipText(lib_min_players.getToolTipText());
 		sai_min_players.setBackground(new Color(255, 255, 255));
 		sai_min_players.setColumns(10);
@@ -1290,7 +1297,7 @@ public class MenuPrincipal extends JFrame {
 		lib_max_players.setBounds(307, 191, 84, 25);
 		pan_arena_settings.add(lib_max_players);
 
-		sai_max_players = new JFormattedTextField(new MaskFormatter("###"));
+		sai_max_players = new JFormattedTextField(NumberFormat.getIntegerInstance());
 		sai_max_players.setToolTipText(lib_max_players.getToolTipText());
 		sai_max_players.setBackground(new Color(255, 255, 255));
 		sai_max_players.setColumns(10);
@@ -1304,7 +1311,7 @@ public class MenuPrincipal extends JFrame {
 		lib_max_join_distance.setBounds(307, 228, 119, 25);
 		pan_arena_settings.add(lib_max_join_distance);
 
-		sai_max_join_distance = new JFormattedTextField(new MaskFormatter("###"));
+		sai_max_join_distance = new JFormattedTextField(NumberFormat.getIntegerInstance());
 		sai_max_join_distance.setToolTipText(lib_max_join_distance.getToolTipText());
 		sai_max_join_distance.setBackground(new Color(255, 255, 255));
 		sai_max_join_distance.setColumns(10);
@@ -1318,7 +1325,7 @@ public class MenuPrincipal extends JFrame {
 		lib_first_delay.setBounds(307, 265, 119, 25);
 		pan_arena_settings.add(lib_first_delay);
 
-		sai_first_delay = new JFormattedTextField(new MaskFormatter("###"));
+		sai_first_delay = new JFormattedTextField(NumberFormat.getIntegerInstance());
 		sai_first_delay.setToolTipText(lib_first_delay.getToolTipText());
 		sai_first_delay.setBackground(new Color(255, 255, 255));
 		sai_first_delay.setColumns(10);
@@ -1332,7 +1339,7 @@ public class MenuPrincipal extends JFrame {
 		lib_interval.setBounds(307, 301, 119, 25);
 		pan_arena_settings.add(lib_interval);
 
-		sai_interval = new JFormattedTextField(new MaskFormatter("###"));
+		sai_interval = new JFormattedTextField(NumberFormat.getIntegerInstance());
 		sai_interval.setToolTipText(lib_interval.getToolTipText());
 		sai_interval.setBackground(new Color(255, 255, 255));
 		sai_interval.setColumns(10);
@@ -1346,7 +1353,7 @@ public class MenuPrincipal extends JFrame {
 		lib_final_wave.setBounds(307, 338, 119, 25);
 		pan_arena_settings.add(lib_final_wave);
 
-		sai_final_wave = new JFormattedTextField(new MaskFormatter("###"));
+		sai_final_wave = new JFormattedTextField(NumberFormat.getIntegerInstance());
 		sai_final_wave.setToolTipText(lib_final_wave.getToolTipText());
 		sai_final_wave.setBackground(new Color(255, 255, 255));
 		sai_final_wave.setColumns(10);
@@ -1360,7 +1367,7 @@ public class MenuPrincipal extends JFrame {
 		lib_monster_limit.setBounds(307, 376, 119, 25);
 		pan_arena_settings.add(lib_monster_limit);
 
-		sai_monster_limit = new JFormattedTextField(new MaskFormatter("###"));
+		sai_monster_limit = new JFormattedTextField(NumberFormat.getIntegerInstance());
 		sai_monster_limit.setToolTipText(lib_monster_limit.getToolTipText());
 		sai_monster_limit.setBackground(new Color(255, 255, 255));
 		sai_monster_limit.setColumns(10);
@@ -1414,7 +1421,7 @@ public class MenuPrincipal extends JFrame {
 		lib_auto_start.setBounds(514, 224, 119, 25);
 		pan_arena_settings.add(lib_auto_start);
 
-		sai_auto_start = new JFormattedTextField(new MaskFormatter("###"));
+		sai_auto_start = new JFormattedTextField(NumberFormat.getIntegerInstance());
 		sai_auto_start.setToolTipText(lib_auto_start.getToolTipText());
 		sai_auto_start.setBackground(new Color(255, 255, 255));
 		sai_auto_start.setColumns(10);
@@ -1688,10 +1695,10 @@ public class MenuPrincipal extends JFrame {
 		sai_name.setText(wave.getNom());
 		combo_category.setSelectedItem(wave.getCategory().getNom());
 		combo_type.setSelectedItem(wave.getType().name());
-		sai_wave.setText(wave.getNumwave()+"");
+		sai_wave.setValue(wave.getNumwave());
 
-		sai_priority.setText(wave.getPriority()+"");
-		sai_frequency.setText(wave.getFrequency()+"");
+		sai_priority.setValue(wave.getPriority());
+		sai_frequency.setValue(wave.getFrequency());
 
 		switch (wave.getType()) {
 		case Default:
@@ -1707,7 +1714,7 @@ public class MenuPrincipal extends JFrame {
 			sai_boss_name.setText(bwave.getBossName());
 			combo_health.setSelectedItem(bwave.getHealth().getNom());
 			chk_abi_announce.setSelected(bwave.isAbility_announce());
-			sai_abi_interval.setText(bwave.getAbility_interval()+"");
+			sai_abi_interval.setValue(bwave.getAbility_interval());
 			combo_monster.setSelectedItem(bwave.getMonstres().get(0).getMonstre().getNom());
 			loadListCaracs_ArenaConfig(bwave.getAbilities(), list_carac_wave);
 			break;
@@ -1798,16 +1805,16 @@ public class MenuPrincipal extends JFrame {
 	 */
 	public void majData_ArenaConfig(KeyEvent e) {
 
-		JTextField source = (JTextField) e.getSource();
+		JFormattedTextField source = (JFormattedTextField) e.getSource();
 		JList<CellListWave> list_sel = list_recurrent.getSelectedIndex()!=-1 ? list_recurrent : list_single;
 		Wave wave = list_sel.getSelectedValue().getWave();
 		Arena lArene = arenas.getALarenas().get(combo_arena.getSelectedIndex());
 		ArrayList<Wave> waveList = lArene.getWavesType(list_sel == list_recurrent ? ECatW.recurrent	: ECatW.single);
-		String txtsource = source.getText();
+		Integer val_src = ((Number) source.getValue()).intValue();
 
 		if(source==sai_wave){
 
-			int numwave = txtsource.equals("") ? 1 : Integer.parseInt(txtsource);
+			int numwave = (int) (val_src.equals("") ? 1 : val_src);
 
 			wave.setNumwave(numwave);
 
@@ -1831,7 +1838,7 @@ public class MenuPrincipal extends JFrame {
 		}
 		else if(source==sai_priority || source==sai_frequency){
 
-			int numcarac = txtsource.equals("") ? 1 : Integer.parseInt(txtsource);
+			int numcarac = (int) (val_src.equals("") ? 1 : val_src);
 			if(source==sai_priority)
 				wave.setPriority(numcarac);
 			else
@@ -1853,7 +1860,7 @@ public class MenuPrincipal extends JFrame {
 		}
 		else if(source==sai_abi_interval){
 			BossW bwave = (BossW) wave;
-			int abi_interval = txtsource.equals("") ? 3 : Integer.parseInt(txtsource);
+			int abi_interval = (int) (val_src.equals("") ? 3 : val_src);
 			bwave.setAbility_interval(abi_interval);
 
 		}
