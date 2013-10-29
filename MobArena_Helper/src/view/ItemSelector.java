@@ -28,6 +28,7 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.text.MaskFormatter;
 
 import model.Armor;
+import model.ArmorList;
 import model.Item;
 import model.ItemList;
 import model.enums.EItem;
@@ -106,7 +107,7 @@ public class ItemSelector extends JFrame {
 
 					ArrayList<EItem> values = switchValues();
 
-					values.removeAll(ItemSelector.this.items);
+					values.removeAll(ItemSelector.this.items.getEItemList());
 					loadSelectable(values);
 
 				}
@@ -128,6 +129,7 @@ public class ItemSelector extends JFrame {
 
 		try {
 			sai_search = new JFormattedTextField(new MaskFormatter("LLLLLLLLLLLLLLL"));
+			sai_search.setFocusLostBehavior(JFormattedTextField.COMMIT);
 			sai_search.addKeyListener(new KeyAdapter() {
 				public void keyReleased(KeyEvent e) {
 					loadSelectable(crossSearch());
@@ -142,15 +144,8 @@ public class ItemSelector extends JFrame {
 
 		list_selectable = new JList<CellListEItem>();
 
-		ArrayList<EItem> values;
-		if(this.isArmor) {
-			values = new ArrayList<>();
-			for(int i=298;i<=317;i++){
-				values.add(EItem.searchBy(i, 0));
-			}
-		}
-		else values = new ArrayList<>(Arrays.asList(EItem.values()));
-		values.removeAll(items);
+		ArrayList<EItem> values = switchValues();
+		values.removeAll(items.getEItemList());
 		loadSelectable(values);
 		HoverListCellRenderer render1 = new HoverListCellRenderer(list_selectable);
 		list_selectable.setCellRenderer(render1);
@@ -250,7 +245,6 @@ public class ItemSelector extends JFrame {
 				}
 				else {
 
-					//TODO à tester
 					boolean present = false;
 					DefaultListModel<CellListItem> mod = (DefaultListModel<CellListItem>) list_selected.getModel();
 					for(int i=0;i<mod.size();i++) {
@@ -294,8 +288,13 @@ public class ItemSelector extends JFrame {
 		list_selectable.setModel(mod_ItemsSelectable);
 	}
 
-	private void loadSelected(ArrayList<Item> values) {
-		//Collections.sort(values);
+	private void loadSelected(ItemList values) {
+		if (!isArmor) {
+			values.sort();
+		}
+		else {
+			((ArmorList)values).sort();
+		}
 		DefaultListModel<CellListItem> mod_ItemsSelectable = new DefaultListModel<>();
 		for(int i=0;i<values.size();i++) {
 			mod_ItemsSelectable.addElement(new CellListItem(values.get(i)));
@@ -307,6 +306,12 @@ public class ItemSelector extends JFrame {
 		ArrayList<EItem> values;
 		String sort = (String) combo_sort.getSelectedItem();
 		if(sort.equals("All")) values = new ArrayList<EItem>(Arrays.asList(EItem.values()));
+		else if (isArmor) {
+			values = new ArrayList<>();
+			for(int i=298;i<=317;i++){
+				values.add(EItem.searchBy(i, 0));
+			}
+		}
 		else values = EItem.getByCategory(EItemCat.getByName(sort));
 
 		return values;
@@ -314,7 +319,7 @@ public class ItemSelector extends JFrame {
 
 	private ArrayList<EItem> crossSearch() {
 		ArrayList<EItem> values = switchValues();
-		ArrayList<EItem> val_search = EItem.searchBy(((String) sai_search.getValue()).trim());
+		ArrayList<EItem> val_search = EItem.searchBy(sai_search.getText().trim());
 
 		values.retainAll(val_search);
 		values.removeAll(items.getEItemList());
