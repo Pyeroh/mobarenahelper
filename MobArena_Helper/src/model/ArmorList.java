@@ -66,5 +66,37 @@ public class ArmorList extends ItemList {
 		
 		return sArmor.toString();
 	}
+	
+	public void sort() {
+		int size=this.size();
+		triRapide(this,0,size-1);
+	}
+
+	private int partition(ArmorList list,int deb,int fin) {
+		int compt=deb;
+		Item pivot=list.get(deb);
+
+		for(int i=deb+1;i<=fin;i++) {
+			float lid = (list.get(i).getItem().getId()-298)/4f;
+			float pivid = (pivot.getItem().getId()-298)/4f;
+			
+			lid = lid - (int)lid;
+			pivid = pivid - (int)pivid;
+			if (lid<pivid) {
+				compt++;
+				echanger(list,compt,i);
+			}
+		}
+		echanger(list,deb,compt);
+		return compt;
+	}
+	
+	protected void triRapide(ArmorList list,int deb,int fin) {
+		if(deb<fin) {
+			int positionPivot=partition(list,deb,fin);
+			triRapide(list,deb,positionPivot-1);
+			triRapide(list,positionPivot+1,fin);
+		}
+	}
 
 }

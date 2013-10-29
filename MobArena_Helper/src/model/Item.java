@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import model.enums.EEnchantment;
 import model.enums.EItem;
 
-public class Item implements Comparable<Item> {
+public class Item {
 
 	private EItem item;
 	private int quantity = 1;
@@ -67,23 +67,6 @@ public class Item implements Comparable<Item> {
 		}
 		
 		return item.toString();
-	}
-
-	public int compareTo(Item o) {
-		int oid, tid;
-		EItem oitem, titem;
-		oitem = o.getItem();
-		titem = this.item;
-		oid = oitem.getId();
-		tid = titem.getId();
-		
-		if(tid > oid) return -1;
-		else if (tid < oid) return 1;
-		else {
-			if(titem.getMeta() > oitem.getMeta()) return -1;
-			else if(titem.getMeta() < oitem.getMeta()) return 1;
-			else return 0;
-		}
 	}
 
 }

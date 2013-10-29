@@ -7,7 +7,7 @@ import model.enums.EItem;
 public class ItemList extends ArrayList<Item> {
 
 	private static final long serialVersionUID = -1822352239305240836L;
-	
+
 	public ItemList() {
 		super();
 	}
@@ -15,7 +15,7 @@ public class ItemList extends ArrayList<Item> {
 	public ItemList(ArrayList<Item> list) {
 		super(list);
 	}
-	
+
 	public void fill(String items) {
 
 		String[] sItem = items.replace('\'', ' ')
@@ -72,10 +72,10 @@ public class ItemList extends ArrayList<Item> {
 			int length = sItems.length();
 			sItems.delete(length-2, length);
 		}
-		
+
 		return sItems.toString();
 	}
-	
+
 	/**
 	 * Vérifie si l'EItem passé en paramètre a déjà un Item associé dans la liste
 	 * @param e
@@ -90,12 +90,47 @@ public class ItemList extends ArrayList<Item> {
 		}
 		return contain;
 	}
-	
+
 	public ArrayList<EItem> getEItemList() {
 		ArrayList<EItem> eitems = new ArrayList<>();
 		for(int i=0;i<size();i++){
 			eitems.add(get(i).getItem());
 		}
 		return eitems;
+	}
+
+	public void sort() {
+		int size=this.size();
+		triRapide(this,0,size-1);
+	}
+
+	private int partition(ItemList list,int deb,int fin) {
+		int compt=deb;
+		Item pivot=list.get(deb);
+
+		for(int i=deb+1;i<=fin;i++) {
+			EItem litem = list.get(i).getItem();
+			EItem pivitem = pivot.getItem();
+			if ((litem.getId()<pivitem.getId()) || (litem.getId()==pivitem.getId() && litem.getMeta()<pivitem.getMeta())) {
+				compt++;
+				echanger(list,compt,i);
+			}
+		}
+		echanger(list,deb,compt);
+		return compt;
+	}
+
+	protected void triRapide(ItemList list,int deb,int fin) {
+		if(deb<fin) {
+			int positionPivot=partition(list,deb,fin);
+			triRapide(list,deb,positionPivot-1);
+			triRapide(list,positionPivot+1,fin);
+		}
+	}
+	
+	protected void echanger(ItemList list, int deb, int fin) {
+		Item temp = list.get(deb);
+		list.set(deb,list.get(fin));
+		list.set(fin,temp);
 	}
 }
