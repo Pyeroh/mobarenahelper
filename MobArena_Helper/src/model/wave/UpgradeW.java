@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import model.Classe;
 import model.GestYaml;
 import model.Wave;
 import model.enums.ETypeW;
@@ -33,6 +34,42 @@ public class UpgradeW extends Wave {
 	public LinkedHashMap<String, Object> getMap() {
 		//TODO changer ça
 		return null;
+	}
+	
+	/**
+	 * Trie la liste des upgrades de la vague par rapport à l'ordre de celle des classes
+	 * @return vrai si l'ordre a été changé, faux sinon
+	 */
+	public boolean sortUpgrades() {
+		
+		ArrayList<UpgradeSet> next_upgrades = new ArrayList<UpgradeSet>();
+		ArrayList<Classe> classe_list = Classe.classe_list;
+		
+		for(int i=0;i<classe_list.size();i++) {
+			UpgradeSet upset = findUpgradeSet(classe_list.get(i));
+			if(upset!=null) {
+				next_upgrades.add(upset);
+			}
+		}
+		
+		boolean changed = false;
+		for(int i=0;i<next_upgrades.size();i++){
+			if(next_upgrades.get(i)!=upgrades.get(i)) changed = true;
+		}
+		
+		upgrades = next_upgrades;
+		
+		return changed;
+	}
+	
+	public UpgradeSet findUpgradeSet(Classe classe) {
+		int i=0;
+		while(i<upgrades.size()) {
+			if(upgrades.get(i).getClasse()==classe) break;
+			i++;
+		}
+		if(i==upgrades.size()) return null;
+		else return upgrades.get(i);
 	}
 
 	public static UpgradeW setWave(String nom, Map<String, Object> map) {

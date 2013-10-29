@@ -108,5 +108,18 @@ public class Classe {
 
 		return map;
 	}
+	
+	public static Classe getByName(String name) {
+		int i=0;
+		while(!classe_list.get(i).getName().equals(name) && i<classe_list.size()){
+			i++;
+		}
+		if(i==classe_list.size()){
+			throw new IllegalArgumentException("Invalid Classe name : "+name);
+		}
+		else {
+			return classe_list.get(i);
+		}
+	}
 
 }

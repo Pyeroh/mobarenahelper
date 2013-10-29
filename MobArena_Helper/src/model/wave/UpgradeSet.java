@@ -25,9 +25,16 @@ public class UpgradeSet {
 			}
 			return namevalues;
 		}
+		
+		public String toString() {
+			String name = this.name();
+			String first = name.charAt(0)+"";
+			name = name.replaceFirst("^[a-z]", first.toUpperCase());
+			return name;
+		}
 	}
 
-	private UpSetup setup;
+	private UpSetup setup = UpSetup.legacy;
 	private Classe classe;
 	private ItemList items = new ItemList();
 	private ArmorList armor = new ArmorList();
@@ -35,6 +42,10 @@ public class UpgradeSet {
 	
 	public UpgradeSet(UpSetup setup, Classe classe) {
 		this.setup = setup;
+		this.classe = classe;
+	}
+	
+	public UpgradeSet(Classe classe) {
 		this.classe = classe;
 	}
 	
@@ -57,9 +68,17 @@ public class UpgradeSet {
 	public ItemList getItems() {
 		return items;
 	}
+	
+	public void setItems(ItemList items) {
+		this.items = items;
+	}
 
 	public ArmorList getArmor() {
 		return armor;
+	}
+	
+	public void setArmor(ArmorList armor) {
+		this.armor = armor;
 	}
 
 	public ArrayList<String> getPermissions() {
@@ -105,8 +124,6 @@ public class UpgradeSet {
 		default:
 			break;
 		}
-		
-		
 		
 		return set;
 	}

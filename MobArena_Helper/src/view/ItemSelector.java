@@ -233,8 +233,9 @@ public class ItemSelector extends JFrame {
 				EItem eitem = list_selectable.getSelectedValue().getEItem();
 				if(!isArmor()) {
 
-					String input = JOptionPane.showInputDialog(rootPane, "How many items do you wish to add ?",1).trim();
+					String input = JOptionPane.showInputDialog(rootPane, "How many items do you wish to add ?",1);
 					if (input!=null) {
+						input = input.trim();
 						if (input.matches("^[1-9][0-9]{0,2}$")) {
 
 							items.add(new Item(eitem, Integer.parseInt(input), null));
@@ -313,7 +314,7 @@ public class ItemSelector extends JFrame {
 
 	private ArrayList<EItem> crossSearch() {
 		ArrayList<EItem> values = switchValues();
-		ArrayList<EItem> val_search = EItem.searchBy(sai_search.getText().trim());
+		ArrayList<EItem> val_search = EItem.searchBy(((String) sai_search.getValue()).trim());
 
 		values.retainAll(val_search);
 		values.removeAll(items.getEItemList());
