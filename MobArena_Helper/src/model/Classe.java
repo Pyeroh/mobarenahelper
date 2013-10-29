@@ -56,7 +56,7 @@ public class Classe {
 		this.name = name;
 	}
 
-	public ArrayList<Item> getItems() {
+	public ItemList getItems() {
 		return items;
 	}
 
