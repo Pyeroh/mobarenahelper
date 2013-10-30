@@ -10,6 +10,8 @@ public class Classe {
 	private String name;
 	private ItemList items = new ItemList();
 	private ArmorList armor = new ArmorList();
+	private int dog_number;
+	private int horse;
 	private LinkedHashMap<String, Object> permissions = new LinkedHashMap<String, Object>();
 	private LinkedHashMap<String, Object> lobby_permissions = new LinkedHashMap<String, Object>();
 	private boolean unbreakable_weapons = true;
@@ -38,6 +40,13 @@ public class Classe {
 	private void load() {
 		GestYaml g = new GestYaml(classe);
 
+		String[] sItems = g.getString("items").split(",");
+		//TODO trouver nombre de chiens et de chevaux
+		for(int i=0;i<sItems.length;i++) {
+			
+		}
+		
+		
 		items.fill(g.getString("items"));
 		armor.fill(g.getString("armor"));
 

@@ -89,6 +89,7 @@ public class MenuPrincipal extends JFrame {
 	private Arenas arenas = null;
 	private File file = null;
 	private Wave wave;
+	private Classe classe;
 
 	private JTabbedPane tabpan_config;
 
@@ -449,6 +450,7 @@ public class MenuPrincipal extends JFrame {
 							combo_arena.addItem(alArenas.get(i).getNom());
 						}
 						loadArena(0);
+						loadData_ClassConfig(arenas.getALclasses());
 					} catch (Exception e1) {
 						e1.printStackTrace();
 						
@@ -521,6 +523,14 @@ public class MenuPrincipal extends JFrame {
 		lib_arena.setFont(new Font("Tahoma", Font.BOLD, 14));
 
 		combo_arena = new JComboBox<String>();
+		combo_arena.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if(e.getStateChange() == ItemEvent.DESELECTED && combo_arena.isFocusOwner()) {
+					loadArena(combo_arena.getSelectedIndex());
+				}
+			}
+		});
 		combo_arena.setBounds(66, 6, 192, 20);
 		pan_arena_wave.add(combo_arena);
 		combo_arena.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -1075,6 +1085,16 @@ public class MenuPrincipal extends JFrame {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				
+				int index = ((HoverListCellRenderer) list_classes.getCellRenderer()).getHoverIndex();
+				
+				if(index!=-1) {
+					pan_caracs_class.setVisible(true);
+					classe = list_classes.getModel().getElementAt(index).getClasse();
+					sai_class.setValue(classe.getName());
+					sai_dogs.setValue(classe.get
+				}
+				else list_classes.clearSelection();
+				
 			}
 		});
 
@@ -1549,8 +1569,6 @@ public class MenuPrincipal extends JFrame {
 
 		ArrayList<Wave> singW = arena.getWavesType(ECatW.single);
 		loadListCaracs_ArenaConfig(singW, list_single);
-		
-		loadClasses_ClassConfig(arenas.getALclasses());
 
 	}
 
@@ -1891,7 +1909,7 @@ public class MenuPrincipal extends JFrame {
 
 	}
 
-	private void loadClasses_ClassConfig(ArrayList<Classe> aLclasses) {
+	private void loadData_ClassConfig(ArrayList<Classe> aLclasses) {
 		DefaultListModel<CellListClass> mod_Class = new DefaultListModel<>();
 		for(int i=0;i<aLclasses.size();i++) {
 			mod_Class.addElement(new CellListClass(aLclasses.get(i)));
@@ -1901,5 +1919,12 @@ public class MenuPrincipal extends JFrame {
 		list_classes.setCellRenderer(renderer);
 		list_classes.addMouseListener(renderer.getHandler());
 		list_classes.addMouseMotionListener(renderer.getHandler());
+		
+		pan_caracs_class.setVisible(false);
 	}
+	
+	private void loadClass_ClassConfig(Classe classe) {
+		
+	}
+	
 }
