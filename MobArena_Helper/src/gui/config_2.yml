@@ -70,7 +70,6 @@ arenas:
                     type: default
                     priority: 1
                     frequency: 1
-                    wave: 1
                     monsters:
                         zombie: 10
                         skeleton: 4
@@ -93,7 +92,16 @@ arenas:
                         powered_creeper: 10
                         angry_wolf: 10
                         zombie_pigman: 10
-                upgrade1: null
+                upgrade1:
+                    type: upgrade
+                    priority: 7
+                    frequency: 10
+                    wave: 10
+                    upgrades:
+                        all: potion:8197:2
+                        Archer: arrow:64
+                        Oddjob: tnt:2, netherrack
+                    give-all-items: true
             single:
                 swarm1:
                     type: swarm
@@ -112,7 +120,21 @@ arenas:
                     monster: zombie_pigman
                     health: high
                     abilities: root-target, arrows, fire-aura
-                upgrade2: null
+                upgrade2:
+                    type: upgrade
+                    wave: 14
+                    upgrades:
+                        all: potion:8197:2
+                        Knight:
+                            armor: diamond_helmet
+                            items: diamond_sword 16:2;19:1
+                        Tank: iron_sword 19:3
+                        Oddjob:
+                            armor: 307,308
+                        Wizard:
+                            permissions:
+                            - magicspells.cast.ChainLightning
+                    give-all-items: true
                 boss3:
                     type: boss
                     wave: 16

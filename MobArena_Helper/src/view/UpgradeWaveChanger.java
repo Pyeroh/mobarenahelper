@@ -57,7 +57,7 @@ public class UpgradeWaveChanger extends JFrame {
 	private JComboBox<String> combo_setup;
 	private JButton btn_add_perm;
 
-	public UpgradeWaveChanger(UpgradeW upw, JFrame frame) {
+	public UpgradeWaveChanger(JFrame frame, UpgradeW upw) {
 		super("Upgrade Wave modifier - "+frame.getTitle());
 		frame.setEnabled(false);
 
@@ -72,7 +72,6 @@ public class UpgradeWaveChanger extends JFrame {
 		this.upgradew = upw;
 		this.frame = frame;
 
-		setAlwaysOnTop(true);
 		getContentPane().setLayout(null);
 		setSize(658, 300);
 		setLocationRelativeTo(frame);
@@ -114,6 +113,7 @@ public class UpgradeWaveChanger extends JFrame {
 
 					}
 				}
+				else list_classes.clearSelection();
 
 			}
 		});
@@ -202,7 +202,7 @@ public class UpgradeWaveChanger extends JFrame {
 
 		MouseAdapter itemsetter = new MouseAdapter() {
 			public void mouseReleased(MouseEvent e) {
-				
+
 				JFrame frame = UpgradeWaveChanger.this;
 				if(e.getSource() == btn_set_items) {
 					upset.setItems(new ItemSelector(frame,upset.getItems(),0,false).getItemList());
@@ -210,7 +210,7 @@ public class UpgradeWaveChanger extends JFrame {
 				else if(e.getSource()== btn_set_armor) {
 					upset.setArmor((ArmorList) new ItemSelector(frame,upset.getArmor(),4,true).getItemList());
 				}
-				
+
 			}
 		};
 
@@ -225,6 +225,7 @@ public class UpgradeWaveChanger extends JFrame {
 		pan_upgrade_config.add(lib_armor);
 
 		btn_set_armor = new JButton("Set");
+		btn_set_armor.addMouseListener(itemsetter);
 		btn_set_armor.setBounds(66, 70, 114, 20);
 		pan_upgrade_config.add(btn_set_armor);
 
@@ -245,11 +246,17 @@ public class UpgradeWaveChanger extends JFrame {
 
 				ArrayList<String> perm_list = upset.getPermissions();
 
-				if(e.getButton()==MouseEvent.BUTTON2) {
-					int choice = JOptionPane.showConfirmDialog(rootPane, "Are you sure you want to delete the "+perm_list.get(index)+" permission ?", "Confirmation", JOptionPane.YES_NO_OPTION);
-					if (choice==JOptionPane.YES_OPTION) {
-						perm_list.remove(index);
-						loadUpgradeSet(upset);
+				if (index!=-1) {
+					if (e.getButton() == MouseEvent.BUTTON2) {
+						int choice = JOptionPane.showConfirmDialog(rootPane,
+								"Are you sure you want to delete the "
+										+ perm_list.get(index)
+										+ " permission ?", "Confirmation",
+										JOptionPane.YES_NO_OPTION);
+						if (choice == JOptionPane.YES_OPTION) {
+							perm_list.remove(index);
+							loadUpgradeSet(upset);
+						}
 					}
 				}
 
@@ -262,6 +269,19 @@ public class UpgradeWaveChanger extends JFrame {
 		pan_upgrade_config.add(lib_permissions);
 
 		btn_add_perm = new JButton("Add");
+		btn_add_perm.addMouseListener(new MouseAdapter() {
+			public void mouseReleased(MouseEvent e) {
+				String perm = JOptionPane.showInputDialog(
+						rootPane,
+						"What is the permission you want to add ?\nWARNING : as MobArena Helper can't see plugins you have \non your server, it can't control permissions you add in the config file.",
+						"Permission", JOptionPane.QUESTION_MESSAGE);
+
+				if(perm!=null) {
+					upset.getPermissions().add(perm);
+					loadUpgradeSet(upset);
+				}
+			}
+		});
 		btn_add_perm.setBounds(216, 102, 90, 20);
 		pan_upgrade_config.add(btn_add_perm);
 

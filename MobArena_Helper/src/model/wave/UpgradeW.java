@@ -32,8 +32,24 @@ public class UpgradeW extends Wave {
 	}
 
 	public LinkedHashMap<String, Object> getMap() {
-		//TODO changer ça
-		return null;
+		LinkedHashMap<String, Object> map = super.getMap();
+		
+		LinkedHashMap<String, Object> upset_map = new LinkedHashMap<String, Object>();
+		for(int i=0;i<upgrades.size();i++) {
+			
+			UpgradeSet upset = upgrades.get(i);
+			String upclasse = upset.getClasse().getName();
+			Object upmap = upset.getMap();
+			if(upmap!=null) {
+					upset_map.put(upclasse, upmap);
+			}
+			
+		}
+		
+		if(!upset_map.isEmpty()) map.put("upgrades", upset_map);
+		if(give_all_items) map.put("give-all-items", give_all_items);
+		
+		return map;
 	}
 	
 	/**

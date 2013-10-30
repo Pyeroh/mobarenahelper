@@ -217,10 +217,12 @@ public class MenuPrincipal extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
 		getContentPane().setLayout(null);
+		getContentPane().setVisible(true);
 
-		//TODO Ajouter la gestion (ajout/suppression) des arènes
+		//NEW Gestion (ajout/suppression) des arènes
 
 		MouseAdapter newWave = new MouseAdapter() {
+			@Override
 			public void mouseReleased(MouseEvent e) {
 
 				if (combo_arena.getSelectedIndex()!=-1) {
@@ -258,6 +260,7 @@ public class MenuPrincipal extends JFrame {
 
 		MouseAdapter cellmouseadapter = new MouseAdapter() {
 			@SuppressWarnings("unchecked")
+			@Override
 			public void mouseReleased(MouseEvent e) {
 
 				//On récupère la liste source en tant que liste de caracs pour l'évaluation de situation
@@ -383,6 +386,7 @@ public class MenuPrincipal extends JFrame {
 		};
 
 		KeyAdapter mask_numeric = new KeyAdapter() {
+			@Override
 			public void keyReleased(KeyEvent e) {
 				JComponent component = (JComponent) e.getSource();
 				if(component instanceof JFormattedTextField){
@@ -395,6 +399,7 @@ public class MenuPrincipal extends JFrame {
 		};
 
 		ItemListener itemListener_monster_amount = new ItemListener() {
+			@Override
 			public void itemStateChanged(ItemEvent e) {
 
 				//la clause isFocusOwner() est spécifiée car la combo Amount change de valeur à l'initialisation
@@ -428,6 +433,7 @@ public class MenuPrincipal extends JFrame {
 
 		btn_load = new JButton("Load Config");
 		btn_load.addMouseListener(new MouseAdapter() {
+			@Override
 			public void mouseReleased(MouseEvent e) {
 				Classe.classe_list.clear();
 				YmlJFileChooser fchoose = new YmlJFileChooser();
@@ -462,11 +468,12 @@ public class MenuPrincipal extends JFrame {
 		btn_load.setForeground(new Color(255, 255, 255));
 		btn_load.setBackground(new Color(100, 149, 237));
 		btn_load.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btn_load.setBounds(526, 493, 97, 23);
+		btn_load.setBounds(526, 533, 97, 23);
 		getContentPane().add(btn_load);
 
 		btn_save = new JButton("Save Config As");
 		btn_save.addMouseListener(new MouseAdapter() {
+			@Override
 			public void mouseReleased(MouseEvent e) {
 				if(arenas!=null){
 
@@ -497,11 +504,11 @@ public class MenuPrincipal extends JFrame {
 		btn_save.setForeground(Color.WHITE);
 		btn_save.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btn_save.setBackground(new Color(100, 149, 237));
-		btn_save.setBounds(633, 493, 115, 23);
+		btn_save.setBounds(633, 533, 115, 23);
 		getContentPane().add(btn_save);
 
 		tabpan_config = new JTabbedPane(JTabbedPane.TOP);
-		tabpan_config.setBounds(0, 6, 754, 484);
+		tabpan_config.setBounds(0, 6, 754, 515);
 		getContentPane().add(tabpan_config);
 
 		pan_arena_wave = new JPanel();
@@ -533,16 +540,16 @@ public class MenuPrincipal extends JFrame {
 		list_recurrent.addMouseListener(cellmouseadapter);
 		list_recurrent.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrpan_recurrent = new JScrollPane(list_recurrent);
-		scrpan_recurrent.setBounds(6, 74, 252, 165);
+		scrpan_recurrent.setBounds(6, 74, 252, 190);
 		pan_arena_wave.add(scrpan_recurrent);
 
 		lib_single = new JLabel("Single Waves");
-		lib_single.setBounds(9, 261, 132, 17);
+		lib_single.setBounds(9, 276, 132, 17);
 		pan_arena_wave.add(lib_single);
 		lib_single.setFont(new Font("Tahoma", Font.BOLD, 14));
 
 		btn_newsingle = new JButton("New Wave");
-		btn_newsingle.setBounds(167, 255, 91, 23);
+		btn_newsingle.setBounds(167, 270, 91, 23);
 		pan_arena_wave.add(btn_newsingle);
 		btn_newsingle.addMouseListener(newWave);
 		btn_newsingle.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -551,11 +558,11 @@ public class MenuPrincipal extends JFrame {
 		list_single.addMouseListener(cellmouseadapter);
 		list_single.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrpan_single = new JScrollPane(list_single);
-		scrpan_single.setBounds(9, 280, 252, 165);
+		scrpan_single.setBounds(9, 295, 252, 180);
 		pan_arena_wave.add(scrpan_single);
 
 		pan_conf = new JPanel();
-		pan_conf.setBounds(267, 8, 474, 437);
+		pan_conf.setBounds(274, 8, 474, 467);
 		pan_arena_wave.add(pan_conf);
 		pan_conf.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		pan_conf.setLayout(null);
@@ -568,6 +575,7 @@ public class MenuPrincipal extends JFrame {
 
 		sai_name = new JTextField();
 		sai_name.addKeyListener(new KeyAdapter() {
+			@Override
 			public void keyReleased(KeyEvent e) {
 
 				String category = wave.getCategory().name();
@@ -599,6 +607,7 @@ public class MenuPrincipal extends JFrame {
 
 		combo_category = new JComboBox<String>();
 		combo_category.addItemListener(new ItemListener() {
+			@Override
 			public void itemStateChanged(ItemEvent e) {
 
 				if(e.getStateChange() == ItemEvent.DESELECTED && combo_category.isFocusOwner()) {
@@ -653,7 +662,7 @@ public class MenuPrincipal extends JFrame {
 
 		combo_type = new JComboBox<String>();
 		combo_type.addItemListener(new ItemListener() {
-
+			@Override
 			public void itemStateChanged(ItemEvent e) {
 
 				Wave nextWave = null;
@@ -758,6 +767,7 @@ public class MenuPrincipal extends JFrame {
 
 		combo_growth = new JComboBox<String>();
 		combo_growth.addItemListener(new ItemListener() {
+			@Override
 			public void itemStateChanged(ItemEvent e) {
 
 				if(e.getStateChange() == ItemEvent.DESELECTED && combo_growth.isFocusOwner()) {
@@ -782,6 +792,7 @@ public class MenuPrincipal extends JFrame {
 
 		list_carac_wave = new JList<CellListCaracs>();
 		list_carac_wave.addListSelectionListener(new ListSelectionListener() {
+			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				list_carac_wave.clearSelection();
 			}
@@ -790,7 +801,7 @@ public class MenuPrincipal extends JFrame {
 		list_carac_wave.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		scrpan_carac_wave = new JScrollPane(list_carac_wave);
-		scrpan_carac_wave.setBounds(219, 42, 245, 357);
+		scrpan_carac_wave.setBounds(219, 42, 245, 389);
 		pan_conf.add(scrpan_carac_wave);
 
 		lib_monster = new JLabel("Monster :");
@@ -823,6 +834,7 @@ public class MenuPrincipal extends JFrame {
 
 		combo_health = new JComboBox<String>();
 		combo_health.addItemListener(new ItemListener() {
+			@Override
 			public void itemStateChanged(ItemEvent e) {
 
 				//la clause isFocusOwner() est spécifiée car la combo Amount change de valeur à l'initialisation
@@ -854,6 +866,7 @@ public class MenuPrincipal extends JFrame {
 		chk_abi_announce = new JCheckBox();
 		chk_abi_announce.setHorizontalAlignment(SwingConstants.CENTER);
 		chk_abi_announce.addItemListener(new ItemListener() {
+			@Override
 			public void itemStateChanged(ItemEvent e) {
 
 				//la clause isFocusOwner() est spécifiée car la combo Amount change de valeur à l'initialisation
@@ -903,6 +916,7 @@ public class MenuPrincipal extends JFrame {
 
 		btn_add = new JButton("Add");
 		btn_add.addMouseListener(new MouseAdapter() {
+			@Override
 			public void mouseReleased(MouseEvent e) {
 
 				if (combo_carac_wave.getSelectedIndex()!=-1) {
@@ -948,19 +962,19 @@ public class MenuPrincipal extends JFrame {
 			}
 		});
 		btn_add.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btn_add.setBounds(219, 408, 58, 23);
+		btn_add.setBounds(219, 438, 58, 23);
 		pan_conf.add(btn_add);
 
 		combo_carac_wave = new JWideComboBox();
 		combo_carac_wave.setFont(new Font("SansSerif", Font.PLAIN, 12));
-		combo_carac_wave.setBounds(287, 409, 105, 20);
+		combo_carac_wave.setBounds(287, 439, 105, 20);
 		pan_conf.add(combo_carac_wave);
 
 		sai_nb_carac_wave = new JFormattedTextField(NumberFormat.getIntegerInstance());
 		sai_nb_carac_wave.setBackground(new Color(255, 255, 255));
 		sai_nb_carac_wave.addKeyListener(mask_numeric);
 		sai_nb_carac_wave.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		sai_nb_carac_wave.setBounds(402, 409, 62, 22);
+		sai_nb_carac_wave.setBounds(402, 439, 62, 22);
 		pan_conf.add(sai_nb_carac_wave);
 		sai_nb_carac_wave.setColumns(10);
 
@@ -976,13 +990,13 @@ public class MenuPrincipal extends JFrame {
 		sai_boss_name.setColumns(10);
 
 		lib_set = new JLabel("Set");
-		lib_set.setHorizontalAlignment(SwingConstants.TRAILING);
 		lib_set.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lib_set.setBounds(300, 11, 70, 20);
+		lib_set.setBounds(10, 433, 84, 28);
 		pan_conf.add(lib_set);
 
 		btn_set = new JButton("Set");
 		btn_set.addMouseListener(new MouseAdapter() {
+			@Override
 			public void mouseClicked(MouseEvent e) {
 				String type = wave.getType().name();
 				
@@ -999,15 +1013,14 @@ public class MenuPrincipal extends JFrame {
 					break;
 				case "Upgrade":
 					UpgradeW upw = (UpgradeW) wave;
-					new UpgradeWaveChanger(upw, MenuPrincipal.this);
-					//TODO créer une fenêtre de configuration des vagues upgrade
+					new UpgradeWaveChanger(MenuPrincipal.this, upw);
 					break;
 				default:
 					break;
 				}
 			}
 		});
-		btn_set.setBounds(374, 7, 90, 28);
+		btn_set.setBounds(104, 433, 105, 28);
 		pan_conf.add(btn_set);
 
 		menuBar = new JMenuBar();
@@ -1018,6 +1031,7 @@ public class MenuPrincipal extends JFrame {
 
 		JMenuItem mntmTodoList = new JMenuItem("ToDo List");
 		mntmTodoList.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				blocage(e.getActionCommand());
 			}
@@ -1029,6 +1043,7 @@ public class MenuPrincipal extends JFrame {
 
 		mntmHowToUse = new JMenuItem("How to use");
 		mntmHowToUse.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				blocage(e.getActionCommand());
 			}
@@ -1039,12 +1054,14 @@ public class MenuPrincipal extends JFrame {
 
 		mntmAbout = new JMenuItem("About...");
 		mntmAbout.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				blocage(e.getActionCommand());
 			}
 		});
 		mnHelp.add(mntmAbout);
 
+		//TODO Gestion des classes
 		pan_classes = new JPanel();
 		pan_classes.setLayout(null);
 
@@ -1054,6 +1071,12 @@ public class MenuPrincipal extends JFrame {
 		pan_classes.add(lib_classes);
 
 		list_classes = new JList<CellListClass>();
+		list_classes.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				
+			}
+		});
 
 		scrpan_classes = new JScrollPane(list_classes);
 		scrpan_classes.setBounds(7, 33, 276, 220);
@@ -1127,6 +1150,7 @@ public class MenuPrincipal extends JFrame {
 		combo_hArmor.setBounds(130, 208, 137, 26);
 		pan_caracs_class.add(combo_hArmor);
 
+		//TODO Gestion des paramètres globaux d'arène
 		pan_arena_settings = new JPanel();
 		pan_arena_settings.setBorder(new LineBorder(new Color(0, 0, 0)));
 		pan_arena_settings.setBounds(6, 6, 567, 341);
@@ -1253,34 +1277,34 @@ public class MenuPrincipal extends JFrame {
 		chk_allow_tp.setToolTipText("<html>If false, all warping to and from the arena region is blocked. <br>Useful for preventing players from summoning other players into the arena for help.");
 		chk_allow_tp.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_allow_tp.setFont(new Font("Tahoma", Font.BOLD, 14));
-		chk_allow_tp.setBounds(307, 6, 139, 25);
+		chk_allow_tp.setBounds(6, 450, 139, 25);
 		pan_arena_settings.add(chk_allow_tp);
 
 		chk_spectate_death = new JCheckBox("Spectate on death");
 		chk_spectate_death.setToolTipText("<html>If false, players will not get warped to the spectator area, but instead be \"kicked\" <br>from the arena (essentially a forced /ma leave).");
 		chk_spectate_death.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_spectate_death.setFont(new Font("Tahoma", Font.BOLD, 14));
-		chk_spectate_death.setBounds(307, 43, 149, 25);
+		chk_spectate_death.setBounds(307, 6, 149, 25);
 		pan_arena_settings.add(chk_spectate_death);
 
 		chk_auto_respawn = new JCheckBox("Auto respawn");
 		chk_auto_respawn.setToolTipText("<html>If false, players will be greeted with the typical death screen upon dying in the <br>arena, and will have to click the respawn button to respawn. With this setting at false, <br>players will actually die in the arena, meaning plugins like Heroes and mcMMO will <br>properly trigger their resetting of internal data upon respawn.");
 		chk_auto_respawn.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_auto_respawn.setFont(new Font("Tahoma", Font.BOLD, 14));
-		chk_auto_respawn.setBounds(307, 80, 119, 25);
+		chk_auto_respawn.setBounds(307, 43, 119, 25);
 		pan_arena_settings.add(chk_auto_respawn);
 
 		chk_share = new JCheckBox("Share items");
 		chk_share.setToolTipText("If false, players will not be able to drop items in the arena.");
 		chk_share.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_share.setFont(new Font("Tahoma", Font.BOLD, 14));
-		chk_share.setBounds(307, 117, 105, 25);
+		chk_share.setBounds(307, 80, 105, 25);
 		pan_arena_settings.add(chk_share);
 
 		lib_min_players = new JLabel("Min players");
 		lib_min_players.setToolTipText("<html>Gives a lower limit on how many players are required to start the arena. The default <br>of 0 is the same as 1, which means 1 or more players may start the arena.");
 		lib_min_players.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lib_min_players.setBounds(307, 154, 84, 25);
+		lib_min_players.setBounds(307, 117, 84, 25);
 		pan_arena_settings.add(lib_min_players);
 
 		sai_min_players = new JFormattedTextField(NumberFormat.getIntegerInstance());
@@ -1288,13 +1312,13 @@ public class MenuPrincipal extends JFrame {
 		sai_min_players.setBackground(new Color(255, 255, 255));
 		sai_min_players.setColumns(10);
 		sai_min_players.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		sai_min_players.setBounds(438, 155, 50, 25);
+		sai_min_players.setBounds(438, 118, 50, 25);
 		pan_arena_settings.add(sai_min_players);
 
 		lib_max_players = new JLabel("Max players");
 		lib_max_players.setToolTipText("Gives an upper limit on how many players may join the arena. The default of 0 means no limit.");
 		lib_max_players.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lib_max_players.setBounds(307, 191, 84, 25);
+		lib_max_players.setBounds(307, 154, 84, 25);
 		pan_arena_settings.add(lib_max_players);
 
 		sai_max_players = new JFormattedTextField(NumberFormat.getIntegerInstance());
@@ -1302,13 +1326,13 @@ public class MenuPrincipal extends JFrame {
 		sai_max_players.setBackground(new Color(255, 255, 255));
 		sai_max_players.setColumns(10);
 		sai_max_players.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		sai_max_players.setBounds(438, 192, 50, 25);
+		sai_max_players.setBounds(438, 155, 50, 25);
 		pan_arena_settings.add(sai_max_players);
 
 		lib_max_join_distance = new JLabel("Max join distance");
 		lib_max_join_distance.setToolTipText("<html>The maximum distance (in blocks) from which players can join or spectate the <br>arena. If 0 (default), there is no limit. Note that the distance is calculated from every <br>corner of the arena region, and that players not in the arena world won't be able to <br>join or spectate.");
 		lib_max_join_distance.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lib_max_join_distance.setBounds(307, 228, 119, 25);
+		lib_max_join_distance.setBounds(307, 191, 119, 25);
 		pan_arena_settings.add(lib_max_join_distance);
 
 		sai_max_join_distance = new JFormattedTextField(NumberFormat.getIntegerInstance());
@@ -1316,13 +1340,13 @@ public class MenuPrincipal extends JFrame {
 		sai_max_join_distance.setBackground(new Color(255, 255, 255));
 		sai_max_join_distance.setColumns(10);
 		sai_max_join_distance.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		sai_max_join_distance.setBounds(438, 229, 50, 25);
+		sai_max_join_distance.setBounds(438, 192, 50, 25);
 		pan_arena_settings.add(sai_max_join_distance);
 
 		lib_first_delay = new JLabel("First wave delay");
 		lib_first_delay.setToolTipText("The time (in seconds) before the first wave of monsters upon arena start.");
 		lib_first_delay.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lib_first_delay.setBounds(307, 265, 119, 25);
+		lib_first_delay.setBounds(307, 228, 119, 25);
 		pan_arena_settings.add(lib_first_delay);
 
 		sai_first_delay = new JFormattedTextField(NumberFormat.getIntegerInstance());
@@ -1330,13 +1354,13 @@ public class MenuPrincipal extends JFrame {
 		sai_first_delay.setBackground(new Color(255, 255, 255));
 		sai_first_delay.setColumns(10);
 		sai_first_delay.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		sai_first_delay.setBounds(438, 266, 50, 25);
+		sai_first_delay.setBounds(438, 229, 50, 25);
 		pan_arena_settings.add(sai_first_delay);
 
 		lib_interval = new JLabel("Wave interval");
 		lib_interval.setToolTipText("The time (in seconds) between each new wave of monsters. If clear-wave-before-next: true, this setting will be ignored.");
 		lib_interval.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lib_interval.setBounds(307, 301, 119, 25);
+		lib_interval.setBounds(307, 264, 119, 25);
 		pan_arena_settings.add(lib_interval);
 
 		sai_interval = new JFormattedTextField(NumberFormat.getIntegerInstance());
@@ -1344,13 +1368,13 @@ public class MenuPrincipal extends JFrame {
 		sai_interval.setBackground(new Color(255, 255, 255));
 		sai_interval.setColumns(10);
 		sai_interval.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		sai_interval.setBounds(438, 302, 50, 25);
+		sai_interval.setBounds(438, 265, 50, 25);
 		pan_arena_settings.add(sai_interval);
 
 		lib_final_wave = new JLabel("Final wave");
 		lib_final_wave.setToolTipText("<html>The number of the final wave before the arena is force ended. This is useful if you <br>want to set a cap on how many waves an arena will have.");
 		lib_final_wave.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lib_final_wave.setBounds(307, 338, 119, 25);
+		lib_final_wave.setBounds(307, 301, 119, 25);
 		pan_arena_settings.add(lib_final_wave);
 
 		sai_final_wave = new JFormattedTextField(NumberFormat.getIntegerInstance());
@@ -1358,13 +1382,13 @@ public class MenuPrincipal extends JFrame {
 		sai_final_wave.setBackground(new Color(255, 255, 255));
 		sai_final_wave.setColumns(10);
 		sai_final_wave.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		sai_final_wave.setBounds(438, 340, 50, 25);
+		sai_final_wave.setBounds(438, 303, 50, 25);
 		pan_arena_settings.add(sai_final_wave);
 
 		lib_monster_limit = new JLabel("Monster limit");
 		lib_monster_limit.setToolTipText("<html>The maximum amount of monsters MobArena is allowed to spawn for this arena. <br>The next wave, if any, will not spawn until there is room for more monsters.");
 		lib_monster_limit.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lib_monster_limit.setBounds(307, 376, 119, 25);
+		lib_monster_limit.setBounds(307, 339, 119, 25);
 		pan_arena_settings.add(lib_monster_limit);
 
 		sai_monster_limit = new JFormattedTextField(NumberFormat.getIntegerInstance());
@@ -1372,53 +1396,53 @@ public class MenuPrincipal extends JFrame {
 		sai_monster_limit.setBackground(new Color(255, 255, 255));
 		sai_monster_limit.setColumns(10);
 		sai_monster_limit.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		sai_monster_limit.setBounds(438, 377, 50, 25);
+		sai_monster_limit.setBounds(438, 340, 50, 25);
 		pan_arena_settings.add(sai_monster_limit);
 
 		chk_monster_xp = new JCheckBox("Monsters drop XP");
 		chk_monster_xp.setToolTipText("<html>If true, monsters will drop experience orbs. This is useful if you wish to give players <br>the ability to spend the gathered experience on enchants or something else (using <br>different plugins) during the session.");
 		chk_monster_xp.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_monster_xp.setFont(new Font("Tahoma", Font.BOLD, 14));
-		chk_monster_xp.setBounds(307, 413, 149, 25);
+		chk_monster_xp.setBounds(307, 376, 149, 25);
 		pan_arena_settings.add(chk_monster_xp);
 
 		chk_keep_xp = new JCheckBox("Keep XP");
 		chk_keep_xp.setToolTipText("<html>If true, players will keep the experience they gather in the arenas after death. This is <br>useful if you want to allow players to level up or gather experience in the arenas. <br>NOTE: If using display-waves-as-level or display-timer-as-level, set keep-exp to false.");
 		chk_keep_xp.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_keep_xp.setFont(new Font("Tahoma", Font.BOLD, 14));
-		chk_keep_xp.setBounds(514, 6, 80, 25);
+		chk_keep_xp.setBounds(307, 413, 80, 25);
 		pan_arena_settings.add(chk_keep_xp);
 
 		chk_food_regen = new JCheckBox("Food regeneration");
 		chk_food_regen.setToolTipText("<html>If true, a full food bar will cause players to regenerate health while in the arena. <br>Note that this potentially makes tank-like classes extremely overpowered, since <br>diamond armor (by default) coupled with a full food bar will make a player very hard <br>to kill.");
 		chk_food_regen.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_food_regen.setFont(new Font("Tahoma", Font.BOLD, 14));
-		chk_food_regen.setBounds(514, 39, 150, 25);
+		chk_food_regen.setBounds(307, 450, 150, 25);
 		pan_arena_settings.add(chk_food_regen);
 
 		chk_lock_food = new JCheckBox("Lock food level");
 		chk_lock_food.setToolTipText("<html>If true, the food bar will be locked for all players in the arena, meaning they will not <br>end up starving, and they will be able to sprint around as they please.");
 		chk_lock_food.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_lock_food.setFont(new Font("Tahoma", Font.BOLD, 14));
-		chk_lock_food.setBounds(514, 80, 127, 25);
+		chk_lock_food.setBounds(514, 6, 127, 25);
 		pan_arena_settings.add(chk_lock_food);
 
 		lib_player_time = new JLabel("Player time of day");
 		lib_player_time.setToolTipText("<html>When set to anything but world, this setting will freeze the apparent world time for <br>players in the arena to whatever value you set. This is useful for making time-of-day <br>themed arenas (e.g. constant night time for a cemetery, broad daylight for a pirate <br>ship).");
 		lib_player_time.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lib_player_time.setBounds(514, 150, 127, 25);
+		lib_player_time.setBounds(514, 76, 127, 25);
 		pan_arena_settings.add(lib_player_time);
 
 		combo_player_time = new JComboBox<String>();
 		combo_player_time.setToolTipText(lib_player_time.getToolTipText());
 		combo_player_time.setModel(new DefaultComboBoxModel<String>(new String[] {"world", "dawn", "sunrise", "morning", "midday", "noon", "day", "afternoon", "evening", "sunset", "dusk", "night", "midnight"}));
-		combo_player_time.setBounds(653, 150, 95, 26);
+		combo_player_time.setBounds(653, 76, 95, 26);
 		pan_arena_settings.add(combo_player_time);
 
 		lib_auto_start = new JLabel("Auto start timer");
 		lib_auto_start.setToolTipText("<html>The time (in seconds) before the arena will be force started after the first player has <br>joined the lobby (the default of 0 means deactivated or infinite time). Non-ready <br>players will be removed from the lobby. This setting is useful to prevent ill-minded <br>players from delaying or preventing other players from starting the arena.");
 		lib_auto_start.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lib_auto_start.setBounds(514, 224, 119, 25);
+		lib_auto_start.setBounds(514, 150, 119, 25);
 		pan_arena_settings.add(lib_auto_start);
 
 		sai_auto_start = new JFormattedTextField(NumberFormat.getIntegerInstance());
@@ -1426,59 +1450,59 @@ public class MenuPrincipal extends JFrame {
 		sai_auto_start.setBackground(new Color(255, 255, 255));
 		sai_auto_start.setColumns(10);
 		sai_auto_start.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		sai_auto_start.setBounds(645, 225, 50, 25);
+		sai_auto_start.setBounds(645, 151, 50, 25);
 		pan_arena_settings.add(sai_auto_start);
 
 		chk_spout_class = new JCheckBox("Spout class select");
 		chk_spout_class.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_spout_class.setFont(new Font("Tahoma", Font.BOLD, 14));
-		chk_spout_class.setBounds(514, 113, 149, 25);
+		chk_spout_class.setBounds(514, 39, 149, 25);
 		pan_arena_settings.add(chk_spout_class);
 
 		chk_auto_ignite = new JCheckBox("Auto ignite TNT");
 		chk_auto_ignite.setToolTipText("<html>If true, TNT will be automatically ignited when placed. This is useful for preventing <br>Oddjob-like classes from forting.");
 		chk_auto_ignite.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_auto_ignite.setFont(new Font("Tahoma", Font.BOLD, 14));
-		chk_auto_ignite.setBounds(514, 187, 149, 25);
+		chk_auto_ignite.setBounds(514, 113, 149, 25);
 		pan_arena_settings.add(chk_auto_ignite);
 
 		chk_use_class_chest = new JCheckBox("Use class chests");
 		chk_use_class_chest.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_use_class_chest.setFont(new Font("Tahoma", Font.BOLD, 14));
-		chk_use_class_chest.setBounds(514, 261, 131, 25);
+		chk_use_class_chest.setBounds(514, 187, 131, 25);
 		pan_arena_settings.add(chk_use_class_chest);
 
 		chk_display_waves = new JCheckBox("Display waves as level");
 		chk_display_waves.setToolTipText("<html>When set to true, the players' level counter (above the experience bar) will be used <br>to display the current wave number. If the wave announcements in the <br>announcements-file are silenced, this can be used to make a much less \"spammy\" <br>MobArena experience. NOTE: Do not use this if keep-exp is set to true!");
 		chk_display_waves.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_display_waves.setFont(new Font("Tahoma", Font.BOLD, 14));
-		chk_display_waves.setBounds(514, 299, 170, 25);
+		chk_display_waves.setBounds(514, 225, 170, 25);
 		pan_arena_settings.add(chk_display_waves);
 
 		chk_display_timer = new JCheckBox("Display timer as level");
 		chk_display_timer.setToolTipText("<html>When set to true, the players' level counter (above the experience bar) will be used <br>to display the auto-start timer in the lobby. NOTE: Do not use this if keep-exp is set to <br>true!");
 		chk_display_timer.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_display_timer.setFont(new Font("Tahoma", Font.BOLD, 14));
-		chk_display_timer.setBounds(514, 336, 170, 25);
+		chk_display_timer.setBounds(514, 262, 170, 25);
 		pan_arena_settings.add(chk_display_timer);
 
 		chk_auto_ready = new JCheckBox("Auto ready");
 		chk_auto_ready.setToolTipText("<html>When set to true, players are automatically flagged as ready when they pick a class. <br>Useful for arenas with many players where hitting an iron block becomes difficult.");
 		chk_auto_ready.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_auto_ready.setFont(new Font("Tahoma", Font.BOLD, 14));
-		chk_auto_ready.setBounds(514, 373, 99, 25);
+		chk_auto_ready.setBounds(514, 299, 99, 25);
 		pan_arena_settings.add(chk_auto_ready);
 
 		chk_scoreboard = new JCheckBox("Use scoreboards");
 		chk_scoreboard.setToolTipText("Whether to use scoreboards in MobArena or not.");
 		chk_scoreboard.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_scoreboard.setFont(new Font("Tahoma", Font.BOLD, 14));
-		chk_scoreboard.setBounds(514, 413, 139, 25);
+		chk_scoreboard.setBounds(514, 339, 139, 25);
 		pan_arena_settings.add(chk_scoreboard);
 
 		setInvisibleComponents_ArenaConfig();
 
-		setSize(760,580);
+		setSize(760,618);
 
 		tabpan_config.addTab("Arenas and waves configuration", pan_arena_wave);
 		tabpan_config.addTab("Classes configuration", pan_classes);
@@ -1486,12 +1510,12 @@ public class MenuPrincipal extends JFrame {
 
 		JSeparator separator = new JSeparator();
 		separator.setOrientation(SwingConstants.VERTICAL);
-		separator.setBounds(293, 6, 2, 441);
+		separator.setBounds(293, 6, 2, 473);
 		pan_arena_settings.add(separator);
 
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setOrientation(SwingConstants.VERTICAL);
-		separator_1.setBounds(500, 6, 2, 441);
+		separator_1.setBounds(500, 6, 2, 473);
 		pan_arena_settings.add(separator_1);
 
 		setLocationRelativeTo(null);

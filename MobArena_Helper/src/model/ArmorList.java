@@ -54,7 +54,7 @@ public class ArmorList extends ItemList {
 	public String getMap() {
 		StringBuffer sArmor = new StringBuffer();
 		if(this.size()==1){
-			sArmor.append("'"+this.get(0).getMap()+"'");
+			sArmor.append(((Armor)(this.get(0))).getMap(false));
 		}
 		else {
 			for(int i=0;i<this.size();i++) {

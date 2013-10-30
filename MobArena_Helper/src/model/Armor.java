@@ -15,12 +15,16 @@ public class Armor extends Item {
 	}
 	
 	public String getMap() {
-
+		return getMap(true);
+	}
+	
+	public String getMap(boolean numberformat) {
+		
 		EItem thisitem = getItem();
 		int thisquantity = getQuantity();
 		ArrayList<Enchantment> thisenchantements = getEnchantements();
 		
-		StringBuffer item = new StringBuffer(thisitem.getId()+"");
+		StringBuffer item = new StringBuffer((numberformat ? thisitem.getId() : thisitem.getRealName())+"");
 		
 		if(thisitem.getMeta()!=0) item.append(":"+thisitem.getMeta()+":"+thisquantity);
 		else {
@@ -38,6 +42,7 @@ public class Armor extends Item {
 		}
 		
 		return item.toString();
+		
 	}
 	
 }

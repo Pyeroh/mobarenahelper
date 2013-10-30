@@ -526,7 +526,7 @@ public enum EItem {
 	}
 
 	public String getRealName() {
-		return realname;
+		return realname.toLowerCase();
 	}
 
 	public EItemCat getCategory() {
