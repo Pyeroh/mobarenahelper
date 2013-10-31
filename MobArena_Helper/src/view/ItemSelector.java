@@ -191,7 +191,7 @@ public class ItemSelector extends JFrame {
 		list_selected.addMouseListener(render2.getHandler());
 		list_selected.addMouseMotionListener(render2.getHandler());
 
-		//NEW Gestion des enchantements (peut être un JDialog ?)
+		//TODO Gestion des enchantements (peut être un JDialog ?)
 		btn_enchant = new JButton("Enchant");
 		btn_enchant.setBounds(481, 78, 90, 28);
 		btn_enchant.setVisible(false);
