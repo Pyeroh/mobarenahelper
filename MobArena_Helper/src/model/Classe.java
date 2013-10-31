@@ -3,6 +3,8 @@ package model;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
+import model.enums.EItem;
+
 public class Classe {
 
 	private LinkedHashMap<String, Object> classe;
@@ -10,8 +12,8 @@ public class Classe {
 	private String name;
 	private ItemList items = new ItemList();
 	private ArmorList armor = new ArmorList();
-	private int dog_number;
-	private int horse;
+	private int dog_number = 0;
+	private int horse = 0;
 	private LinkedHashMap<String, Object> permissions = new LinkedHashMap<String, Object>();
 	private LinkedHashMap<String, Object> lobby_permissions = new LinkedHashMap<String, Object>();
 	private boolean unbreakable_weapons = true;
@@ -39,16 +41,20 @@ public class Classe {
 	
 	private void load() {
 		GestYaml g = new GestYaml(classe);
-
-		String[] sItems = g.getString("items").split(",");
-		//TODO trouver nombre de chiens et de chevaux
-		for(int i=0;i<sItems.length;i++) {
-			
-		}
-		
 		
 		items.fill(g.getString("items"));
 		armor.fill(g.getString("armor"));
+		
+		int dog_index = items.indexofEItem(EItem.bone);
+		if(dog_index!=-1) {
+			dog_number = items.get(dog_index).getQuantity();
+			items.remove(dog_index);
+		}
+		int horse_index = items.indexofEItem(EItem.hay_block);
+		if(horse_index!=-1) {
+			horse = items.get(horse_index).getQuantity();
+			items.remove(horse_index);
+		}
 
 		this.permissions = g.getMap("permissions");
 		this.lobby_permissions = g.getMap("lobby-permissions");
@@ -68,9 +74,33 @@ public class Classe {
 	public ItemList getItems() {
 		return items;
 	}
+	
+	public void setItems(ItemList items) {
+		this.items = items;
+	}
 
 	public ArmorList getArmor() {
 		return armor;
+	}
+	
+	public void setArmor(ArmorList armor) {
+		this.armor = armor;
+	}
+
+	public int getDog_number() {
+		return dog_number;
+	}
+
+	public void setDog_number(int dog_number) {
+		this.dog_number = dog_number;
+	}
+
+	public int getHorse() {
+		return horse;
+	}
+
+	public void setHorse(int horse) {
+		this.horse = horse;
 	}
 
 	public LinkedHashMap<String, Object> getPermissions() {
