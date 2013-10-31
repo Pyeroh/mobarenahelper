@@ -79,16 +79,10 @@ public class ItemList extends ArrayList<Item> {
 	/**
 	 * Vérifie si l'EItem passé en paramètre a déjà un Item associé dans la liste
 	 * @param e
-	 * @return
+	 * @return {@code true} si l'EItem existe, {@code false} sinon
 	 */
-	public boolean containsItem(EItem e) {
-		boolean contain = false;
-		for(int i=0;i<this.size();i++) {
-			if(get(i).getItem()==e) {
-				contain = true;
-			}
-		}
-		return contain;
+	public boolean containsEItem(EItem e) {
+		return indexofEItem(e)!=-1;
 	}
 
 	public ArrayList<EItem> getEItemList() {
@@ -97,6 +91,20 @@ public class ItemList extends ArrayList<Item> {
 			eitems.add(get(i).getItem());
 		}
 		return eitems;
+	}
+	
+	/**
+	 * Renvoie la position d'un EItem dans la liste
+	 * @param e
+	 * @return l'index de l'objet, -1 sinon
+	 */
+	public int indexofEItem(EItem e) {
+		int index=-1, i=0;
+		while(i<size() && get(i).getItem()!=e) {
+			i++;
+		}
+		if(i<this.size()) index = i;
+		return index;
 	}
 
 	public void sort() {

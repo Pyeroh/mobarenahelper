@@ -85,8 +85,8 @@ public class UpgradeWaveChanger extends JFrame {
 		list_classes.addMouseListener(new MouseAdapter() {
 			public void mouseReleased(MouseEvent e) {
 
-				int index = ((HoverListCellRenderer) list_classes.getCellRenderer()).getHoverIndex();
-
+				int index = list_classes.getSelectedIndex();
+				
 				ArrayList<UpgradeSet> upsetlist = upgradew.getUpgrades();
 
 				if (index!=-1) {
@@ -242,7 +242,7 @@ public class UpgradeWaveChanger extends JFrame {
 		list_permissions.addMouseListener(new MouseAdapter() {
 			public void mouseReleased(MouseEvent e) {
 
-				int index = ((HoverListCellRenderer) list_permissions.getCellRenderer()).getHoverIndex();
+				int index = list_permissions.getSelectedIndex();
 
 				ArrayList<String> perm_list = upset.getPermissions();
 
