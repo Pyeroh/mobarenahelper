@@ -50,6 +50,7 @@ import javax.swing.text.MaskFormatter;
 
 import model.Arena;
 import model.Arenas;
+import model.ArmorList;
 import model.Classe;
 import model.GestYaml;
 import model.ItemList;
@@ -134,6 +135,10 @@ public class MenuPrincipal extends JFrame {
 	private JCheckBox chk_abi_announce;
 	private JTextArea lib_abi_interval;
 	private JFormattedTextField sai_abi_interval;
+	private JLabel lib_boss_name;
+
+	private JTextField sai_boss_name;
+
 	private JButton btn_add;
 	private JWideComboBox combo_carac_wave;
 	private JFormattedTextField sai_nb_carac_wave;
@@ -145,6 +150,8 @@ public class MenuPrincipal extends JFrame {
 	private JFormattedTextField sai_dogs;
 	private JLabel lib_horse;
 	private JLabel lib_classes;
+	private JButton btn_new_class;
+
 	private JScrollPane scrpan_classes;
 	private JList<CellListClass> list_classes;
 	private JLabel lib_class;
@@ -209,9 +216,7 @@ public class MenuPrincipal extends JFrame {
 	private JCheckBox chk_display_timer;
 	private JCheckBox chk_auto_ready;
 	private JCheckBox chk_scoreboard;
-	private JLabel lib_boss_name;
-	private JTextField sai_boss_name;
-
+	
 	public MenuPrincipal() throws ParseException{
 		super("MobArena Helper v2");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(MenuPrincipal.class.getResource("/gui/mobarena.png")));
@@ -220,7 +225,7 @@ public class MenuPrincipal extends JFrame {
 		getContentPane().setLayout(null);
 		getContentPane().setVisible(true);
 
-		//NEW Gestion (ajout/suppression) des arènes
+		//TODO Gestion (ajout/suppression) des arènes
 
 		MouseAdapter newWave = new MouseAdapter() {
 			@Override
@@ -450,6 +455,7 @@ public class MenuPrincipal extends JFrame {
 							combo_arena.addItem(alArenas.get(i).getNom());
 						}
 						loadArena(0);
+						pan_caracs_class.setVisible(false);
 						loadData_ClassConfig(arenas.getALclasses());
 					} catch (Exception e1) {
 						e1.printStackTrace();
@@ -1085,18 +1091,18 @@ public class MenuPrincipal extends JFrame {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				
-				int index = ((HoverListCellRenderer) list_classes.getCellRenderer()).getHoverIndex();
-				
-				if(index!=-1) {
-					pan_caracs_class.setVisible(true);
-					classe = list_classes.getModel().getElementAt(index).getClasse();
-					sai_class.setValue(classe.getName());
-					sai_dogs.setValue(classe.get
+				if(list_classes.getSelectedIndex()!=-1) {
+					classe = list_classes.getSelectedValue().getClasse();
+					loadClass_ClassConfig(classe);
 				}
 				else list_classes.clearSelection();
 				
 			}
 		});
+		
+		btn_new_class = new JButton("New class");
+		btn_new_class.setBounds(193, 8, 90, 22);
+		pan_classes.add(btn_new_class);
 
 		scrpan_classes = new JScrollPane(list_classes);
 		scrpan_classes.setBounds(7, 33, 276, 220);
@@ -1104,6 +1110,7 @@ public class MenuPrincipal extends JFrame {
 
 		pan_caracs_class = new JPanel();
 		pan_caracs_class.setBounds(295, 7, 276, 246);
+		pan_caracs_class.setVisible(false);
 		pan_caracs_class.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		pan_classes.add(pan_caracs_class);
 		pan_caracs_class.setLayout(null);
@@ -1114,6 +1121,21 @@ public class MenuPrincipal extends JFrame {
 		lib_class.setFont(new Font("Tahoma", Font.BOLD, 13));
 
 		sai_class = new JFormattedTextField(new MaskFormatter("U??????????????"));
+		sai_class.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				
+				String new_name = sai_class.getText().trim();
+				if(new_name.equals("")) {
+					classe.setName("New_class");
+				}
+				else classe.setName(sai_class.getText().trim());
+				
+				loadData_ClassConfig(arenas.getALclasses());
+				
+			}
+		});
+		sai_class.setFocusLostBehavior(JFormattedTextField.COMMIT);
 		sai_class.setBackground(new Color(255, 255, 255));
 		sai_class.setBounds(130, 7, 137, 28);
 		sai_class.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -1126,6 +1148,12 @@ public class MenuPrincipal extends JFrame {
 		pan_caracs_class.add(lib_items);
 
 		btn_items = new JButton("Set Items");
+		btn_items.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				classe.setItems(new ItemSelector(MenuPrincipal.this, classe.getItems(), 0, false).getItemList());
+			}
+		});
 		btn_items.setBounds(130, 47, 137, 28);
 		pan_caracs_class.add(btn_items);
 
@@ -1135,6 +1163,12 @@ public class MenuPrincipal extends JFrame {
 		pan_caracs_class.add(lib_armor);
 
 		btn_armor = new JButton("Set Armor");
+		btn_armor.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				classe.setArmor((ArmorList) new ItemSelector(MenuPrincipal.this, classe.getArmor(), 4, true).getItemList());
+			}
+		});
 		btn_armor.setBounds(130, 87, 137, 28);
 		pan_caracs_class.add(btn_armor);
 
@@ -1143,7 +1177,15 @@ public class MenuPrincipal extends JFrame {
 		lib_dogs.setBounds(8, 126, 110, 25);
 		pan_caracs_class.add(lib_dogs);
 
-		sai_dogs = new JFormattedTextField(new MaskFormatter("###"));
+		sai_dogs = new JFormattedTextField(NumberFormat.getIntegerInstance());
+		sai_dogs.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				try {sai_dogs.commitEdit();}
+				catch (ParseException e1) {}
+				classe.setDog_number((int)((long) sai_dogs.getValue()));
+			}
+		});
 		sai_dogs.setBackground(new Color(255, 255, 255));
 		sai_dogs.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		sai_dogs.setColumns(10);
@@ -1156,6 +1198,11 @@ public class MenuPrincipal extends JFrame {
 		pan_caracs_class.add(lib_horse);
 
 		combo_horse = new JComboBox<String>();
+		combo_horse.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				//TODO
+			}
+		});
 		combo_horse.setModel(new DefaultComboBoxModel<String>(new String[] {"None", "Horse", "Donkey", "Mule", "Skeleton", "Undead"}));
 		combo_horse.setBounds(130, 167, 137, 26);
 		pan_caracs_class.add(combo_horse);
@@ -1166,6 +1213,11 @@ public class MenuPrincipal extends JFrame {
 		pan_caracs_class.add(lib_hArmor);
 
 		combo_hArmor = new JComboBox<String>();
+		combo_hArmor.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				//TODO
+			}
+		});
 		combo_hArmor.setModel(new DefaultComboBoxModel<String>(new String[] {"None", "Iron", "Gold", "Diamond"}));
 		combo_hArmor.setBounds(130, 208, 137, 26);
 		pan_caracs_class.add(combo_hArmor);
@@ -1920,11 +1972,25 @@ public class MenuPrincipal extends JFrame {
 		list_classes.addMouseListener(renderer.getHandler());
 		list_classes.addMouseMotionListener(renderer.getHandler());
 		
-		pan_caracs_class.setVisible(false);
+		//pan_caracs_class.setVisible(false);
 	}
 	
 	private void loadClass_ClassConfig(Classe classe) {
+		pan_caracs_class.setVisible(true);
 		
+		String name = classe.getName();
+		if(!name.equals("New_class")) {
+			sai_class.setValue(name);
+		}
+		else sai_class.setValue(null);
+		sai_dogs.setValue(classe.getDog_number());
+		int hArmor = (int) (classe.getHorse()/8f);
+		int horse = 5-((hArmor*8)+5-classe.getHorse());
+		horse = horse<0 ? 0 : horse;
+		combo_horse.setSelectedIndex(horse);
+		combo_hArmor.setSelectedIndex(hArmor);
+		
+		sai_class.requestFocus();
+		sai_class.selectAll();
 	}
-	
 }
