@@ -9,8 +9,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,6 +16,7 @@ import java.util.Arrays;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -37,7 +36,7 @@ import view.cells.CellListEItem;
 import view.cells.CellListItem;
 import view.cells.HoverListCellRenderer;
 
-public class ItemSelector extends JFrame {
+public class ItemSelector extends JDialog {
 
 	private static final long serialVersionUID = 7238413511342140781L;
 
@@ -45,7 +44,6 @@ public class ItemSelector extends JFrame {
 	private int max;
 	private boolean isArmor;
 	private boolean classSelector;
-	private JFrame frame;
 
 	private JLabel lib_selectable;
 	private JLabel lib_sort;
@@ -69,27 +67,22 @@ public class ItemSelector extends JFrame {
 	 * @param isArmor si la fenêtre est un sélecteur d'armure
 	 * @param classSelector si la fenêtre est un sélecteur d'items de classe, si vrai pas d'os ou de balle de foin (loup et cheval)
 	 * @throws ParseException 
+	 * @wbp.parser.constructor
 	 */
 	public ItemSelector(JFrame frame, ItemList items, int max, boolean isArmor, boolean classSelector) {
-		super("Item Selector - "+frame.getTitle());
+		super();
+		setModalityType(ModalityType.APPLICATION_MODAL);
+		setTitle("Item Selector - "+frame.getTitle());
 		
-		addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent e) {
-				ItemSelector.this.frame.setEnabled(true);
-				ItemSelector.this.frame.requestFocusInWindow();
-			}
-		});
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ItemSelector.class.getResource("/gui/mobarena.png")));
 		setResizable(false);
 		this.items = items;
 		this.max = max;
 		this.isArmor = isArmor;
 		this.classSelector = classSelector;
-		this.frame = frame;
 
 		setSize(850,356);
 		setLocationRelativeTo(frame);
-		this.frame.setEnabled(false);
 		getContentPane().setLayout(null);
 
 		lib_selectable = new JLabel("Items selectable");
@@ -207,6 +200,18 @@ public class ItemSelector extends JFrame {
 
 		setVisible(true);
 
+	}
+	
+	/**
+	 * Constructeur d'un sélecteur d'items à partir de la liste {@code items} et
+	 * permettant la sélection de {@code max} items.
+	 * @param frame 
+	 * @param items la liste d'entrée
+	 * @param max le nombre d'items sélectionnable max
+	 * @param isArmor si la fenêtre est un sélecteur d'armure
+	 */
+	public ItemSelector(JFrame frame, ItemList items, int max, boolean isArmor) {
+		this(frame,items,max,isArmor,false);
 	}
 
 

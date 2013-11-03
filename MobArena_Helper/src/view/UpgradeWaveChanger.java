@@ -7,14 +7,13 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -35,12 +34,12 @@ import view.cells.CellListCaracs;
 import view.cells.CellListClass;
 import view.cells.HoverListCellRenderer;
 
-public class UpgradeWaveChanger extends JFrame {
+public class UpgradeWaveChanger extends JDialog {
 
 	private static final long serialVersionUID = -8859125188519188824L;
 	private UpgradeW upgradew;
 	private UpgradeSet upset;
-	private JFrame frame;
+	private JFrame frame = new JFrame();
 	private JScrollPane scrpan_classes;
 	private JList<CellListClass> list_classes;
 	private JLabel lib_classes_upgrade;
@@ -58,25 +57,17 @@ public class UpgradeWaveChanger extends JFrame {
 	private JButton btn_add_perm;
 
 	public UpgradeWaveChanger(JFrame frame, UpgradeW upw) {
-		super("Upgrade Wave modifier - "+frame.getTitle());
-		frame.setEnabled(false);
-
-		addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent e) {
-				UpgradeWaveChanger.this.frame.setEnabled(true);
-				UpgradeWaveChanger.this.frame.requestFocusInWindow();
-			}
-		});
+		super();
+		setModalityType(ModalityType.APPLICATION_MODAL);
+		setTitle("Upgrade Wave modifier - "+frame.getTitle());
 
 		setIconImage(Toolkit.getDefaultToolkit().getImage(UpgradeWaveChanger.class.getResource("/gui/mobarena.png")));
 		setResizable(false);
 		this.upgradew = upw;
-		this.frame = frame;
 
 		getContentPane().setLayout(null);
 		setSize(658, 300);
 		setLocationRelativeTo(frame);
-		setVisible(true);
 
 		list_classes = new JList<CellListClass>();
 		HoverListCellRenderer render = new HoverListCellRenderer(list_classes);
@@ -204,12 +195,12 @@ public class UpgradeWaveChanger extends JFrame {
 		MouseAdapter itemsetter = new MouseAdapter() {
 			public void mouseReleased(MouseEvent e) {
 
-				JFrame frame = UpgradeWaveChanger.this;
+				JFrame frame = UpgradeWaveChanger.this.frame;
 				if(e.getSource() == btn_set_items) {
-					upset.setItems(new ItemSelector(frame,upset.getItems(),0,false, false).getItemList());
+					upset.setItems(new ItemSelector(frame,upset.getItems(),0,false).getItemList());
 				}
 				else if(e.getSource()== btn_set_armor) {
-					upset.setArmor((ArmorList) new ItemSelector(frame,upset.getArmor(),4,true, false).getItemList());
+					upset.setArmor((ArmorList) new ItemSelector(frame,upset.getArmor(),4,true).getItemList());
 				}
 
 			}
@@ -289,9 +280,14 @@ public class UpgradeWaveChanger extends JFrame {
 		scrpan_permissions = new JScrollPane(list_permissions);
 		scrpan_permissions.setBounds(6, 123, 300, 127);
 		pan_upgrade_config.add(scrpan_permissions);
+		
+		this.frame.setSize(this.getSize());
+		this.frame.setTitle(this.getTitle());
 
 		load();
 		setInvisibleComponents();
+		
+		setVisible(true);
 
 	}
 
