@@ -30,7 +30,7 @@ arenas:
             world: world
             enabled: true
             protect: true
-            entry-fee: '$20, stick:5'
+            entry-fee: ''
             clear-wave-before-next: false
             clear-boss-before-next: false
             clear-wave-before-boss: false
@@ -59,11 +59,17 @@ arenas:
             food-regen: false
             lock-food-level: true
             spout-class-select: false
-            player-time-in-arena: world
+            player-time-in-arena: morning
             auto-ignite-tnt: false
             auto-start-timer: 0
-            use-class-chests: false
             display-waves-as-level: false
+            display-timer-as-level: false
+            auto-ready: false
+            use-scoreboards: false
+            use-class-chests: false
+            isolated-chat: false
+            global-end-announce: false
+            global-join-announce: false
         waves:
             recurrent:
                 def1:
