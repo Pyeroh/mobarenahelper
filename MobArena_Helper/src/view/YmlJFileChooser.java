@@ -56,10 +56,10 @@ public class YmlJFileChooser extends JFileChooser {
 
 	public YmlJFileChooser() {
 		super(".");
-		FileFilter jpegFilter = new ExtensionFileFilter(null, new String[] { "YML" });
+		FileFilter ymlfilter = new ExtensionFileFilter(null, new String[] { "YML" });
 
 		removeChoosableFileFilter(getFileFilter());
-		addChoosableFileFilter(jpegFilter);
+		addChoosableFileFilter(ymlfilter);
 	}
 	
 	public YmlJFileChooser(String dir) {

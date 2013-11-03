@@ -127,19 +127,24 @@ public class GestYaml {
 		return yaml.dumpAsMap(data);
 	}
 
+	/**
+	 * Réalise un dump de la Map chargée dans le fichier passé en paramètre
+	 * @param file le fichier dans lequel on écrit
+	 * @throws IOException exception à gérer pour l'écriture dans le fichier
+	 */
 	public void dumpAsFile(FileWriter file) throws IOException {
-		String dump = dump();
-		String[] ligdump = dump.split("\n");
 		
 		file.write("# MobArena v0.95.5 - Config-file"+"\n");
 		file.write("# Read the Wiki for details on how to set up this file: http://goo.gl/F5TTc"+"\n");
 		file.write("# Note: You -must- use spaces instead of tabs!"+"\n");
 
-		for(int i=0;i<ligdump.length;i++){
-			file.write(ligdump[i]+"\n");
-		}
+		file.write(dump());
 		file.close();
 
+	}
+	
+	public boolean containsKey(String value) {
+		return data.containsKey(value);
 	}
 
 }
