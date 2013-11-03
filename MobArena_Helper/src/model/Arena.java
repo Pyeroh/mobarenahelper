@@ -18,7 +18,6 @@ public class Arena {
 	@SuppressWarnings("unchecked")
 	private ArrayList<Wave>[] waves = new ArrayList[2];
 
-	private LinkedHashMap<String, Object> settings;
 	private LinkedHashMap<String, Object> rewards;
 	private LinkedHashMap<String, Object> classlimits;
 	private LinkedHashMap<String, Object> coords;
@@ -88,7 +87,7 @@ public class Arena {
 
 	public LinkedHashMap<String, Object> getMap() {
 		LinkedHashMap<String, Object> arena = new LinkedHashMap<>();
-		arena.put("settings", settings);
+		arena.put("settings", config.getMap());
 		
 		LinkedHashMap<String, Object> mapwaves = new LinkedHashMap<>();
 		String[] catvague = {"recurrent", "single"};

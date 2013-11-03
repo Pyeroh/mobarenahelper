@@ -126,6 +126,12 @@ public class ArenaConfig {
 		if(g.containsKey("global-join-announce")) global_join_announce = g.getBool("global-join-announce");
 		
 	}
+	
+	public LinkedHashMap<String,Object> getMap() {
+		//TODO à faire
+		
+		return null;
+	}
 
 	public String getWorld() {return world;}
 
