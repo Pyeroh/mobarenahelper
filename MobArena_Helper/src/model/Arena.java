@@ -9,6 +9,7 @@ import model.enums.ECatW;
 
 public class Arena {
 	private String nom;
+	private ArenaConfig config;
 	/**
 	 * Les deux types de vagues existant pour une arène :
 	 * 0 pour recurrent
@@ -36,6 +37,20 @@ public class Arena {
 		this.waves[1] = new ArrayList<Wave>();
 		GestYaml garena = new GestYaml(arena);
 		GestYaml gwaves = new GestYaml(garena.getMap("waves"));
+		
+		loadWaves(gwaves);
+		config = new ArenaConfig(garena.getMap("settings"));
+		
+		this.rewards = garena.getMap("rewards");
+		this.classlimits = garena.getMap("class-limits");
+		this.coords = garena.getMap("coords");
+		
+		Collections.sort(waves[0]);
+		Collections.sort(waves[1]);
+		
+	}
+	
+	private void loadWaves(GestYaml gwaves) {
 		for (Iterator<String> it = gwaves.getMap("recurrent").keySet().iterator(); it.hasNext();) {
 			String wave = (String) it.next();
 			this.waves[0].add(Wave.setWave(wave,ECatW.recurrent,gwaves.getMap("recurrent." + wave)));
@@ -44,14 +59,6 @@ public class Arena {
 			String wave = (String) it.next();
 			this.waves[1].add(Wave.setWave(wave,ECatW.single,gwaves.getMap("single." + wave)));
 		}
-		this.settings = garena.getMap("settings");
-		this.rewards = garena.getMap("rewards");
-		this.classlimits = garena.getMap("class-limits");
-		this.coords = garena.getMap("coords");
-		
-		Collections.sort(waves[0]);
-		Collections.sort(waves[1]);
-		
 	}
 
 	public ArrayList<Wave> getWavesType(ECatW type){
@@ -69,6 +76,14 @@ public class Arena {
 
 	public void setNom(String nom) {
 		this.nom = nom;
+	}
+
+	public ArenaConfig getConfig() {
+		return config;
+	}
+
+	public void setConfig(ArenaConfig config) {
+		this.config = config;
 	}
 
 	public LinkedHashMap<String, Object> getMap() {
