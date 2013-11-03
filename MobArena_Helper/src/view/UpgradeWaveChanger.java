@@ -64,6 +64,7 @@ public class UpgradeWaveChanger extends JFrame {
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
 				UpgradeWaveChanger.this.frame.setEnabled(true);
+				UpgradeWaveChanger.this.frame.requestFocusInWindow();
 			}
 		});
 
@@ -205,10 +206,10 @@ public class UpgradeWaveChanger extends JFrame {
 
 				JFrame frame = UpgradeWaveChanger.this;
 				if(e.getSource() == btn_set_items) {
-					upset.setItems(new ItemSelector(frame,upset.getItems(),0,false).getItemList());
+					upset.setItems(new ItemSelector(frame,upset.getItems(),0,false, false).getItemList());
 				}
 				else if(e.getSource()== btn_set_armor) {
-					upset.setArmor((ArmorList) new ItemSelector(frame,upset.getArmor(),4,true).getItemList());
+					upset.setArmor((ArmorList) new ItemSelector(frame,upset.getArmor(),4,true, false).getItemList());
 				}
 
 			}

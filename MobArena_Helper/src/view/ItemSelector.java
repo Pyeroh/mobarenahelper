@@ -44,6 +44,7 @@ public class ItemSelector extends JFrame {
 	private ItemList items;
 	private int max;
 	private boolean isArmor;
+	private boolean classSelector;
 	private JFrame frame;
 
 	private JLabel lib_selectable;
@@ -64,16 +65,18 @@ public class ItemSelector extends JFrame {
 	 * permettant la sélection de {@code max} items.
 	 * @param frame 
 	 * @param items la liste d'entrée
-	 * @param max le nombre d'items sélectionnable max, non géré pour le moment 
-	 * @param isArmor si la fenêtre est un sélecteur d'armure, non géré pour le moment
+	 * @param max le nombre d'items sélectionnable max
+	 * @param isArmor si la fenêtre est un sélecteur d'armure
+	 * @param classSelector si la fenêtre est un sélecteur d'items de classe, si vrai pas d'os ou de balle de foin (loup et cheval)
 	 * @throws ParseException 
 	 */
-	public ItemSelector(JFrame frame, ItemList items, int max, boolean isArmor) {
+	public ItemSelector(JFrame frame, ItemList items, int max, boolean isArmor, boolean classSelector) {
 		super("Item Selector - "+frame.getTitle());
 		
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
 				ItemSelector.this.frame.setEnabled(true);
+				ItemSelector.this.frame.requestFocusInWindow();
 			}
 		});
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ItemSelector.class.getResource("/gui/mobarena.png")));
@@ -81,6 +84,7 @@ public class ItemSelector extends JFrame {
 		this.items = items;
 		this.max = max;
 		this.isArmor = isArmor;
+		this.classSelector = classSelector;
 		this.frame = frame;
 
 		setSize(850,356);
@@ -313,6 +317,11 @@ public class ItemSelector extends JFrame {
 			}
 		}
 		else values = EItem.getByCategory(EItemCat.getByName(sort));
+		
+		if(classSelector) {
+			values.remove(EItem.bone);
+			values.remove(EItem.hay_block);
+		}
 
 		return values;
 	}
