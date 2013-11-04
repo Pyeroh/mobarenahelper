@@ -14,11 +14,11 @@ public class Armor extends Item {
 		return getItem().getName();
 	}
 	
-	public String getMap() {
-		return getMap(true);
+	public String getString() {
+		return getString(true);
 	}
 	
-	public String getMap(boolean numberformat) {
+	public String getString(boolean numberformat) {
 		
 		EItem thisitem = getItem();
 		int thisquantity = getQuantity();

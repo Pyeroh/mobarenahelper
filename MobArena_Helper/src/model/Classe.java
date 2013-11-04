@@ -143,7 +143,7 @@ public class Classe {
 		LinkedHashMap<String, Object> map = new LinkedHashMap<String, Object>();
 
 		//Items
-		StringBuffer sItems = new StringBuffer(items.getMap());
+		StringBuffer sItems = new StringBuffer(items.getString());
 		if(dog_number!=0) {
 			sItems.append(", "+EItem.bone.getRealName());
 			if(dog_number!=1) sItems.append(":"+dog_number);
@@ -155,7 +155,7 @@ public class Classe {
 		map.put("items", sItems.toString());
 
 		//Armor
-		map.put("armor", armor.getMap());
+		map.put("armor", armor.getString());
 
 		if(permissions!=null) map.put("permissions", permissions);
 		if(lobby_permissions!=null) map.put("lobby-permissions", lobby_permissions);

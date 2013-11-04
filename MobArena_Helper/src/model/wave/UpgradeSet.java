@@ -96,7 +96,7 @@ public class UpgradeSet {
 		case legacy:
 			lhMap = null;
 			if(items.size()!=0) {
-				sMap = items.getMap();
+				sMap = items.getString();
 			}
 			else sMap = null;
 			break;
@@ -106,12 +106,12 @@ public class UpgradeSet {
 			int psize = permissions.size();
 			if(isize!=0 && asize==0 && psize==0) {
 				lhMap = null;
-				sMap = items.getMap();
+				sMap = items.getString();
 				break;
 			}
 			if(isize!=0 || asize!=0 || psize!=0) {
-				if(asize!=0) lhMap.put("armor", armor.getMap());
-				if(isize!=0) lhMap.put("items", items.getMap());
+				if(asize!=0) lhMap.put("armor", armor.getString());
+				if(isize!=0) lhMap.put("items", items.getString());
 				if(psize!=0) lhMap.put("permissions", permissions);
 			}
 			else lhMap = null;

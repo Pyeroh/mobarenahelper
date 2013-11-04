@@ -51,14 +51,14 @@ public class ArmorList extends ItemList {
 		}
 	}
 
-	public String getMap() {
+	public String getString() {
 		StringBuffer sArmor = new StringBuffer();
 		if(this.size()==1){
-			sArmor.append(((Armor)(this.get(0))).getMap(false));
+			sArmor.append(((Armor)(this.get(0))).getString(false));
 		}
 		else {
 			for(int i=0;i<this.size();i++) {
-				sArmor.append(this.get(i).getMap()+",");
+				sArmor.append(this.get(i).getString()+",");
 			}
 			int length = sArmor.length();
 			sArmor.delete(length-1, length);

@@ -133,7 +133,7 @@ public class BossW extends Wave{
 		vague.put("abilities", this.getAbilities().toString());
 		if(!this.isAbility_announce())vague.put("ability-announce", this.isAbility_announce());
 		if(this.getAbility_interval()!=3)vague.put("ability-interval", this.getAbility_interval());
-		if(reward.size()!=0)vague.put("reward", reward.getMap());
+		if(reward.size()!=0)vague.put("reward", reward.getString());
 
 		return vague;
 	}

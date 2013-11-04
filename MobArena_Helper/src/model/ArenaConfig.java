@@ -137,7 +137,7 @@ public class ArenaConfig {
 		
 		String fee = "  ";
 		if(entry_fee_money!=0) fee += "$"+entry_fee_money+", ";
-		if(entry_fee_item!=null) fee += entry_fee_item.getMap()+", ";
+		if(entry_fee_item!=null) fee += entry_fee_item.getString()+", ";
 		
 		map.put("entry-fee", fee.substring(0, fee.length()-2));
 		map.put("clear-wave-before-next", clear_wave_before_next);

@@ -47,7 +47,7 @@ public class Item {
 		return enchantements;
 	}
 	
-	public String getMap() {
+	public String getString() {
 
 		StringBuffer item = new StringBuffer(this.item.getRealName().toLowerCase());
 		

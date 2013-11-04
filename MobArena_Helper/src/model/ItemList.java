@@ -58,16 +58,16 @@ public class ItemList extends ArrayList<Item> {
 		}
 	}
 
-	public String getMap() {
+	public String getString() {
 		StringBuffer sItems = new StringBuffer();
 		if(this.size()==1){
-			String item = this.get(0).getMap();
+			String item = this.get(0).getString();
 			if(item.matches("(\\d)+")) sItems.append("'"+item+"'");
 			else sItems.append(item);
 		}
 		else {
 			for(int i=0;i<this.size();i++) {
-				sItems.append(this.get(i).getMap()+", ");
+				sItems.append(this.get(i).getString()+", ");
 			}
 			int length = sItems.length();
 			sItems.delete(length-2, length);

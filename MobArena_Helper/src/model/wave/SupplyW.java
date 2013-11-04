@@ -32,12 +32,12 @@ public class SupplyW extends Wave {
 		LinkedHashMap<String, Object> vague = super.getMap();
 
 		if(drops.size()==1){
-			vague.put("drops", "'"+drops.get(0).getMap()+"'");
+			vague.put("drops", "'"+drops.get(0).getString()+"'");
 		}
 		else {
 			StringBuffer sItems = new StringBuffer();
 			for(int i=0;i<drops.size();i++) {
-				sItems.append(drops.get(i).getMap()+", ");
+				sItems.append(drops.get(i).getString()+", ");
 			}
 			int length = sItems.length();
 			sItems.delete(length-2, length);
