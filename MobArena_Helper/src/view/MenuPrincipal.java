@@ -54,6 +54,7 @@ import model.Arenas;
 import model.ArmorList;
 import model.Classe;
 import model.GestYaml;
+import model.Item;
 import model.ItemList;
 import model.MonsterList;
 import model.Monstre;
@@ -1039,12 +1040,12 @@ public class MenuPrincipal extends JFrame {
 				switch (type) {
 				case "Supply":
 					SupplyW supw = (SupplyW) wave;
-					ItemList drops = new ItemSelector(MenuPrincipal.this,supw.getDrops(), 0, false, false).getItemList();
+					ItemList drops = new ItemSelector(MenuPrincipal.this,supw.getDrops(), 0, false).getItemList();
 					supw.setDrops(drops);
 					break;
 				case "Boss":
 					BossW bwave = (BossW) wave;
-					ItemList reward = new ItemSelector(MenuPrincipal.this,bwave.getReward(), 1, false, false).getItemList();
+					ItemList reward = new ItemSelector(MenuPrincipal.this,bwave.getReward(), 1, false).getItemList();
 					bwave.setReward(reward);
 					break;
 				case "Upgrade":
@@ -1186,7 +1187,7 @@ public class MenuPrincipal extends JFrame {
 		btn_armor.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				classe.setArmor((ArmorList) new ItemSelector(MenuPrincipal.this, classe.getArmor(), 4, true, false).getItemList());
+				classe.setArmor((ArmorList) new ItemSelector(MenuPrincipal.this, classe.getArmor(), 4, true).getItemList());
 			}
 		});
 		btn_armor.setBounds(130, 87, 137, 28);
@@ -1223,7 +1224,7 @@ public class MenuPrincipal extends JFrame {
 
 				@SuppressWarnings("unchecked")
 				JComboBox<String> combo = (JComboBox<String>) e.getSource();
-				
+
 				if(e.getStateChange() == ItemEvent.DESELECTED && combo.isFocusOwner()){
 
 					if(combo_horse.getSelectedIndex()==0) {
@@ -1233,7 +1234,7 @@ public class MenuPrincipal extends JFrame {
 					}
 					else if(combo_horse.getSelectedIndex()!=-1) {
 						combo_hArmor.setEnabled(true);
-						
+
 						classe.setHorse(combo_horse.getSelectedIndex()+(8*combo_hArmor.getSelectedIndex()));
 					}
 
@@ -1253,14 +1254,14 @@ public class MenuPrincipal extends JFrame {
 		combo_hArmor = new JComboBox<String>();
 		combo_hArmor.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
-				
+
 				@SuppressWarnings("unchecked")
 				JComboBox<String> combo = (JComboBox<String>) e.getSource();
-				
+
 				if(e.getStateChange() == ItemEvent.DESELECTED && combo.isFocusOwner()){
-					
+
 					classe.setHorse(combo_horse.getSelectedIndex()+(8*combo_hArmor.getSelectedIndex()));
-					
+
 				}
 
 			}
@@ -1269,18 +1270,17 @@ public class MenuPrincipal extends JFrame {
 		combo_hArmor.setBounds(130, 208, 137, 26);
 		pan_caracs_class.add(combo_hArmor);
 
-		//TODO Gestion des paramètres globaux d'arène
 		pan_arena_settings = new JPanel();
 		pan_arena_settings.setBorder(new LineBorder(new Color(0, 0, 0)));
 		pan_arena_settings.setBounds(6, 6, 567, 341);
 		pan_arena_settings.setLayout(null);
-		
+
 		lib_world = new JLabel("World");
 		lib_world.setToolTipText("The name of the world the arena resides in.");
 		lib_world.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lib_world.setBounds(6, 6, 73, 25);
 		pan_arena_settings.add(lib_world);
-		
+
 		sai_world = new JFormattedTextField(new MaskFormatter("????????????????????????????????????????"));
 		sai_world.addKeyListener(new KeyAdapter() {
 			@Override
@@ -1291,7 +1291,7 @@ public class MenuPrincipal extends JFrame {
 					sai_world.setText(text);
 				}
 				config.setWorld(text);
-				
+
 			}
 		});
 		sai_world.setFocusLostBehavior(JFormattedTextField.COMMIT);
@@ -1301,14 +1301,14 @@ public class MenuPrincipal extends JFrame {
 		pan_arena_settings.add(sai_world);
 
 		ItemListener chkconfig_listener = new ItemListener() {
-			
+
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				
+
 				JCheckBox source = (JCheckBox) e.getSource();
 				boolean b = source.isSelected();
 				if(source.isFocusOwner()) {
-					
+
 					if(source==chk_enabled)					config.setEnabled(b);
 					else if(source==chk_protect)			config.setProtect(b);
 					else if(source==chk_clear_wave_next)	config.setClear_wave_next(b);
@@ -1341,7 +1341,7 @@ public class MenuPrincipal extends JFrame {
 					else if(source==chk_isolated_chat)		config.setIsolated_chat(b);
 					else if(source==chk_global_join)		config.setGlobal_join_announce(b);
 					else if(source==chk_global_end)			config.setGlobal_end_announce(b);
-					
+
 					if(source==chk_keep_xp && b) {
 						chk_display_waves.setSelected(false);
 						config.setWaves_as_level(false);
@@ -1352,13 +1352,13 @@ public class MenuPrincipal extends JFrame {
 						chk_keep_xp.setSelected(false);
 						config.setKeep_xp(false);
 					}
-					
-					
+
+
 				}
-				
+
 			}
 		};
-		
+
 		chk_enabled = new JCheckBox("Enabled");
 		chk_enabled.addItemListener(chkconfig_listener);
 		chk_enabled.setToolTipText("If false, players cannot join the arena.");
@@ -1375,6 +1375,29 @@ public class MenuPrincipal extends JFrame {
 		chk_protect.setBounds(91, 43, 73, 25);
 		pan_arena_settings.add(chk_protect);
 
+		KeyAdapter int_config_adapter = new KeyAdapter(){
+			@Override
+			public void keyReleased(KeyEvent e) {
+				JFormattedTextField source = (JFormattedTextField) e.getSource();
+				try {
+					source.commitEdit();
+				} catch (ParseException e1) {
+					e1.printStackTrace();
+				}
+				int value = (int)((long)source.getValue());
+				
+				if(source==sai_entry) config.setEntry_fee_money(value);
+				else if(source==sai_min_players) config.setMin_players(value);
+				else if(source==sai_max_players) config.setMax_players(value);
+				else if(source==sai_max_join_distance) config.setMax_join_distance(value);
+				else if(source==sai_first_delay) config.setFirst_wave_delay(value);
+				else if(source==sai_interval) config.setWave_interval(value);
+				else if(source==sai_final_wave) config.setFinal_wave(value);
+				else if(source==sai_monster_limit) config.setMonster_limit(value);
+				else if(source==sai_auto_start) config.setAuto_start(value);
+			}
+		};
+		
 		lib_entry = new JLabel("Entry fee");
 		lib_entry.setToolTipText("<html>Follows the exact same notation as the class items and rewards. 20 will subtract<br> 20 of whatever currency you use from the players upon joining. $5, stick:2 will <br>require the player to have 5 currency units and 2 sticks to join the arena. The <br>entry-fee will be refunded if the player leaves before the arena starts.");
 		lib_entry.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -1382,6 +1405,7 @@ public class MenuPrincipal extends JFrame {
 		pan_arena_settings.add(lib_entry);
 
 		sai_entry = new JFormattedTextField(NumberFormat.getIntegerInstance());
+		sai_entry.addKeyListener(int_config_adapter);
 		sai_entry.setToolTipText(lib_entry.getToolTipText());
 		sai_entry.setBackground(new Color(255, 255, 255));
 		sai_entry.setBounds(91, 81, 50, 25);
@@ -1390,6 +1414,18 @@ public class MenuPrincipal extends JFrame {
 		sai_entry.setColumns(10);
 
 		btn_entry = new JButton("Set item");
+		btn_entry.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				ItemList il = new ItemList();
+				Item it_fee = config.getEntry_fee_item();
+				if (it_fee!=null) {
+					il.add(config.getEntry_fee_item());
+				}
+				il = new ItemSelector(MenuPrincipal.this, il, 1, false).getItemList();
+				if(il.size()!=0) config.setEntry_fee_item(il.get(0));
+			}
+		});
 		btn_entry.setToolTipText(lib_entry.getToolTipText());
 		btn_entry.setBounds(153, 81, 90, 25);
 		pan_arena_settings.add(btn_entry);
@@ -1529,6 +1565,7 @@ public class MenuPrincipal extends JFrame {
 		pan_arena_settings.add(lib_min_players);
 
 		sai_min_players = new JFormattedTextField(NumberFormat.getIntegerInstance());
+		sai_min_players.addKeyListener(int_config_adapter);
 		sai_min_players.setToolTipText(lib_min_players.getToolTipText());
 		sai_min_players.setBackground(new Color(255, 255, 255));
 		sai_min_players.setColumns(10);
@@ -1543,6 +1580,7 @@ public class MenuPrincipal extends JFrame {
 		pan_arena_settings.add(lib_max_players);
 
 		sai_max_players = new JFormattedTextField(NumberFormat.getIntegerInstance());
+		sai_max_players.addKeyListener(int_config_adapter);
 		sai_max_players.setToolTipText(lib_max_players.getToolTipText());
 		sai_max_players.setBackground(new Color(255, 255, 255));
 		sai_max_players.setColumns(10);
@@ -1557,6 +1595,7 @@ public class MenuPrincipal extends JFrame {
 		pan_arena_settings.add(lib_max_join_distance);
 
 		sai_max_join_distance = new JFormattedTextField(NumberFormat.getIntegerInstance());
+		sai_max_join_distance.addKeyListener(int_config_adapter);
 		sai_max_join_distance.setToolTipText(lib_max_join_distance.getToolTipText());
 		sai_max_join_distance.setBackground(new Color(255, 255, 255));
 		sai_max_join_distance.setColumns(10);
@@ -1571,6 +1610,7 @@ public class MenuPrincipal extends JFrame {
 		pan_arena_settings.add(lib_first_delay);
 
 		sai_first_delay = new JFormattedTextField(NumberFormat.getIntegerInstance());
+		sai_first_delay.addKeyListener(int_config_adapter);
 		sai_first_delay.setToolTipText(lib_first_delay.getToolTipText());
 		sai_first_delay.setBackground(new Color(255, 255, 255));
 		sai_first_delay.setColumns(10);
@@ -1585,6 +1625,7 @@ public class MenuPrincipal extends JFrame {
 		pan_arena_settings.add(lib_interval);
 
 		sai_interval = new JFormattedTextField(NumberFormat.getIntegerInstance());
+		sai_interval.addKeyListener(int_config_adapter);
 		sai_interval.setToolTipText(lib_interval.getToolTipText());
 		sai_interval.setBackground(new Color(255, 255, 255));
 		sai_interval.setColumns(10);
@@ -1599,6 +1640,7 @@ public class MenuPrincipal extends JFrame {
 		pan_arena_settings.add(lib_final_wave);
 
 		sai_final_wave = new JFormattedTextField(NumberFormat.getIntegerInstance());
+		sai_final_wave.addKeyListener(int_config_adapter);
 		sai_final_wave.setToolTipText(lib_final_wave.getToolTipText());
 		sai_final_wave.setBackground(new Color(255, 255, 255));
 		sai_final_wave.setColumns(10);
@@ -1613,6 +1655,7 @@ public class MenuPrincipal extends JFrame {
 		pan_arena_settings.add(lib_monster_limit);
 
 		sai_monster_limit = new JFormattedTextField(NumberFormat.getIntegerInstance());
+		sai_monster_limit.addKeyListener(int_config_adapter);
 		sai_monster_limit.setToolTipText(lib_monster_limit.getToolTipText());
 		sai_monster_limit.setBackground(new Color(255, 255, 255));
 		sai_monster_limit.setColumns(10);
@@ -1659,6 +1702,14 @@ public class MenuPrincipal extends JFrame {
 		pan_arena_settings.add(lib_player_time);
 
 		combo_player_time = new JComboBox<String>();
+		combo_player_time.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if(e.getStateChange()==ItemEvent.DESELECTED && combo_player_time.isFocusOwner()) {
+					config.setPlayer_time((String) combo_player_time.getSelectedItem());
+				}
+			}
+		});
 		combo_player_time.setToolTipText(lib_player_time.getToolTipText());
 		combo_player_time.setModel(new DefaultComboBoxModel<String>(new String[] {"world", "dawn", "sunrise", "morning", "midday", "noon", "day", "afternoon", "evening", "sunset", "dusk", "night", "midnight"}));
 		combo_player_time.setBounds(653, 43, 95, 26);
@@ -1671,6 +1722,7 @@ public class MenuPrincipal extends JFrame {
 		pan_arena_settings.add(lib_auto_start);
 
 		sai_auto_start = new JFormattedTextField(NumberFormat.getIntegerInstance());
+		sai_auto_start.addKeyListener(int_config_adapter);
 		sai_auto_start.setToolTipText(lib_auto_start.getToolTipText());
 		sai_auto_start.setBackground(new Color(255, 255, 255));
 		sai_auto_start.setColumns(10);
@@ -1739,7 +1791,7 @@ public class MenuPrincipal extends JFrame {
 		chk_isolated_chat.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_isolated_chat.setBounds(514, 342, 119, 25);
 		pan_arena_settings.add(chk_isolated_chat);
-		
+
 		chk_global_join = new JCheckBox("Global join announce");
 		chk_global_join.addItemListener(chkconfig_listener);
 		chk_global_join.setToolTipText("<html>When set to true, MobArena will announce the arena-join-global message to all <br>players on the server when the first player joins an arena.");
@@ -1747,7 +1799,7 @@ public class MenuPrincipal extends JFrame {
 		chk_global_join.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_global_join.setBounds(514, 376, 170, 25);
 		pan_arena_settings.add(chk_global_join);
-		
+
 		chk_global_end = new JCheckBox("Global end announce");
 		chk_global_end.addItemListener(chkconfig_listener);
 		chk_global_end.setToolTipText("<html>When set to true, MobArena will announce the arena-end-global message  to all <br>players on the server when an arena ends.");
@@ -1765,7 +1817,7 @@ public class MenuPrincipal extends JFrame {
 		separator_1.setOrientation(SwingConstants.VERTICAL);
 		separator_1.setBounds(500, 6, 2, 473);
 		pan_arena_settings.add(separator_1);
-		
+
 		setInvisibleComponents_ArenaConfig();
 
 		setSize(760,618);
@@ -1773,7 +1825,7 @@ public class MenuPrincipal extends JFrame {
 		tabpan_config.addTab("Arenas and waves configuration", pan_arena_wave);
 		tabpan_config.addTab("Classes configuration", pan_classes);
 		tabpan_config.addTab("Arena configuration", pan_arena_settings);
-		
+
 		tabpan_config.setEnabledAt(1, false);
 		tabpan_config.setEnabledAt(2, false);
 
@@ -1809,7 +1861,7 @@ public class MenuPrincipal extends JFrame {
 
 		ArrayList<Wave> singW = arena.getWavesType(ECatW.single);
 		loadListCaracs_ArenaConfig(singW, list_single);
-		
+
 		loadConfig_ArenaConfig(config);
 
 	}
@@ -2182,7 +2234,7 @@ public class MenuPrincipal extends JFrame {
 		sai_class.requestFocus();
 		sai_class.selectAll();
 	}
-	
+
 	private void loadConfig_ArenaConfig(ArenaConfig config) {
 		sai_world.setValue(config.getWorld());
 		chk_enabled.setSelected(config.isEnabled());
@@ -2228,5 +2280,5 @@ public class MenuPrincipal extends JFrame {
 		chk_global_join.setSelected(config.isGlobal_join_announce());
 		chk_global_end.setSelected(config.isGlobal_end_announce());
 	}
-	
+
 }
