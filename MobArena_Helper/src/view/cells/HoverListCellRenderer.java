@@ -27,7 +27,7 @@ public class HoverListCellRenderer extends DefaultListCellRenderer {
 		super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);  
 
 		CellListCaracs thisvalue = (CellListCaracs) value;
-		thisvalue.setPreferredSize(new Dimension(thisvalue.getWidth(),thisvalue.getHeight()));
+		thisvalue.setPreferredSize(new Dimension(list.getWidth()-20, thisvalue.getHeight()));
 		thisvalue.setMinimumSize(thisvalue.getPreferredSize());
 		thisvalue.setMaximumSize(thisvalue.getPreferredSize());
 
