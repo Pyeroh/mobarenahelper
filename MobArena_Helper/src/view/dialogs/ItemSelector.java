@@ -1,4 +1,4 @@
-package view;
+package view.dialogs;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -32,6 +32,7 @@ import model.Item;
 import model.ItemList;
 import model.enums.EItem;
 import model.enums.EItemCat;
+import view.JWideComboBox;
 import view.cells.CellListEItem;
 import view.cells.CellListItem;
 import view.cells.HoverListCellRenderer;

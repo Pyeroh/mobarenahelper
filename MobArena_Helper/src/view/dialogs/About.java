@@ -1,4 +1,4 @@
-package view;
+package view.dialogs;
 
 import java.awt.Color;
 import java.awt.Desktop;
@@ -20,6 +20,7 @@ import javax.swing.JTextPane;
 import javax.swing.JWindow;
 import javax.swing.border.LineBorder;
 
+import view.MenuPrincipal;
 import view.cells.CellListWave;
 
 public class About extends JWindow {

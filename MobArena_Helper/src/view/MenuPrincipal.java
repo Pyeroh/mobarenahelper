@@ -79,6 +79,12 @@ import view.cells.CellListClass;
 import view.cells.CellListMonster;
 import view.cells.CellListWave;
 import view.cells.HoverListCellRenderer;
+import view.dialogs.About;
+import view.dialogs.HowTo;
+import view.dialogs.ItemSelector;
+import view.dialogs.Todo;
+import view.dialogs.UpgradeWaveChanger;
+import view.dialogs.YmlJFileChooser;
 
 public class MenuPrincipal extends JFrame {
 

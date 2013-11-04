@@ -1,4 +1,4 @@
-package view;
+package view.dialogs;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -12,6 +12,8 @@ import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JWindow;
 import javax.swing.border.LineBorder;
+
+import view.MenuPrincipal;
 
 public class Todo extends JWindow {
 
