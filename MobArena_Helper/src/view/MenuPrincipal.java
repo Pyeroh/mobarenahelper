@@ -1105,7 +1105,6 @@ public class MenuPrincipal extends JFrame {
 		});
 		mnHelp.add(mntmAbout);
 
-		//TODO Gestion des classes (permissions à ajouter)
 		pan_classes = new JPanel();
 		pan_classes.setLayout(null);
 
@@ -1187,11 +1186,10 @@ public class MenuPrincipal extends JFrame {
 			public void keyReleased(KeyEvent e) {
 
 				String new_name = sai_class.getText().trim();
-				if(new_name.equals("")) {
+				if (new_name.equals("")) {
 					classe.setName("New_class");
-				}
-				else classe.setName(new_name);
-
+				} else
+					classe.setName(new_name);
 				loadData_ClassConfig(Classe.classe_list);
 
 			}
@@ -1341,7 +1339,7 @@ public class MenuPrincipal extends JFrame {
 						if(source==btn_add_perm) classe.setPermissions(perm_list);
 						else if(source==btn_add_lobby_permissions) classe.setLobby_permissions(perm_list);
 					}
-					perm_list.add(perm);
+					perm_list.add(perm.trim());
 					loadClass_ClassConfig(classe);
 				}
 
@@ -2364,6 +2362,9 @@ public class MenuPrincipal extends JFrame {
 	}
 
 	private void loadData_ClassConfig(ArrayList<Classe> aLclasses) {
+		
+		int index = list_classes.getSelectedIndex();
+		
 		DefaultListModel<CellListClass> mod_Class = new DefaultListModel<>();
 		for(int i=0;i<aLclasses.size();i++) {
 			Classe iclasse = aLclasses.get(i);
@@ -2377,7 +2378,10 @@ public class MenuPrincipal extends JFrame {
 		list_classes.addMouseListener(renderer.getHandler());
 		list_classes.addMouseMotionListener(renderer.getHandler());
 
-		pan_caracs_class.setVisible(false);
+		if(index==-1) pan_caracs_class.setVisible(false);
+		else {
+			list_classes.setSelectedIndex(index);
+		}
 
 	}
 
