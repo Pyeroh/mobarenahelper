@@ -14,8 +14,8 @@ public class Classe {
 	private ArmorList armor = new ArmorList();
 	private int dog_number = 0;
 	private int horse = 0;
-	private LinkedHashMap<String, Object> permissions = new LinkedHashMap<String, Object>();
-	private LinkedHashMap<String, Object> lobby_permissions = new LinkedHashMap<String, Object>();
+	private ArrayList<String> permissions = new ArrayList<String>();
+	private ArrayList<String> lobby_permissions = new ArrayList<String>();
 	private boolean unbreakable_weapons = true;
 	private boolean unbreakable_armor = true;
 	
@@ -35,7 +35,7 @@ public class Classe {
 		load();
 	}
 	
-	private Classe(String name) {
+	public Classe(String name) {
 		this.name = name;
 	}
 	
@@ -56,8 +56,8 @@ public class Classe {
 			items.remove(horse_index);
 		}
 
-		this.permissions = g.getMap("permissions");
-		this.lobby_permissions = g.getMap("lobby-permissions");
+		this.permissions = g.getList("permissions");
+		this.lobby_permissions = g.getList("lobby-permissions");
 		this.unbreakable_armor = g.getString("unbreakable-armor")==null ? true : g.getBool("unbreakable-armor");
 		this.unbreakable_weapons = g.getString("unbreakable-weapons")==null ? true : g.getBool("unbreakable-weapons");
 
@@ -103,12 +103,20 @@ public class Classe {
 		this.horse = horse;
 	}
 
-	public LinkedHashMap<String, Object> getPermissions() {
+	public ArrayList<String> getPermissions() {
 		return permissions;
 	}
 
-	public LinkedHashMap<String, Object> getLobby_permissions() {
+	public void setPermissions(ArrayList<String> permissions) {
+		this.permissions = permissions;		
+	}
+
+	public ArrayList<String> getLobby_permissions() {
 		return lobby_permissions;
+	}
+	
+	public void setLobby_permissions(ArrayList<String> lobby_permissions) {
+		this.lobby_permissions = lobby_permissions;
 	}
 
 	public boolean isUnbreakable_weapons() {
