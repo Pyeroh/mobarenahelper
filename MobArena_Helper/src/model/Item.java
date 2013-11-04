@@ -1,15 +1,14 @@
 package model;
 
-import java.util.ArrayList;
-
 import model.enums.EEnchantment;
 import model.enums.EItem;
+import model.lists.EnchantList;
 
 public class Item {
 
 	private EItem item;
 	private int quantity = 1;
-	private ArrayList<Enchantment> enchantements = new ArrayList<>();
+	private EnchantList enchantements = new EnchantList();
 	
 	public Item(EItem item, int quantity, String[] enchantments) {
 		this.item = item;
@@ -43,7 +42,7 @@ public class Item {
 		return quantity+" "+item.getName();
 	}
 
-	public ArrayList<Enchantment> getEnchantements() {
+	public EnchantList getEnchantements() {
 		return enchantements;
 	}
 	

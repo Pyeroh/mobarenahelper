@@ -6,11 +6,11 @@ import java.util.Map;
 import java.util.Set;
 
 import model.GestYaml;
-import model.ItemList;
 import model.Monstre;
 import model.Wave;
 import model.enums.EMonsterAliases;
 import model.enums.ETypeW;
+import model.lists.ItemList;
 
 public class SupplyW extends Wave {
 

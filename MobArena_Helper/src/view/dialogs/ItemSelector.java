@@ -27,11 +27,11 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.text.MaskFormatter;
 
 import model.Armor;
-import model.ArmorList;
 import model.Item;
-import model.ItemList;
 import model.enums.EItem;
 import model.enums.EItemCat;
+import model.lists.ArmorList;
+import model.lists.ItemList;
 import view.JWideComboBox;
 import view.cells.CellListEItem;
 import view.cells.CellListItem;

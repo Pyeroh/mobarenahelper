@@ -5,13 +5,13 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import model.GestYaml;
-import model.ItemList;
 import model.Monstre;
 import model.Wave;
 import model.enums.EAbilities;
 import model.enums.EHealth;
 import model.enums.EMonsterAliases;
 import model.enums.ETypeW;
+import model.lists.ItemList;
 
 public class BossW extends Wave{
 

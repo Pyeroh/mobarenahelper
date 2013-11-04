@@ -1,7 +1,9 @@
-package model;
+package model.lists;
 
 import java.util.ArrayList;
 
+import model.Armor;
+import model.Item;
 import model.enums.EItem;
 
 public class ArmorList extends ItemList {

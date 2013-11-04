@@ -1,7 +1,8 @@
-package model;
+package model.lists;
 
 import java.util.ArrayList;
 
+import model.Monstre;
 import model.enums.EMonsters;
 
 public class MonsterList extends ArrayList<Monstre> {

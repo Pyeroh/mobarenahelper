@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 import model.enums.EItem;
+import model.lists.ArmorList;
+import model.lists.ItemList;
 
 public class Classe {
 

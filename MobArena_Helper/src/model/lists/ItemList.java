@@ -1,7 +1,8 @@
-package model;
+package model.lists;
 
 import java.util.ArrayList;
 
+import model.Item;
 import model.enums.EItem;
 
 public class ItemList extends ArrayList<Item> {

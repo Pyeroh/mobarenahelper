@@ -3,10 +3,10 @@ package model.wave;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
-import model.ArmorList;
 import model.Classe;
 import model.GestYaml;
-import model.ItemList;
+import model.lists.ArmorList;
+import model.lists.ItemList;
 
 public class UpgradeSet {
 

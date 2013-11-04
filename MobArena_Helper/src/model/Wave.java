@@ -5,6 +5,7 @@ import java.util.Map;
 
 import model.enums.ECatW;
 import model.enums.ETypeW;
+import model.lists.MonsterList;
 import model.wave.BossW;
 import model.wave.DefaultW;
 import model.wave.OtherW;
