@@ -211,7 +211,6 @@ public class ItemSelector extends JDialog {
 			}
 		});
 
-		//TODO Gestion des enchantements (peut être un JDialog ?)
 		btn_enchant = new JButton("Enchant");
 		btn_enchant.addMouseListener(new MouseAdapter() {
 			@Override

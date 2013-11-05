@@ -3,9 +3,7 @@ package view.dialogs;
 import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Font;
-import java.awt.GraphicsEnvironment;
 import java.awt.Image;
-import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
@@ -14,34 +12,36 @@ import java.net.URISyntaxException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextPane;
-import javax.swing.JWindow;
 import javax.swing.border.LineBorder;
 
 import view.MenuPrincipal;
-import view.cells.CellListWave;
+import view.cells.CellListCaracs;
 
-public class About extends JWindow {
+public class About extends JDialog {
 
 	private static final long serialVersionUID = -7754918383926484094L;
 	private JTextPane lib_about;
 	private JLabel img_header;
 	private JLabel lib_link;
 
-	private MenuPrincipal menu;
 	private JLabel border;
 
 	public About(MenuPrincipal menu) {
+		setUndecorated(true);
+		setModalityType(ModalityType.APPLICATION_MODAL);
 		setAlwaysOnTop(true);
 		getContentPane().setBackground(new Color(255, 255, 255));
 		getContentPane().setLayout(null);
+		setSize(437, 320);
 
 		img_header = new JLabel("");
 		img_header.setBounds(0, 0, 437, 140);
 		ImageIcon orig_icon = new ImageIcon(About.class.getResource("/gui/Banner.png"));
-		Image icon = CellListWave.scaleImage(orig_icon.getImage(), img_header);
+		Image icon = CellListCaracs.scaleImage(orig_icon.getImage(), img_header);
 		img_header.setIcon(new ImageIcon(icon));
 		getContentPane().add(img_header);
 
@@ -90,28 +90,19 @@ public class About extends JWindow {
 		JButton btn_ok = new JButton("OK");
 		btn_ok.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				activate();
-				setVisible(false);
+				dispose();
 			}
 		});
 		btn_ok.setBounds(368, 285, 59, 23);
 		getContentPane().add(btn_ok);
 		
 		border = new JLabel("");
-		border.setBounds(0, 140, 437, 195);
+		border.setBounds(0, 140, 437, this.getHeight()-img_header.getHeight()-1);
 		border.setBorder(new LineBorder(new Color(0, 0, 0)));
 		getContentPane().add(border);
 
-		this.menu = menu;
-
-		setSize(437, 335);
-		Rectangle d = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
-		setLocation((d.width-getWidth())/2, (d.height-getHeight())/2);
+		setLocationRelativeTo(menu);
 		setVisible(true);
 
-	}
-
-	private void activate() {
-		menu.setEnabled(true);
 	}
 }

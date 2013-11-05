@@ -1,7 +1,9 @@
 package view.cells;
 
 import java.awt.Font;
+import java.awt.Image;
 
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -25,5 +27,15 @@ public class CellListCaracs extends JPanel {
 	
 	public void setText(String text) {
 		lib_desc.setText(text);
+	}
+	
+	public String getText() {
+		return lib_desc.getText();
+	}
+	
+	public static Image scaleImage(Image source, JComponent component) {
+		int height = component.getHeight();
+		int width = component.getWidth();
+		return source.getScaledInstance(width, height, Image.SCALE_AREA_AVERAGING);
 	}
 }

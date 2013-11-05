@@ -242,7 +242,7 @@ public class MenuPrincipal extends JFrame {
 	private JCheckBox chk_global_end;
 
 	public MenuPrincipal() throws ParseException{
-		super("MobArena Helper v2");
+		super("MobArena Helper v2.0");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(MenuPrincipal.class.getResource("/gui/mobarena.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
@@ -1083,7 +1083,7 @@ public class MenuPrincipal extends JFrame {
 		mntmTodoList.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				blocage(e.getActionCommand());
+				new Todo(MenuPrincipal.this);
 			}
 		});
 		mnPlanned.add(mntmTodoList);
@@ -1095,7 +1095,7 @@ public class MenuPrincipal extends JFrame {
 		mntmHowToUse.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				blocage(e.getActionCommand());
+				new HowTo(MenuPrincipal.this);
 			}
 		});
 		mnHelp.add(mntmHowToUse);
@@ -1106,7 +1106,7 @@ public class MenuPrincipal extends JFrame {
 		mntmAbout.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				blocage(e.getActionCommand());
+				new About(MenuPrincipal.this);
 			}
 		});
 		mnHelp.add(mntmAbout);
@@ -1995,23 +1995,6 @@ public class MenuPrincipal extends JFrame {
 
 		setLocationRelativeTo(null);
 		setVisible(true);
-	}
-
-	private void blocage(String launching){
-		setEnabled(false);
-		switch (launching) {
-		case "About...":
-			new About(this);
-			break;
-		case "How to use":
-			new HowTo(this);
-			break;
-		case "ToDo List":
-			new Todo(this);
-			break;
-		default:
-			break;
-		}
 	}
 
 	private void loadArena(int numarena) {

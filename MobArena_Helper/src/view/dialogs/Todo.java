@@ -9,7 +9,7 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JTextArea;
+import javax.swing.JTextPane;
 import javax.swing.JWindow;
 import javax.swing.border.LineBorder;
 
@@ -19,7 +19,7 @@ public class Todo extends JWindow {
 
 	private static final long serialVersionUID = 4530101048983920413L;
 	private MenuPrincipal menu;
-	private JTextArea lib_todo;
+	private JTextPane lib_todo;
 	private JButton btn_ok;
 	private JLabel border;
 	
@@ -27,12 +27,20 @@ public class Todo extends JWindow {
 		getContentPane().setBackground(new Color(255, 255, 255));
 		getContentPane().setLayout(null);
 		
-		lib_todo = new JTextArea();
-		lib_todo.setLineWrap(true);
-		lib_todo.setWrapStyleWord(true);
-		lib_todo.setTabSize(2);
+		lib_todo = new JTextPane();
+		lib_todo.setContentType("text/html");
 		lib_todo.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lib_todo.setText("I plan to add a lot of functionnalities, because the program is still at a very basic stage, it is simply a portage of the Wave Editor by Agnate. To do :\r\n- Add control over\r\n\t- general settings\r\n\t- arena settings\r\n\t- class limit by arena\r\n- Allow create, modify and delete on :\r\n\t- classes\r\n\t- rewards\r\n\t- arenas\r\n- Give control on :\r\n\t- upgrade waves\r\n\t- supply waves");
+		lib_todo.setText("<html>I plan to add a lot of functionnalities, because the program is still at a very basic stage, it is simply a portage of the Wave Editor by Agnate. To do :<br>"
+				+ "- Add control over<br>- general settings<br>"
+				+ "<span class=\"marge\"><s>- arena settings</s></span><br>"
+				+ "<span class=\"marge\">- class limit by arena<</span>br>"
+				+ "- Allow create, modify and delete on :<br>"
+				+ "<span class=\"marge\">- classes</span><br>"
+				+ "<span class=\"marge\">- rewards</span><br>"
+				+ "<span class=\"marge\">- arenas</span><br>"
+				+ "- Give control on :<br>"
+				+ "<span class=\"marge\">- upgrade waves</span><br>"
+				+ "<span class=\"marge\">- supply waves</span>");
 		lib_todo.setBounds(10, 11, 390, 210);
 		lib_todo.setBorder(null);
 		getContentPane().add(lib_todo);

@@ -58,6 +58,14 @@ public enum EEnchantment {
 		return lvlmax;
 	}
 
+	/**
+	 * Trouve l'EEnchantment correspondant au nom passé en paramètre. La comparaison est faite par rapport à la méthode
+	 * getName().
+	 * @param name le nom recherché
+	 * @return la constante associée au nom passé en paramètre
+	 * @throws IllegalArgumentException si la constante recherchée n'existe pas
+	 * @throws NullPointerException si le paramètre vaut {@code null}
+	 */
 	public static EEnchantment getByName(String name) {
 
 		if (name!=null) {

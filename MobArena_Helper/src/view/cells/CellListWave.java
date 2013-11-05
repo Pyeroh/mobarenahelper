@@ -1,9 +1,6 @@
 package view.cells;
 
-import java.awt.Image;
-
 import javax.swing.ImageIcon;
-import javax.swing.JComponent;
 import javax.swing.JLabel;
 
 import model.Wave;
@@ -27,12 +24,6 @@ public class CellListWave extends CellListCaracs {
 
 		add(image);
 
-	}
-
-	public static Image scaleImage(Image source, JComponent component) {
-		int height = component.getHeight();
-		int width = component.getWidth();
-		return source.getScaledInstance(width, height, Image.SCALE_AREA_AVERAGING);
 	}
 
 	public Wave getWave() {
