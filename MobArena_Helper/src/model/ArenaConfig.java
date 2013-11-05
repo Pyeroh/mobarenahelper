@@ -6,50 +6,50 @@ import model.enums.EItem;
 
 public class ArenaConfig {
 
-	private String world;
-	private boolean enabled;
-	private boolean protect;
-	private int entry_fee_money;
-	private Item entry_fee_item;
-	private boolean clear_wave_before_next;
-	private boolean clear_boss_before_next;
-	private boolean clear_wave_before_boss;
-	private boolean lightning;
-	private boolean auto_equip_armor;
-	private boolean soft_restore;
-	private boolean soft_restore_drops;
-	private boolean require_empty_inv_join;
-	private boolean require_empty_inv_spec;
-	private boolean hellhounds;
-	private boolean pvp_enabled;
-	private boolean monster_infight;
-	private boolean allow_teleporting;
-	private boolean spectate_on_death;
-	private boolean auto_respawn;
-	private boolean share_items_in_arena;
-	private int min_players;
-	private int max_players;
-	private int max_join_distance;
-	private int first_wave_delay;
-	private int wave_interval;
-	private int final_wave;
-	private int monster_limit;
-	private boolean monster_exp;
-	private boolean keep_exp;
-	private boolean food_regen;
-	private boolean lock_food_level;
-	private boolean spout_class_select;
-	private String player_time_in_arena;
-	private boolean auto_ignite_tnt;
-	private int auto_start_timer;
-	private boolean display_waves_as_level;
-	private boolean display_timer_as_level;
-	private boolean auto_ready;
-	private boolean use_scoreboards;
-	private boolean use_class_chest;
-	private boolean isolated_chat;
-	private boolean global_end_announce;
-	private boolean global_join_announce;
+	private String world = "world";
+	private boolean enabled = true;
+	private boolean protect = false;
+	private int entry_fee_money = 0;
+	private Item entry_fee_item = null;
+	private boolean clear_wave_before_next = false;
+	private boolean clear_boss_before_next = false;
+	private boolean clear_wave_before_boss = false;
+	private boolean lightning = false;
+	private boolean auto_equip_armor = false;
+	private boolean soft_restore = false;
+	private boolean soft_restore_drops = false;
+	private boolean require_empty_inv_join = false;
+	private boolean require_empty_inv_spec = false;
+	private boolean hellhounds = false;
+	private boolean pvp_enabled = false;
+	private boolean monster_infight = false;
+	private boolean allow_teleporting = false;
+	private boolean spectate_on_death = false;
+	private boolean auto_respawn = false;
+	private boolean share_items_in_arena = false;
+	private int min_players = 0;
+	private int max_players = 0;
+	private int max_join_distance = 0;
+	private int first_wave_delay = 0;
+	private int wave_interval = 0;
+	private int final_wave = 0;
+	private int monster_limit = 0;
+	private boolean monster_exp = false;
+	private boolean keep_exp = false;
+	private boolean food_regen = false;
+	private boolean lock_food_level = false;
+	private boolean spout_class_select = false;
+	private String player_time_in_arena = "world";
+	private boolean auto_ignite_tnt = false;
+	private int auto_start_timer = 0;
+	private boolean display_waves_as_level = false;
+	private boolean display_timer_as_level = false;
+	private boolean auto_ready = false;
+	private boolean use_scoreboards = false;
+	private boolean use_class_chest = false;
+	private boolean isolated_chat = false;
+	private boolean global_end_announce = false;
+	private boolean global_join_announce = false;
 	
 	private LinkedHashMap<String, Object> config;
 	
@@ -60,6 +60,12 @@ public class ArenaConfig {
 		
 	}
 	
+	/**
+	 * Constructeur par défaut. Instancie tous les paramètres à une valeur par défaut.
+	 */
+	public ArenaConfig() {
+	}
+
 	private void load() {
 		
 		GestYaml g = new GestYaml(config);

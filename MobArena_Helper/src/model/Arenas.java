@@ -7,7 +7,7 @@ import java.util.LinkedHashMap;
 
 public class Arenas {
 	
-	private LinkedHashMap<String, Object> globalsettings;
+	private LinkedHashMap<String, Object> globalsettings = new LinkedHashMap<>();
 	private LinkedHashMap<String, Object> listclasses;
 	private LinkedHashMap<String, Object> listarenas;
 	private ArrayList<Classe> arraylistclasses = new ArrayList<Classe>();
@@ -25,6 +25,13 @@ public class Arenas {
 		this.globalsettings = globalsettings;
 		this.listclasses = listclasses;
 		load();
+	}
+
+	/**
+	 * Instance un nouveau groupe d'arènes, vide. Les ArrayList pour les arènes et les
+	 * classes sont déjà instanciées, les LinkedHashMap des paramètres sont à {@code null}.
+	 */
+	public Arenas() {
 	}
 
 	public LinkedHashMap<String, Object> getListclasses() {

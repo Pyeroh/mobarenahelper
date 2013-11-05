@@ -4,6 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import model.enums.ECatW;
+import model.enums.EMonsterAliases;
 import model.enums.ETypeW;
 import model.lists.MonsterList;
 import model.wave.BossW;
@@ -175,12 +176,19 @@ public abstract class Wave implements Comparable<Wave> {
 			}
 
 			
-			if(monstres.size()==1) vague.put("monster", monstres.get(0).getMonstre().name());
+			if(monstres.size()==1) {
+				Monstre monster = monstres.get(0);
+				int probability = monster.getProbability();
+				if(probability==0) vague.put("monster", EMonsterAliases.valueOf(monster.getMonstre().name()).getPlural().name());
+				else if(probability==1) vague.put("monster", monstres.get(0).getMonstre().name());
+			}
 			else if(monstres.size()>1){
 				LinkedHashMap<String, Object> mapmonstres = new LinkedHashMap<>();
 				for (int i=0;i<monstres.size();i++) {
 					Monstre monster = monstres.get(i);
-					mapmonstres.put(monster.getMonstre().name(), monster.getProbability());
+					int probability = monster.getProbability();
+					if(probability==0 || probability>1) mapmonstres.put(EMonsterAliases.valueOf(monster.getMonstre().name()).getPlural().name(), probability);
+					else mapmonstres.put(monster.getMonstre().name(), monster.getProbability());
 				}
 				vague.put("monsters", mapmonstres);
 			}

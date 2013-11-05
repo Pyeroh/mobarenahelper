@@ -41,6 +41,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
+import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.LineBorder;
@@ -90,26 +91,26 @@ public class MenuPrincipal extends JFrame {
 
 	private static final long serialVersionUID = 7504976316824014595L;
 
-	private JMenuItem mntmAbout;
-	private JMenuBar menuBar;
-	private JMenu mnHelp;
-	private JMenuItem mntmHowToUse;
-	private JMenu mnPlanned;
-
-	private JMenuItem mntmTodoList;
-
-	private GestYaml g;
 	private Arenas arenas = null;
 	private File file = null;
 	private Wave wave;
 	private Classe classe;
 	private ArenaConfig config;
 
-	private JTabbedPane tabpan_config;
+	private JMenuItem mntmAbout;
+	private JMenuBar menuBar;
+	private JMenu mnHelp;
+	private JMenuItem mntmHowToUse;
+	private JMenu mnPlanned;
+	private JMenuItem mntmTodoList;
 
+	private JTabbedPane tabpan_config;
 	private JPanel pan_arena_wave;
 	private JLabel lib_arena;
-	private JComboBox<String> combo_arena;
+	private JWideComboBox combo_arena;
+	private JButton btn_plus;
+	private JButton btn_moins;
+
 	private JLabel lib_recurrent;
 	private JButton btn_newrecurrent;
 	private JScrollPane scrpan_recurrent;
@@ -240,7 +241,7 @@ public class MenuPrincipal extends JFrame {
 	private JCheckBox chk_isolated_chat;
 	private JCheckBox chk_global_join;
 	private JCheckBox chk_global_end;
-
+	
 	public MenuPrincipal() throws ParseException{
 		super("MobArena Helper v2.0");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(MenuPrincipal.class.getResource("/gui/mobarena.png")));
@@ -249,7 +250,6 @@ public class MenuPrincipal extends JFrame {
 		getContentPane().setLayout(null);
 		getContentPane().setVisible(true);
 
-		//TODO Gestion (ajout/suppression) des arènes
 		//TODO Possibilité de remettre à 0 et/ou de créer une config perso
 
 		MouseAdapter newWave = new MouseAdapter() {
@@ -472,8 +472,9 @@ public class MenuPrincipal extends JFrame {
 				file = fchoose.getSelectedFile();
 				if (file!=null) {
 					try {
+						raz();
 						GestYaml.S_gestionnaire = new GestYaml(file);
-						g = GestYaml.S_gestionnaire;
+						GestYaml g = GestYaml.S_gestionnaire;
 						arenas = new Arenas(g.getMap("arenas"),g.getMap("global-settings"),g.getMap("classes"));
 						ArrayList<Arena> alArenas = arenas.getALarenas();
 						for(int i=0;i<alArenas.size();i++){
@@ -486,16 +487,7 @@ public class MenuPrincipal extends JFrame {
 					} catch (Exception e1) {
 						e1.printStackTrace();
 
-						Classe.classe_list.clear();
-						file = null;
-						wave = null;
-						config = null;
-						tabpan_config.setEnabledAt(1, false);
-						tabpan_config.setEnabledAt(2, false);
-						list_recurrent.setModel(new DefaultListModel<CellListWave>());
-						list_single.setModel(new DefaultListModel<CellListWave>());
-						combo_arena.setModel(new DefaultComboBoxModel<String>());
-						setInvisibleComponents_Arena();
+						raz();
 						JOptionPane.showMessageDialog(rootPane, "Incorrect file format, please check it at\nhttp://yaml-online-parser.appspot.com/\nand verify everything is okay in your config file","Critical error",JOptionPane.ERROR_MESSAGE);
 
 					}
@@ -539,7 +531,7 @@ public class MenuPrincipal extends JFrame {
 
 				}
 				else {
-					JOptionPane.showMessageDialog(null, "You must load a file before saving it !","Saving error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "You must load a file before saving it !\nElse, you can try to create your own config.","Saving error", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -562,7 +554,7 @@ public class MenuPrincipal extends JFrame {
 		pan_arena_wave.add(lib_arena);
 		lib_arena.setFont(new Font("Tahoma", Font.BOLD, 14));
 
-		combo_arena = new JComboBox<String>();
+		combo_arena = new JWideComboBox();
 		combo_arena.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
@@ -574,14 +566,67 @@ public class MenuPrincipal extends JFrame {
 		combo_arena.setBounds(66, 6, 192, 20);
 		pan_arena_wave.add(combo_arena);
 		combo_arena.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		
+		btn_plus = new JButton("+");
+		btn_plus.setToolTipText("Add an arena");
+		btn_plus.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				if(arenas==null) {
+					raz();
+					arenas = new  Arenas();
+				}
+				String name = JOptionPane.showInputDialog(rootPane, "Which name will you give to this arena ?\n\nWARNING : you can't change an arena's name, \notherwise you will have to delete and re-create it.","Arena's name", JOptionPane.QUESTION_MESSAGE);
+				if(name!=null) {
+					name = name.trim();
+					arenas.getALarenas().add(new Arena(name));
+					combo_arena.addItem(name);
+					combo_arena.setSelectedItem(name);
+					loadArena(0);
+					tabpan_config.setEnabledAt(1, true);
+					tabpan_config.setEnabledAt(2, true);
+				}
+				
+			}
+		});
+		btn_plus.setBounds(215, 27, 20, 20);
+		btn_plus.setBorder(new CompoundBorder());
+		pan_arena_wave.add(btn_plus);
+		
+		btn_moins = new JButton("-");
+		btn_moins.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				int index = combo_arena.getSelectedIndex();
+				if(index!=-1) {
+					int choice = JOptionPane.showConfirmDialog(rootPane, "Are you really sure you want to delete the "+combo_arena.getSelectedItem()+" arena ?", "Confirmation", JOptionPane.YES_NO_OPTION);
+					if(choice==JOptionPane.YES_OPTION) {
+						choice = JOptionPane.showConfirmDialog(rootPane, "Okay, it's for real this time. You will delete this arena\nand EVERY data inside it !\nIs it really okay ?", "Confirmation", JOptionPane.YES_NO_OPTION);
+						if(choice==JOptionPane.YES_OPTION) {
+							JOptionPane.showMessageDialog(rootPane,"As you want... Arena "+combo_arena.getSelectedItem()+" is deleted.","Confirmation",JOptionPane.INFORMATION_MESSAGE);
+							arenas.getALarenas().remove(index);
+							combo_arena.remove(index);
+							if(arenas.getALarenas().size()==0) {
+								raz();
+							}
+						}
+					}
+					
+				}
+			}
+		});
+		btn_moins.setToolTipText("Remove the selected arena");
+		btn_moins.setBorder(new CompoundBorder());
+		btn_moins.setBounds(238, 27, 20, 20);
+		pan_arena_wave.add(btn_moins);
 
 		lib_recurrent = new JLabel("Recurrent Waves");
-		lib_recurrent.setBounds(9, 55, 132, 17);
+		lib_recurrent.setBounds(9, 60, 132, 17);
 		pan_arena_wave.add(lib_recurrent);
 		lib_recurrent.setFont(new Font("Tahoma", Font.BOLD, 14));
 
 		btn_newrecurrent = new JButton("New Wave");
-		btn_newrecurrent.setBounds(167, 49, 91, 23);
+		btn_newrecurrent.setBounds(167, 59, 91, 23);
 		pan_arena_wave.add(btn_newrecurrent);
 		btn_newrecurrent.addMouseListener(newWave);
 		btn_newrecurrent.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -590,7 +635,7 @@ public class MenuPrincipal extends JFrame {
 		list_recurrent.addMouseListener(cellmouseadapter);
 		list_recurrent.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrpan_recurrent = new JScrollPane(list_recurrent);
-		scrpan_recurrent.setBounds(6, 74, 252, 190);
+		scrpan_recurrent.setBounds(9, 84, 252, 180);
 		pan_arena_wave.add(scrpan_recurrent);
 
 		lib_single = new JLabel("Single Waves");
@@ -1997,6 +2042,20 @@ public class MenuPrincipal extends JFrame {
 		setVisible(true);
 	}
 
+	private void raz() {
+		Classe.classe_list.clear();
+		arenas = null;
+		file = null;
+		wave = null;
+		config = null;
+		tabpan_config.setEnabledAt(1, false);
+		tabpan_config.setEnabledAt(2, false);
+		list_recurrent.setModel(new DefaultListModel<CellListWave>());
+		list_single.setModel(new DefaultListModel<CellListWave>());
+		combo_arena.setModel(new DefaultComboBoxModel<String>());
+		setInvisibleComponents_Arena();
+	}
+
 	private void loadArena(int numarena) {
 
 		setInvisibleComponents_Arena();
@@ -2351,9 +2410,9 @@ public class MenuPrincipal extends JFrame {
 	}
 
 	private void loadData_ClassConfig(ArrayList<Classe> aLclasses) {
-		
+
 		int index = list_classes.getSelectedIndex();
-		
+
 		DefaultListModel<CellListClass> mod_Class = new DefaultListModel<>();
 		for(int i=0;i<aLclasses.size();i++) {
 			Classe iclasse = aLclasses.get(i);

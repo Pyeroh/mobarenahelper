@@ -117,7 +117,7 @@ public class BossW extends Wave{
 				wave.abilities.add(EAbilities.valueOf(abi[i].replace('-', '_').trim()));
 			}
 		}
-		wave.getMonstres().add(new Monstre(EMonsterAliases.valueOf(g.getString("monster")).getMonstre(),0));
+		wave.getMonstres().add(new Monstre(EMonsterAliases.valueOf(g.getString("monster")).getMonstre(),1));
 		if(map.containsKey("reward")){
 			wave.getReward().fill(g.getString("reward"));
 		}

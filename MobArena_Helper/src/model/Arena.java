@@ -49,6 +49,18 @@ public class Arena {
 		
 	}
 	
+	/**
+	 * Instance une arène seulement avec son nom, pour que l'utilisateur remplisse les
+	 * autres données dans l'application.
+	 * @param nom
+	 */
+	public Arena(String nom) {
+		this.nom = nom;
+		this.waves[0] = new ArrayList<Wave>();
+		this.waves[1] = new ArrayList<Wave>();
+		this.config = new ArenaConfig();
+	}
+
 	private void loadWaves(GestYaml gwaves) {
 		for (Iterator<String> it = gwaves.getMap("recurrent").keySet().iterator(); it.hasNext();) {
 			String wave = (String) it.next();
@@ -105,7 +117,7 @@ public class Arena {
 		}
 
 		arena.put("waves", mapwaves);
-		arena.put("rewards", rewards);
+		if(rewards!=null) arena.put("rewards", rewards);
 		if (classlimits!=null) arena.put("class-limits", classlimits);
 		if(coords!=null) arena.put("coords", coords);
 		
