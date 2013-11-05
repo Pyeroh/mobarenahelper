@@ -28,8 +28,33 @@ public class Enchantment {
 		this.lvl = lvl;
 	}
 	
-	public String toString() {
+	public String getString() {
 		return enchantement.getEid()+":"+lvl;
+	}
+	
+	public String toString() {
+		String sLvl;
+		switch (this.lvl) {
+		case 1:
+			sLvl = "I";
+			break;
+		case 2:
+			sLvl = "II";
+			break;
+		case 3:
+			sLvl = "III";
+			break;
+		case 4:
+			sLvl = "IV";
+			break;
+		case 5:
+			sLvl = "V";
+			break;
+		default:
+			sLvl = "";
+			break;
+		}
+		return enchantement.getName()+" "+sLvl;
 	}
 	
 }

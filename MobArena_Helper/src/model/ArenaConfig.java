@@ -187,15 +187,15 @@ public class ArenaConfig {
 
 	public void setWorld(String world) {this.world = world;}
 
-	public boolean isEnabled() {return enabled;}
+	public boolean getEnabled() {return enabled;}
 
 	public void setEnabled(boolean enabled) {this.enabled = enabled;}
 
-	public boolean isProtect() {return protect;}
+	public boolean getProtect() {return protect;}
 
 	public void setProtect(boolean protect) {this.protect = protect;}
 
-	public boolean isLightning() {return lightning;}
+	public boolean getLightning() {return lightning;}
 
 	public void setLightning(boolean lightning) {this.lightning = lightning;}
 
@@ -207,63 +207,63 @@ public class ArenaConfig {
 
 	public void setEntry_fee_item(Item entry_fee_item) {this.entry_fee_item = entry_fee_item;}
 
-	public boolean isClear_wave_next() {return clear_wave_before_next;}
+	public boolean getClear_wave_next() {return clear_wave_before_next;}
 
 	public void setClear_wave_next(boolean clear_wave_next) {this.clear_wave_before_next = clear_wave_next;}
 
-	public boolean isClear_boss_next() {return clear_boss_before_next;}
+	public boolean getClear_boss_next() {return clear_boss_before_next;}
 
 	public void setClear_boss_next(boolean clear_boss_next) {this.clear_boss_before_next = clear_boss_next;}
 
-	public boolean isClear_wave_boss() {return clear_wave_before_boss;}
+	public boolean getClear_wave_boss() {return clear_wave_before_boss;}
 
 	public void setClear_wave_boss(boolean clear_wave_boss) {this.clear_wave_before_boss = clear_wave_boss;}
 
-	public boolean isAuto_equip_armor() {return auto_equip_armor;}
+	public boolean getAuto_equip_armor() {return auto_equip_armor;}
 
 	public void setAuto_equip_armor(boolean auto_equip_armor) {this.auto_equip_armor = auto_equip_armor;}
 
-	public boolean isSoft_restore() {return soft_restore;}
+	public boolean getSoft_restore() {return soft_restore;}
 
 	public void setSoft_restore(boolean soft_restore) {this.soft_restore = soft_restore;}
 
-	public boolean isSoft_restore_drops() {return soft_restore_drops;}
+	public boolean getSoft_restore_drops() {return soft_restore_drops;}
 
 	public void setSoft_restore_drops(boolean soft_restore_drops) {this.soft_restore_drops = soft_restore_drops;}
 
-	public boolean isEmpty_inv_join() {return require_empty_inv_join;}
+	public boolean getEmpty_inv_join() {return require_empty_inv_join;}
 
 	public void setEmpty_inv_join(boolean empty_inv_join) {this.require_empty_inv_join = empty_inv_join;}
 
-	public boolean isEmpty_inv_spec() {return require_empty_inv_spec;}
+	public boolean getEmpty_inv_spec() {return require_empty_inv_spec;}
 
 	public void setEmpty_inv_spec(boolean empty_inv_spec) {this.require_empty_inv_spec = empty_inv_spec;}
 
-	public boolean isHellhounds() {return hellhounds;}
+	public boolean getHellhounds() {return hellhounds;}
 
 	public void setHellhounds(boolean hellhounds) {this.hellhounds = hellhounds;}
 
-	public boolean isPvp_enabled() {return pvp_enabled;}
+	public boolean getPvp_enabled() {return pvp_enabled;}
 
 	public void setPvp_enabled(boolean pvp_enabled) {this.pvp_enabled = pvp_enabled;}
 
-	public boolean isMonster_infight() {return monster_infight;}
+	public boolean getMonster_infight() {return monster_infight;}
 
 	public void setMonster_infight(boolean monster_infight) {this.monster_infight = monster_infight;}
 
-	public boolean isAllow_tp() {return allow_teleporting;}
+	public boolean getAllow_tp() {return allow_teleporting;}
 
 	public void setAllow_tp(boolean allow_tp) {this.allow_teleporting = allow_tp;}
 
-	public boolean isDeath_spec() {return spectate_on_death;}
+	public boolean getDeath_spec() {return spectate_on_death;}
 
 	public void setDeath_spec(boolean death_spec) {this.spectate_on_death = death_spec;}
 
-	public boolean isAuto_respawn() {return auto_respawn;}
+	public boolean getAuto_respawn() {return auto_respawn;}
 
 	public void setAuto_respawn(boolean auto_respawn) {this.auto_respawn = auto_respawn;}
 
-	public boolean isShare_items() {return share_items_in_arena;}
+	public boolean getShare_items() {return share_items_in_arena;}
 
 	public void setShare_items(boolean share_items) {this.share_items_in_arena = share_items;}
 
@@ -295,23 +295,23 @@ public class ArenaConfig {
 
 	public void setMonster_limit(int monster_limit) {this.monster_limit = monster_limit;}
 
-	public boolean isMonster_drop_xp() {return monster_exp;}
+	public boolean getMonster_drop_xp() {return monster_exp;}
 
 	public void setMonster_drop_xp(boolean monster_drop_xp) {this.monster_exp = monster_drop_xp;}
 
-	public boolean isKeep_xp() {return keep_exp;}
+	public boolean getKeep_xp() {return keep_exp;}
 
 	public void setKeep_xp(boolean keep_xp) {this.keep_exp = keep_xp;}
 
-	public boolean isFood_regen() {return food_regen;}
+	public boolean getFood_regen() {return food_regen;}
 
 	public void setFood_regen(boolean food_regen) {this.food_regen = food_regen;}
 
-	public boolean isFood_level_lock() {return lock_food_level;}
+	public boolean getFood_level_lock() {return lock_food_level;}
 
 	public void setFood_level_lock(boolean food_level_lock) {this.lock_food_level = food_level_lock;}
 
-	public boolean isSpout_select() {return spout_class_select;}
+	public boolean getSpout_select() {return spout_class_select;}
 
 	public void setSpout_select(boolean spout_select) {this.spout_class_select = spout_select;}
 
@@ -319,7 +319,7 @@ public class ArenaConfig {
 
 	public void setPlayer_time(String player_time) {this.player_time_in_arena = player_time;}
 
-	public boolean isAuto_ignite_tnt() {return auto_ignite_tnt;}
+	public boolean getAuto_ignite_tnt() {return auto_ignite_tnt;}
 
 	public void setAuto_ignite_tnt(boolean auto_ignite_tnt) {this.auto_ignite_tnt = auto_ignite_tnt;}
 
@@ -327,35 +327,35 @@ public class ArenaConfig {
 
 	public void setAuto_start(int auto_start) {this.auto_start_timer = auto_start;}
 
-	public boolean isClass_chest() {return use_class_chest;}
+	public boolean getClass_chest() {return use_class_chest;}
 
 	public void setClass_chest(boolean class_chest) {this.use_class_chest = class_chest;}
 
-	public boolean isWaves_as_level() {return display_waves_as_level;}
+	public boolean getWaves_as_level() {return display_waves_as_level;}
 
 	public void setWaves_as_level(boolean waves_as_level) {this.display_waves_as_level = waves_as_level;}
 
-	public boolean isTimer_as_level() {return display_timer_as_level;}
+	public boolean getTimer_as_level() {return display_timer_as_level;}
 
 	public void setTimer_as_level(boolean timer_as_level) {this.display_timer_as_level = timer_as_level;}
 
-	public boolean isAuto_ready() {return auto_ready;}
+	public boolean getAuto_ready() {return auto_ready;}
 
 	public void setAuto_ready(boolean auto_ready) {this.auto_ready = auto_ready;}
 
-	public boolean isScoreboards() {return use_scoreboards;}
+	public boolean getScoreboards() {return use_scoreboards;}
 
 	public void setScoreboards(boolean scoreboards) {this.use_scoreboards = scoreboards;}
 
-	public boolean isIsolated_chat() {return isolated_chat;}
+	public boolean getIsolated_chat() {return isolated_chat;}
 
 	public void setIsolated_chat(boolean isolated_chat) {this.isolated_chat = isolated_chat;}
 
-	public boolean isGlobal_end_announce() {return global_end_announce;}
+	public boolean getGlobal_end_announce() {return global_end_announce;}
 
 	public void setGlobal_end_announce(boolean global_end_announce) {this.global_end_announce = global_end_announce;}
 
-	public boolean isGlobal_join_announce() {return global_join_announce;}
+	public boolean getGlobal_join_announce() {return global_join_announce;}
 
 	public void setGlobal_join_announce(boolean global_join_announce) {this.global_join_announce = global_join_announce;}
 	

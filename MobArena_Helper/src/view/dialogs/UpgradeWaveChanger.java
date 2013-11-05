@@ -281,8 +281,7 @@ public class UpgradeWaveChanger extends JDialog {
 		scrpan_permissions.setBounds(6, 123, 300, 127);
 		pan_upgrade_config.add(scrpan_permissions);
 		
-		this.frame.setSize(this.getSize());
-		this.frame.setTitle(this.getTitle());
+		this.frame = frame;
 
 		load();
 		setInvisibleComponents();
