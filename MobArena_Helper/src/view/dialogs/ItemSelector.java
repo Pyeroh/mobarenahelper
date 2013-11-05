@@ -28,6 +28,7 @@ import javax.swing.text.MaskFormatter;
 
 import model.Armor;
 import model.Item;
+import model.enums.EEnchantItem;
 import model.enums.EItem;
 import model.enums.EItemCat;
 import model.lists.ArmorList;
@@ -42,9 +43,11 @@ public class ItemSelector extends JDialog {
 	private static final long serialVersionUID = 7238413511342140781L;
 
 	private ItemList items;
+	private JFrame frame;
 	private int max;
 	private boolean isArmor;
 	private boolean classSelector;
+	private Item selectedItem;
 
 	private JLabel lib_selectable;
 	private JLabel lib_sort;
@@ -68,7 +71,7 @@ public class ItemSelector extends JDialog {
 	 * @param isArmor si la fenêtre est un sélecteur d'armure
 	 * @param classSelector si la fenêtre est un sélecteur d'items de classe, si vrai pas d'os ou de balle de foin (loup et cheval)
 	 * @throws ParseException 
-	 * @wbp.parser.constructor
+	 * @wbp.parser.constructor Constructeur graphique
 	 */
 	public ItemSelector(JFrame frame, ItemList items, int max, boolean isArmor, boolean classSelector) {
 		super();
@@ -78,6 +81,7 @@ public class ItemSelector extends JDialog {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ItemSelector.class.getResource("/gui/mobarena.png")));
 		setResizable(false);
 		this.items = items;
+		this.frame = frame;
 		this.max = max;
 		this.isArmor = isArmor;
 		this.classSelector = classSelector;
@@ -98,6 +102,7 @@ public class ItemSelector extends JDialog {
 
 		combo_sort = new JWideComboBox();
 		combo_sort.addItemListener(new ItemListener() {
+			@Override
 			public void itemStateChanged(ItemEvent e) {
 
 				if(e.getStateChange() == ItemEvent.DESELECTED && combo_sort.isFocusOwner()){
@@ -155,10 +160,9 @@ public class ItemSelector extends JDialog {
 
 		btn_add = new JButton("Add >>");
 		btn_add.addMouseListener(new MouseAdapter() {
+			@Override
 			public void mouseReleased(MouseEvent e) {
-
 				addItem();
-
 			}
 		});
 		btn_add.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -167,10 +171,9 @@ public class ItemSelector extends JDialog {
 
 		btn_remove = new JButton("<< Remove");
 		btn_remove.addMouseListener(new MouseAdapter() {
+			@Override
 			public void mouseReleased(MouseEvent e) {
-
 				removeItem();
-
 			}
 		});
 		btn_remove.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -188,9 +191,34 @@ public class ItemSelector extends JDialog {
 		list_selected.setCellRenderer(render2);
 		list_selected.addMouseListener(render2.getHandler());
 		list_selected.addMouseMotionListener(render2.getHandler());
+		list_selected.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				
+				int hoverIndex = ((HoverListCellRenderer) list_selected.getCellRenderer()).getHoverIndex();
+				
+				if(hoverIndex!=-1) {
+					selectedItem = list_selected.getSelectedValue().getItem();
+					if(EEnchantItem.getByItem(selectedItem.getItem()).size()==0) btn_enchant.setVisible(false);
+					else btn_enchant.setVisible(true);
+				}
+				else {
+					list_selected.clearSelection();
+					selectedItem = null;
+					btn_enchant.setVisible(false);
+				}
+				
+			}
+		});
 
 		//TODO Gestion des enchantements (peut être un JDialog ?)
 		btn_enchant = new JButton("Enchant");
+		btn_enchant.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				new Enchanter(ItemSelector.this, selectedItem);
+			}
+		});
 		btn_enchant.setBounds(481, 78, 90, 28);
 		btn_enchant.setVisible(false);
 		getContentPane().add(btn_enchant);
@@ -218,6 +246,10 @@ public class ItemSelector extends JDialog {
 
 	public ItemList getItemList() {
 		return items;
+	}
+	
+	protected JFrame getFrame() {
+		return frame;
 	}
 
 	private boolean isArmor() {
@@ -282,7 +314,7 @@ public class ItemSelector extends JDialog {
 		
 		if(!list_selected.isSelectionEmpty()) {
 			
-			items.remove(list_selected.getSelectedValue().getItem());
+			items.remove(selectedItem);
 			loadSelected(items);
 			loadSelectable(crossSearch());
 			

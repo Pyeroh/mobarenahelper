@@ -1,8 +1,7 @@
 package model;
 
-import java.util.ArrayList;
-
 import model.enums.EItem;
+import model.lists.EnchantList;
 
 public class Armor extends Item {
 
@@ -22,7 +21,7 @@ public class Armor extends Item {
 		
 		EItem thisitem = getItem();
 		int thisquantity = getQuantity();
-		ArrayList<Enchantment> thisenchantements = getEnchantements();
+		EnchantList thisenchantements = getEnchantements();
 		
 		StringBuffer item = new StringBuffer((numberformat ? thisitem.getId() : thisitem.getRealName())+"");
 		
@@ -38,7 +37,7 @@ public class Armor extends Item {
 			if(i==0) item.append(" ");
 			else item.append(";");
 			
-			item.append(thisenchantements.get(i).toString());
+			item.append(thisenchantements.get(i).getString());
 		}
 		
 		return item.toString();

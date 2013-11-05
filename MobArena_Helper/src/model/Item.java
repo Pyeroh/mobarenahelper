@@ -1,6 +1,5 @@
 package model;
 
-import model.enums.EEnchantment;
 import model.enums.EItem;
 import model.lists.EnchantList;
 
@@ -15,13 +14,7 @@ public class Item {
 		this.quantity = quantity;
 		
 		if (enchantments!=null) {
-			for (String enchant : enchantments) {
-				String[] e_caracs = enchant.split(":");
-				int id = Integer.parseInt(e_caracs[0]);
-				int lvl = Integer.parseInt(e_caracs[1]);
-				this.enchantements.add(new Enchantment(
-						EEnchantment.getById(id), lvl));
-			}
+			enchantements.fill(enchantments);
 		}
 		
 	}
@@ -62,7 +55,7 @@ public class Item {
 			if(i==0) item.append(" ");
 			else item.append(";");
 			
-			item.append(enchantements.get(i).toString());
+			item.append(enchantements.get(i).getString());
 		}
 		
 		return item.toString();
