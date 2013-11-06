@@ -13,6 +13,9 @@ Lien de téléchargement : http://tinyurl.com/kkvxxrm
 
 J'espère qu'il rendra la vie plus facile aux utilisateurs de ce plugin, et je vous invite d'ailleurs à aller visiter la page sur BukkitDev pour le plugin.
 
+Pour ceux que cela pourrait intéresser, le lien vers la javadoc du modèle de données de l'appli :
+http://pyeroh.github.io/mobarenahelper/
+
 Enjoy =)
 
 
@@ -30,6 +33,9 @@ Be warned, to save, you'd better leave the extension as it is, otherwise there a
 Moreover, the program is fully in english, it's a simple portage of Agnate's WaveEditor, which sinked into 404 error pit.
 
 Download link : http://tinyurl.com/kkvxxrm
+
+For interested ones, here's the link to application data model javadoc :
+http://pyeroh.github.io/mobarenahelper/ (in french...)
 
 I hope it will make MobArena users's life easier, and you should go visit the page on BukkitDev, because this program is useless without the existence of MobArena ;)
 
