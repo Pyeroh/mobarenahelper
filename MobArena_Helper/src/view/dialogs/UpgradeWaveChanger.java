@@ -61,7 +61,7 @@ public class UpgradeWaveChanger extends JDialog {
 		setModalityType(ModalityType.APPLICATION_MODAL);
 		setTitle("Upgrade Wave modifier - "+frame.getTitle());
 
-		setIconImage(new ImageIcon(UpgradeWaveChanger.class.getResource("/gui/pics/mobarena.png")).getImage());
+		setIconImage(new ImageIcon(UpgradeWaveChanger.class.getResource("gui/pics/mobarena.png")).getImage());
 		setResizable(false);
 		this.upgradew = upw;
 

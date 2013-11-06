@@ -22,7 +22,7 @@ public enum ETypeW {
 
 	ETypeW(String nom){
 		this.nom = nom;
-		this.image = new ImageIcon(getClass().getClassLoader().getResource("/gui/pics/"+nom.toLowerCase()+".png")).getImage();
+		this.image = new ImageIcon(getClass().getClassLoader().getResource("gui/pics/"+nom+".png")).getImage();
 	}
 
 	public String getNom() {

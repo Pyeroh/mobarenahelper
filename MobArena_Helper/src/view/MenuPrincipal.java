@@ -583,7 +583,7 @@ public class MenuPrincipal extends JFrame {
 					arenas.getALarenas().add(new Arena(name));
 					combo_arena.addItem(name);
 					combo_arena.setSelectedItem(name);
-					loadArena(0);
+					loadArena(combo_arena.getSelectedIndex());
 					tabpan_config.setEnabledAt(1, true);
 					tabpan_config.setEnabledAt(2, true);
 				}
@@ -606,10 +606,12 @@ public class MenuPrincipal extends JFrame {
 						if(choice==JOptionPane.YES_OPTION) {
 							JOptionPane.showMessageDialog(rootPane,"As you want... Arena "+combo_arena.getSelectedItem()+" is deleted.","Confirmation",JOptionPane.INFORMATION_MESSAGE);
 							arenas.getALarenas().remove(index);
-							combo_arena.remove(index);
+							combo_arena.removeItemAt(index);
+							combo_arena.setSelectedIndex(combo_arena.getModel().getSize()-1);
 							if(arenas.getALarenas().size()==0) {
 								raz();
 							}
+							else loadArena(arenas.getALarenas().size()-1);
 						}
 					}
 

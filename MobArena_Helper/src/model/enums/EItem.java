@@ -509,7 +509,7 @@ public enum EItem {
 		else {
 			dossier = "items";
 		}
-		StringBuffer imagepath = new StringBuffer("/gui/eitems/"+dossier+"/"+id+"_");
+		StringBuffer imagepath = new StringBuffer("gui/eitems/"+dossier+"/"+id+"_");
 		if(name().startsWith("s_p_")){
 			imagepath.append("s_"+name().substring(4).split("[_]")[0]);
 		}
