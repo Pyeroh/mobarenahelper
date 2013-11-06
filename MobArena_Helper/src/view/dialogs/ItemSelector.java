@@ -78,7 +78,7 @@ public class ItemSelector extends JDialog {
 		setModalityType(ModalityType.APPLICATION_MODAL);
 		setTitle("Item Selector - "+frame.getTitle());
 		
-		setIconImage(Toolkit.getDefaultToolkit().getImage(ItemSelector.class.getResource("/gui/mobarena.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(ItemSelector.class.getResource("/gui/pics//mobarena.png")));
 		setResizable(false);
 		this.items = items;
 		this.frame = frame;

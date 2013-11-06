@@ -248,7 +248,7 @@ public class MenuPrincipal extends JFrame {
 
 	public MenuPrincipal() throws ParseException{
 		super("MobArena Helper v2.0");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(MenuPrincipal.class.getResource("/gui/mobarena.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(MenuPrincipal.class.getResource("/gui/pics//mobarena.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
 		getContentPane().setLayout(null);

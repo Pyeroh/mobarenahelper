@@ -42,7 +42,7 @@ public class About extends JDialog {
 
 		img_header = new JLabel("");
 		img_header.setBounds(0, 0, 437, 140);
-		ImageIcon orig_icon = new ImageIcon(About.class.getResource("/gui/Banner.png"));
+		ImageIcon orig_icon = new ImageIcon(About.class.getResource("/gui/pics/Banner.png"));
 		Image icon = CellListCaracs.scaleImage(orig_icon.getImage(), img_header);
 		img_header.setIcon(new ImageIcon(icon));
 		getContentPane().add(img_header);
