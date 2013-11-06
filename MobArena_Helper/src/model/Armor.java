@@ -5,7 +5,7 @@ import model.lists.ArmorList;
 import model.lists.EnchantList;
 
 /**
- * 
+ * Une pièce d'armure
  * @author Pyeroh
  * @see Item
  * @see ArmorList
