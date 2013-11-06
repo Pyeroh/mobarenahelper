@@ -1,7 +1,14 @@
 package model;
 
 import model.enums.EMonsters;
+import model.lists.MonsterList;
 
+/**
+ * L'existence réelle d'un monstre, c'est à dire un monstre et la probabilité qu'il a d'apparaitre.
+ * @author Pyeroh
+ * @see EMonsters
+ * @see MonsterList
+ */
 public class Monstre {
 	private EMonsters monstre;
 	private int probability;
@@ -33,6 +40,7 @@ public class Monstre {
 		this.probability = probability;
 	}
 	
+	@Override
 	public String toString() {
 		String ret = monstre + " : " + probability;
 		return ret;

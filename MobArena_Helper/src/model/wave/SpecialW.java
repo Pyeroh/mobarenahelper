@@ -2,22 +2,33 @@ package model.wave;
 
 import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.Set;
 
 import model.GestYaml;
 import model.Monstre;
 import model.Wave;
+import model.enums.ECatW;
 import model.enums.EMonsterAliases;
 import model.enums.ETypeW;
 
+/**
+ * Une vague spéciale, fait apparaitre un seul type de monstre choisi dans une liste. 
+ * @author Pyeroh
+ * @see Wave
+ */
 public class SpecialW extends Wave {
 
 	public SpecialW(String nom) {
 		super(nom, ETypeW.Special);
 	}
 
-	public static SpecialW setWave(String nom, Map<String, Object> map){
+	/**
+	 * {@link Wave#setWave(String, ECatW, LinkedHashMap)}
+	 * @param nom le nom de la vague
+	 * @param map la map d'informations de la vague
+	 * @return la map d'informations de la vague
+	 */
+	public static SpecialW setWave(String nom, LinkedHashMap<String, Object> map){
 		SpecialW wave = new SpecialW(nom);
 		GestYaml g = new GestYaml(map);
 		if(map.containsKey("frequency")){
@@ -40,8 +51,8 @@ public class SpecialW extends Wave {
 		return wave;
 	}
 	
+	@Override
 	public LinkedHashMap<String, Object> getMap() {
-
 		return super.getMap();
 	}
 

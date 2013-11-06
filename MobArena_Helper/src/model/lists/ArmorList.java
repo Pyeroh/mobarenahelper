@@ -6,6 +6,11 @@ import model.Armor;
 import model.Item;
 import model.enums.EItem;
 
+/**
+ * Liste des pièces d'armure ; permet de remplir une liste à partir d'une chaine, et de la trier
+ * @author Pyeroh
+ *
+ */
 public class ArmorList extends ItemList {
 
 	private static final long serialVersionUID = -6274717578188692826L;
@@ -18,6 +23,10 @@ public class ArmorList extends ItemList {
 		super(list);
 	}
 
+	/**
+	 * Remplis la liste avec la chaine de caractères passée en paramètre, en la découpant.
+	 * Gère également l'enchantement.
+	 */
 	public void fill(String armor) {
 
 		String[] sArmor = armor.replace('\'', ' ')
@@ -53,6 +62,11 @@ public class ArmorList extends ItemList {
 		}
 	}
 
+	/**
+	 * Renvoie la chaine correspondant aux différents pièces d'armure de la liste
+	 * @see ItemList 
+	 */
+	@Override
 	public String getString() {
 		StringBuffer sArmor = new StringBuffer();
 		if(this.size()==1){
@@ -69,6 +83,7 @@ public class ArmorList extends ItemList {
 		return sArmor.toString();
 	}
 	
+	@Override
 	public void sort() {
 		int size=this.size();
 		triRapide(this,0,size-1);
@@ -93,6 +108,10 @@ public class ArmorList extends ItemList {
 		return compt;
 	}
 	
+	/**
+	 * Méthode utilisée pour trier la liste
+	 * @see ItemList
+	 */
 	protected void triRapide(ArmorList list,int deb,int fin) {
 		if(deb<fin) {
 			int positionPivot=partition(list,deb,fin);

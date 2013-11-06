@@ -1,5 +1,10 @@
 package model.enums;
 
+/**
+ * Les alias de monstre correspondant à un type de monstre
+ * @author Pyeroh
+ *
+ */
 public enum EMonsterAliases {
 	zombie(EMonsters.zombie), 
 	zombies(EMonsters.zombie, true),
@@ -106,6 +111,12 @@ public enum EMonsterAliases {
 		return pluriel;
 	}
 	
+	/**
+	 * Renvoie l'alias de monstre "pluriel" (un creeper, des creepers) de la constante en cours.
+	 * Attention, certaines constantes n'ont pas de pluriel, dans ce cas, la valeur retournée est
+	 * la constante elle-même.
+	 * @return
+	 */
 	public EMonsterAliases getPlural() {
 		EMonsterAliases plural = this;
 		

@@ -1,5 +1,10 @@
 package model.enums;
 
+/**
+ * Les enchantements qui existent
+ * @author Pyeroh
+ *
+ */
 public enum EEnchantment {
 
 	//Armor
@@ -25,6 +30,7 @@ public enum EEnchantment {
 	silk_touch(33,1),
 	unbreaking(34,3),
 	fortune(35,3),
+	//TODO à corriger pour le passage à la nouvelle version Minecraft
 	//luck_of_the_sea(61,3),
 	//lure(62,3),
 
@@ -61,7 +67,7 @@ public enum EEnchantment {
 	/**
 	 * Trouve l'EEnchantment correspondant au nom passé en paramètre. La comparaison est faite par rapport à la méthode
 	 * getName().
-	 * @param name le nom recherché
+	 * @param name le nom recherché, il peut être renvoyé par la méthode {@link EEnchantment#getName()}
 	 * @return la constante associée au nom passé en paramètre
 	 * @throws IllegalArgumentException si la constante recherchée n'existe pas
 	 * @throws NullPointerException si le paramètre vaut {@code null}
@@ -87,6 +93,12 @@ public enum EEnchantment {
 
 	}
 
+	/**
+	 * Equivalent de valueOf, mais avec l'eid de l'enchantement
+	 * @param id l'id recherché
+	 * @return la constante associée à l'id passé en paramètre
+	 * @throws IllegalArgumentException si la constante recherchée n'existe pas
+	 */
 	public static EEnchantment getById(int id) {
 
 		EEnchantment[] values = values();

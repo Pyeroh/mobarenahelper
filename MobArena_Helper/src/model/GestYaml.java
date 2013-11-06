@@ -14,6 +14,10 @@ import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.nodes.Tag;
 
+/**
+ * Gestionnaire YAML. Gère en réalité l'instanciation du {@link Yaml} et la récupération des données dans une LinkedHashMap.
+ * @author Pyeroh
+ */
 public class GestYaml {
 	private LinkedHashMap<String, Object> data;
 	private Yaml yaml;
@@ -73,15 +77,6 @@ public class GestYaml {
 		data = (LinkedHashMap<String, Object>) map;
 	}
 
-	/*public GestYaml(ArrayList<Wave> map) {
-
-		data = new LinkedHashMap<String, Object>();
-		for(int i=0;i<map.size();i++) {
-
-		}
-
-	}*/
-
 	@SuppressWarnings("unchecked") 
 	protected Object get(String key) {
 		String[] arbokey = key.split("[.]");
@@ -93,36 +88,74 @@ public class GestYaml {
 		return value;
 	}
 
+	/**
+	 * Renvoie une chaîne à partir de la clé d'accès
+	 * @param key peut être composée de '.', chacun indiquant un niveau dans l'arborescence YAML
+	 * @return la valeur pour la clé passée en paramètre
+	 */
 	public String getString(String key) {
 		return (String) get(key);
 	}
 
+	/**
+	 * Renvoie un entier à partir de la clé d'accès
+	 * @param key peut être composée de '.', chacun indiquant un niveau dans l'arborescence YAML
+	 * @return la valeur pour la clé passée en paramètre
+	 */
 	public int getInt(String key) {
 		return (int) get(key);
 	}
 
+	/**
+	 * Renvoie un booléen à partir de la clé d'accès
+	 * @param key peut être composée de '.', chacun indiquant un niveau dans l'arborescence YAML
+	 * @return la valeur pour la clé passée en paramètre
+	 */
 	public boolean getBool(String key) {
 		return Boolean.parseBoolean(get(key).toString());
 	}
 
+	/**
+	 * Renvoie une Map à partir de la clé d'accès
+	 * @param key peut être composée de '.', chacun indiquant un niveau dans l'arborescence YAML
+	 * @return la valeur pour la clé passée en paramètre
+	 */
 	@SuppressWarnings("unchecked")
 	public LinkedHashMap<String, Object> getMap(String key) {
 		return (LinkedHashMap<String, Object>) get(key);
 	}
 	
+	/**
+	 * Renvoie une List à partir de la clé d'accès
+	 * @param key peut être composée de '.', chacun indiquant un niveau dans l'arborescence YAML
+	 * @return la valeur pour la clé passée en paramètre
+	 */
 	@SuppressWarnings("unchecked")
 	public ArrayList<String> getList(String key) {
 		return (ArrayList<String>) get(key);
 	}
 	
+	/**
+	 * Renvoie le tag du noeud correspondant au dernier noeud de la clé d'accès
+	 * @param key peut être composée de '.', chacun indiquant un niveau dans l'arborescence YAML
+	 * @return le tag du dernier noeud de la clé
+	 */
 	public Tag getTag(String key) {
 		return yaml.represent(get(key)).getTag();
 	}
 	
+	/**
+	 * Renvoie le tag de la Map du gestionnaire YAML en cours
+	 * @return
+	 */
 	public Tag getTag() {
 		return yaml.represent(data).getTag();
 	}
 
+	/**
+	 * Effectue un dump de la Map du gestionnaire en cours
+	 * @return la chaîne de caractères complète représentant la Map du gestionnaire
+	 */
 	public String dump() {
 		return yaml.dumpAsMap(data);
 	}
@@ -143,8 +176,13 @@ public class GestYaml {
 
 	}
 	
-	public boolean containsKey(String value) {
-		return data.containsKey(value);
+	/**
+	 * Est-ce qu'au premier niveau, la Map du gestionnaire contient la clé passée en paramètre ?
+	 * @param key
+	 * @return
+	 */
+	public boolean containsKey(String key) {
+		return data.containsKey(key);
 	}
 
 }

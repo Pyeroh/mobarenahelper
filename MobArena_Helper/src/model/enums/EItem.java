@@ -5,6 +5,11 @@ import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * Les items Minecraft, sans les objets techniques et certains autres...
+ * @author Pyeroh
+ * @see EItemCat
+ */
 public enum EItem {
 
 	//Blocks
@@ -525,6 +530,10 @@ public enum EItem {
 		return meta;
 	}
 
+	/**
+	 * Renvoie le nom minecraft
+	 * @return
+	 */
 	public String getRealName() {
 		return realname.toLowerCase();
 	}
@@ -537,6 +546,10 @@ public enum EItem {
 		return image;
 	}
 
+	/**
+	 * Renvoie le nom correctement formaté pour l'affichage
+	 * @return
+	 */
 	public String getName() {
 		String name = name();
 		if(name.endsWith("wool") || name.endsWith("stained_clay") || name.endsWith("carpet") || name.endsWith("dye")) {
@@ -563,6 +576,11 @@ public enum EItem {
 		return name()+"("+id+","+meta+","+realname+","+category+")";
 	}
 
+	/**
+	 * Permet de faire une recherche des items par une des catégories définies dans {@link EItemCat}
+	 * @param category
+	 * @return une liste des items recherchés
+	 */
 	public static ArrayList<EItem> getByCategory(EItemCat category) {
 		EItem[] values = values();
 		ArrayList<EItem> items = new ArrayList<EItem>();
@@ -578,7 +596,7 @@ public enum EItem {
 		return items;
 	}
 
-	private static EItem getByName(String name) {
+	private static EItem getByNameFirst(String name) {
 
 		if (name!=null) {
 			EItem[] values = values();
@@ -599,7 +617,7 @@ public enum EItem {
 
 	}
 
-	private static EItem getById(int id) {
+	private static EItem getByIdFirst(int id) {
 
 		if(id!=0) {
 			EItem[] values = values();
@@ -630,7 +648,7 @@ public enum EItem {
 	public static EItem searchBy(String name, int meta) {
 		ArrayList<EItem> values = new ArrayList<EItem>(Arrays.asList(values()));
 
-		EItem item = EItem.getByName(name);
+		EItem item = EItem.getByNameFirst(name);
 		if(item!=null){
 			while(item.getMeta()!=meta) {
 
@@ -654,7 +672,7 @@ public enum EItem {
 	public static EItem searchBy(int id, int meta) {
 		ArrayList<EItem> values = new ArrayList<EItem>(Arrays.asList(values()));
 
-		EItem item = EItem.getById(id);
+		EItem item = EItem.getByIdFirst(id);
 		if(item!=null){
 			while(item.getMeta()!=meta) {
 
@@ -670,8 +688,8 @@ public enum EItem {
 	}
 
 	/**
-	 * 
-	 * @param name
+	 * Renvoie la liste de tous les items dont le nom "ressemble" à celui passé en paramètre
+	 * @param name la chaine de comparaison, peut être renvoyée par {@link EItem#getName()}
 	 * @return la liste des EItem correspondant au nom Minecraft passé en paramètre
 	 */
 	public static ArrayList<EItem> searchBy(String name) {

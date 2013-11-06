@@ -2,7 +2,6 @@ package model.wave;
 
 import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.Set;
 
 import model.GestYaml;
@@ -13,6 +12,11 @@ import model.enums.EGrowth;
 import model.enums.EMonsterAliases;
 import model.enums.ETypeW;
 
+/**
+ * Une vague par défaut, spawn de monstres choisis parmi une liste aléatoirement, et croissance du nombre de monstres à chaque vague.
+ * @author Pyeroh
+ * @see Wave
+ */
 public class DefaultW extends Wave{
 
 	private EGrowth growth = EGrowth.old;
@@ -43,6 +47,7 @@ public class DefaultW extends Wave{
 		this.fixed = fixed;
 	}
 	
+	@Override
 	public String toString() {
 		String ret = super.toString()
 				+"\ngrowth : "+growth.getNom()
@@ -50,6 +55,7 @@ public class DefaultW extends Wave{
 		return ret;
 	}
 
+	@Override
 	public LinkedHashMap<String, Object> getMap() {
 		LinkedHashMap<String, Object> vague = super.getMap();
 		if(this.getGrowth()!=EGrowth.old) vague.put("growth", this.getGrowth().name());
@@ -58,7 +64,13 @@ public class DefaultW extends Wave{
 		return vague;
 	}
 
-	public static DefaultW setWave(String nom, Map<String, Object> map){
+	/**
+	 * {@link Wave#setWave(String, ECatW, LinkedHashMap)}
+	 * @param nom le nom de la vague
+	 * @param map la map d'informations de la vague
+	 * @return la map d'informations de la vague
+	 */
+	public static DefaultW setWave(String nom, LinkedHashMap<String, Object> map){
 		DefaultW wave = new DefaultW(nom);
 		GestYaml g = new GestYaml(map);
 		if(map.containsKey("frequency")){

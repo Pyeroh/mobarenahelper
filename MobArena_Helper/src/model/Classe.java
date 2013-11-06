@@ -7,6 +7,10 @@ import model.enums.EItem;
 import model.lists.ArmorList;
 import model.lists.ItemList;
 
+/**
+ * Une classe jouable en arène.
+ * @author Pyeroh
+ */
 public class Classe {
 
 	private LinkedHashMap<String, Object> classe;
@@ -21,6 +25,9 @@ public class Classe {
 	private boolean unbreakable_weapons = true;
 	private boolean unbreakable_armor = true;
 	
+	/**
+	 * La liste des classes actuellement en configuration
+	 */
 	public static ArrayList<Classe> classe_list = new ArrayList<Classe>(){
 		private static final long serialVersionUID = -5427655124441902011L;
 		public void clear() {
@@ -29,6 +36,11 @@ public class Classe {
 		}
 	};
 
+	/**
+	 * Instancie une classe avec son nom et la Map de ses informations, puis charge ces informations.
+	 * @param name le nom de la classe
+	 * @param classe la Map en question
+	 */
 	public Classe (String name, LinkedHashMap<String, Object> classe) {
 		classe_list.add(this);
 		
@@ -37,6 +49,10 @@ public class Classe {
 		load();
 	}
 	
+	/**
+	 * Instance une classe seulement avec son nom, pour que l'utilisateur complète les autres informations.
+	 * @param name le nom de la classe
+	 */
 	public Classe(String name) {
 		this.name = name;
 	}
@@ -137,10 +153,15 @@ public class Classe {
 		this.unbreakable_armor = unbreakable_armor;
 	}
 
+	@Override
 	public String toString() {
 		return name+"\n"+armor.toString()+"\n"+items.toString()+"\n";
 	}
 
+	/**
+	 * Renvoie la Map des informations de la classe
+	 * @return
+	 */
 	public LinkedHashMap<String, Object> getMap() {
 		LinkedHashMap<String, Object> map = new LinkedHashMap<String, Object>();
 
@@ -167,9 +188,15 @@ public class Classe {
 		return map;
 	}
 	
+	/**
+	 * Renvoie la classe correspondant au nom passé en paramètre, sans importance sur la casse.
+	 * @param name le nom de la classe
+	 * @return la classe correspondant au nom passé en paramètre.
+	 * @throws IllegalArgumentException si la classe associée au nom passé en paramètre n'existe pas
+	 */
 	public static Classe getByName(String name) {
 		int i=0;
-		while(!classe_list.get(i).getName().equals(name) && i<classe_list.size()){
+		while(!classe_list.get(i).getName().equalsIgnoreCase(name) && i<classe_list.size()){
 			i++;
 		}
 		if(i==classe_list.size()){

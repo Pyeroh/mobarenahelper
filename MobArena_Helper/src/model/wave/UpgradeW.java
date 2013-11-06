@@ -3,13 +3,18 @@ package model.wave;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.Map;
 
 import model.Classe;
 import model.GestYaml;
 import model.Wave;
 import model.enums.ETypeW;
 
+/**
+ * Une vague d'amélioration des objets et des équipements. Donne de nouveaux objets, équipements, améliore ceux qui existent déjà (s'ils sont similaires, une épée en diamant pour remplacer une
+ * épée en fer, ou un enchantement...) et même de nouvelles permissions.
+ * @author Pyeroh
+ * @see Wave
+ */
 public class UpgradeW extends Wave {
 
 	private ArrayList<UpgradeSet> upgrades = new ArrayList<>();
@@ -31,6 +36,7 @@ public class UpgradeW extends Wave {
 		this.give_all_items = give_all_items;
 	}
 
+	@Override
 	public LinkedHashMap<String, Object> getMap() {
 		LinkedHashMap<String, Object> map = super.getMap();
 		
@@ -78,6 +84,12 @@ public class UpgradeW extends Wave {
 		return changed;
 	}
 	
+	/**
+	 * Trouve un upgradeSet correspondant à la classe passée en paramètre.
+	 * @param classe la classe recherchée
+	 * @return l'upgradeSet correspondant, ou {@code null}
+	 * @see Classe
+	 */
 	public UpgradeSet findUpgradeSet(Classe classe) {
 		int i=0;
 		while(i<upgrades.size()) {
@@ -88,7 +100,14 @@ public class UpgradeW extends Wave {
 		else return upgrades.get(i);
 	}
 
-	public static UpgradeW setWave(String nom, Map<String, Object> map) {
+	/**
+	 * Instancie une vague et remplis complètement ses informations grâce à la Map.
+	 * @param nom le nom de la vague
+	 * @param category la catégorie à laquelle elle appartient
+	 * @param map la map d'informations de la vague
+	 * @return la vague, avec ses informations remplies
+	 */
+	public static UpgradeW setWave(String nom, LinkedHashMap<String, Object> map) {
 		UpgradeW wave = new UpgradeW(nom);
 		GestYaml g = new GestYaml(map);
 		

@@ -1,12 +1,26 @@
 package model;
 
+import model.enums.EEnchantItem;
 import model.enums.EEnchantment;
+import model.lists.EnchantList;
 
+/**
+ * Un enchantement réel
+ * @author Pyeroh
+ * @see EEnchantment
+ * @see EEnchantItem
+ * @see EnchantList
+ */
 public class Enchantment {
 
 	private EEnchantment enchantement;
 	private int lvl;
 	
+	/**
+	 * Instancie un enchantement avec la constante d'enchantement associée et le niveau voulu
+	 * @param enchantement
+	 * @param lvl
+	 */
 	public Enchantment(EEnchantment enchantement, int lvl) {
 		this.enchantement = enchantement;
 		this.lvl = lvl;
@@ -28,10 +42,15 @@ public class Enchantment {
 		this.lvl = lvl;
 	}
 	
+	/**
+	 * Renvoie le code pour l'enchantement avec son niveau, afin de l'intégrer à la Map qui sera écrite dans le fichier de config.
+	 * @return
+	 */
 	public String getString() {
 		return enchantement.getEid()+":"+lvl;
 	}
 	
+	@Override
 	public String toString() {
 		String sLvl;
 		switch (this.lvl) {

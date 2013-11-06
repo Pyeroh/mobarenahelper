@@ -7,6 +7,11 @@ import java.util.LinkedHashMap;
 
 import model.enums.ECatW;
 
+/**
+ * Une arène. Contient des vagues uniques, récurrentes, peut accorder des récompenses... Une arène quoi.
+ * @author Pyeroh
+ * @see ArenaConfig
+ */
 public class Arena {
 	private String nom;
 	private ArenaConfig config;
@@ -72,6 +77,11 @@ public class Arena {
 		}
 	}
 
+	/**
+	 * Renvoie la liste de vagues correspondant à la catégorie passée en paramètre
+	 * @param type le type de vagues attendu
+	 * @return les vagues récurrentes si {@link ECatW#recurrent}, uniques si {@link ECatW#single}.
+	 */
 	public ArrayList<Wave> getWavesType(ECatW type){
 		if(type.equals(ECatW.recurrent)){
 			return waves[0];
@@ -97,6 +107,10 @@ public class Arena {
 		this.config = config;
 	}
 
+	/**
+	 * Renvoie la map des informations de l'arène.
+	 * @return
+	 */
 	public LinkedHashMap<String, Object> getMap() {
 		LinkedHashMap<String, Object> arena = new LinkedHashMap<>();
 		arena.put("settings", config.getMap());

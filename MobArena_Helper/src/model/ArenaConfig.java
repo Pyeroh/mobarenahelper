@@ -4,6 +4,11 @@ import java.util.LinkedHashMap;
 
 import model.enums.EItem;
 
+/**
+ * Les paramètres de configuration d'une arène.
+ * @author Pyeroh
+ * @see Arena
+ */
 public class ArenaConfig {
 
 	private String world = "world";
@@ -53,11 +58,13 @@ public class ArenaConfig {
 	
 	private LinkedHashMap<String, Object> config;
 	
+	/**
+	 * Constructeur avec une Map. Instancie les paramètres à la valeur qu'ils ont dans le fichier.
+	 * @param config
+	 */
 	public ArenaConfig(LinkedHashMap<String, Object> config) {
-		
 		this.config = config;
 		load();
-		
 	}
 	
 	/**
@@ -133,6 +140,10 @@ public class ArenaConfig {
 		
 	}
 	
+	/**
+	 * Renvoie la Map des informations de la configuration de l'arène.
+	 * @return
+	 */
 	public LinkedHashMap<String,Object> getMap() {
 
 		LinkedHashMap<String,Object> map = new LinkedHashMap<>();

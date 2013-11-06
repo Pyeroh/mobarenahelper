@@ -2,16 +2,21 @@ package model.wave;
 
 import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.Set;
 
 import model.GestYaml;
 import model.Monstre;
 import model.Wave;
+import model.enums.ECatW;
 import model.enums.EMonsterAliases;
 import model.enums.ETypeW;
 import model.lists.ItemList;
 
+/**
+ * Une vague de réapprovisionnement. Fais apparaitre un monstre par joueur, choisi parmi une liste, et chaque monstre drop un objet choisi dans la liste des drops à sa mort.
+ * @author Pyeroh
+ * @see Wave
+ */
 public class SupplyW extends Wave {
 
 	private ItemList drops = new ItemList();
@@ -28,6 +33,7 @@ public class SupplyW extends Wave {
 		this.drops = drops;		
 	}
 
+	@Override
 	public LinkedHashMap<String, Object> getMap() {
 		LinkedHashMap<String, Object> vague = super.getMap();
 
@@ -48,7 +54,13 @@ public class SupplyW extends Wave {
 		return vague;
 	}
 
-	public static SupplyW setWave(String nom, Map<String, Object> map) {
+	/**
+	 * {@link Wave#setWave(String, ECatW, LinkedHashMap)}
+	 * @param nom le nom de la vague
+	 * @param map la map d'informations de la vague
+	 * @return la map d'informations de la vague
+	 */
+	public static SupplyW setWave(String nom, LinkedHashMap<String, Object> map) {
 		SupplyW wave = new SupplyW(nom);
 		GestYaml g = new GestYaml(map);
 		if(map.containsKey("frequency")){

@@ -5,6 +5,11 @@ import java.util.ArrayList;
 import model.Item;
 import model.enums.EItem;
 
+/**
+ * Liste d'items ; permet de remplir une liste à partir d'une chaine et de la trier
+ * @author Pyeroh
+ *
+ */
 public class ItemList extends ArrayList<Item> {
 
 	private static final long serialVersionUID = -1822352239305240836L;
@@ -17,6 +22,11 @@ public class ItemList extends ArrayList<Item> {
 		super(list);
 	}
 
+	/**
+	 * Remplis la liste à partir de la chaine de caractères contenant les différents items.
+	 * Gère également l'enchantement.
+	 * @param items
+	 */
 	public void fill(String items) {
 
 		String[] sItem = items.replace('\'', ' ')
@@ -59,12 +69,15 @@ public class ItemList extends ArrayList<Item> {
 		}
 	}
 
+	/**
+	 * Renvoie la liste des items sous forme de chaîne, séparés par des virgules
+	 * @return
+	 */
 	public String getString() {
 		StringBuffer sItems = new StringBuffer();
 		if(this.size()==1){
 			String item = this.get(0).getString();
-			if(item.matches("(\\d)+")) sItems.append("'"+item+"'");
-			else sItems.append(item);
+			sItems.append(item);
 		}
 		else {
 			for(int i=0;i<this.size();i++) {
@@ -86,6 +99,11 @@ public class ItemList extends ArrayList<Item> {
 		return indexofEItem(e)!=-1;
 	}
 
+	/**
+	 * Renvoie la liste des constantes qui composent les items de la liste
+	 * @return la liste des constantes
+	 * @see EItem
+	 */
 	public ArrayList<EItem> getEItemList() {
 		ArrayList<EItem> eitems = new ArrayList<>();
 		for(int i=0;i<size();i++){
@@ -108,6 +126,9 @@ public class ItemList extends ArrayList<Item> {
 		return index;
 	}
 
+	/**
+	 * Permet de trier la liste
+	 */
 	public void sort() {
 		int size=this.size();
 		triRapide(this,0,size-1);

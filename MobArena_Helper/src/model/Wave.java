@@ -1,7 +1,6 @@
 package model;
 
 import java.util.LinkedHashMap;
-import java.util.Map;
 
 import model.enums.ECatW;
 import model.enums.EMonsterAliases;
@@ -9,12 +8,15 @@ import model.enums.ETypeW;
 import model.lists.MonsterList;
 import model.wave.BossW;
 import model.wave.DefaultW;
-import model.wave.OtherW;
 import model.wave.SpecialW;
 import model.wave.SupplyW;
 import model.wave.SwarmW;
 import model.wave.UpgradeW;
 
+/**
+ * Classe abstraite servant à décrire une vague de manière générale.
+ * @author Pyeroh
+ */
 public abstract class Wave implements Comparable<Wave> {
 
 	private String nom;
@@ -81,42 +83,66 @@ public abstract class Wave implements Comparable<Wave> {
 	public MonsterList getMonstres() {
 		return monstres;
 	}
-	
+
 	public void setMonstres(MonsterList monstres) {
 		this.monstres = monstres;
 	}
-	
+
+	/**
+	 * Change le type de la vague et la reconstruit, avec les informations basiques d'une vague
+	 * @return la nouvelle vague
+	 */
 	public DefaultW getDefaultW() {
 		return (DefaultW) getWave(new DefaultW(nom));
 	}
-	
+
+	/**
+	 * Change le type de la vague et la reconstruit, avec les informations basiques d'une vague
+	 * @return la nouvelle vague
+	 */
 	public SpecialW getSpecialW() {
 		return (SpecialW) getWave(new SpecialW(nom));
 	}
-	
+
+	/**
+	 * Change le type de la vague et la reconstruit, avec les informations basiques d'une vague
+	 * @return la nouvelle vague
+	 */
 	public SwarmW getSwarmW() {
 		return (SwarmW) getWave(new SwarmW(nom));
 	}
-	
+
+	/**
+	 * Change le type de la vague et la reconstruit, avec les informations basiques d'une vague
+	 * @return la nouvelle vague
+	 */
 	public BossW getBossW() {
 		return (BossW) getWave(new BossW(nom));
 	}
-	
+
+	/**
+	 * Change le type de la vague et la reconstruit, avec les informations basiques d'une vague
+	 * @return la nouvelle vague
+	 */
 	public SupplyW getSupplyW() {
 		return (SupplyW) getWave(new SupplyW(nom));
 	}
-	
+
+	/**
+	 * Change le type de la vague et la reconstruit, avec les informations basiques d'une vague
+	 * @return la nouvelle vague
+	 */
 	public UpgradeW getUpgradeW() {
 		return (UpgradeW) getWave(new UpgradeW(nom));
 	}
-	
+
 	private Wave getWave(Wave wave) {
 		wave.setCategory(category);
 		wave.setNumwave(numwave);
 		wave.setPriority(priority);
 		wave.setFrequency(frequency);
 		wave.setMonstres(new MonsterList());
-		
+
 		return wave;
 	}
 
@@ -126,6 +152,7 @@ public abstract class Wave implements Comparable<Wave> {
 	 * laquelle on compare, la méthode renverra respectivement -1, 0, ou 1.
 	 * @param wave une autre vague de monstres
 	 */
+	@Override
 	public int compareTo(Wave wave) {
 		int wint,tint;
 		if (this.category==ECatW.recurrent) {
@@ -136,16 +163,17 @@ public abstract class Wave implements Comparable<Wave> {
 			wint = wave.getNumwave();
 			tint = this.numwave;
 		}
-		
+
 		if (wint > tint)
 			return -1;
 		else if (wint == tint)
 			return 0;
 		else
 			return 1;
-		
+
 	}
 
+	@Override
 	public String toString() {
 		String ret = "Classe : "+getClass()
 				+"\nname : "+nom
@@ -158,47 +186,53 @@ public abstract class Wave implements Comparable<Wave> {
 		return ret;
 	}
 
+	/**
+	 * Renvoie la "map" des informations relatives à la vague
+	 * @return une Map contenant les clés pour les informations de la vague
+	 */
 	public LinkedHashMap<String, Object> getMap() {
 		LinkedHashMap<String, Object> vague = new LinkedHashMap<>();
-		if(this instanceof OtherW) {
-			vague = (LinkedHashMap<String, Object>) ((OtherW) this).getDefvague();
+
+		vague.put("type", type.getNom());
+
+		if(category==ECatW.recurrent){
+			vague.put("priority", priority);
+			vague.put("frequency", frequency);
+			if(numwave!=0 && numwave!=1)vague.put("wave", numwave);
 		}
 		else {
-			vague.put("type", type.getNom());
+			vague.put("wave", numwave);
+		}
 
-			if(category==ECatW.recurrent){
-				vague.put("priority", priority);
-				vague.put("frequency", frequency);
-				if(numwave!=0 && numwave!=1)vague.put("wave", numwave);
-			}
-			else {
-				vague.put("wave", numwave);
-			}
 
-			
-			if(monstres.size()==1) {
-				Monstre monster = monstres.get(0);
+		if(monstres.size()==1) {
+			Monstre monster = monstres.get(0);
+			int probability = monster.getProbability();
+			if(probability==0) vague.put("monster", EMonsterAliases.valueOf(monster.getMonstre().name()).getPlural().name());
+			else if(probability==1) vague.put("monster", monstres.get(0).getMonstre().name());
+		}
+		else if(monstres.size()>1){
+			LinkedHashMap<String, Object> mapmonstres = new LinkedHashMap<>();
+			for (int i=0;i<monstres.size();i++) {
+				Monstre monster = monstres.get(i);
 				int probability = monster.getProbability();
-				if(probability==0) vague.put("monster", EMonsterAliases.valueOf(monster.getMonstre().name()).getPlural().name());
-				else if(probability==1) vague.put("monster", monstres.get(0).getMonstre().name());
+				if(probability==0 || probability>1) mapmonstres.put(EMonsterAliases.valueOf(monster.getMonstre().name()).getPlural().name(), probability);
+				else mapmonstres.put(monster.getMonstre().name(), monster.getProbability());
 			}
-			else if(monstres.size()>1){
-				LinkedHashMap<String, Object> mapmonstres = new LinkedHashMap<>();
-				for (int i=0;i<monstres.size();i++) {
-					Monstre monster = monstres.get(i);
-					int probability = monster.getProbability();
-					if(probability==0 || probability>1) mapmonstres.put(EMonsterAliases.valueOf(monster.getMonstre().name()).getPlural().name(), probability);
-					else mapmonstres.put(monster.getMonstre().name(), monster.getProbability());
-				}
-				vague.put("monsters", mapmonstres);
-			}
-			
+			vague.put("monsters", mapmonstres);
 		}
 
 		return vague;
 	}
 
-	public static Wave setWave(String nom, ECatW category, Map<String, Object> map){
+	/**
+	 * Instancie une vague et remplis complètement ses informations grâce à la Map.
+	 * @param nom le nom de la vague
+	 * @param category la catégorie à laquelle elle appartient
+	 * @param map la map d'informations de la vague
+	 * @return la vague, avec ses informations remplies
+	 */
+	public static Wave setWave(String nom, ECatW category, LinkedHashMap<String, Object> map){
 		Wave wave = null;
 		StringBuffer type = new StringBuffer(map.get("type").toString());
 		type.replace(0, 1, type.substring(0, 1).toUpperCase());

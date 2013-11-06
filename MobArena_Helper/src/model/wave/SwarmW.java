@@ -1,15 +1,20 @@
 package model.wave;
 
 import java.util.LinkedHashMap;
-import java.util.Map;
 
 import model.GestYaml;
 import model.Monstre;
 import model.Wave;
 import model.enums.EAmount;
+import model.enums.ECatW;
 import model.enums.EMonsterAliases;
 import model.enums.ETypeW;
 
+/**
+ * Une vague d'entrainement ! Ne fais apparaitre qu'un type de monste, avec un seul point de vie, et en très grande quantité.
+ * @author denanq
+ * @see Wave
+ */
 public class SwarmW extends Wave{
 
 	private EAmount amount = EAmount.low;
@@ -26,13 +31,20 @@ public class SwarmW extends Wave{
 		this.amount = amount;
 	}
 	
+	@Override
 	public String toString() {
 		String ret = super.toString()
 				+"\namount : "+amount.getNom();
 		return ret;
 	}
 
-	public static SwarmW setWave(String nom, Map<String, Object> map){
+	/**
+	 * {@link Wave#setWave(String, ECatW, LinkedHashMap)}
+	 * @param nom le nom de la vague
+	 * @param map la map d'informations de la vague
+	 * @return la map d'informations de la vague
+	 */
+	public static SwarmW setWave(String nom, LinkedHashMap<String, Object> map){
 		SwarmW wave = new SwarmW(nom);
 		GestYaml g = new GestYaml(map);
 		if(map.containsKey("frequency")){
@@ -52,6 +64,7 @@ public class SwarmW extends Wave{
 		return wave;
 	}
 	
+	@Override
 	public LinkedHashMap<String, Object> getMap() {
 		LinkedHashMap<String, Object> vague = super.getMap();		
 		if(this.getAmount()!=EAmount.low) vague.put("amount", this.getAmount().getName());

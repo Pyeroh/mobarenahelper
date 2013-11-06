@@ -1,5 +1,10 @@
 package model.enums;
 
+/**
+ * Les différentes valeurs de santé existant
+ * @author Pyeroh
+ *
+ */
 public enum EHealth {
 	verylow("Very low"),
 	low("Low"),
@@ -18,10 +23,10 @@ public enum EHealth {
 		return nom;
 	}
 
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
-
+	/**
+	 * Renvoie la liste des noms des constantes.
+	 * @return la liste des noms des constantes.
+	 */
 	public static String[] namevalues(){
 
 		EHealth[] values = values();
@@ -32,6 +37,13 @@ public enum EHealth {
 		return namevalues;
 	}
 
+	/**
+	 * Renvoie la constante associée au nom passé en paramètre.
+	 * @param name ce qui peut être renvoyé par {@link EHealth#getNom()}
+	 * @return la constante
+	 * @throws IllegalArgumentException si la constante n'existe pas
+	 * @throws NullPointerException si le paramètre vaut {@code null}
+	 */
 	public static EHealth getByName(String name) {
 
 		if (name!=null) {

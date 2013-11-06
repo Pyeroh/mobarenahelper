@@ -1,5 +1,10 @@
 package model.enums;
 
+/**
+ * Les deux catégories de vague
+ * @author Pyeroh
+ *
+ */
 public enum ECatW {
 	recurrent("Recurrent"),
 	single("Single");
@@ -14,6 +19,10 @@ public enum ECatW {
 		return nom;
 	}
 
+	/**
+	 * Renvoie la liste des noms des constantes.
+	 * @return la liste des noms des constantes.
+	 */
 	public static String[] namevalues(){
 
 		ECatW[] values = values();

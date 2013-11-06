@@ -3,8 +3,14 @@ package model.lists;
 import java.util.ArrayList;
 
 import model.Enchantment;
+import model.Item;
 import model.enums.EEnchantment;
 
+/**
+ * Liste d'enchantements pour un item donné
+ * @author Pyeroh
+ * @see Item
+ */
 public class EnchantList extends ArrayList<Enchantment> {
 
 	private static final long serialVersionUID = -8007639127841701265L;
@@ -18,6 +24,10 @@ public class EnchantList extends ArrayList<Enchantment> {
 		return true;
 	}
 	
+	/**
+	 * Remplis la liste avec le tableau de chaînes passé en paramètre
+	 * @param enchantments
+	 */
 	public void fill(String[] enchantments) {
 		for (String enchant : enchantments) {
 			String[] e_caracs = enchant.split(":");
@@ -28,6 +38,11 @@ public class EnchantList extends ArrayList<Enchantment> {
 		}
 	}
 	
+	/**
+	 * Renvoie l'index de l'enchantement passé en paramètre
+	 * @param e l'enchantement recherché
+	 * @return -1 si l'enchantement en question n'existe pas dans la liste, son indice sinon
+	 */
 	public int indexofEEnchantment(EEnchantment e) {
 		int index=-1, i=0;
 		while(i<size() && get(i).getEnchantement()!=e) {
@@ -37,6 +52,10 @@ public class EnchantList extends ArrayList<Enchantment> {
 		return index;
 	}
 	
+	/**
+	 * Renvoie la liste des constantes qui composent la liste
+	 * @return
+	 */
 	public ArrayList<EEnchantment> getEEnchantmentList() {
 		ArrayList<EEnchantment> eenchantment = new ArrayList<>();
 		for(int i=0;i<size();i++){

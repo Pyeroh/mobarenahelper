@@ -4,7 +4,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 
-
+/**
+ * Un groupe d'arènes. Est généralement chargé à partir d'un fichier, et est dans tous les cas intégré à un seul fichier à la sauvegarde des données.
+ * @author Pyeroh
+ * @see Arena
+ */
 public class Arenas {
 	
 	private LinkedHashMap<String, Object> globalsettings = new LinkedHashMap<>();
@@ -66,6 +70,10 @@ public class Arenas {
 		}
 	}
 	
+	/**
+	 * Renvoie la Map des informations du groupe d'arènes (la combinaison des informations de toutes les arènes).
+	 * @return
+	 */
 	public LinkedHashMap<String, Object> getMap() {
 		listarenas = new LinkedHashMap<>();
 		for(int i=0;i<arraylistarenas.size();i++) {

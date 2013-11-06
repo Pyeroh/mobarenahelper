@@ -2,13 +2,26 @@ package model;
 
 import model.enums.EItem;
 import model.lists.EnchantList;
+import model.lists.ItemList;
 
+/**
+ * L'existence réelle d'un item. Représente un item, dans une certaine quantité, et auquel est associé certains enchantements.
+ * @author Pyeroh
+ * @see EItem
+ * @see ItemList
+ */
 public class Item {
 
 	private EItem item;
 	private int quantity = 1;
 	private EnchantList enchantements = new EnchantList();
 	
+	/**
+	 * Instancie un Item avec ce qu'il est, sa quantité, et ses enchantements.
+	 * @param item
+	 * @param quantity
+	 * @param enchantments
+	 */
 	public Item(EItem item, int quantity, String[] enchantments) {
 		this.item = item;
 		this.quantity = quantity;
@@ -31,6 +44,7 @@ public class Item {
 		this.quantity = quantity;
 	}
 	
+	@Override
 	public String toString() {
 		return quantity+" "+item.getName();
 	}
@@ -39,6 +53,10 @@ public class Item {
 		return enchantements;
 	}
 	
+	/**
+	 * Renvoie la chaine correspondant aux informations de l'Item.
+	 * @return la chaine correspondant aux informations de l'Item.
+	 */
 	public String getString() {
 
 		StringBuffer item = new StringBuffer(this.item.getRealName().toLowerCase());

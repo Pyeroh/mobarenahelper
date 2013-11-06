@@ -1,0 +1,611 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.1.4" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
+  realizations="true" associations="true" dependencies="false" nesting-relationships="true">  
+  <class id="1" language="java" name="model.Armor" project="MobArena_Helper" 
+    file="/MobArena_Helper/src/model/Armor.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="119" width="146" x="2065" y="1889"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="model.Arenas" project="MobArena_Helper" 
+    file="/MobArena_Helper/src/model/Arenas.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="245" width="526" x="2268" y="37"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="false" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="model.Item" project="MobArena_Helper" file="/MobArena_Helper/src/model/Item.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="155" width="182" x="2313" y="1586"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="false" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="model.GestYaml" project="MobArena_Helper" 
+    file="/MobArena_Helper/src/model/GestYaml.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="371" width="250" x="1004" y="37"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="model.Wave" project="MobArena_Helper" file="/MobArena_Helper/src/model/Wave.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="335" width="268" x="1115" y="707"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="false" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" name="model.ArenaConfig" project="MobArena_Helper" 
+    file="/MobArena_Helper/src/model/ArenaConfig.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="839" width="212" x="2290" y="707"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="false" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="true" protected="true" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="7" language="java" name="model.Enchantment" project="MobArena_Helper" 
+    file="/MobArena_Helper/src/model/Enchantment.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="119" width="178" x="2868" y="1586"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="false" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="8" language="java" name="model.Classe" project="MobArena_Helper" 
+    file="/MobArena_Helper/src/model/Classe.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="299" width="248" x="2065" y="2516"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="false" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="9" language="java" name="model.Arena" project="MobArena_Helper" 
+    file="/MobArena_Helper/src/model/Arena.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="209" width="245" x="2268" y="458"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="false" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="10" language="java" name="model.Monstre" project="MobArena_Helper" 
+    file="/MobArena_Helper/src/model/Monstre.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="101" width="138" x="2834" y="37"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="false" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <enumeration id="11" language="java" name="model.wave.UpgradeSet.UpSetup" project="MobArena_Helper" 
+    file="/MobArena_Helper/src/model/wave/UpgradeSet.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1012" y="2197"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="false" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </enumeration>  
+  <class id="12" language="java" name="model.wave.SupplyW" project="MobArena_Helper" 
+    file="/MobArena_Helper/src/model/wave/SupplyW.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="101" width="248" x="2025" y="1586"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="false" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="13" language="java" name="model.wave.SpecialW" project="MobArena_Helper" 
+    file="/MobArena_Helper/src/model/wave/SpecialW.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="101" width="250" x="500" y="1586"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="14" language="java" name="model.wave.SwarmW" project="MobArena_Helper" 
+    file="/MobArena_Helper/src/model/wave/SwarmW.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="119" width="250" x="210" y="1586"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="false" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="15" language="java" name="model.wave.DefaultW" project="MobArena_Helper" 
+    file="/MobArena_Helper/src/model/wave/DefaultW.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="155" width="249" x="1736" y="1586"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="false" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="16" language="java" name="model.wave.BossW" project="MobArena_Helper" 
+    file="/MobArena_Helper/src/model/wave/BossW.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="227" width="240" x="1456" y="1586"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="false" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="17" language="java" name="model.wave.UpgradeSet" project="MobArena_Helper" 
+    file="/MobArena_Helper/src/model/wave/UpgradeSet.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="137" width="347" x="1068" y="1889"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="false" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="18" language="java" name="model.wave.UpgradeW" project="MobArena_Helper" 
+    file="/MobArena_Helper/src/model/wave/UpgradeW.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="173" width="256" x="1160" y="1586"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="false" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="19" language="java" name="model.lists.ItemList" project="MobArena_Helper" 
+    file="/MobArena_Helper/src/model/lists/ItemList.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="263" width="176" x="1436" y="2891"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="20" language="java" name="model.lists.EnchantList" project="MobArena_Helper" 
+    file="/MobArena_Helper/src/model/lists/EnchantList.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="155" width="262" x="2251" y="1889"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="21" language="java" name="model.lists.ArmorList" project="MobArena_Helper" 
+    file="/MobArena_Helper/src/model/lists/ArmorList.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="191" width="174" x="1436" y="3194"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="22" language="java" name="model.lists.MonsterList" project="MobArena_Helper" 
+    file="/MobArena_Helper/src/model/lists/MonsterList.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="137" width="161" x="959" y="1586"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <enumeration id="23" language="java" name="model.enums.EMonsterAliases" project="MobArena_Helper" 
+    file="/MobArena_Helper/src/model/enums/EMonsterAliases.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="155" width="207" x="3012" y="37"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="false" 
+      visibility="true">      
+      <attributes public="false" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </enumeration>  
+  <enumeration id="24" language="java" name="model.enums.EItem" project="MobArena_Helper" 
+    file="/MobArena_Helper/src/model/enums/EItem.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="371" width="232" x="2574" y="1889"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </enumeration>  
+  <enumeration id="25" language="java" name="model.enums.EAmount" project="MobArena_Helper" 
+    file="/MobArena_Helper/src/model/enums/EAmount.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="263" width="163" x="210" y="1889"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </enumeration>  
+  <enumeration id="26" language="java" name="model.enums.EMonsters" project="MobArena_Helper" 
+    file="/MobArena_Helper/src/model/enums/EMonsters.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="137" width="171" x="2923" y="458"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="false" 
+      visibility="true">      
+      <attributes public="false" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </enumeration>  
+  <enumeration id="27" language="java" name="model.enums.EItemCat" project="MobArena_Helper" 
+    file="/MobArena_Helper/src/model/enums/EItemCat.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="335" width="161" x="2574" y="2516"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </enumeration>  
+  <enumeration id="28" language="java" name="model.enums.EEnchantItem" project="MobArena_Helper" 
+    file="/MobArena_Helper/src/model/enums/EEnchantItem.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="137" width="254" x="2574" y="1586"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </enumeration>  
+  <enumeration id="29" language="java" name="model.enums.EHealth" project="MobArena_Helper" 
+    file="/MobArena_Helper/src/model/enums/EHealth.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="245" width="156" x="1679" y="1889"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </enumeration>  
+  <enumeration id="30" language="java" name="model.enums.ETypeW" project="MobArena_Helper" 
+    file="/MobArena_Helper/src/model/enums/ETypeW.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="103" y="1605"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </enumeration>  
+  <enumeration id="31" language="java" name="model.enums.ECatW" project="MobArena_Helper" 
+    file="/MobArena_Helper/src/model/enums/ECatW.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="155" width="129" x="790" y="1586"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </enumeration>  
+  <enumeration id="32" language="java" name="model.enums.EEnchantment" project="MobArena_Helper" 
+    file="/MobArena_Helper/src/model/enums/EEnchantment.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="587" width="199" x="2846" y="1889"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="false" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </enumeration>  
+  <enumeration id="33" language="java" name="model.enums.EGrowth" project="MobArena_Helper" 
+    file="/MobArena_Helper/src/model/enums/EGrowth.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="209" width="129" x="1875" y="1889"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </enumeration>  
+  <enumeration id="34" language="java" name="model.enums.EAbilities" project="MobArena_Helper" 
+    file="/MobArena_Helper/src/model/enums/EAbilities.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="515" width="163" x="1476" y="1889"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </enumeration>  
+  <association id="35">    
+    <bendpoint x="1394" y="2569"/>    
+    <end type="SOURCE" refId="17" navigable="false">      
+      <attribute id="36" name="classe"/>      
+      <multiplicity id="37" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="38">    
+    <end type="SOURCE" refId="24" navigable="false">      
+      <attribute id="39" name="category"/>      
+      <multiplicity id="40" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="27" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="41">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="5"/>  
+  </generalization>  
+  <association id="42">    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="43" name="waves"/>      
+      <multiplicity id="44" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="45">    
+    <bendpoint x="1077" y="2516"/>    
+    <bendpoint x="1077" y="2891"/>    
+    <end type="SOURCE" refId="17" navigable="false">      
+      <attribute id="46" name="armor"/>      
+      <multiplicity id="47" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="21" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="48">    
+    <end type="SOURCE" refId="16" navigable="false">      
+      <attribute id="49" name="health"/>      
+      <multiplicity id="50" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="29" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="51">    
+    <end type="SOURCE" refId="14" navigable="false">      
+      <attribute id="52" name="amount"/>      
+      <multiplicity id="53" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="25" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="54">    
+    <bendpoint x="2543" y="458"/>    
+    <bendpoint x="2543" y="1586"/>    
+    <bendpoint x="2542" y="2266"/>    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="55" name="arraylistclasses"/>      
+      <multiplicity id="56" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="57">    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="58" name="enchantement"/>      
+      <multiplicity id="59" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="32" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="60">    
+    <end type="SOURCE" refId="17"/>    
+    <end type="TARGET" refId="11"/>  
+  </nesting>  
+  <association id="61">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="62" name="monstres"/>      
+      <multiplicity id="63" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="22" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="64">    
+    <bendpoint x="2034" y="1889"/>    
+    <bendpoint x="2034" y="2516"/>    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="65" name="drops"/>      
+      <multiplicity id="66" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="67">    
+    <end type="SOURCE" refId="18"/>    
+    <end type="TARGET" refId="5"/>  
+  </generalization>  
+  <association id="68">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="69" name="type"/>      
+      <multiplicity id="70" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="30" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="71">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="5"/>  
+  </generalization>  
+  <generalization id="72">    
+    <end type="SOURCE" refId="21"/>    
+    <end type="TARGET" refId="19"/>  
+  </generalization>  
+  <generalization id="73">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="3"/>  
+  </generalization>  
+  <association id="74">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="75" name="items"/>      
+      <multiplicity id="76" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="77">    
+    <end type="SOURCE" refId="16" navigable="false">      
+      <attribute id="78" name="abilities"/>      
+      <multiplicity id="79" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="34" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="80">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="81" name="enchantements"/>      
+      <multiplicity id="82" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="20" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="83">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="84" name="armor"/>      
+      <multiplicity id="85" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="21" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="86">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="87" name="classe_list"/>      
+      <multiplicity id="88" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="89">    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="5"/>  
+  </generalization>  
+  <association id="90">    
+    <bendpoint x="1267" y="2516"/>    
+    <end type="SOURCE" refId="17" navigable="false">      
+      <attribute id="91" name="items"/>      
+      <multiplicity id="92" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="93">    
+    <end type="SOURCE" refId="10" navigable="false">      
+      <attribute id="94" name="monstre"/>      
+      <multiplicity id="95" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="26" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="96">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="97" name="item"/>      
+      <multiplicity id="98" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="24" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="99">    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="100" name="config"/>      
+      <multiplicity id="101" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="102">    
+    <end type="SOURCE" refId="17" navigable="false">      
+      <attribute id="103" name="setup"/>      
+      <multiplicity id="104" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="105">    
+    <end type="SOURCE" refId="28" navigable="false">      
+      <attribute id="106" name="item"/>      
+      <multiplicity id="107" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="24" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="108">    
+    <end type="SOURCE" refId="28" navigable="false">      
+      <attribute id="109" name="enchantment"/>      
+      <multiplicity id="110" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="32" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="111">    
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="5"/>  
+  </generalization>  
+  <association id="112">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="113" name="arraylistarenas"/>      
+      <multiplicity id="114" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="115">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="116" name="category"/>      
+      <multiplicity id="117" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="31" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="118">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="119" name="S_gestionnaire"/>      
+      <multiplicity id="120" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="121">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="122" name="entry_fee_item"/>      
+      <multiplicity id="123" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="124">    
+    <end type="SOURCE" refId="23" navigable="false">      
+      <attribute id="125" name="monstre"/>      
+      <multiplicity id="126" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="26" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="127">    
+    <bendpoint x="1445" y="1889"/>    
+    <bendpoint x="1445" y="2516"/>    
+    <end type="SOURCE" refId="16" navigable="false">      
+      <attribute id="128" name="reward"/>      
+      <multiplicity id="129" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="130">    
+    <end type="SOURCE" refId="15" navigable="false">      
+      <attribute id="131" name="growth"/>      
+      <multiplicity id="132" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="33" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="133">    
+    <end type="SOURCE" refId="18" navigable="false">      
+      <attribute id="134" name="upgrades"/>      
+      <multiplicity id="135" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="17" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="136">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="5"/>  
+  </generalization>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

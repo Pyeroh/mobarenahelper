@@ -3,6 +3,11 @@ package model.enums;
 import java.awt.Image;
 import java.awt.Toolkit;
 
+/**
+ * Les types de vague possibles
+ * @author Pyeroh
+ *
+ */
 public enum ETypeW {
 	Default("default"),
 	Special("special"),
@@ -27,6 +32,10 @@ public enum ETypeW {
 		return image;
 	}
 
+	/**
+	 * Renvoie la liste des noms des constantes.
+	 * @return la liste des noms des constantes.
+	 */
 	public static String[] namevalues(){
 
 		ETypeW[] values = values();

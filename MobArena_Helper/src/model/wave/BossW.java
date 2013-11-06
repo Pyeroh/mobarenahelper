@@ -2,7 +2,6 @@ package model.wave;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.Map;
 
 import model.GestYaml;
 import model.Monstre;
@@ -13,6 +12,11 @@ import model.enums.EMonsterAliases;
 import model.enums.ETypeW;
 import model.lists.ItemList;
 
+/**
+ * Une vague de boss
+ * @author Pyeroh
+ * @see Wave
+ */
 public class BossW extends Wave{
 
 	private String bossname = "";
@@ -87,7 +91,7 @@ public class BossW extends Wave{
 		return ret;
 	}
 
-	public static BossW setWave(String nom, Map<String, Object> map){
+	public static BossW setWave(String nom, LinkedHashMap<String, Object> map){
 		BossW wave = new BossW(nom);
 		GestYaml g = new GestYaml(map);
 		if(map.containsKey("frequency")){

@@ -1,5 +1,10 @@
 package model.enums;
 
+/**
+ * Les abilités des boss
+ * @author Pyeroh
+ *
+ */
 public enum EAbilities {
 	arrows("Arrows"),
 	fireballs("Fireballs"),
@@ -36,6 +41,10 @@ public enum EAbilities {
 		return name().replace('_', '-');
 	}
 
+	/**
+	 * Renvoie la liste des noms des constantes.
+	 * @return la liste des noms des constantes.
+	 */
 	public static String[] namevalues(){
 
 		EAbilities[] values = values();
@@ -46,6 +55,13 @@ public enum EAbilities {
 		return namevalues;
 	}
 	
+	/**
+	 * Renvoie la constante associée au nom passé en paramètre.
+	 * @param name ce qui peut être renvoyé par {@link EAbilities#getNom()}
+	 * @return la constante
+	 * @throws IllegalArgumentException si la constante n'existe pas
+	 * @throws NullPointerException si le paramètre vaut {@code null}
+	 */
 	public static EAbilities getByName(String name) {
 
 		if (name!=null) {

@@ -1,5 +1,10 @@
 package model.enums;
 
+/**
+ * La quantité de monstres
+ * @author Pyeroh
+ *
+ */
 public enum EAmount {
 	verylow("Very low"),
 	low("Low"),
@@ -25,6 +30,10 @@ public enum EAmount {
 		return name;
 	}
 
+	/**
+	 * Renvoie la liste des noms des constantes.
+	 * @return la liste des noms des constantes.
+	 */
 	public static String[] namevalues(){
 
 		EAmount[] values = values();
@@ -35,6 +44,13 @@ public enum EAmount {
 		return namevalues;
 	}
 
+	/**
+	 * Renvoie la constante associée au nom passé en paramètre.
+	 * @param name ce qui peut être renvoyé par {@link EAmount#getName()}
+	 * @return la constante
+	 * @throws IllegalArgumentException si la constante n'existe pas
+	 * @throws NullPointerException si le paramètre vaut {@code null}
+	 */
 	public static EAmount getByName(String name) {
 
 		if (name!=null) {

@@ -69,7 +69,6 @@ import model.lists.ItemList;
 import model.lists.MonsterList;
 import model.wave.BossW;
 import model.wave.DefaultW;
-import model.wave.OtherW;
 import model.wave.SpecialW;
 import model.wave.SupplyW;
 import model.wave.SwarmW;
@@ -246,7 +245,7 @@ public class MenuPrincipal extends JFrame {
 	private JCheckBox chk_global_join;
 	private JCheckBox chk_global_end;
 	private JMenuItem mntmQuit;
-	
+
 	public MenuPrincipal() throws ParseException{
 		super("MobArena Helper v2.0");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(MenuPrincipal.class.getResource("/gui/mobarena.png")));
@@ -569,7 +568,7 @@ public class MenuPrincipal extends JFrame {
 		combo_arena.setBounds(66, 6, 192, 20);
 		pan_arena_wave.add(combo_arena);
 		combo_arena.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		
+
 		btn_plus = new JButton("+");
 		btn_plus.setToolTipText("Add an arena");
 		btn_plus.addMouseListener(new MouseAdapter() {
@@ -589,13 +588,13 @@ public class MenuPrincipal extends JFrame {
 					tabpan_config.setEnabledAt(1, true);
 					tabpan_config.setEnabledAt(2, true);
 				}
-				
+
 			}
 		});
 		btn_plus.setBounds(215, 27, 20, 20);
 		btn_plus.setBorder(new CompoundBorder());
 		pan_arena_wave.add(btn_plus);
-		
+
 		btn_moins = new JButton("-");
 		btn_moins.addMouseListener(new MouseAdapter() {
 			@Override
@@ -614,7 +613,7 @@ public class MenuPrincipal extends JFrame {
 							}
 						}
 					}
-					
+
 				}
 			}
 		});
@@ -1040,7 +1039,7 @@ public class MenuPrincipal extends JFrame {
 							MonsterList monsterlist = wave.getMonstres();
 							int proba = Integer.parseInt((String) sai_nb_carac_wave.getValue());
 
-							if(monsterlist.contain(EMonsters.getByName(name))) {
+							if(monsterlist.contains(EMonsters.getByName(name))) {
 								JOptionPane.showMessageDialog(null, "You can't add the same monster twice !","Invalid value", JOptionPane.WARNING_MESSAGE);
 							}
 							else {
@@ -1123,10 +1122,10 @@ public class MenuPrincipal extends JFrame {
 
 		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
-		
+
 		mnApplication = new JMenu("Application");
 		menuBar.add(mnApplication);
-		
+
 		mntmNewConfiguration = new JMenuItem("New configuration");
 		mntmNewConfiguration.addActionListener(new ActionListener() {
 			@Override
@@ -1139,7 +1138,7 @@ public class MenuPrincipal extends JFrame {
 		});
 		mnApplication.add(mntmNewConfiguration);
 		mnApplication.addSeparator();
-		
+
 		mntmQuit = new JMenuItem("Quit");
 		mntmQuit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -2331,9 +2330,7 @@ public class MenuPrincipal extends JFrame {
 
 			for(int i=0;i<listdata.size();i++){
 				Wave vague = (Wave) listdata.get(i);
-				if (!(vague instanceof OtherW)) {
-					modW.addElement(new CellListWave(vague));
-				}
+				modW.addElement(new CellListWave(vague));
 			}
 
 		}
@@ -2394,16 +2391,11 @@ public class MenuPrincipal extends JFrame {
 
 				Collections.sort(waveList);
 				int i = 0;
-				int otherw = 0;
 				while (i < waveList.size() && waveList.get(i) != wave) {
-					if (waveList.get(i) instanceof OtherW) {
-						otherw++;
-					}
 					i++;
 				}
 				loadListCaracs_Arena(waveList, list_sel);
-				int index_sel = i - otherw;
-				list_sel.setSelectedIndex(index_sel);
+				list_sel.setSelectedIndex(i);
 
 			}
 
@@ -2418,16 +2410,11 @@ public class MenuPrincipal extends JFrame {
 
 			Collections.sort(waveList);
 			int i = 0;
-			int otherw = 0;
 			while (i < waveList.size() && waveList.get(i) != wave) {
-				if (waveList.get(i) instanceof OtherW) {
-					otherw++;
-				}
 				i++;
 			}
 			loadListCaracs_Arena(waveList, list_sel);
-			int index_sel = i - otherw;
-			list_sel.setSelectedIndex(index_sel);
+			list_sel.setSelectedIndex(i);
 
 		}
 		else if(source==sai_abi_interval){

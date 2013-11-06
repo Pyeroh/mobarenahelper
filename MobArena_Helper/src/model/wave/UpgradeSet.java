@@ -8,12 +8,27 @@ import model.GestYaml;
 import model.lists.ArmorList;
 import model.lists.ItemList;
 
+/**
+ * Un set d'upgrade est la combinaison d'une vague Upgrade et d'une classe. Pour une certaine classe, il est possible d'améliorer de l'équipement, des objets, de donner des permissions.
+ * On peut retrouver plusieurs UpgradeSet dans une vague Upgrade.
+ * @author Pyeroh
+ * @see UpgradeW
+ */
 public class UpgradeSet {
 
+	/**
+	 * Le setup d'un set d'upgrade permet de savoir si c'est simple ({@link #legacy})
+	 * ou avancé ({@link #advanced})
+	 * @author Pyeroh
+	 */
 	public enum UpSetup {
 		legacy,
 		advanced;
 
+		/**
+		 * Renvoie la liste des noms des constantes.
+		 * @return la liste des noms des constantes.
+		 */
 		public static String[] namevalues(){
 
 			UpSetup[] values = values();
@@ -89,6 +104,12 @@ public class UpgradeSet {
 		this.permissions = permissions;
 	}
 
+	/**
+	 * Renvoie la "map" des informations relatives à l'upgradeSet.
+	 * @return si la config de l'upgradeSet est simple, renvoie une chaîne. Sinon, renvoie une LinkedHashMap, seulement si la liste des
+	 * objets n'est pas la seule à être renseignée. Si on est dans ce cas là, à la réouverture du fichier dans le MobArena_Helper, cet 
+	 * upgradeSet sera considéré legacy.
+	 */
 	public Object getMap() {
 		LinkedHashMap<String, Object> lhMap = new LinkedHashMap<String, Object>();
 		String sMap = null;
@@ -129,6 +150,12 @@ public class UpgradeSet {
 		else return lhMap;
 	}
 
+	/**
+	 * Instancie un upgradeSet et remplis complètement ses informations grâce à la Map.
+	 * @param nom le nom de la classe associée
+	 * @param map la map d'informations de la vague
+	 * @return l'upgradeSet, avec ses informations complétées
+	 */
 	public static UpgradeSet setUpgradeSet(String nom_classe, LinkedHashMap<String, Object> map) {
 		GestYaml g = new GestYaml(map);
 		UpgradeSet set = null;

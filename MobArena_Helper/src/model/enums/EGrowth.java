@@ -1,5 +1,10 @@
 package model.enums;
 
+/**
+ * La croissance d'une vague
+ * @author Pyeroh
+ *
+ */
 public enum EGrowth {
 	old("Old"),
 	slow("Slow"),
@@ -17,6 +22,10 @@ public enum EGrowth {
 		return nom;
 	}
 
+	/**
+	 * Renvoie la liste des noms des constantes.
+	 * @return la liste des noms des constantes.
+	 */
 	public static String[] namevalues(){
 
 		EGrowth[] values = values();

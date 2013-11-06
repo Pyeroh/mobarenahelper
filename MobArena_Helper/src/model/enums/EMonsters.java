@@ -1,5 +1,10 @@
 package model.enums;
 
+/**
+ * Les différents monstres ajoutables dans une vague
+ * @author Pyeroh
+ *
+ */
 public enum EMonsters {
 
 	zombie("Zombie"),
@@ -55,6 +60,10 @@ public enum EMonsters {
 		return nom;
 	}
 
+	/**
+	 * Renvoie la liste des noms des constantes.
+	 * @return la liste des noms des constantes.
+	 */
 	public static String[] namevalues(){
 
 		EMonsters[] values = values();
@@ -65,6 +74,13 @@ public enum EMonsters {
 		return namevalues;
 	}
 	
+	/**
+	 * Renvoie la constante associée au nom passé en paramètre.
+	 * @param name ce qui peut être renvoyé par {@link EMonsters#getNom()}
+	 * @return la constante
+	 * @throws IllegalArgumentException si la constante n'existe pas
+	 * @throws NullPointerException si le paramètre vaut {@code null}
+	 */
 	public static EMonsters getByName(String name) {
 		
 		if (name!=null) {

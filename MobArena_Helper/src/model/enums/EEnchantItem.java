@@ -2,6 +2,11 @@ package model.enums;
 
 import java.util.ArrayList;
 
+/**
+ * Les combinaisons disponibles enchantement/item
+ * @author Pyeroh
+ *
+ */
 public enum EEnchantItem {
 
 	//Armures
@@ -305,6 +310,11 @@ public enum EEnchantItem {
 		return item;
 	}
 
+	/**
+	 * Renvoie touts les items qui sont enchantables par l'enchantement passé en paramètre
+	 * @param enchant
+	 * @return
+	 */
 	public static ArrayList<EItem> getByEnchant(EEnchantment enchant) {
 		ArrayList<EItem> items = new ArrayList<>();
 		EEnchantItem[] values = values();
@@ -316,6 +326,11 @@ public enum EEnchantItem {
 		return items;
 	}
 
+	/**
+	 * Renvoie tous les enchantements qui sont applicable à l'item passé en paramètre
+	 * @param eitem
+	 * @return
+	 */
 	public static ArrayList<EEnchantment> getByItem(EItem eitem) {
 		ArrayList<EEnchantment> enchants = new ArrayList<>();
 		EEnchantItem[] values = values();
