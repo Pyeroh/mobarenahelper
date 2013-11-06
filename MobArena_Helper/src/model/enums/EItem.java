@@ -1,9 +1,10 @@
 package model.enums;
 
 import java.awt.Image;
-import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import javax.swing.ImageIcon;
 
 /**
  * Les items Minecraft, sans les objets techniques et certains autres...
@@ -519,7 +520,7 @@ public enum EItem {
 			imagepath.append(meta);
 		}
 		imagepath.append(".png");
-		this.image = Toolkit.getDefaultToolkit().getImage(getClass().getResource(imagepath.toString()));
+		this.image = new ImageIcon(getClass().getClassLoader().getResource(imagepath.toString())).getImage();
 	}
 
 	public int getId() {

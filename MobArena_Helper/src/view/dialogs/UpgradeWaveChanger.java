@@ -2,7 +2,6 @@ package view.dialogs;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Toolkit;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
@@ -11,6 +10,7 @@ import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -61,7 +61,7 @@ public class UpgradeWaveChanger extends JDialog {
 		setModalityType(ModalityType.APPLICATION_MODAL);
 		setTitle("Upgrade Wave modifier - "+frame.getTitle());
 
-		setIconImage(Toolkit.getDefaultToolkit().getImage(UpgradeWaveChanger.class.getResource("/gui/pics//mobarena.png")));
+		setIconImage(new ImageIcon(UpgradeWaveChanger.class.getResource("/gui/pics/mobarena.png")).getImage());
 		setResizable(false);
 		this.upgradew = upw;
 

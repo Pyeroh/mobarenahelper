@@ -2,7 +2,6 @@ package view.dialogs;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Toolkit;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
@@ -15,6 +14,7 @@ import java.util.Arrays;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
@@ -78,7 +78,7 @@ public class ItemSelector extends JDialog {
 		setModalityType(ModalityType.APPLICATION_MODAL);
 		setTitle("Item Selector - "+frame.getTitle());
 		
-		setIconImage(Toolkit.getDefaultToolkit().getImage(ItemSelector.class.getResource("/gui/pics//mobarena.png")));
+		setIconImage(new ImageIcon(ItemSelector.class.getResource("/gui/pics/mobarena.png")).getImage());
 		setResizable(false);
 		this.items = items;
 		this.frame = frame;

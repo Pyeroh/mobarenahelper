@@ -33,7 +33,7 @@ public class Todo extends JWindow {
 		lib_todo.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lib_todo.setBounds(10, 11, 464, 317);
 		try {
-			lib_todo.setPage(Todo.class.getResource("/gui/pics//todo_en.html"));
+			lib_todo.setPage(Todo.class.getResource("/gui/pics/todo_en.html"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

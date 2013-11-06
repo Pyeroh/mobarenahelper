@@ -1,7 +1,8 @@
 package model.enums;
 
 import java.awt.Image;
-import java.awt.Toolkit;
+
+import javax.swing.ImageIcon;
 
 /**
  * Les types de vague possibles
@@ -21,7 +22,7 @@ public enum ETypeW {
 
 	ETypeW(String nom){
 		this.nom = nom;
-		this.image = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/gui/pics/"+nom.toLowerCase()+".png"));
+		this.image = new ImageIcon(getClass().getClassLoader().getResource("/gui/pics/"+nom.toLowerCase()+".png")).getImage();
 	}
 
 	public String getNom() {
