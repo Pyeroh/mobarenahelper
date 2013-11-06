@@ -50,7 +50,7 @@ public class Enchanter extends JDialog {
 	public Enchanter(JDialog dial, Item item) {
 		super();
 		setModalityType(ModalityType.APPLICATION_MODAL);
-		setIconImage(new ImageIcon(Enchanter.class.getResource("gui/pics/mobarena.png")).getImage());
+		setIconImage(new ImageIcon(Enchanter.class.getResource("/gui/pics/mobarena.png")).getImage());
 		this.item = item;
 		setTitle("Enchanter - " + ((ItemSelector)dial).getFrame().getTitle());
 
@@ -158,7 +158,7 @@ public class Enchanter extends JDialog {
 		lib_help = new JLabel("");
 		lib_help.setToolTipText("<html>This enchanter is done to add or delete an enchantment on a weapon or a <br>tool. You can't modify an existing enchantment by clicking it. But it's not that <br>hard to delete it by wheel-clicking it and creating it again, isn't it ? :p\r\n<br> ... okay, I'll change it in a future update...");
 		lib_help.setBounds(220, 6, 24, 24);
-		Image img = CellListCaracs.scaleImage(new ImageIcon(Enchanter.class.getResource("gui/pics/question.png")).getImage(), lib_help);
+		Image img = CellListCaracs.scaleImage(new ImageIcon(Enchanter.class.getResource("/gui/pics/question.png")).getImage(), lib_help);
 		lib_help.setIcon(new ImageIcon(img));
 		getContentPane().add(lib_help);
 
