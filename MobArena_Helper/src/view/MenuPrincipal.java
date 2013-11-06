@@ -99,6 +99,10 @@ public class MenuPrincipal extends JFrame {
 
 	private JMenuItem mntmAbout;
 	private JMenuBar menuBar;
+	private JMenu mnApplication;
+
+	private JMenuItem mntmNewConfiguration;
+
 	private JMenu mnHelp;
 	private JMenuItem mntmHowToUse;
 	private JMenu mnPlanned;
@@ -241,6 +245,7 @@ public class MenuPrincipal extends JFrame {
 	private JCheckBox chk_isolated_chat;
 	private JCheckBox chk_global_join;
 	private JCheckBox chk_global_end;
+	private JMenuItem mntmQuit;
 	
 	public MenuPrincipal() throws ParseException{
 		super("MobArena Helper v2.0");
@@ -249,8 +254,6 @@ public class MenuPrincipal extends JFrame {
 		setResizable(false);
 		getContentPane().setLayout(null);
 		getContentPane().setVisible(true);
-
-		//TODO Possibilité de remettre à 0 et/ou de créer une config perso
 
 		MouseAdapter newWave = new MouseAdapter() {
 			@Override
@@ -1120,6 +1123,33 @@ public class MenuPrincipal extends JFrame {
 
 		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
+		
+		mnApplication = new JMenu("Application");
+		menuBar.add(mnApplication);
+		
+		mntmNewConfiguration = new JMenuItem("New configuration");
+		mntmNewConfiguration.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int choice = JOptionPane.showConfirmDialog(rootPane, "There may be unsaved changes. Are you sure\nyou want to create a new configuration ?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+				if(choice==JOptionPane.YES_OPTION) {
+					raz();
+				}
+			}
+		});
+		mnApplication.add(mntmNewConfiguration);
+		mnApplication.addSeparator();
+		
+		mntmQuit = new JMenuItem("Quit");
+		mntmQuit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int choice = JOptionPane.showConfirmDialog(rootPane, "There may be unsaved changes. Are you sure\nyou want to quit ?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+				if(choice==JOptionPane.YES_OPTION) {
+					dispose();
+				}
+			}
+		});
+		mnApplication.add(mntmQuit);
 
 		mnPlanned = new JMenu("Planned");
 		menuBar.add(mnPlanned);
