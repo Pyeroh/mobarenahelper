@@ -17,6 +17,7 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.ResourceBundle;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
@@ -248,6 +249,9 @@ public class MenuPrincipal extends JFrame {
 
 	public MenuPrincipal() throws ParseException{
 		super("MobArena Helper v2.0");
+		
+		//Locale.setDefault(Locale.ENGLISH);
+		
 		setIconImage(new ImageIcon(MenuPrincipal.class.getResource("/gui/pics/mobarena.png")).getImage());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
@@ -464,7 +468,7 @@ public class MenuPrincipal extends JFrame {
 			}
 		};
 
-		btn_load = new JButton("Load Config");
+		btn_load = new JButton(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.btn_load.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		btn_load.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -502,7 +506,7 @@ public class MenuPrincipal extends JFrame {
 		btn_load.setBounds(526, 533, 97, 23);
 		getContentPane().add(btn_load);
 
-		btn_save = new JButton("Save Config As");
+		btn_save = new JButton(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.btn_save.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		btn_save.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -550,7 +554,7 @@ public class MenuPrincipal extends JFrame {
 		pan_arena_wave.setBounds(43, 54, 732, 443);
 		pan_arena_wave.setLayout(null);
 
-		lib_arena = new JLabel("Arena");
+		lib_arena = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_arena.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_arena.setBounds(9, 8, 46, 17);
 		pan_arena_wave.add(lib_arena);
 		lib_arena.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -569,7 +573,7 @@ public class MenuPrincipal extends JFrame {
 		combo_arena.setFont(new Font("Tahoma", Font.PLAIN, 14));
 
 		btn_plus = new JButton("+");
-		btn_plus.setToolTipText("Add an arena");
+		btn_plus.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.btn_plus.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		btn_plus.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -618,17 +622,17 @@ public class MenuPrincipal extends JFrame {
 				}
 			}
 		});
-		btn_moins.setToolTipText("Remove the selected arena");
+		btn_moins.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.btn_moins.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		btn_moins.setBorder(new CompoundBorder());
 		btn_moins.setBounds(238, 27, 20, 20);
 		pan_arena_wave.add(btn_moins);
 
-		lib_recurrent = new JLabel("Recurrent Waves");
+		lib_recurrent = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_recurrent.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_recurrent.setBounds(9, 60, 132, 17);
 		pan_arena_wave.add(lib_recurrent);
 		lib_recurrent.setFont(new Font("Tahoma", Font.BOLD, 14));
 
-		btn_newrecurrent = new JButton("New Wave");
+		btn_newrecurrent = new JButton(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.btn_newrecurrent.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		btn_newrecurrent.setBounds(167, 59, 91, 23);
 		pan_arena_wave.add(btn_newrecurrent);
 		btn_newrecurrent.addMouseListener(newWave);
@@ -641,12 +645,12 @@ public class MenuPrincipal extends JFrame {
 		scrpan_recurrent.setBounds(9, 84, 252, 180);
 		pan_arena_wave.add(scrpan_recurrent);
 
-		lib_single = new JLabel("Single Waves");
+		lib_single = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_single.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_single.setBounds(9, 276, 132, 17);
 		pan_arena_wave.add(lib_single);
 		lib_single.setFont(new Font("Tahoma", Font.BOLD, 14));
 
-		btn_newsingle = new JButton("New Wave");
+		btn_newsingle = new JButton(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.btn_newsingle.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		btn_newsingle.setBounds(167, 270, 91, 23);
 		pan_arena_wave.add(btn_newsingle);
 		btn_newsingle.addMouseListener(newWave);
@@ -665,7 +669,7 @@ public class MenuPrincipal extends JFrame {
 		pan_conf.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		pan_conf.setLayout(null);
 
-		lib_name = new JLabel("Name :");
+		lib_name = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_name.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_name.setForeground(new Color(81, 133, 190));
 		lib_name.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lib_name.setBounds(10, 11, 58, 20);
@@ -698,7 +702,7 @@ public class MenuPrincipal extends JFrame {
 		pan_conf.add(sai_name);
 		sai_name.setColumns(10);
 
-		lib_category = new JLabel("Category :");
+		lib_category = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_category.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_category.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lib_category.setBounds(10, 42, 69, 20);
 		pan_conf.add(lib_category);
@@ -753,7 +757,7 @@ public class MenuPrincipal extends JFrame {
 		combo_category.setBounds(104, 42, 105, 20);
 		pan_conf.add(combo_category);
 
-		lib_type = new JLabel("Type :");
+		lib_type = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_type.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_type.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lib_type.setBounds(10, 73, 69, 20);
 		pan_conf.add(lib_type);
@@ -816,7 +820,7 @@ public class MenuPrincipal extends JFrame {
 		combo_type.setBounds(104, 73, 105, 20);
 		pan_conf.add(combo_type);
 
-		lib_wave = new JLabel("Wave :");
+		lib_wave = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_wave.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_wave.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lib_wave.setBounds(10, 104, 69, 20);
 		pan_conf.add(lib_wave);
@@ -830,7 +834,7 @@ public class MenuPrincipal extends JFrame {
 		pan_conf.add(sai_wave);
 		sai_wave.setColumns(10);
 
-		lib_priority = new JLabel("Priority :");
+		lib_priority = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_priority.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_priority.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lib_priority.setBounds(10, 135, 69, 20);
 		pan_conf.add(lib_priority);
@@ -844,7 +848,7 @@ public class MenuPrincipal extends JFrame {
 		sai_priority.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		pan_conf.add(sai_priority);
 
-		lib_frequency = new JLabel("Frequency :");
+		lib_frequency = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_frequency.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_frequency.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lib_frequency.setBounds(10, 166, 84, 20);
 		pan_conf.add(lib_frequency);
@@ -858,7 +862,7 @@ public class MenuPrincipal extends JFrame {
 		sai_frequency.setBounds(104, 166, 105, 20);
 		pan_conf.add(sai_frequency);
 
-		lib_growth = new JLabel("Growth :");
+		lib_growth = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_growth.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_growth.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lib_growth.setBounds(10, 197, 84, 20);
 		pan_conf.add(lib_growth);
@@ -883,7 +887,7 @@ public class MenuPrincipal extends JFrame {
 		combo_growth.setBounds(104, 197, 105, 20);
 		pan_conf.add(combo_growth);
 
-		lib_carac_wave = new JLabel("Monsters");
+		lib_carac_wave = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_carac_wave.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_carac_wave.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lib_carac_wave.setBounds(219, 11, 69, 20);
 		pan_conf.add(lib_carac_wave);
@@ -902,7 +906,7 @@ public class MenuPrincipal extends JFrame {
 		scrpan_carac_wave.setBounds(219, 42, 245, 389);
 		pan_conf.add(scrpan_carac_wave);
 
-		lib_monster = new JLabel("Monster :");
+		lib_monster = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_monster.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_monster.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lib_monster.setBounds(10, 228, 84, 20);
 		pan_conf.add(lib_monster);
@@ -913,7 +917,7 @@ public class MenuPrincipal extends JFrame {
 		combo_monster.setBounds(104, 228, 105, 20);
 		pan_conf.add(combo_monster);
 
-		lib_amount = new JLabel("Amount :");
+		lib_amount = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_amount.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_amount.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lib_amount.setBounds(10, 259, 84, 20);
 		pan_conf.add(lib_amount);
@@ -925,7 +929,7 @@ public class MenuPrincipal extends JFrame {
 		combo_amount.setBounds(104, 259, 105, 20);
 		pan_conf.add(combo_amount);
 
-		lib_health = new JLabel("Health :");
+		lib_health = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_health.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_health.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lib_health.setBounds(10, 290, 84, 20);
 		pan_conf.add(lib_health);
@@ -993,7 +997,7 @@ public class MenuPrincipal extends JFrame {
 		chk_abi_announce.setBounds(104, 322, 105, 20);
 		pan_conf.add(chk_abi_announce);
 
-		lib_abi_interval = new JTextArea("Ability Interval :");
+		lib_abi_interval = new JTextArea(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_abi_interval.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_abi_interval.setWrapStyleWord(true);
 		lib_abi_interval.setLineWrap(true);
 		lib_abi_interval.setFont(new Font("Tahoma", Font.BOLD, 13));
@@ -1012,7 +1016,7 @@ public class MenuPrincipal extends JFrame {
 		sai_abi_interval.setBounds(104, 369, 105, 20);
 		pan_conf.add(sai_abi_interval);
 
-		btn_add = new JButton("Add");
+		btn_add = new JButton(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.btn_add.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		btn_add.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -1076,7 +1080,7 @@ public class MenuPrincipal extends JFrame {
 		pan_conf.add(sai_nb_carac_wave);
 		sai_nb_carac_wave.setColumns(10);
 
-		lib_boss_name = new JLabel("Boss name :");
+		lib_boss_name = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_boss_name.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_boss_name.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lib_boss_name.setBounds(10, 401, 88, 20);
 		pan_conf.add(lib_boss_name);
@@ -1124,10 +1128,10 @@ public class MenuPrincipal extends JFrame {
 		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 
-		mnApplication = new JMenu("Application");
+		mnApplication = new JMenu(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.mnApplication.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		menuBar.add(mnApplication);
 
-		mntmNewConfiguration = new JMenuItem("New configuration");
+		mntmNewConfiguration = new JMenuItem(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.mntmNewConfiguration.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		mntmNewConfiguration.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -1140,7 +1144,7 @@ public class MenuPrincipal extends JFrame {
 		mnApplication.add(mntmNewConfiguration);
 		mnApplication.addSeparator();
 
-		mntmQuit = new JMenuItem("Quit");
+		mntmQuit = new JMenuItem(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.mntmQuit.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		mntmQuit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int choice = JOptionPane.showConfirmDialog(rootPane, "There may be unsaved changes. Are you sure\nyou want to quit ?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
@@ -1151,10 +1155,10 @@ public class MenuPrincipal extends JFrame {
 		});
 		mnApplication.add(mntmQuit);
 
-		mnPlanned = new JMenu("Planned");
+		mnPlanned = new JMenu(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.mnPlanned.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		menuBar.add(mnPlanned);
 
-		mntmTodoList = new JMenuItem("ToDo List");
+		mntmTodoList = new JMenuItem(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.mntmTodoList.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		mntmTodoList.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -1163,10 +1167,10 @@ public class MenuPrincipal extends JFrame {
 		});
 		mnPlanned.add(mntmTodoList);
 
-		mnHelp = new JMenu("Help");
+		mnHelp = new JMenu(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.mnHelp.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		menuBar.add(mnHelp);
 
-		mntmHowToUse = new JMenuItem("How to use");
+		mntmHowToUse = new JMenuItem(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.mntmHowToUse.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		mntmHowToUse.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -1177,7 +1181,7 @@ public class MenuPrincipal extends JFrame {
 
 		mnHelp.addSeparator();
 
-		mntmAbout = new JMenuItem("About...");
+		mntmAbout = new JMenuItem(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.mntmAbout.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		mntmAbout.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -1189,7 +1193,7 @@ public class MenuPrincipal extends JFrame {
 		pan_classes = new JPanel();
 		pan_classes.setLayout(null);
 
-		lib_classes = new JLabel("Classes");
+		lib_classes = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_classes.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_classes.setBounds(7, 7, 64, 22);
 		lib_classes.setFont(new Font("Tahoma", Font.BOLD, 14));
 		pan_classes.add(lib_classes);
@@ -1230,7 +1234,7 @@ public class MenuPrincipal extends JFrame {
 			}
 		});
 
-		btn_new_class = new JButton("New class");
+		btn_new_class = new JButton(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.btn_new_class.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		btn_new_class.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -1256,7 +1260,7 @@ public class MenuPrincipal extends JFrame {
 		pan_classes.add(pan_caracs_class);
 		pan_caracs_class.setLayout(null);
 
-		lib_class = new JLabel("Class name");
+		lib_class = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_class.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_class.setBounds(8, 6, 90, 25);
 		pan_caracs_class.add(lib_class);
 		lib_class.setFont(new Font("Tahoma", Font.BOLD, 13));
@@ -1282,12 +1286,12 @@ public class MenuPrincipal extends JFrame {
 		pan_caracs_class.add(sai_class);
 		sai_class.setColumns(10);
 
-		lib_items = new JLabel("Items");
+		lib_items = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_items.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_items.setBounds(8, 46, 90, 25);
 		lib_items.setFont(new Font("Tahoma", Font.BOLD, 13));
 		pan_caracs_class.add(lib_items);
 
-		btn_items = new JButton("Set Items");
+		btn_items = new JButton(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.btn_items.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		btn_items.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -1297,12 +1301,12 @@ public class MenuPrincipal extends JFrame {
 		btn_items.setBounds(110, 46, 137, 28);
 		pan_caracs_class.add(btn_items);
 
-		lib_armor = new JLabel("Armor");
+		lib_armor = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_armor.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_armor.setBounds(8, 86, 90, 25);
 		lib_armor.setFont(new Font("Tahoma", Font.BOLD, 13));
 		pan_caracs_class.add(lib_armor);
 
-		btn_armor = new JButton("Set Armor");
+		btn_armor = new JButton(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.btn_armor.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		btn_armor.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -1312,7 +1316,7 @@ public class MenuPrincipal extends JFrame {
 		btn_armor.setBounds(110, 86, 137, 28);
 		pan_caracs_class.add(btn_armor);
 
-		lib_dogs = new JLabel("Dogs");
+		lib_dogs = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_dogs.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_dogs.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lib_dogs.setBounds(8, 126, 90, 25);
 		pan_caracs_class.add(lib_dogs);
@@ -1332,7 +1336,7 @@ public class MenuPrincipal extends JFrame {
 		sai_dogs.setBounds(110, 126, 137, 28);
 		pan_caracs_class.add(sai_dogs);
 
-		lib_horse = new JLabel("Horse");
+		lib_horse = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_horse.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_horse.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lib_horse.setBounds(8, 166, 90, 28);
 		pan_caracs_class.add(lib_horse);
@@ -1365,7 +1369,7 @@ public class MenuPrincipal extends JFrame {
 		combo_horse.setBounds(110, 166, 137, 26);
 		pan_caracs_class.add(combo_horse);
 
-		lib_hArmor = new JLabel("with armor");
+		lib_hArmor = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_hArmor.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_hArmor.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lib_hArmor.setBounds(8, 206, 90, 28);
 		pan_caracs_class.add(lib_hArmor);
@@ -1394,7 +1398,7 @@ public class MenuPrincipal extends JFrame {
 		separator_2.setBounds(259, 6, 2, 228);
 		pan_caracs_class.add(separator_2);
 
-		lib_permissions = new JLabel("Permissions");
+		lib_permissions = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_permissions.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_permissions.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lib_permissions.setBounds(273, 10, 76, 25);
 		pan_caracs_class.add(lib_permissions);
@@ -1473,7 +1477,7 @@ public class MenuPrincipal extends JFrame {
 			}
 		};
 
-		btn_add_perm = new JButton("Add");
+		btn_add_perm = new JButton(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.btn_add_perm.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		btn_add_perm.addMouseListener(add_perm_adapter);
 		btn_add_perm.setBounds(395, 9, 90, 22);
 		pan_caracs_class.add(btn_add_perm);
@@ -1491,12 +1495,12 @@ public class MenuPrincipal extends JFrame {
 		separator_3.setBounds(497, 6, 2, 228);
 		pan_caracs_class.add(separator_3);
 
-		lib_lobby_permissions = new JLabel("Lobby permissions");
+		lib_lobby_permissions = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_lobby_permissions.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_lobby_permissions.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lib_lobby_permissions.setBounds(511, 10, 123, 25);
 		pan_caracs_class.add(lib_lobby_permissions);
 
-		btn_add_lobby_permissions = new JButton("Add");
+		btn_add_lobby_permissions = new JButton(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.btn_add_lobby_permissions.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		btn_add_lobby_permissions.addMouseListener(add_perm_adapter);
 		btn_add_lobby_permissions.setBounds(633, 9, 90, 22);
 		pan_caracs_class.add(btn_add_lobby_permissions);
@@ -1514,8 +1518,8 @@ public class MenuPrincipal extends JFrame {
 		pan_arena_settings.setBounds(6, 6, 567, 341);
 		pan_arena_settings.setLayout(null);
 
-		lib_world = new JLabel("World");
-		lib_world.setToolTipText("The name of the world the arena resides in.");
+		lib_world = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_world.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_world.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_world.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_world.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lib_world.setBounds(6, 6, 73, 25);
 		pan_arena_settings.add(lib_world);
@@ -1534,7 +1538,7 @@ public class MenuPrincipal extends JFrame {
 			}
 		});
 		sai_world.setFocusLostBehavior(JFormattedTextField.COMMIT);
-		sai_world.setToolTipText("The name of the world the arena resides in.");
+		sai_world.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.sai_world.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		sai_world.setBounds(91, 5, 127, 28);
 		sai_world.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		pan_arena_settings.add(sai_world);
@@ -1598,17 +1602,17 @@ public class MenuPrincipal extends JFrame {
 			}
 		};
 
-		chk_enabled = new JCheckBox("Enabled");
+		chk_enabled = new JCheckBox(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_enabled.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_enabled.addItemListener(chkconfig_listener);
-		chk_enabled.setToolTipText("If false, players cannot join the arena.");
+		chk_enabled.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_enabled.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_enabled.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_enabled.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_enabled.setBounds(6, 43, 84, 25);
 		pan_arena_settings.add(chk_enabled);
 
-		chk_protect = new JCheckBox("Protect");
+		chk_protect = new JCheckBox(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_protect.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_protect.addItemListener(chkconfig_listener);
-		chk_protect.setToolTipText("If false, the arena will not be protected from explosions and players breaking the blocks.");
+		chk_protect.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_protect.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_protect.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_protect.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_protect.setBounds(91, 43, 73, 25);
@@ -1637,8 +1641,8 @@ public class MenuPrincipal extends JFrame {
 			}
 		};
 
-		lib_entry = new JLabel("Entry fee");
-		lib_entry.setToolTipText("<html>Follows the exact same notation as the class items and rewards. 20 will subtract<br> 20 of whatever currency you use from the players upon joining. $5, stick:2 will <br>require the player to have 5 currency units and 2 sticks to join the arena. The <br>entry-fee will be refunded if the player leaves before the arena starts.");
+		lib_entry = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_entry.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_entry.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_entry.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_entry.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lib_entry.setBounds(6, 80, 73, 25);
 		pan_arena_settings.add(lib_entry);
@@ -1652,7 +1656,7 @@ public class MenuPrincipal extends JFrame {
 		pan_arena_settings.add(sai_entry);
 		sai_entry.setColumns(10);
 
-		btn_entry = new JButton("Set item");
+		btn_entry = new JButton(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.btn_entry.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		btn_entry.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -1669,136 +1673,136 @@ public class MenuPrincipal extends JFrame {
 		btn_entry.setBounds(153, 81, 90, 25);
 		pan_arena_settings.add(btn_entry);
 
-		chk_clear_wave_next = new JCheckBox("Clear wave before next");
+		chk_clear_wave_next = new JCheckBox(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_clear_wave_next.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_clear_wave_next.addItemListener(chkconfig_listener);
-		chk_clear_wave_next.setToolTipText("<html>If true, no monsters will spawn before all monsters of the previous wave<br> have been killed.");
+		chk_clear_wave_next.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_clear_wave_next.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_clear_wave_next.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_clear_wave_next.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_clear_wave_next.setBounds(6, 117, 182, 25);
 		pan_arena_settings.add(chk_clear_wave_next);
 
-		chk_clear_boss_next = new JCheckBox("Clear boss before next");
+		chk_clear_boss_next = new JCheckBox(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_clear_boss_next.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_clear_boss_next.addItemListener(chkconfig_listener);
-		chk_clear_boss_next.setToolTipText("If true, no new waves will spawn before the current boss (if any) is dead.");
+		chk_clear_boss_next.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_clear_boss_next.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_clear_boss_next.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_clear_boss_next.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_clear_boss_next.setBounds(6, 154, 177, 25);
 		pan_arena_settings.add(chk_clear_boss_next);
 
-		chk_clear_wave_boss = new JCheckBox("Clear wave before boss");
+		chk_clear_wave_boss = new JCheckBox(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_clear_wave_boss.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_clear_wave_boss.addItemListener(chkconfig_listener);
-		chk_clear_wave_boss.setToolTipText("If true, a boss wave will not spawn until all previous monsters have been killed.");
+		chk_clear_wave_boss.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_clear_wave_boss.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_clear_wave_boss.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_clear_wave_boss.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_clear_wave_boss.setBounds(6, 191, 182, 25);
 		pan_arena_settings.add(chk_clear_wave_boss);
 
-		chk_lightning = new JCheckBox("Lightning");
+		chk_lightning = new JCheckBox(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_lightning.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_lightning.addItemListener(chkconfig_listener);
-		chk_lightning.setToolTipText("If true, every spawnpoint will be struck by lightning (no damage) on special waves.");
+		chk_lightning.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_lightning.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_lightning.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_lightning.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_lightning.setBounds(176, 43, 90, 25);
 		pan_arena_settings.add(chk_lightning);
 
-		chk_auto_equip = new JCheckBox("Auto equip armor");
+		chk_auto_equip = new JCheckBox(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_auto_equip.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_auto_equip.addItemListener(chkconfig_listener);
-		chk_auto_equip.setToolTipText("<html>If true, armor pieces will automatically be equipped upon class selection. <br>Note that this does not work if a class has more than 1 of an armor piece type.");
+		chk_auto_equip.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_auto_equip.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_auto_equip.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_auto_equip.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_auto_equip.setBounds(6, 228, 144, 25);
 		pan_arena_settings.add(chk_auto_equip);
 
-		chk_soft_restore = new JCheckBox("Soft restore");
+		chk_soft_restore = new JCheckBox(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_soft_restore.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_soft_restore.addItemListener(chkconfig_listener);
-		chk_soft_restore.setToolTipText("<html>If true, all destroyed blocks will be saved in a \"repair list\", which will be used to restore <br>blocks at arena end. No data is saved to the harddrive. Note that this setting, if true, <br>ignores the protect flag.");
+		chk_soft_restore.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_soft_restore.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_soft_restore.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_soft_restore.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_soft_restore.setBounds(161, 228, 105, 25);
 		pan_arena_settings.add(chk_soft_restore);
 
-		chk_soft_restore_drops = new JCheckBox("Soft restore drops");
+		chk_soft_restore_drops = new JCheckBox(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_soft_restore_drops.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_soft_restore_drops.addItemListener(chkconfig_listener);
-		chk_soft_restore_drops.setToolTipText("<html>If true, blocks destroyed by players will drop as items like they normally do (using<br> pickaxes, spades, etc.). Note that this makes it very easy for classes with pickaxes<br> to \"mine the arena\" and build forts.");
+		chk_soft_restore_drops.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_soft_restore_drops.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_soft_restore_drops.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_soft_restore_drops.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_soft_restore_drops.setBounds(6, 265, 149, 25);
 		pan_arena_settings.add(chk_soft_restore_drops);
 
-		chk_require_inv_join = new JCheckBox("Require empty inventory to join");
+		chk_require_inv_join = new JCheckBox(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_require_inv_join.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_require_inv_join.addItemListener(chkconfig_listener);
-		chk_require_inv_join.setToolTipText("If false, players' inventories will be saved upon joining, and restored upon death/leaving.");
+		chk_require_inv_join.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_require_inv_join.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_require_inv_join.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_require_inv_join.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_require_inv_join.setBounds(6, 300, 242, 28);
 		pan_arena_settings.add(chk_require_inv_join);
 
-		chk_require_inv_spec = new JCheckBox("Require empty inventory to spectate");
+		chk_require_inv_spec = new JCheckBox(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_require_inv_spec.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_require_inv_spec.addItemListener(chkconfig_listener);
-		chk_require_inv_spec.setToolTipText("If false, players can spectate the arena without having to empty their inventories.");
+		chk_require_inv_spec.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_require_inv_spec.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_require_inv_spec.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_require_inv_spec.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_require_inv_spec.setBounds(6, 336, 275, 28);
 		pan_arena_settings.add(chk_require_inv_spec);
 
-		chk_hellhounds = new JCheckBox("Hellhounds");
+		chk_hellhounds = new JCheckBox(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_hellhounds.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_hellhounds.addItemListener(chkconfig_listener);
-		chk_hellhounds.setToolTipText("<html>If true, all pet wolves in the arena will be in flames! This has no actual function, and is purely for the cool-factor. <br>Also useful for distinguishing enemy wolves and pet wolves.");
+		chk_hellhounds.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_hellhounds.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_hellhounds.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_hellhounds.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_hellhounds.setBounds(6, 376, 99, 25);
 		pan_arena_settings.add(chk_hellhounds);
 
-		chk_pvp = new JCheckBox("PVP enabled");
+		chk_pvp = new JCheckBox(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_pvp.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_pvp.addItemListener(chkconfig_listener);
-		chk_pvp.setToolTipText("If true, players can damage each other in the arena.");
+		chk_pvp.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_pvp.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_pvp.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_pvp.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_pvp.setBounds(117, 376, 108, 25);
 		pan_arena_settings.add(chk_pvp);
 
-		chk_monster_infight = new JCheckBox("Monster infight");
+		chk_monster_infight = new JCheckBox(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_monster_infight.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_monster_infight.addItemListener(chkconfig_listener);
-		chk_monster_infight.setToolTipText("If false, monsters will no longer damage each other.");
+		chk_monster_infight.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_monster_infight.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_monster_infight.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_monster_infight.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_monster_infight.setBounds(6, 413, 127, 25);
 		pan_arena_settings.add(chk_monster_infight);
 
-		chk_allow_tp = new JCheckBox("Allow teleporting");
+		chk_allow_tp = new JCheckBox(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_allow_tp.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_allow_tp.addItemListener(chkconfig_listener);
-		chk_allow_tp.setToolTipText("<html>If false, all warping to and from the arena region is blocked. <br>Useful for preventing players from summoning other players into the arena for help.");
+		chk_allow_tp.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_allow_tp.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_allow_tp.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_allow_tp.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_allow_tp.setBounds(145, 413, 139, 25);
 		pan_arena_settings.add(chk_allow_tp);
 
-		chk_spectate_death = new JCheckBox("Spectate on death");
+		chk_spectate_death = new JCheckBox(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_spectate_death.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_spectate_death.addItemListener(chkconfig_listener);
-		chk_spectate_death.setToolTipText("<html>If false, players will not get warped to the spectator area, but instead be \"kicked\" <br>from the arena (essentially a forced /ma leave).");
+		chk_spectate_death.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_spectate_death.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_spectate_death.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_spectate_death.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_spectate_death.setBounds(6, 450, 149, 25);
 		pan_arena_settings.add(chk_spectate_death);
 
-		chk_auto_respawn = new JCheckBox("Auto respawn");
+		chk_auto_respawn = new JCheckBox(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_auto_respawn.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_auto_respawn.addItemListener(chkconfig_listener);
-		chk_auto_respawn.setToolTipText("<html>If false, players will be greeted with the typical death screen upon dying in the <br>arena, and will have to click the respawn button to respawn. With this setting at false, <br>players will actually die in the arena, meaning plugins like Heroes and mcMMO will <br>properly trigger their resetting of internal data upon respawn.");
+		chk_auto_respawn.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_auto_respawn.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_auto_respawn.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_auto_respawn.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_auto_respawn.setBounds(307, 6, 119, 25);
 		pan_arena_settings.add(chk_auto_respawn);
 
-		chk_share = new JCheckBox("Share items");
+		chk_share = new JCheckBox(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_share.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_share.addItemListener(chkconfig_listener);
-		chk_share.setToolTipText("If false, players will not be able to drop items in the arena.");
+		chk_share.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_share.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_share.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_share.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_share.setBounds(307, 43, 105, 25);
 		pan_arena_settings.add(chk_share);
 
-		lib_min_players = new JLabel("Min players");
-		lib_min_players.setToolTipText("<html>Gives a lower limit on how many players are required to start the arena. The default <br>of 0 is the same as 1, which means 1 or more players may start the arena.");
+		lib_min_players = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_min_players.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_min_players.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_min_players.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_min_players.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lib_min_players.setBounds(307, 80, 84, 25);
 		pan_arena_settings.add(lib_min_players);
@@ -1812,8 +1816,8 @@ public class MenuPrincipal extends JFrame {
 		sai_min_players.setBounds(438, 81, 50, 25);
 		pan_arena_settings.add(sai_min_players);
 
-		lib_max_players = new JLabel("Max players");
-		lib_max_players.setToolTipText("Gives an upper limit on how many players may join the arena. The default of 0 means no limit.");
+		lib_max_players = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_max_players.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_max_players.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_max_players.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_max_players.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lib_max_players.setBounds(307, 117, 84, 25);
 		pan_arena_settings.add(lib_max_players);
@@ -1827,8 +1831,8 @@ public class MenuPrincipal extends JFrame {
 		sai_max_players.setBounds(438, 118, 50, 25);
 		pan_arena_settings.add(sai_max_players);
 
-		lib_max_join_distance = new JLabel("Max join distance");
-		lib_max_join_distance.setToolTipText("<html>The maximum distance (in blocks) from which players can join or spectate the <br>arena. If 0 (default), there is no limit. Note that the distance is calculated from every <br>corner of the arena region, and that players not in the arena world won't be able to <br>join or spectate.");
+		lib_max_join_distance = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_max_join_distance.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_max_join_distance.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_max_join_distance.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_max_join_distance.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lib_max_join_distance.setBounds(307, 154, 119, 25);
 		pan_arena_settings.add(lib_max_join_distance);
@@ -1842,8 +1846,8 @@ public class MenuPrincipal extends JFrame {
 		sai_max_join_distance.setBounds(438, 155, 50, 25);
 		pan_arena_settings.add(sai_max_join_distance);
 
-		lib_first_delay = new JLabel("First wave delay");
-		lib_first_delay.setToolTipText("The time (in seconds) before the first wave of monsters upon arena start.");
+		lib_first_delay = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_first_delay.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_first_delay.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_first_delay.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_first_delay.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lib_first_delay.setBounds(307, 191, 119, 25);
 		pan_arena_settings.add(lib_first_delay);
@@ -1857,8 +1861,8 @@ public class MenuPrincipal extends JFrame {
 		sai_first_delay.setBounds(438, 192, 50, 25);
 		pan_arena_settings.add(sai_first_delay);
 
-		lib_interval = new JLabel("Wave interval");
-		lib_interval.setToolTipText("The time (in seconds) between each new wave of monsters. If clear-wave-before-next: true, this setting will be ignored.");
+		lib_interval = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_interval.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_interval.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_interval.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_interval.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lib_interval.setBounds(307, 227, 119, 25);
 		pan_arena_settings.add(lib_interval);
@@ -1872,8 +1876,8 @@ public class MenuPrincipal extends JFrame {
 		sai_interval.setBounds(438, 228, 50, 25);
 		pan_arena_settings.add(sai_interval);
 
-		lib_final_wave = new JLabel("Final wave");
-		lib_final_wave.setToolTipText("<html>The number of the final wave before the arena is force ended. This is useful if you <br>want to set a cap on how many waves an arena will have.");
+		lib_final_wave = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_final_wave.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_final_wave.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_final_wave.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_final_wave.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lib_final_wave.setBounds(307, 264, 119, 25);
 		pan_arena_settings.add(lib_final_wave);
@@ -1887,8 +1891,8 @@ public class MenuPrincipal extends JFrame {
 		sai_final_wave.setBounds(438, 266, 50, 25);
 		pan_arena_settings.add(sai_final_wave);
 
-		lib_monster_limit = new JLabel("Monster limit");
-		lib_monster_limit.setToolTipText("<html>The maximum amount of monsters MobArena is allowed to spawn for this arena. <br>The next wave, if any, will not spawn until there is room for more monsters.");
+		lib_monster_limit = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_monster_limit.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_monster_limit.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_monster_limit.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_monster_limit.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lib_monster_limit.setBounds(307, 302, 119, 25);
 		pan_arena_settings.add(lib_monster_limit);
@@ -1902,40 +1906,40 @@ public class MenuPrincipal extends JFrame {
 		sai_monster_limit.setBounds(438, 303, 50, 25);
 		pan_arena_settings.add(sai_monster_limit);
 
-		chk_monster_xp = new JCheckBox("Monsters drop XP");
+		chk_monster_xp = new JCheckBox(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_monster_xp.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_monster_xp.addItemListener(chkconfig_listener);
-		chk_monster_xp.setToolTipText("<html>If true, monsters will drop experience orbs. This is useful if you wish to give players <br>the ability to spend the gathered experience on enchants or something else (using <br>different plugins) during the session.");
+		chk_monster_xp.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_monster_xp.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_monster_xp.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_monster_xp.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_monster_xp.setBounds(307, 339, 149, 25);
 		pan_arena_settings.add(chk_monster_xp);
 
-		chk_keep_xp = new JCheckBox("Keep XP");
+		chk_keep_xp = new JCheckBox(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_keep_xp.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_keep_xp.addItemListener(chkconfig_listener);
-		chk_keep_xp.setToolTipText("<html>If true, players will keep the experience they gather in the arenas after death. This is <br>useful if you want to allow players to level up or gather experience in the arenas. <br>NOTE: If using display-waves-as-level or display-timer-as-level, set keep-exp to false.");
+		chk_keep_xp.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_keep_xp.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_keep_xp.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_keep_xp.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_keep_xp.setBounds(307, 376, 80, 25);
 		pan_arena_settings.add(chk_keep_xp);
 
-		chk_food_regen = new JCheckBox("Food regeneration");
+		chk_food_regen = new JCheckBox(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_food_regen.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_food_regen.addItemListener(chkconfig_listener);
-		chk_food_regen.setToolTipText("<html>If true, a full food bar will cause players to regenerate health while in the arena. <br>Note that this potentially makes tank-like classes extremely overpowered, since <br>diamond armor (by default) coupled with a full food bar will make a player very hard <br>to kill.");
+		chk_food_regen.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_food_regen.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_food_regen.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_food_regen.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_food_regen.setBounds(307, 413, 150, 25);
 		pan_arena_settings.add(chk_food_regen);
 
-		chk_lock_food = new JCheckBox("Lock food level");
+		chk_lock_food = new JCheckBox(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_lock_food.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_lock_food.addItemListener(chkconfig_listener);
-		chk_lock_food.setToolTipText("<html>If true, the food bar will be locked for all players in the arena, meaning they will not <br>end up starving, and they will be able to sprint around as they please.");
+		chk_lock_food.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_lock_food.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_lock_food.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_lock_food.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_lock_food.setBounds(307, 450, 127, 25);
 		pan_arena_settings.add(chk_lock_food);
 
-		lib_player_time = new JLabel("Player time of day");
-		lib_player_time.setToolTipText("<html>When set to anything but world, this setting will freeze the apparent world time for <br>players in the arena to whatever value you set. This is useful for making time-of-day <br>themed arenas (e.g. constant night time for a cemetery, broad daylight for a pirate <br>ship).");
+		lib_player_time = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_player_time.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_player_time.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_player_time.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_player_time.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lib_player_time.setBounds(514, 43, 127, 25);
 		pan_arena_settings.add(lib_player_time);
@@ -1954,8 +1958,8 @@ public class MenuPrincipal extends JFrame {
 		combo_player_time.setBounds(653, 43, 95, 26);
 		pan_arena_settings.add(combo_player_time);
 
-		lib_auto_start = new JLabel("Auto start timer");
-		lib_auto_start.setToolTipText("<html>The time (in seconds) before the arena will be force started after the first player has <br>joined the lobby (the default of 0 means deactivated or infinite time). Non-ready <br>players will be removed from the lobby. This setting is useful to prevent ill-minded <br>players from delaying or preventing other players from starting the arena.");
+		lib_auto_start = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_auto_start.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_auto_start.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_auto_start.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_auto_start.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lib_auto_start.setBounds(514, 117, 119, 25);
 		pan_arena_settings.add(lib_auto_start);
@@ -1969,79 +1973,79 @@ public class MenuPrincipal extends JFrame {
 		sai_auto_start.setBounds(645, 118, 50, 25);
 		pan_arena_settings.add(sai_auto_start);
 
-		chk_spout_class = new JCheckBox("Spout class select");
+		chk_spout_class = new JCheckBox(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_spout_class.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_spout_class.addItemListener(chkconfig_listener);
 		chk_spout_class.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_spout_class.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_spout_class.setBounds(514, 6, 149, 25);
 		pan_arena_settings.add(chk_spout_class);
 
-		chk_auto_ignite = new JCheckBox("Auto ignite TNT");
+		chk_auto_ignite = new JCheckBox(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_auto_ignite.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_auto_ignite.addItemListener(chkconfig_listener);
-		chk_auto_ignite.setToolTipText("<html>If true, TNT will be automatically ignited when placed. This is useful for preventing <br>Oddjob-like classes from forting.");
+		chk_auto_ignite.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_auto_ignite.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_auto_ignite.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_auto_ignite.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_auto_ignite.setBounds(514, 80, 149, 25);
 		pan_arena_settings.add(chk_auto_ignite);
 
-		chk_use_class_chest = new JCheckBox("Use class chests");
+		chk_use_class_chest = new JCheckBox(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_use_class_chest.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_use_class_chest.addItemListener(chkconfig_listener);
 		chk_use_class_chest.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_use_class_chest.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_use_class_chest.setBounds(514, 154, 131, 25);
 		pan_arena_settings.add(chk_use_class_chest);
 
-		chk_display_waves = new JCheckBox("Display waves as level");
+		chk_display_waves = new JCheckBox(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_display_waves.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_display_waves.addItemListener(chkconfig_listener);
-		chk_display_waves.setToolTipText("<html>When set to true, the players' level counter (above the experience bar) will be used <br>to display the current wave number. If the wave announcements in the <br>announcements-file are silenced, this can be used to make a much less \"spammy\" <br>MobArena experience. NOTE: Do not use this if keep-exp is set to true!");
+		chk_display_waves.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_display_waves.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_display_waves.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_display_waves.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_display_waves.setBounds(514, 192, 170, 25);
 		pan_arena_settings.add(chk_display_waves);
 
-		chk_display_timer = new JCheckBox("Display timer as level");
+		chk_display_timer = new JCheckBox(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_display_timer.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_display_timer.addItemListener(chkconfig_listener);
-		chk_display_timer.setToolTipText("<html>When set to true, the players' level counter (above the experience bar) will be used <br>to display the auto-start timer in the lobby. NOTE: Do not use this if keep-exp is set to <br>true!");
+		chk_display_timer.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_display_timer.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_display_timer.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_display_timer.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_display_timer.setBounds(514, 229, 170, 25);
 		pan_arena_settings.add(chk_display_timer);
 
-		chk_auto_ready = new JCheckBox("Auto ready");
+		chk_auto_ready = new JCheckBox(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_auto_ready.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_auto_ready.addItemListener(chkconfig_listener);
-		chk_auto_ready.setToolTipText("<html>When set to true, players are automatically flagged as ready when they pick a class. <br>Useful for arenas with many players where hitting an iron block becomes difficult.");
+		chk_auto_ready.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_auto_ready.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_auto_ready.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_auto_ready.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_auto_ready.setBounds(514, 266, 99, 25);
 		pan_arena_settings.add(chk_auto_ready);
 
-		chk_scoreboard = new JCheckBox("Use scoreboards");
+		chk_scoreboard = new JCheckBox(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_scoreboard.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_scoreboard.addItemListener(chkconfig_listener);
-		chk_scoreboard.setToolTipText("Whether to use scoreboards in MobArena or not.");
+		chk_scoreboard.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_scoreboard.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_scoreboard.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_scoreboard.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_scoreboard.setBounds(514, 306, 139, 25);
 		pan_arena_settings.add(chk_scoreboard);
 
-		chk_isolated_chat = new JCheckBox("Isolated chat");
+		chk_isolated_chat = new JCheckBox(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_isolated_chat.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_isolated_chat.addItemListener(chkconfig_listener);
-		chk_isolated_chat.setToolTipText("<html>When set to true, all chat messages sent by arena players will be seen only by other <br>arena players in the same arena. The arena players will still be able to see chat <br>messages from other players on the server who aren't in an arena.");
+		chk_isolated_chat.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_isolated_chat.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_isolated_chat.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_isolated_chat.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_isolated_chat.setBounds(514, 342, 119, 25);
 		pan_arena_settings.add(chk_isolated_chat);
 
-		chk_global_join = new JCheckBox("Global join announce");
+		chk_global_join = new JCheckBox(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_global_join.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_global_join.addItemListener(chkconfig_listener);
-		chk_global_join.setToolTipText("<html>When set to true, MobArena will announce the arena-join-global message to all <br>players on the server when the first player joins an arena.");
+		chk_global_join.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_global_join.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_global_join.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_global_join.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_global_join.setBounds(514, 376, 170, 25);
 		pan_arena_settings.add(chk_global_join);
 
-		chk_global_end = new JCheckBox("Global end announce");
+		chk_global_end = new JCheckBox(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_global_end.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_global_end.addItemListener(chkconfig_listener);
-		chk_global_end.setToolTipText("<html>When set to true, MobArena will announce the arena-end-global message  to all <br>players on the server when an arena ends.");
+		chk_global_end.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_global_end.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_global_end.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_global_end.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_global_end.setBounds(514, 413, 170, 25);
@@ -2248,10 +2252,10 @@ public class MenuPrincipal extends JFrame {
 		lib_set.setVisible(false);
 		btn_set.setVisible(false);
 
-		lib_abi_announce.setText("Ability Announce :");
+		lib_abi_announce.setText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_abi_announce.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		list_carac_wave.setModel(new DefaultListModel<CellListCaracs>());
-		lib_set.setText("Set");
-		btn_set.setText("Set");
+		lib_set.setText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_set.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		btn_set.setText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.btn_set.text")); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	private void deselectWaveLists_Arena(JList<CellListWave> jList){
