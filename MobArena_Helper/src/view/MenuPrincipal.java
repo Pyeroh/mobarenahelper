@@ -2327,7 +2327,7 @@ public class MenuPrincipal extends JFrame {
 
 		lib_abi_announce.setText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_abi_announce.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		list_carac_wave.setModel(new DefaultListModel<CellListCaracs>());
-		lib_set.setText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_set.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_set.setText("");
 		btn_set.setText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.btn_set.text")); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
