@@ -2,6 +2,7 @@ package view;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -17,8 +18,10 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
+import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -35,6 +38,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
@@ -96,6 +100,7 @@ public class MenuPrincipal extends JFrame {
 	private Wave wave;
 	private Classe classe;
 	private ArenaConfig config;
+	private boolean initializing = true;
 
 	private JMenuItem mntmAbout;
 	private JMenuBar menuBar;
@@ -246,12 +251,15 @@ public class MenuPrincipal extends JFrame {
 	private JCheckBox chk_global_join;
 	private JCheckBox chk_global_end;
 	private JMenuItem mntmQuit;
+	private JMenu mnLanguage;
+	private JRadioButtonMenuItem rdbtnmntmFrench;
+	private JRadioButtonMenuItem rdbtnmntmEnglish;
 
 	public MenuPrincipal() throws ParseException{
 		super("MobArena Helper v2.0");
-		
-		//Locale.setDefault(Locale.ENGLISH);
-		
+
+		if(Locale.getDefault()!=Locale.ENGLISH && Locale.getDefault()!=Locale.FRENCH) Locale.setDefault(Locale.ENGLISH);
+
 		setIconImage(new ImageIcon(MenuPrincipal.class.getResource("/gui/pics/mobarena.png")).getImage());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
@@ -467,6 +475,45 @@ public class MenuPrincipal extends JFrame {
 
 			}
 		};
+		
+		ItemListener language_listener = new ItemListener() {
+			@SuppressWarnings("unused")
+			private JRadioButtonMenuItem deselected_one;
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				JRadioButtonMenuItem source = (JRadioButtonMenuItem) e.getSource();
+				if (e.getStateChange()==ItemEvent.SELECTED) {
+					if (!initializing) {
+						if (source == rdbtnmntmEnglish) {
+							Locale.setDefault(Locale.ENGLISH);
+						} else if (source == rdbtnmntmFrench) {
+							Locale.setDefault(Locale.FRENCH);
+						}
+						int choice = JOptionPane
+								.showConfirmDialog(
+										rootPane,
+										"Changing the language require the application to be restarted.\nDo you wish to restart the application ?",
+										"Confirmation",
+										JOptionPane.YES_NO_OPTION);
+						switch (choice) {
+						case JOptionPane.YES_OPTION:
+							MenuPrincipal.this.setVisible(false);
+							try {
+								new MenuPrincipal();
+							} catch (ParseException e1) {
+								e1.printStackTrace();
+							}
+							break;
+						case JOptionPane.NO_OPTION:
+							source.setSelected(true);
+							break;
+						}
+					}
+				}
+				else deselected_one = source;
+
+			}
+		};
 
 		btn_load = new JButton(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.btn_load.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		btn_load.addMouseListener(new MouseAdapter() {
@@ -628,7 +675,7 @@ public class MenuPrincipal extends JFrame {
 		pan_arena_wave.add(btn_moins);
 
 		lib_recurrent = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_recurrent.text")); //$NON-NLS-1$ //$NON-NLS-2$
-		lib_recurrent.setBounds(9, 60, 132, 17);
+		lib_recurrent.setBounds(9, 60, 146, 17);
 		pan_arena_wave.add(lib_recurrent);
 		lib_recurrent.setFont(new Font("Tahoma", Font.BOLD, 14));
 
@@ -704,7 +751,7 @@ public class MenuPrincipal extends JFrame {
 
 		lib_category = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_category.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_category.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lib_category.setBounds(10, 42, 69, 20);
+		lib_category.setBounds(10, 42, 82, 20);
 		pan_conf.add(lib_category);
 
 		combo_category = new JComboBox<String>();
@@ -759,7 +806,7 @@ public class MenuPrincipal extends JFrame {
 
 		lib_type = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_type.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_type.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lib_type.setBounds(10, 73, 69, 20);
+		lib_type.setBounds(10, 73, 82, 20);
 		pan_conf.add(lib_type);
 
 		combo_type = new JComboBox<String>();
@@ -822,7 +869,7 @@ public class MenuPrincipal extends JFrame {
 
 		lib_wave = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_wave.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_wave.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lib_wave.setBounds(10, 104, 69, 20);
+		lib_wave.setBounds(10, 104, 82, 20);
 		pan_conf.add(lib_wave);
 
 		sai_wave = new JFormattedTextField(NumberFormat.getIntegerInstance());
@@ -836,7 +883,7 @@ public class MenuPrincipal extends JFrame {
 
 		lib_priority = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_priority.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_priority.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lib_priority.setBounds(10, 135, 69, 20);
+		lib_priority.setBounds(10, 135, 82, 20);
 		pan_conf.add(lib_priority);
 
 		sai_priority = new JFormattedTextField(NumberFormat.getIntegerInstance());
@@ -850,7 +897,7 @@ public class MenuPrincipal extends JFrame {
 
 		lib_frequency = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_frequency.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_frequency.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lib_frequency.setBounds(10, 166, 84, 20);
+		lib_frequency.setBounds(10, 166, 82, 20);
 		pan_conf.add(lib_frequency);
 
 		sai_frequency = new JFormattedTextField(NumberFormat.getIntegerInstance());
@@ -864,7 +911,7 @@ public class MenuPrincipal extends JFrame {
 
 		lib_growth = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_growth.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_growth.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lib_growth.setBounds(10, 197, 84, 20);
+		lib_growth.setBounds(10, 197, 82, 20);
 		pan_conf.add(lib_growth);
 
 		combo_growth = new JComboBox<String>();
@@ -908,7 +955,7 @@ public class MenuPrincipal extends JFrame {
 
 		lib_monster = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_monster.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_monster.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lib_monster.setBounds(10, 228, 84, 20);
+		lib_monster.setBounds(10, 228, 82, 20);
 		pan_conf.add(lib_monster);
 
 		combo_monster = new JWideComboBox();
@@ -919,7 +966,7 @@ public class MenuPrincipal extends JFrame {
 
 		lib_amount = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_amount.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_amount.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lib_amount.setBounds(10, 259, 84, 20);
+		lib_amount.setBounds(10, 259, 82, 20);
 		pan_conf.add(lib_amount);
 
 		combo_amount = new JComboBox<String>();
@@ -931,7 +978,7 @@ public class MenuPrincipal extends JFrame {
 
 		lib_health = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_health.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_health.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lib_health.setBounds(10, 290, 84, 20);
+		lib_health.setBounds(10, 290, 82, 20);
 		pan_conf.add(lib_health);
 
 		combo_health = new JComboBox<String>();
@@ -955,14 +1002,14 @@ public class MenuPrincipal extends JFrame {
 		combo_health.setBounds(104, 290, 105, 20);
 		pan_conf.add(combo_health);
 
-		lib_abi_announce = new JTextArea("Ability Announce :");
-		lib_abi_announce.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lib_abi_announce = new JTextArea();
+		lib_abi_announce.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lib_abi_announce.setWrapStyleWord(true);
 		lib_abi_announce.setLineWrap(true);
 		lib_abi_announce.setBackground(new Color(214, 217, 223));
 		lib_abi_announce.setBorder(new EmptyBorder(0, 0, 0, 0));
 		lib_abi_announce.setEditable(false);
-		lib_abi_announce.setBounds(10, 321, 84, 36);
+		lib_abi_announce.setBounds(10, 321, 82, 36);
 		pan_conf.add(lib_abi_announce);
 
 		chk_abi_announce = new JCheckBox();
@@ -1000,11 +1047,11 @@ public class MenuPrincipal extends JFrame {
 		lib_abi_interval = new JTextArea(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_abi_interval.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_abi_interval.setWrapStyleWord(true);
 		lib_abi_interval.setLineWrap(true);
-		lib_abi_interval.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lib_abi_interval.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lib_abi_interval.setBackground(new Color(214, 217, 223));
 		lib_abi_interval.setBorder(new EmptyBorder(0, 0, 0, 0));
 		lib_abi_interval.setEditable(false);
-		lib_abi_interval.setBounds(10, 363, 84, 36);
+		lib_abi_interval.setBounds(10, 363, 92, 36);
 		pan_conf.add(lib_abi_interval);
 
 		sai_abi_interval = new JFormattedTextField(NumberFormat.getIntegerInstance());
@@ -1017,6 +1064,8 @@ public class MenuPrincipal extends JFrame {
 		pan_conf.add(sai_abi_interval);
 
 		btn_add = new JButton(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.btn_add.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		btn_add.setBorder(new CompoundBorder());
+		btn_add.setMargin(new Insets(0, 0, 0, 0));
 		btn_add.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -1082,7 +1131,7 @@ public class MenuPrincipal extends JFrame {
 
 		lib_boss_name = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_boss_name.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_boss_name.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lib_boss_name.setBounds(10, 401, 88, 20);
+		lib_boss_name.setBounds(10, 401, 92, 20);
 		pan_conf.add(lib_boss_name);
 
 		sai_boss_name = new JTextField();
@@ -1091,12 +1140,12 @@ public class MenuPrincipal extends JFrame {
 		pan_conf.add(sai_boss_name);
 		sai_boss_name.setColumns(10);
 
-		lib_set = new JLabel("Set");
-		lib_set.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lib_set.setBounds(10, 433, 84, 28);
+		lib_set = new JLabel();
+		lib_set.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lib_set.setBounds(10, 433, 92, 28);
 		pan_conf.add(lib_set);
 
-		btn_set = new JButton("Set");
+		btn_set = new JButton(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.btn_set.text"));
 		btn_set.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -1142,6 +1191,29 @@ public class MenuPrincipal extends JFrame {
 			}
 		});
 		mnApplication.add(mntmNewConfiguration);
+
+		mnLanguage = new JMenu(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.mnLanguage.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		mnApplication.add(mnLanguage);
+
+		rdbtnmntmEnglish = new JRadioButtonMenuItem(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.rdbtnmntmEnglish.text"),new ImageIcon(MenuPrincipal.class.getResource("/gui/pics/gb-icon.png"))); //$NON-NLS-1$ //$NON-NLS-2$
+		rdbtnmntmEnglish.addItemListener(language_listener);
+		mnLanguage.add(rdbtnmntmEnglish);
+
+		rdbtnmntmFrench = new JRadioButtonMenuItem(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.rdbtnmntmFrench.text"),new ImageIcon(MenuPrincipal.class.getResource("/gui/pics/fr-icon.png"))); //$NON-NLS-1$ //$NON-NLS-2$
+		rdbtnmntmFrench.addItemListener(language_listener);
+		mnLanguage.add(rdbtnmntmFrench);
+
+		ButtonGroup bg = new ButtonGroup();
+		bg.add(rdbtnmntmEnglish);
+		bg.add(rdbtnmntmFrench);
+		Locale defloc = Locale.getDefault();
+		if(defloc==Locale.ENGLISH) {
+			rdbtnmntmEnglish.setSelected(true);
+		}
+		else if(defloc==Locale.FRENCH) {
+			rdbtnmntmFrench.setSelected(true);
+		}
+
 		mnApplication.addSeparator();
 
 		mntmQuit = new JMenuItem(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.mntmQuit.text")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -1247,7 +1319,7 @@ public class MenuPrincipal extends JFrame {
 				loadClass_ClassConfig(classe);
 			}
 		});
-		btn_new_class.setBounds(288, 8, 90, 22);
+		btn_new_class.setBounds(262, 8, 116, 22);
 		pan_classes.add(btn_new_class);
 
 		scrpan_classes = new JScrollPane(list_classes);
@@ -2065,14 +2137,15 @@ public class MenuPrincipal extends JFrame {
 
 		setSize(760,618);
 
-		tabpan_config.addTab("Arenas and waves configuration", pan_arena_wave);
-		tabpan_config.addTab("Classes configuration", pan_classes);
-		tabpan_config.addTab("Arena configuration", pan_arena_settings);
+		tabpan_config.addTab(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.tabpan_arena_wave.title"), pan_arena_wave); //$NON-NLS-1$ //$NON-NLS-2$
+		tabpan_config.addTab(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.tabpan_classes.title"), pan_classes); //$NON-NLS-1$ //$NON-NLS-2$
+		tabpan_config.addTab(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.tabpan_arena_settings.title"), pan_arena_settings); //$NON-NLS-1$ //$NON-NLS-2$
 
 		tabpan_config.setEnabledAt(1, false);
 		tabpan_config.setEnabledAt(2, false);
 
 		setLocationRelativeTo(null);
+		initializing = false;
 		setVisible(true);
 	}
 
@@ -2150,17 +2223,17 @@ public class MenuPrincipal extends JFrame {
 			lib_abi_interval.setVisible(true);
 			sai_abi_interval.setVisible(true);
 
-			lib_set.setText("Reward :");
+			lib_set.setText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.reward"));
 			lib_set.setVisible(true);
 			btn_set.setVisible(true);
 
-			lib_carac_wave.setText("Abilities");
+			lib_carac_wave.setText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.abilities"));
 			combo_carac_wave.setModel(new DefaultComboBoxModel<String>(EAbilities.namevalues()));
 			combo_carac_wave.setSelectedIndex(-1);
 			sai_nb_carac_wave.setVisible(false);
 			break;
 		case Special:
-			lib_carac_wave.setText("Monsters");
+			lib_carac_wave.setText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.monsters"));
 			combo_carac_wave.setModel(new DefaultComboBoxModel<String>(EMonsters.namevalues()));
 			combo_carac_wave.setSelectedIndex(-1);
 			break;
@@ -2177,20 +2250,20 @@ public class MenuPrincipal extends JFrame {
 			sai_nb_carac_wave.setVisible(false);
 			break;
 		case Supply:
-			lib_carac_wave.setText("Monsters");
+			lib_carac_wave.setText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.monsters"));
 			combo_carac_wave.setModel(new DefaultComboBoxModel<String>(EMonsters.namevalues()));
 			combo_carac_wave.setSelectedIndex(-1);
 
 			lib_set.setVisible(true);
-			lib_set.setText("Drops :");
+			lib_set.setText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.drops"));
 			btn_set.setVisible(true);
 			break;
 		case Upgrade:
 			lib_abi_announce.setVisible(true);
-			lib_abi_announce.setText("Give all  items :");
+			lib_abi_announce.setText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.give_all_items"));
 			chk_abi_announce.setVisible(true);
 			lib_set.setVisible(true);
-			lib_set.setText("Configure :");
+			lib_set.setText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.configure"));
 			btn_set.setVisible(true);
 
 			lib_carac_wave.setVisible(false);
