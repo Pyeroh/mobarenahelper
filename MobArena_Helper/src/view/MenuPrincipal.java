@@ -269,164 +269,14 @@ public class MenuPrincipal extends JFrame {
 		MouseAdapter newWave = new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-
-				if (combo_arena.getSelectedIndex()!=-1) {
-
-					ECatW category = null;
-					JList<CellListWave> listToLoad = null;
-					if(e.getSource()==btn_newrecurrent){
-						category = ECatW.recurrent;
-						listToLoad = list_recurrent;
-					}
-					else {
-						category = ECatW.single;
-						listToLoad = list_single;
-					}
-
-					Arena lArene = arenas.getALarenas().get(
-							combo_arena.getSelectedIndex());
-					ArrayList<Wave> waves = lArene
-							.getWavesType(category);
-					DefaultW defwave = new DefaultW(category);
-					waves.add(0, defwave);
-					wave = defwave;
-					loadListCaracs_Arena(waves, listToLoad);
-					setVisibleComponents_Arena(defwave);
-					loadData_Arena(defwave);
-					listToLoad.setSelectedIndex(0);
-					deselectWaveLists_Arena(listToLoad);
-					sai_name.requestFocus();
-					sai_name.selectAll();
-
-				}
-
+				newWave(e);
 			}
 		};
 
 		MouseAdapter cellmouseadapter = new MouseAdapter() {
-			@SuppressWarnings("unchecked")
 			@Override
 			public void mouseReleased(MouseEvent e) {
-
-				//On récupère la liste source en tant que liste de caracs pour l'évaluation de situation
-				//et en tant que liste de vagues pour le travail sur les données
-				JList<CellListCaracs> source = (JList<CellListCaracs>) e.getSource();
-				JList<CellListWave> jList = (JList<CellListWave>) e.getSource();
-				if (source.getModel().getSize()!=0) {
-
-					jList.ensureIndexIsVisible(jList.getSelectedIndex());
-
-					switch (e.getButton()) {
-					//Clic gauche (sélection)
-					case MouseEvent.BUTTON1:
-						if (source != list_carac_wave) {
-							wave = jList.getSelectedValue().getWave();
-							setVisibleComponents_Arena(wave);
-							loadData_Arena(wave);
-							deselectWaveLists_Arena(jList);
-						}
-						break;
-						//Clic molette (suppression)
-					case MouseEvent.BUTTON2:
-						int hoverIndex = ((HoverListCellRenderer) jList
-								.getCellRenderer()).getHoverIndex();
-
-						if (hoverIndex != -1) {
-							if (source != list_carac_wave) {
-
-								setInvisibleComponents_Arena();
-
-								wave = jList.getModel()
-										.getElementAt(hoverIndex).getWave();
-								int reponse = JOptionPane.showConfirmDialog(
-										null,
-										"Are you sure you want to delete the "
-												+ wave.getCategory().name()
-												+ " wave named "
-												+ wave.getNom() + " ?",
-												"Confirmation",
-												JOptionPane.YES_NO_OPTION,
-												JOptionPane.QUESTION_MESSAGE);
-								switch (reponse) {
-								case 0:
-									//Récupération de l'arène en cours
-									Arena lArene = arenas.getALarenas().get(
-											combo_arena.getSelectedIndex());
-									//Suppression de la vague voulue
-									lArene.getWavesType(wave.getCategory())
-									.remove(hoverIndex);
-									//Rechargement
-									loadListCaracs_Arena(
-											lArene.getWavesType(wave
-													.getCategory()), jList);
-									break;
-								default:
-									break;
-								}
-								deselectWaveLists_Arena(list_recurrent);
-								deselectWaveLists_Arena(list_single);
-
-							} else {
-
-								CellListCaracs cellcarac = source.getModel()
-										.getElementAt(hoverIndex);
-								CellListMonster cellmonster = null;
-								CellListAbility cellabi = null;
-								JList<CellListWave> list_wave = list_recurrent
-										.getSelectedIndex() != -1 ? list_recurrent
-												: list_single;
-								wave = list_wave.getSelectedValue()
-										.getWave();
-								String toDelete = "";
-								String name = "";
-								if (cellcarac instanceof CellListMonster) {
-									toDelete = "monster";
-									cellmonster = (CellListMonster) cellcarac;
-									name = cellmonster.getMonstre()
-											.getMonstre().getNom();
-								} else {
-									toDelete = "ability";
-									cellabi = (CellListAbility) cellcarac;
-									name = cellabi.getAbility().getNom();
-								}
-
-								int reponse = JOptionPane.showConfirmDialog(
-										null,
-										"Are you sure you want to delete the "
-												+ toDelete + " " + name + "?",
-												"Confirmation",
-												JOptionPane.YES_NO_OPTION,
-												JOptionPane.QUESTION_MESSAGE);
-								@SuppressWarnings("rawtypes")
-								ArrayList listdata = null;
-								switch (reponse) {
-								case 0:
-									if (cellcarac instanceof CellListAbility) {
-
-										BossW bwave = (BossW) wave;
-										listdata = bwave.getAbilities();
-										listdata.remove(cellabi.getAbility());
-
-									} else {
-										listdata = wave.getMonstres();
-										listdata.remove(cellmonster
-												.getMonstre());
-									}
-									break;
-								default:
-									break;
-								}
-
-								if (listdata != null) {
-									loadListCaracs_Arena(listdata, source);
-								}
-							}
-						}
-						break;
-					default:
-						break;
-					}
-				}
+				cellMouseAdapter(e);
 			}
 		};
 
@@ -439,7 +289,7 @@ public class MenuPrincipal extends JFrame {
 						((JFormattedTextField)component).commitEdit();
 					} catch (ParseException e1) {}
 				}
-				majData_Arena(e);
+				majData_Arena(component);
 			}
 		};
 
@@ -1333,9 +1183,9 @@ public class MenuPrincipal extends JFrame {
 		pan_caracs_class.setLayout(null);
 
 		lib_class = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_class.text")); //$NON-NLS-1$ //$NON-NLS-2$
-		lib_class.setBounds(8, 6, 90, 25);
+		lib_class.setBounds(8, 6, 99, 25);
 		pan_caracs_class.add(lib_class);
-		lib_class.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lib_class.setFont(new Font("Tahoma", Font.BOLD, 12));
 
 		sai_class = new JFormattedTextField(new MaskFormatter("U??????????????"));
 		sai_class.addKeyListener(new KeyAdapter() {
@@ -1390,7 +1240,7 @@ public class MenuPrincipal extends JFrame {
 
 		lib_dogs = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_dogs.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_dogs.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lib_dogs.setBounds(8, 126, 90, 25);
+		lib_dogs.setBounds(8, 126, 99, 25);
 		pan_caracs_class.add(lib_dogs);
 
 		sai_dogs = new JFormattedTextField(NumberFormat.getIntegerInstance());
@@ -1443,7 +1293,7 @@ public class MenuPrincipal extends JFrame {
 
 		lib_hArmor = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_hArmor.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_hArmor.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lib_hArmor.setBounds(8, 206, 90, 28);
+		lib_hArmor.setBounds(8, 206, 99, 28);
 		pan_caracs_class.add(lib_hArmor);
 
 		combo_hArmor = new JComboBox<String>();
@@ -1568,7 +1418,7 @@ public class MenuPrincipal extends JFrame {
 		pan_caracs_class.add(separator_3);
 
 		lib_lobby_permissions = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_lobby_permissions.text")); //$NON-NLS-1$ //$NON-NLS-2$
-		lib_lobby_permissions.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lib_lobby_permissions.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lib_lobby_permissions.setBounds(511, 10, 123, 25);
 		pan_caracs_class.add(lib_lobby_permissions);
 
@@ -1610,7 +1460,7 @@ public class MenuPrincipal extends JFrame {
 			}
 		});
 		sai_world.setFocusLostBehavior(JFormattedTextField.COMMIT);
-		sai_world.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.sai_world.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
+		sai_world.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_world.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		sai_world.setBounds(91, 5, 127, 28);
 		sai_world.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		pan_arena_settings.add(sai_world);
@@ -1674,7 +1524,8 @@ public class MenuPrincipal extends JFrame {
 			}
 		};
 
-		chk_enabled = new JCheckBox(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_enabled.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		chk_enabled = new JCheckBox(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_enabled.text"));
+		chk_enabled.setHorizontalAlignment(SwingConstants.CENTER);
 		chk_enabled.addItemListener(chkconfig_listener);
 		chk_enabled.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_enabled.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_enabled.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -1686,7 +1537,7 @@ public class MenuPrincipal extends JFrame {
 		chk_protect.addItemListener(chkconfig_listener);
 		chk_protect.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_protect.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_protect.setHorizontalTextPosition(SwingConstants.LEFT);
-		chk_protect.setFont(new Font("Tahoma", Font.BOLD, 14));
+		chk_protect.setFont(new Font("Tahoma", Font.BOLD, 12));
 		chk_protect.setBounds(91, 43, 73, 25);
 		pan_arena_settings.add(chk_protect);
 
@@ -1715,13 +1566,13 @@ public class MenuPrincipal extends JFrame {
 
 		lib_entry = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_entry.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_entry.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_entry.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
-		lib_entry.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lib_entry.setBounds(6, 80, 73, 25);
+		lib_entry.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lib_entry.setBounds(6, 80, 84, 25);
 		pan_arena_settings.add(lib_entry);
 
 		sai_entry = new JFormattedTextField(NumberFormat.getIntegerInstance());
 		sai_entry.addKeyListener(int_config_adapter);
-		sai_entry.setToolTipText(lib_entry.getToolTipText());
+		sai_entry.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_entry.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		sai_entry.setBackground(new Color(255, 255, 255));
 		sai_entry.setBounds(91, 81, 50, 25);
 		sai_entry.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -1741,7 +1592,7 @@ public class MenuPrincipal extends JFrame {
 				if(il.size()!=0) config.setEntry_fee_item(il.get(0));
 			}
 		});
-		btn_entry.setToolTipText(lib_entry.getToolTipText());
+		btn_entry.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_entry.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		btn_entry.setBounds(153, 81, 90, 25);
 		pan_arena_settings.add(btn_entry);
 
@@ -1770,6 +1621,7 @@ public class MenuPrincipal extends JFrame {
 		pan_arena_settings.add(chk_clear_wave_boss);
 
 		chk_lightning = new JCheckBox(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_lightning.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		chk_lightning.setHorizontalAlignment(SwingConstants.CENTER);
 		chk_lightning.addItemListener(chkconfig_listener);
 		chk_lightning.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_lightning.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_lightning.setHorizontalTextPosition(SwingConstants.LEFT);
@@ -1881,7 +1733,7 @@ public class MenuPrincipal extends JFrame {
 
 		sai_min_players = new JFormattedTextField(NumberFormat.getIntegerInstance());
 		sai_min_players.addKeyListener(int_config_adapter);
-		sai_min_players.setToolTipText(lib_min_players.getToolTipText());
+		sai_min_players.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_min_players.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		sai_min_players.setBackground(new Color(255, 255, 255));
 		sai_min_players.setColumns(10);
 		sai_min_players.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -1896,7 +1748,7 @@ public class MenuPrincipal extends JFrame {
 
 		sai_max_players = new JFormattedTextField(NumberFormat.getIntegerInstance());
 		sai_max_players.addKeyListener(int_config_adapter);
-		sai_max_players.setToolTipText(lib_max_players.getToolTipText());
+		sai_max_players.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_max_players.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		sai_max_players.setBackground(new Color(255, 255, 255));
 		sai_max_players.setColumns(10);
 		sai_max_players.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -1911,7 +1763,7 @@ public class MenuPrincipal extends JFrame {
 
 		sai_max_join_distance = new JFormattedTextField(NumberFormat.getIntegerInstance());
 		sai_max_join_distance.addKeyListener(int_config_adapter);
-		sai_max_join_distance.setToolTipText(lib_max_join_distance.getToolTipText());
+		sai_max_join_distance.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_max_join_distance.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		sai_max_join_distance.setBackground(new Color(255, 255, 255));
 		sai_max_join_distance.setColumns(10);
 		sai_max_join_distance.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -1926,7 +1778,7 @@ public class MenuPrincipal extends JFrame {
 
 		sai_first_delay = new JFormattedTextField(NumberFormat.getIntegerInstance());
 		sai_first_delay.addKeyListener(int_config_adapter);
-		sai_first_delay.setToolTipText(lib_first_delay.getToolTipText());
+		sai_first_delay.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_first_delay.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		sai_first_delay.setBackground(new Color(255, 255, 255));
 		sai_first_delay.setColumns(10);
 		sai_first_delay.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -1941,7 +1793,7 @@ public class MenuPrincipal extends JFrame {
 
 		sai_interval = new JFormattedTextField(NumberFormat.getIntegerInstance());
 		sai_interval.addKeyListener(int_config_adapter);
-		sai_interval.setToolTipText(lib_interval.getToolTipText());
+		sai_interval.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_interval.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		sai_interval.setBackground(new Color(255, 255, 255));
 		sai_interval.setColumns(10);
 		sai_interval.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -1956,7 +1808,7 @@ public class MenuPrincipal extends JFrame {
 
 		sai_final_wave = new JFormattedTextField(NumberFormat.getIntegerInstance());
 		sai_final_wave.addKeyListener(int_config_adapter);
-		sai_final_wave.setToolTipText(lib_final_wave.getToolTipText());
+		sai_final_wave.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_final_wave.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		sai_final_wave.setBackground(new Color(255, 255, 255));
 		sai_final_wave.setColumns(10);
 		sai_final_wave.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -1971,7 +1823,7 @@ public class MenuPrincipal extends JFrame {
 
 		sai_monster_limit = new JFormattedTextField(NumberFormat.getIntegerInstance());
 		sai_monster_limit.addKeyListener(int_config_adapter);
-		sai_monster_limit.setToolTipText(lib_monster_limit.getToolTipText());
+		sai_monster_limit.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_monster_limit.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		sai_monster_limit.setBackground(new Color(255, 255, 255));
 		sai_monster_limit.setColumns(10);
 		sai_monster_limit.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -2025,7 +1877,7 @@ public class MenuPrincipal extends JFrame {
 				}
 			}
 		});
-		combo_player_time.setToolTipText(lib_player_time.getToolTipText());
+		combo_player_time.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_player_time.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		combo_player_time.setModel(new DefaultComboBoxModel<String>(new String[] {"world", "dawn", "sunrise", "morning", "midday", "noon", "day", "afternoon", "evening", "sunset", "dusk", "night", "midnight"}));
 		combo_player_time.setBounds(653, 43, 95, 26);
 		pan_arena_settings.add(combo_player_time);
@@ -2038,7 +1890,7 @@ public class MenuPrincipal extends JFrame {
 
 		sai_auto_start = new JFormattedTextField(NumberFormat.getIntegerInstance());
 		sai_auto_start.addKeyListener(int_config_adapter);
-		sai_auto_start.setToolTipText(lib_auto_start.getToolTipText());
+		sai_auto_start.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_auto_start.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		sai_auto_start.setBackground(new Color(255, 255, 255));
 		sai_auto_start.setColumns(10);
 		sai_auto_start.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -2149,7 +2001,7 @@ public class MenuPrincipal extends JFrame {
 		setVisible(true);
 	}
 
-	private void raz() {
+	public void raz() {
 		Classe.classe_list.clear();
 		arenas = null;
 		file = null;
@@ -2162,8 +2014,163 @@ public class MenuPrincipal extends JFrame {
 		combo_arena.setModel(new DefaultComboBoxModel<String>());
 		setInvisibleComponents_Arena();
 	}
+	
+	public void newWave(MouseEvent e) {
+		if (combo_arena.getSelectedIndex()!=-1) {
 
-	private void loadArena(int numarena) {
+			ECatW category = null;
+			JList<CellListWave> listToLoad = null;
+			if(e.getSource()==btn_newrecurrent){
+				category = ECatW.recurrent;
+				listToLoad = list_recurrent;
+			}
+			else {
+				category = ECatW.single;
+				listToLoad = list_single;
+			}
+
+			Arena lArene = arenas.getALarenas().get(
+					combo_arena.getSelectedIndex());
+			ArrayList<Wave> waves = lArene
+					.getWavesType(category);
+			DefaultW defwave = new DefaultW(category);
+			waves.add(0, defwave);
+			wave = defwave;
+			loadListCaracs_Arena(waves, listToLoad);
+			setVisibleComponents_Arena(defwave);
+			loadData_Arena(defwave);
+			listToLoad.setSelectedIndex(0);
+			deselectWaveLists_Arena(listToLoad);
+			sai_name.requestFocus();
+			sai_name.selectAll();
+
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void cellMouseAdapter(MouseEvent e) {
+		//On récupère la liste source en tant que liste de caracs pour l'évaluation de situation
+		//et en tant que liste de vagues pour le travail sur les données
+		JList<CellListCaracs> source = (JList<CellListCaracs>) e.getSource();
+		JList<CellListWave> jList = (JList<CellListWave>) e.getSource();
+		if (source.getModel().getSize()!=0) {
+
+			jList.ensureIndexIsVisible(jList.getSelectedIndex());
+
+			switch (e.getButton()) {
+			//Clic gauche (sélection)
+			case MouseEvent.BUTTON1:
+				if (source != list_carac_wave) {
+					wave = jList.getSelectedValue().getWave();
+					setVisibleComponents_Arena(wave);
+					loadData_Arena(wave);
+					deselectWaveLists_Arena(jList);
+				}
+				break;
+				//Clic molette (suppression)
+			case MouseEvent.BUTTON2:
+				int hoverIndex = ((HoverListCellRenderer) jList
+						.getCellRenderer()).getHoverIndex();
+
+				if (hoverIndex != -1) {
+					if (source != list_carac_wave) {
+
+						setInvisibleComponents_Arena();
+
+						wave = jList.getModel()
+								.getElementAt(hoverIndex).getWave();
+						int reponse = JOptionPane.showConfirmDialog(
+								null,
+								"Are you sure you want to delete the "
+										+ wave.getCategory().name()
+										+ " wave named "
+										+ wave.getNom() + " ?",
+										"Confirmation",
+										JOptionPane.YES_NO_OPTION,
+										JOptionPane.QUESTION_MESSAGE);
+						switch (reponse) {
+						case 0:
+							//Récupération de l'arène en cours
+							Arena lArene = arenas.getALarenas().get(
+									combo_arena.getSelectedIndex());
+							//Suppression de la vague voulue
+							lArene.getWavesType(wave.getCategory())
+							.remove(hoverIndex);
+							//Rechargement
+							loadListCaracs_Arena(
+									lArene.getWavesType(wave
+											.getCategory()), jList);
+							break;
+						default:
+							break;
+						}
+						deselectWaveLists_Arena(list_recurrent);
+						deselectWaveLists_Arena(list_single);
+
+					} else {
+
+						CellListCaracs cellcarac = source.getModel()
+								.getElementAt(hoverIndex);
+						CellListMonster cellmonster = null;
+						CellListAbility cellabi = null;
+						JList<CellListWave> list_wave = list_recurrent
+								.getSelectedIndex() != -1 ? list_recurrent
+										: list_single;
+						wave = list_wave.getSelectedValue()
+								.getWave();
+						String toDelete = "";
+						String name = "";
+						if (cellcarac instanceof CellListMonster) {
+							toDelete = "monster";
+							cellmonster = (CellListMonster) cellcarac;
+							name = cellmonster.getMonstre()
+									.getMonstre().getNom();
+						} else {
+							toDelete = "ability";
+							cellabi = (CellListAbility) cellcarac;
+							name = cellabi.getAbility().getNom();
+						}
+
+						int reponse = JOptionPane.showConfirmDialog(
+								null,
+								"Are you sure you want to delete the "
+										+ toDelete + " " + name + "?",
+										"Confirmation",
+										JOptionPane.YES_NO_OPTION,
+										JOptionPane.QUESTION_MESSAGE);
+						@SuppressWarnings("rawtypes")
+						ArrayList listdata = null;
+						switch (reponse) {
+						case 0:
+							if (cellcarac instanceof CellListAbility) {
+
+								BossW bwave = (BossW) wave;
+								listdata = bwave.getAbilities();
+								listdata.remove(cellabi.getAbility());
+
+							} else {
+								listdata = wave.getMonstres();
+								listdata.remove(cellmonster
+										.getMonstre());
+							}
+							break;
+						default:
+							break;
+						}
+
+						if (listdata != null) {
+							loadListCaracs_Arena(listdata, source);
+						}
+					}
+				}
+				break;
+			default:
+				break;
+			}
+		}
+	}
+
+	public void loadArena(int numarena) {
 
 		setInvisibleComponents_Arena();
 		Arena arena = arenas.getALarenas().get(numarena);
@@ -2179,7 +2186,7 @@ public class MenuPrincipal extends JFrame {
 
 	}
 
-	private void setVisibleComponents_Arena(Wave wave) {
+	public void setVisibleComponents_Arena(Wave wave) {
 		ETypeW typevague = wave.getType();
 		ECatW catvague = wave.getCategory();
 
@@ -2289,7 +2296,7 @@ public class MenuPrincipal extends JFrame {
 
 	}
 
-	private void setInvisibleComponents_Arena() {
+	public void setInvisibleComponents_Arena() {
 		lib_name.setVisible(false);
 		sai_name.setVisible(false);
 		lib_category.setVisible(false);
@@ -2331,7 +2338,7 @@ public class MenuPrincipal extends JFrame {
 		btn_set.setText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.btn_set.text")); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
-	private void deselectWaveLists_Arena(JList<CellListWave> jList){
+	public void deselectWaveLists_Arena(JList<CellListWave> jList){
 		if(jList==list_recurrent){
 			list_single.clearSelection();
 		}
@@ -2340,7 +2347,7 @@ public class MenuPrincipal extends JFrame {
 		}
 	}
 
-	private void loadData_Arena(Wave wave) {
+	public void loadData_Arena(Wave wave) {
 		sai_name.setText(wave.getNom());
 		combo_category.setSelectedItem(wave.getCategory().getNom());
 		combo_type.setSelectedItem(wave.getType().name());
@@ -2399,7 +2406,7 @@ public class MenuPrincipal extends JFrame {
 	 * @param listview
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private void loadListCaracs_Arena(ArrayList listdata, JList listview) {
+	public void loadListCaracs_Arena(ArrayList listdata, JList listview) {
 
 		DefaultListModel modW = new DefaultListModel<>();
 
@@ -2448,11 +2455,11 @@ public class MenuPrincipal extends JFrame {
 
 	/**
 	 * Met à jour les données numériques d'une vague avec le champ source passé en paramètre
-	 * @param e l'évènement source
+	 * @param component le composant source
 	 */
-	private void majData_Arena(KeyEvent e) {
+	public void majData_Arena(JComponent component) {
 
-		JFormattedTextField source = (JFormattedTextField) e.getSource();
+		JFormattedTextField source = (JFormattedTextField) component;
 		JList<CellListWave> list_sel = list_recurrent.getSelectedIndex()!=-1 ? list_recurrent : list_single;
 		Wave wave = list_sel.getSelectedValue().getWave();
 		Arena lArene = arenas.getALarenas().get(combo_arena.getSelectedIndex());
@@ -2504,7 +2511,7 @@ public class MenuPrincipal extends JFrame {
 
 	}
 
-	private void loadData_ClassConfig(ArrayList<Classe> aLclasses) {
+	public void loadData_ClassConfig(ArrayList<Classe> aLclasses) {
 
 		int index = list_classes.getSelectedIndex();
 
@@ -2528,7 +2535,7 @@ public class MenuPrincipal extends JFrame {
 
 	}
 
-	private void loadClass_ClassConfig(Classe classe) {
+	public void loadClass_ClassConfig(Classe classe) {
 		pan_caracs_class.setVisible(true);
 
 		String name = classe.getName();
@@ -2573,7 +2580,7 @@ public class MenuPrincipal extends JFrame {
 		sai_class.select(0, classe.getName().length());
 	}
 
-	private void loadData_ArenaConfig(ArenaConfig config) {
+	public void loadData_ArenaConfig(ArenaConfig config) {
 		sai_world.setValue(config.getWorld());
 		chk_enabled.setSelected(config.getEnabled());
 		chk_protect.setSelected(config.getProtect());

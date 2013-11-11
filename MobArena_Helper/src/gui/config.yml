@@ -30,7 +30,7 @@ arenas:
             world: world
             enabled: true
             protect: true
-            entry-fee: ''
+            entry-fee: $20
             clear-wave-before-next: false
             clear-boss-before-next: false
             clear-wave-before-boss: false
