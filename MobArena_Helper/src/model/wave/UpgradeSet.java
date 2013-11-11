@@ -163,31 +163,33 @@ public class UpgradeSet {
 		String tag = g.getTag(nom_classe).getClassName();
 		ArrayList<Classe> classe_list = Classe.classe_list;
 		int i = 0;
-		while (!classe_list.get(i).getName().equals(nom_classe)) i++;
+		while (!classe_list.get(i).getName().equals(nom_classe) && i<classe_list.size()-1) i++;
 
-		switch (tag) {
-		case "map":
-			set = new UpgradeSet(UpSetup.advanced, classe_list.get(i));
-			map = g.getMap(nom_classe);
-			if(map.containsKey("armor")) {
-				set.getArmor().fill(g.getString(nom_classe+".armor"));
+		if (i<classe_list.size()) {
+			switch (tag) {
+			case "map":
+				set = new UpgradeSet(UpSetup.advanced, classe_list.get(i));
+				map = g.getMap(nom_classe);
+				if (map.containsKey("armor")) {
+					set.getArmor().fill(g.getString(nom_classe + ".armor"));
+				}
+				if (map.containsKey("items")) {
+					set.getItems().fill(g.getString(nom_classe + ".items"));
+				}
+				if (map.containsKey("permissions")) {
+					set.setPermissions(g.getList(nom_classe + ".permissions"));
+				}
+				break;
+			case "str":
+				set = new UpgradeSet(UpSetup.legacy, classe_list.get(i));
+				set.getItems().fill(g.getString(nom_classe));
+				break;
+			default:
+				break;
 			}
-			if(map.containsKey("items")) {
-				set.getItems().fill(g.getString(nom_classe+".items"));
-			}
-			if(map.containsKey("permissions")) {
-				set.setPermissions(g.getList(nom_classe+".permissions"));
-			}
-			break;
-		case "str":
-			set = new UpgradeSet(UpSetup.legacy, classe_list.get(i));
-			set.getItems().fill(g.getString(nom_classe));
-			break;
-		default:
-			break;
+			return set;
 		}
-
-		return set;
+		else return null;
 	}
 
 }

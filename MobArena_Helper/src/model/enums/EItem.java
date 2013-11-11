@@ -59,12 +59,12 @@ public enum EItem {
 	white_wool(35,0,"WOOL",EItemCat.block),
 	orange_wool(35,1,"WOOL",EItemCat.block),
 	magenta_wool(35,2,"WOOL",EItemCat.block),
-	lblue_wool(35,3,"WOOL",EItemCat.block),
+	l_blue_wool(35,3,"WOOL",EItemCat.block),
 	yellow_wool(35,4,"WOOL",EItemCat.block),
-	lgreen_wool(35,5,"WOOL",EItemCat.block),
+	l_green_wool(35,5,"WOOL",EItemCat.block),
 	pink_wool(35,6,"WOOL",EItemCat.block),
 	gray_wool(35,7,"WOOL",EItemCat.block),
-	lgray_wool(35,8,"WOOL",EItemCat.block),
+	l_gray_wool(35,8,"WOOL",EItemCat.block),
 	cyan_wool(35,9,"WOOL",EItemCat.block),
 	purple_wool(35,10,"WOOL",EItemCat.block),
 	blue_wool(35,11,"WOOL",EItemCat.block),
@@ -177,12 +177,12 @@ public enum EItem {
 	white_stained_clay(159,0,"STAINED_CLAY",EItemCat.block),
 	orange_stained_clay(159,1,"STAINED_CLAY",EItemCat.block),
 	magenta_stained_clay(159,2,"STAINED_CLAY",EItemCat.block),
-	lblue_stained_clay(159,3,"STAINED_CLAY",EItemCat.block),
+	l_blue_stained_clay(159,3,"STAINED_CLAY",EItemCat.block),
 	yellow_stained_clay(159,4,"STAINED_CLAY",EItemCat.block),
-	lgreen_stained_clay(159,5,"STAINED_CLAY",EItemCat.block),
+	l_green_stained_clay(159,5,"STAINED_CLAY",EItemCat.block),
 	pink_stained_clay(159,6,"STAINED_CLAY",EItemCat.block),
 	gray_stained_clay(159,7,"STAINED_CLAY",EItemCat.block),
-	lgray_stained_clay(159,8,"STAINED_CLAY",EItemCat.block),
+	l_gray_stained_clay(159,8,"STAINED_CLAY",EItemCat.block),
 	cyan_stained_clay(159,9,"STAINED_CLAY",EItemCat.block),
 	purple_stained_clay(159,10,"STAINED_CLAY",EItemCat.block),
 	blue_stained_clay(159,11,"STAINED_CLAY",EItemCat.block),
@@ -194,12 +194,12 @@ public enum EItem {
 	white_carpet(171,0,"CARPET",EItemCat.decoration),
 	orange_carpet(171,1,"CARPET",EItemCat.decoration),
 	magenta_carpet(171,2,"CARPET",EItemCat.decoration),
-	lblue_carpet(171,3,"CARPET",EItemCat.decoration),
+	l_blue_carpet(171,3,"CARPET",EItemCat.decoration),
 	yellow_carpet(171,4,"CARPET",EItemCat.decoration),
-	lgreen_carpet(171,5,"CARPET",EItemCat.decoration),
+	l_green_carpet(171,5,"CARPET",EItemCat.decoration),
 	pink_carpet(171,6,"CARPET",EItemCat.decoration),
 	gray_carpet(171,7,"CARPET",EItemCat.decoration),
-	lgray_carpet(171,8,"CARPET",EItemCat.decoration),
+	l_gray_carpet(171,8,"CARPET",EItemCat.decoration),
 	cyan_carpet(171,9,"CARPET",EItemCat.decoration),
 	purple_carpet(171,10,"CARPET",EItemCat.decoration),
 	blue_carpet(171,11,"CARPET",EItemCat.decoration),
@@ -319,12 +319,12 @@ public enum EItem {
 	lapis_lazuli(351,4,"INK_SACK",EItemCat.materials),
 	purple_dye(351,5,"INK_SACK",EItemCat.materials),
 	cyan_dye(351,6,"INK_SACK",EItemCat.materials),
-	lgray_dye(351,7,"INK_SACK",EItemCat.materials),
+	l_gray_dye(351,7,"INK_SACK",EItemCat.materials),
 	gray_dye(351,8,"INK_SACK",EItemCat.materials),
 	pink_dye(351,9,"INK_SACK",EItemCat.materials),
-	lgreen_dye(351,10,"INK_SACK",EItemCat.materials),
+	l_green_dye(351,10,"INK_SACK",EItemCat.materials),
 	dandelion_yellow(351,11,"INK_SACK",EItemCat.materials),
-	lblue_dye(351,12,"INK_SACK",EItemCat.materials),
+	l_blue_dye(351,12,"INK_SACK",EItemCat.materials),
 	magenta_dye(351,13,"INK_SACK",EItemCat.materials),
 	orange_dye(351,14,"INK_SACK",EItemCat.materials),
 	white_dye(351,15,"INK_SACK",EItemCat.materials),
@@ -554,7 +554,7 @@ public enum EItem {
 	public String getName() {
 		String name = name();
 		if(name.endsWith("wool") || name.endsWith("stained_clay") || name.endsWith("carpet") || name.endsWith("dye")) {
-			name = name.replaceFirst("^l", "light_");
+			name = name.replaceFirst("^l_", "light_");
 		}
 		if(name.startsWith("p_")) {
 			name = name.replaceFirst("^p", "potion_of");
@@ -574,7 +574,7 @@ public enum EItem {
 	}
 
 	public String toString() {
-		return name()+"("+id+","+meta+","+realname+","+category+")";
+		return name()+"("+id+","+meta+","+getRealName()+","+category+")";
 	}
 
 	/**
@@ -608,12 +608,11 @@ public enum EItem {
 			if (i < values.length) {
 				return values[i];
 			} else {
-				throw new IllegalArgumentException(
-						"No enum constant EItem." + name);
+				return null;
 			}
 		}
 		else {
-			throw new NullPointerException("Name is null");
+			return null;
 		}
 
 	}
@@ -630,12 +629,11 @@ public enum EItem {
 				return values[i];
 			}
 			else {
-				throw new IllegalArgumentException(
-						"No enum constant EItem for id " + id);
+				return null;
 			}
 		}
 		else {
-			throw new NullPointerException("ID equals 0");
+			return null;
 		}
 
 	}
@@ -651,12 +649,13 @@ public enum EItem {
 
 		EItem item = EItem.getByNameFirst(name);
 		if(item!=null){
-			while(item.getMeta()!=meta) {
+			while(item.getMeta()!=meta && item.getRealName().equalsIgnoreCase(name)) {
 
 				item = values.get(values.indexOf(item)+1);
 
 			}
-			return item;
+			if(item.getMeta()==meta) return item;
+			else return null;
 		}
 		else {
 			return null;
@@ -697,13 +696,14 @@ public enum EItem {
 		ArrayList<EItem> ret = new ArrayList<>();
 		EItem[] values = values();
 
-		for (int i = 0; i < values.length; i++) {
-			if (values[i].getName().toLowerCase()
-					.contains(name.toLowerCase())) {
-				ret.add(values[i]);
+		if (name!=null) {
+			for (int i = 0; i < values.length; i++) {
+				if (values[i].getName().toLowerCase()
+						.contains(name.toLowerCase())) {
+					ret.add(values[i]);
+				}
 			}
 		}
-
 		return ret;
 	}
 }

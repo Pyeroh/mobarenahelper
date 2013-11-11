@@ -159,6 +159,11 @@ public class GestYaml {
 	public String dump() {
 		return yaml.dumpAsMap(data);
 	}
+	
+	public String dump(String key) {
+		if(get(key) instanceof String) return getString(key);
+		else return yaml.dumpAsMap(getMap(key));
+	}
 
 	/**
 	 * Réalise un dump de la Map chargée dans le fichier passé en paramètre
