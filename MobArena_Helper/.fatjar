@@ -1,0 +1,14 @@
+#Fat Jar Configuration File
+#Wed Nov 06 20:54:17 SBT 2013
+onejar.license.required=true
+manifest.classpath=
+manifest.removesigners=true
+onejar.checkbox=false
+jarname=MobArenaHelper_v2.0.jar
+manifest.mergeall=true
+manifest.mainclass=view.Launch
+manifest.file=<createnew>
+jarname.isextern=false
+onejar.expand=
+excludes=<po|MobArena_Helper>~snakeyaml-1.12.jar
+includes=

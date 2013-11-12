@@ -1,16 +1,9 @@
 package model.wave;
 
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.Set;
+import java.util.*;
 
-import model.GestYaml;
-import model.Monstre;
-import model.Wave;
-import model.enums.ECatW;
-import model.enums.EGrowth;
-import model.enums.EMonsterAliases;
-import model.enums.ETypeW;
+import model.*;
+import model.enums.*;
 
 /**
  * Une vague par défaut, spawn de monstres choisis parmi une liste aléatoirement, et croissance du nombre de monstres à chaque vague.

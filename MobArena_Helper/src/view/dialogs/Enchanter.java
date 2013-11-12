@@ -2,23 +2,11 @@ package view.dialogs;
 
 import java.awt.Font;
 import java.awt.Image;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -30,7 +18,6 @@ import model.lists.EnchantList;
 import view.JWideComboBox;
 import view.cells.CellListCaracs;
 import view.cells.HoverListCellRenderer;
-import java.util.ResourceBundle;
 
 public class Enchanter extends JDialog {
 

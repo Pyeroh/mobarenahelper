@@ -2,16 +2,9 @@ package model;
 
 import java.util.LinkedHashMap;
 
-import model.enums.ECatW;
-import model.enums.EMonsterAliases;
-import model.enums.ETypeW;
+import model.enums.*;
 import model.lists.MonsterList;
-import model.wave.BossW;
-import model.wave.DefaultW;
-import model.wave.SpecialW;
-import model.wave.SupplyW;
-import model.wave.SwarmW;
-import model.wave.UpgradeW;
+import model.wave.*;
 
 /**
  * Classe abstraite servant à décrire une vague de manière générale.

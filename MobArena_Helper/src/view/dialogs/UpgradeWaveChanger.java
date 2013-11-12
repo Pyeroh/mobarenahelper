@@ -2,24 +2,11 @@ package view.dialogs;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionEvent;
@@ -27,13 +14,9 @@ import javax.swing.event.ListSelectionListener;
 
 import model.Classe;
 import model.lists.ArmorList;
-import model.wave.UpgradeSet;
+import model.wave.*;
 import model.wave.UpgradeSet.UpSetup;
-import model.wave.UpgradeW;
-import view.cells.CellListCaracs;
-import view.cells.CellListClass;
-import view.cells.HoverListCellRenderer;
-import java.util.ResourceBundle;
+import view.cells.*;
 
 public class UpgradeWaveChanger extends JDialog {
 

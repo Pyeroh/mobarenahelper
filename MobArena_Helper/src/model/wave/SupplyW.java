@@ -1,15 +1,9 @@
 package model.wave;
 
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.Set;
+import java.util.*;
 
-import model.GestYaml;
-import model.Monstre;
-import model.Wave;
-import model.enums.ECatW;
-import model.enums.EMonsterAliases;
-import model.enums.ETypeW;
+import model.*;
+import model.enums.*;
 import model.lists.ItemList;
 
 /**

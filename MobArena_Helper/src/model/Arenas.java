@@ -1,8 +1,6 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
+import java.util.*;
 
 /**
  * Un groupe d'arènes. Est généralement chargé à partir d'un fichier, et est dans tous les cas intégré à un seul fichier à la sauvegarde des données.

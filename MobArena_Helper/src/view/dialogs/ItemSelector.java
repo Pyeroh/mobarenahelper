@@ -2,41 +2,22 @@ package view.dialogs;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFormattedTextField;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
+import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.text.MaskFormatter;
 
 import model.Armor;
 import model.Item;
-import model.enums.EEnchantItem;
-import model.enums.EItem;
-import model.enums.EItemCat;
+import model.enums.*;
 import model.lists.ArmorList;
 import model.lists.ItemList;
 import view.JWideComboBox;
-import view.cells.CellListEItem;
-import view.cells.CellListItem;
-import view.cells.HoverListCellRenderer;
+import view.cells.*;
 
 public class ItemSelector extends JDialog {
 

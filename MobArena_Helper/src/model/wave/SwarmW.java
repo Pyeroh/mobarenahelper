@@ -2,13 +2,8 @@ package model.wave;
 
 import java.util.LinkedHashMap;
 
-import model.GestYaml;
-import model.Monstre;
-import model.Wave;
-import model.enums.EAmount;
-import model.enums.ECatW;
-import model.enums.EMonsterAliases;
-import model.enums.ETypeW;
+import model.*;
+import model.enums.*;
 
 /**
  * Une vague d'entrainement ! Ne fais apparaitre qu'un type de monste, avec un seul point de vie, et en très grande quantité.

@@ -1,12 +1,8 @@
 package model.wave;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
+import java.util.*;
 
-import model.Classe;
-import model.GestYaml;
-import model.Wave;
+import model.*;
 import model.enums.ETypeW;
 
 /**

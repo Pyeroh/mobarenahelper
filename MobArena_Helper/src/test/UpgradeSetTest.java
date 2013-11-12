@@ -1,7 +1,7 @@
 package test;
 
 import static org.junit.Assert.*;
-
+import static org.hamcrest.CoreMatchers.*;
 import java.util.ArrayList;
 
 import model.Arenas;
@@ -37,7 +37,7 @@ public class UpgradeSetTest {
 	@Test
 	public void testGetMap() {
 		assertEquals(g.dump("arenas.default.waves.recurrent.upgrade1.upgrades.all"), upset1.get(0).getMap());
-		assertNotEquals(g.dump("arenas.default.waves.recurrent.upgrade1.upgrades.all"), upset1.get(1).getMap());
+		assertThat(g.dump("arenas.default.waves.recurrent.upgrade1.upgrades.all"), not(upset1.get(1).getMap()));
 		assertEquals(g.getMap("arenas.default.waves.single.upgrade2.upgrades.Knight"), upset2.get(1).getMap());
 		assertNull(g.getMap("arenas.default.waves.single.upgrade2.upgrades.Knightt"));
 		assertEquals(g.dump("arenas.default.waves.single.upgrade2.upgrades.Tank.items"), upset2.get(2).getMap());

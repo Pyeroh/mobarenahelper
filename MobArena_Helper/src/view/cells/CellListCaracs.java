@@ -3,9 +3,7 @@ package view.cells;
 import java.awt.Font;
 import java.awt.Image;
 
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 public class CellListCaracs extends JPanel {
 

@@ -1,95 +1,24 @@
 package view;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.awt.*;
+import java.awt.event.*;
+import java.io.*;
 import java.text.NumberFormat;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Locale;
-import java.util.ResourceBundle;
+import java.util.*;
 
-import javax.swing.ButtonGroup;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JFormattedTextField;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButtonMenuItem;
-import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
-import javax.swing.SwingConstants;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.EtchedBorder;
-import javax.swing.border.LineBorder;
+import javax.swing.*;
+import javax.swing.border.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.text.MaskFormatter;
 
-import model.Arena;
-import model.ArenaConfig;
-import model.Arenas;
-import model.Classe;
-import model.GestYaml;
-import model.Item;
-import model.Monstre;
-import model.Wave;
-import model.enums.EAbilities;
-import model.enums.EAmount;
-import model.enums.ECatW;
-import model.enums.EGrowth;
-import model.enums.EHealth;
-import model.enums.EMonsters;
-import model.enums.ETypeW;
-import model.lists.ArmorList;
-import model.lists.ItemList;
-import model.lists.MonsterList;
-import model.wave.BossW;
-import model.wave.DefaultW;
-import model.wave.SpecialW;
-import model.wave.SupplyW;
-import model.wave.SwarmW;
-import model.wave.UpgradeW;
-import view.cells.CellListAbility;
-import view.cells.CellListCaracs;
-import view.cells.CellListClass;
-import view.cells.CellListMonster;
-import view.cells.CellListWave;
-import view.cells.HoverListCellRenderer;
-import view.dialogs.About;
-import view.dialogs.HowTo;
-import view.dialogs.ItemSelector;
-import view.dialogs.Todo;
-import view.dialogs.UpgradeWaveChanger;
-import view.dialogs.YmlJFileChooser;
+import model.*;
+import model.enums.*;
+import model.lists.*;
+import model.wave.*;
+import view.cells.*;
+import view.dialogs.*;
 
 public class MenuPrincipal extends JFrame {
 
@@ -258,7 +187,7 @@ public class MenuPrincipal extends JFrame {
 	public MenuPrincipal() throws ParseException{
 		super("MobArena Helper v2.0");
 
-		if(Locale.getDefault()!=Locale.ENGLISH && Locale.getDefault()!=Locale.FRENCH) Locale.setDefault(Locale.ENGLISH);
+		loadLocale();
 
 		setIconImage(new ImageIcon(MenuPrincipal.class.getResource("/gui/pics/mobarena.png")).getImage());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -784,7 +713,7 @@ public class MenuPrincipal extends JFrame {
 		combo_growth.setBounds(104, 197, 105, 20);
 		pan_conf.add(combo_growth);
 
-		lib_carac_wave = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_carac_wave.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_carac_wave = new JLabel(ResourceBundle.getBundle("gui.lang").getString("")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_carac_wave.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lib_carac_wave.setBounds(219, 11, 69, 20);
 		pan_conf.add(lib_carac_wave);
@@ -2001,6 +1930,17 @@ public class MenuPrincipal extends JFrame {
 		setVisible(true);
 	}
 
+	private void loadLocale() {
+		Locale def = Locale.getDefault();
+		
+		if(def==Locale.ENGLISH || def==Locale.CANADA || def==Locale.UK || def==Locale.US) {
+			Locale.setDefault(Locale.ENGLISH);
+		}
+		else if(def==Locale.CANADA_FRENCH || def==Locale.FRANCE) {
+			Locale.setDefault(Locale.FRENCH);
+		}
+	}
+
 	public void raz() {
 		Classe.classe_list.clear();
 		arenas = null;
@@ -2214,7 +2154,7 @@ public class MenuPrincipal extends JFrame {
 
 			chk_abi_announce.setVisible(true);
 			lib_abi_announce.setText("Fixed :");
-			lib_carac_wave.setText("Monsters");
+			lib_carac_wave.setText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.monsters"));
 			combo_carac_wave.setModel(new DefaultComboBoxModel<String>(EMonsters.namevalues()));
 			combo_carac_wave.setSelectedIndex(-1);
 			break;
