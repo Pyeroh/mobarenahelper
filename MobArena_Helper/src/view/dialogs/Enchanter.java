@@ -30,6 +30,7 @@ import model.lists.EnchantList;
 import view.JWideComboBox;
 import view.cells.CellListCaracs;
 import view.cells.HoverListCellRenderer;
+import java.util.ResourceBundle;
 
 public class Enchanter extends JDialog {
 
@@ -52,15 +53,15 @@ public class Enchanter extends JDialog {
 		setModalityType(ModalityType.APPLICATION_MODAL);
 		setIconImage(new ImageIcon(Enchanter.class.getResource("/gui/pics/mobarena.png")).getImage());
 		this.item = item;
-		setTitle("Enchanter - " + ((ItemSelector)dial).getFrame().getTitle());
+		setTitle(ResourceBundle.getBundle("gui.lang").getString("Enchanter.title") + " - " + ((ItemSelector)dial).getFrame().getTitle());
 
 		setSize(427,230);
 		setLocationRelativeTo(dial);
 		getContentPane().setLayout(null);
 
-		lib_enchant = new JLabel("Enchantments");
+		lib_enchant = new JLabel(ResourceBundle.getBundle("gui.lang").getString("Enchanter.lib_enchant.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_enchant.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lib_enchant.setBounds(6, 6, 92, 20);
+		lib_enchant.setBounds(6, 6, 100, 20);
 		getContentPane().add(lib_enchant);
 
 		list_enchant = new JList<CellListCaracs>();
@@ -114,9 +115,9 @@ public class Enchanter extends JDialog {
 		separator.setBounds(256, 6, 2, 184);
 		getContentPane().add(separator);
 
-		lib_enchantment = new JLabel("Enchantment");
+		lib_enchantment = new JLabel(ResourceBundle.getBundle("gui.lang").getString("Enchanter.lib_enchantment.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_enchantment.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lib_enchantment.setBounds(270, 8, 92, 20);
+		lib_enchantment.setBounds(270, 8, 100, 20);
 		getContentPane().add(lib_enchantment);
 
 		combo_enchantment = new JWideComboBox();
@@ -131,16 +132,16 @@ public class Enchanter extends JDialog {
 		combo_enchantment.setBounds(270, 38, 144, 26);
 		getContentPane().add(combo_enchantment);
 
-		lib_level = new JLabel("Level");
+		lib_level = new JLabel(ResourceBundle.getBundle("gui.lang").getString("Enchanter.lib_level.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_level.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lib_level.setBounds(270, 76, 34, 20);
+		lib_level.setBounds(270, 76, 43, 20);
 		getContentPane().add(lib_level);
 
 		combo_level = new JWideComboBox();
 		combo_level.setBounds(270, 108, 72, 26);
 		getContentPane().add(combo_level);
 
-		btn_add = new JButton("Add !");
+		btn_add = new JButton(ResourceBundle.getBundle("gui.lang").getString("Enchanter.btn_add.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		btn_add.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -156,7 +157,7 @@ public class Enchanter extends JDialog {
 		getContentPane().add(btn_add);
 		
 		lib_help = new JLabel("");
-		lib_help.setToolTipText("<html>This enchanter is done to add or delete an enchantment on a weapon or a <br>tool. You can't modify an existing enchantment by clicking it. But it's not that <br>hard to delete it by wheel-clicking it and creating it again, isn't it ? :p\r\n<br> ... okay, I'll change it in a future update...");
+		lib_help.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("Enchanter.lib_help.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_help.setBounds(220, 6, 24, 24);
 		Image img = CellListCaracs.scaleImage(new ImageIcon(Enchanter.class.getResource("/gui/pics/question.png")).getImage(), lib_help);
 		lib_help.setIcon(new ImageIcon(img));

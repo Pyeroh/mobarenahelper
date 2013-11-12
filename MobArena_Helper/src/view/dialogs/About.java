@@ -20,6 +20,7 @@ import javax.swing.border.LineBorder;
 
 import view.MenuPrincipal;
 import view.cells.CellListCaracs;
+import java.util.ResourceBundle;
 
 public class About extends JDialog {
 
@@ -48,7 +49,7 @@ public class About extends JDialog {
 		getContentPane().add(img_header);
 
 		lib_about = new JTextPane();
-		lib_about.setText("MobArena Helper v2 is inspired by the WaveEditor by Agnate. It can almost do the whole configuration job instead of you !\r\nPyeroh's Dev Concept is the owner of this software, and the banner above is property of garbagemule. Almost everything you can find here comes from his wiki on gitHub.\r\nThis software is designed to edit and customize waves for the plugin MobArena, created by garbagemule.\r\nI'm French, so please excuse me for my mistakes ;)\r\nFeel free to visit my page on facebook at :");
+		lib_about.setText(ResourceBundle.getBundle("gui.lang").getString("About.lib_about.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_about.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lib_about.setEditable(false);
 		lib_about.setBackground(this.getBackground());
@@ -101,9 +102,9 @@ public class About extends JDialog {
 		btn_ok.setBounds(372, 314, 59, 23);
 		getContentPane().add(btn_ok);
 
-		lib_github = new JLabel("My GitHub :");
+		lib_github = new JLabel(ResourceBundle.getBundle("gui.lang").getString("About.lib_github.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_github.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lib_github.setBounds(10, 319, 59, 14);
+		lib_github.setBounds(10, 319, 62, 14);
 		getContentPane().add(lib_github);
 
 		lib_link_git = new JLabel("https://github.com/Pyeroh/mobarenahelper");

@@ -83,6 +83,7 @@ public class HowTo extends JDialog {
 		tab_howto5.addTab("<html>Upgrade Wave<br>Changer", null, lib_howto7, null);
 		
 		lib_howto8 = new JTextPane();
+		lib_howto8.setEditable(false);
 		lib_howto8.setText("That window is very simple : it allows you to edit enchantments applied to an item, which can be a piece of armor, a tool, or a weapon.\r\n\r\nTo add an enchantment, select it in the drop-down list, select the level, and click Add.\r\nTo remove one, middle click on it.\r\n\r\nThat's all !");
 		lib_howto8.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		tab_howto5.addTab("Enchanter", null, lib_howto8, null);

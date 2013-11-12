@@ -33,6 +33,7 @@ import model.wave.UpgradeW;
 import view.cells.CellListCaracs;
 import view.cells.CellListClass;
 import view.cells.HoverListCellRenderer;
+import java.util.ResourceBundle;
 
 public class UpgradeWaveChanger extends JDialog {
 
@@ -59,7 +60,7 @@ public class UpgradeWaveChanger extends JDialog {
 	public UpgradeWaveChanger(JFrame frame, UpgradeW upw) {
 		super();
 		setModalityType(ModalityType.APPLICATION_MODAL);
-		setTitle("Upgrade Wave modifier - "+frame.getTitle());
+		setTitle(ResourceBundle.getBundle("gui.lang").getString("UpgradeWaveChanger.title") + " - "+frame.getTitle());
 
 		setIconImage(new ImageIcon(UpgradeWaveChanger.class.getResource("/gui/pics/mobarena.png")).getImage());
 		setResizable(false);
@@ -115,12 +116,12 @@ public class UpgradeWaveChanger extends JDialog {
 		scrpan_classes.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		getContentPane().add(scrpan_classes);
 
-		lib_classes_upgrade = new JLabel("Classes to upgrade");
+		lib_classes_upgrade = new JLabel(ResourceBundle.getBundle("gui.lang").getString("UpgradeWaveChanger.lib_classes_upgrade.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_classes_upgrade.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lib_classes_upgrade.setBounds(6, 6, 131, 25);
 		getContentPane().add(lib_classes_upgrade);
 
-		btn_add_class = new JButton("Add class");
+		btn_add_class = new JButton(ResourceBundle.getBundle("gui.lang").getString("UpgradeWaveChanger.btn_add_class.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		btn_add_class.addMouseListener(new MouseAdapter() {
 			public void mouseReleased(MouseEvent e) {
 				@SuppressWarnings("unchecked")
@@ -155,7 +156,7 @@ public class UpgradeWaveChanger extends JDialog {
 				}
 			}
 		});
-		btn_add_class.setBounds(233, 5, 90, 28);
+		btn_add_class.setBounds(192, 5, 131, 28);
 		getContentPane().add(btn_add_class);
 
 		pan_upgrade_config = new JPanel();
@@ -164,9 +165,9 @@ public class UpgradeWaveChanger extends JDialog {
 		getContentPane().add(pan_upgrade_config);
 		pan_upgrade_config.setLayout(null);
 
-		lib_setup = new JLabel("Setup");
+		lib_setup = new JLabel(ResourceBundle.getBundle("gui.lang").getString("UpgradeWaveChanger.lib_setup.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_setup.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lib_setup.setBounds(6, 6, 48, 20);
+		lib_setup.setBounds(6, 6, 90, 20);
 		pan_upgrade_config.add(lib_setup);
 
 		combo_setup = new JComboBox<String>();
@@ -184,12 +185,12 @@ public class UpgradeWaveChanger extends JDialog {
 			}
 		});
 		combo_setup.setModel(new DefaultComboBoxModel<String>(UpSetup.namevalues()));
-		combo_setup.setBounds(66, 6, 114, 20);
+		combo_setup.setBounds(108, 6, 114, 20);
 		pan_upgrade_config.add(combo_setup);
 
-		lib_items = new JLabel("Items");
+		lib_items = new JLabel(ResourceBundle.getBundle("gui.lang").getString("UpgradeWaveChanger.lib_items.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_items.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lib_items.setBounds(6, 38, 48, 20);
+		lib_items.setBounds(6, 38, 90, 20);
 		pan_upgrade_config.add(lib_items);
 
 		MouseAdapter itemsetter = new MouseAdapter() {
@@ -206,19 +207,19 @@ public class UpgradeWaveChanger extends JDialog {
 			}
 		};
 
-		btn_set_items = new JButton("Set");
+		btn_set_items = new JButton(ResourceBundle.getBundle("gui.lang").getString("UpgradeWaveChanger.btn_set_items.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		btn_set_items.addMouseListener(itemsetter);
-		btn_set_items.setBounds(66, 38, 114, 20);
+		btn_set_items.setBounds(108, 38, 114, 20);
 		pan_upgrade_config.add(btn_set_items);
 
-		lib_armor = new JLabel("Armor");
+		lib_armor = new JLabel(ResourceBundle.getBundle("gui.lang").getString("UpgradeWaveChanger.lib_armor.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_armor.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lib_armor.setBounds(6, 70, 48, 20);
+		lib_armor.setBounds(6, 70, 90, 20);
 		pan_upgrade_config.add(lib_armor);
 
-		btn_set_armor = new JButton("Set");
+		btn_set_armor = new JButton(ResourceBundle.getBundle("gui.lang").getString("UpgradeWaveChanger.btn_set_armor.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		btn_set_armor.addMouseListener(itemsetter);
-		btn_set_armor.setBounds(66, 70, 114, 20);
+		btn_set_armor.setBounds(108, 70, 114, 20);
 		pan_upgrade_config.add(btn_set_armor);
 
 		list_permissions = new JList<CellListCaracs>();
@@ -255,12 +256,12 @@ public class UpgradeWaveChanger extends JDialog {
 			}
 		});
 
-		lib_permissions = new JLabel("Permissions");
+		lib_permissions = new JLabel(ResourceBundle.getBundle("gui.lang").getString("UpgradeWaveChanger.lib_permissions.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_permissions.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lib_permissions.setBounds(6, 102, 76, 20);
 		pan_upgrade_config.add(lib_permissions);
 
-		btn_add_perm = new JButton("Add");
+		btn_add_perm = new JButton(ResourceBundle.getBundle("gui.lang").getString("UpgradeWaveChanger.btn_add_perm.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		btn_add_perm.addMouseListener(new MouseAdapter() {
 			public void mouseReleased(MouseEvent e) {
 				String perm = JOptionPane.showInputDialog(
