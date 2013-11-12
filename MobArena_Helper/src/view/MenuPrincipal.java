@@ -1601,15 +1601,15 @@ public class MenuPrincipal extends JFrame {
 		chk_clear_wave_next.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_clear_wave_next.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_clear_wave_next.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_clear_wave_next.setFont(new Font("Tahoma", Font.BOLD, 14));
-		chk_clear_wave_next.setBounds(6, 117, 182, 25);
+		chk_clear_wave_next.setBounds(6, 117, 212, 25);
 		pan_arena_settings.add(chk_clear_wave_next);
 
 		chk_clear_boss_next = new JCheckBox(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_clear_boss_next.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_clear_boss_next.addItemListener(chkconfig_listener);
 		chk_clear_boss_next.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_clear_boss_next.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_clear_boss_next.setHorizontalTextPosition(SwingConstants.LEFT);
-		chk_clear_boss_next.setFont(new Font("Tahoma", Font.BOLD, 14));
-		chk_clear_boss_next.setBounds(6, 154, 177, 25);
+		chk_clear_boss_next.setFont(new Font("Tahoma", Font.BOLD, 13));
+		chk_clear_boss_next.setBounds(6, 154, 228, 25);
 		pan_arena_settings.add(chk_clear_boss_next);
 
 		chk_clear_wave_boss = new JCheckBox(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_clear_wave_boss.text")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -1626,15 +1626,15 @@ public class MenuPrincipal extends JFrame {
 		chk_lightning.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_lightning.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_lightning.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_lightning.setFont(new Font("Tahoma", Font.BOLD, 14));
-		chk_lightning.setBounds(176, 43, 90, 25);
+		chk_lightning.setBounds(191, 45, 90, 25);
 		pan_arena_settings.add(chk_lightning);
 
 		chk_auto_equip = new JCheckBox(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_auto_equip.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_auto_equip.addItemListener(chkconfig_listener);
 		chk_auto_equip.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_auto_equip.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_auto_equip.setHorizontalTextPosition(SwingConstants.LEFT);
-		chk_auto_equip.setFont(new Font("Tahoma", Font.BOLD, 14));
-		chk_auto_equip.setBounds(6, 228, 144, 25);
+		chk_auto_equip.setFont(new Font("Tahoma", Font.BOLD, 12));
+		chk_auto_equip.setBounds(6, 228, 158, 25);
 		pan_arena_settings.add(chk_auto_equip);
 
 		chk_soft_restore = new JCheckBox(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_soft_restore.text")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -1642,7 +1642,7 @@ public class MenuPrincipal extends JFrame {
 		chk_soft_restore.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_soft_restore.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_soft_restore.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_soft_restore.setFont(new Font("Tahoma", Font.BOLD, 14));
-		chk_soft_restore.setBounds(161, 228, 105, 25);
+		chk_soft_restore.setBounds(161, 228, 120, 25);
 		pan_arena_settings.add(chk_soft_restore);
 
 		chk_soft_restore_drops = new JCheckBox(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_soft_restore_drops.text")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -1650,7 +1650,7 @@ public class MenuPrincipal extends JFrame {
 		chk_soft_restore_drops.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_soft_restore_drops.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_soft_restore_drops.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_soft_restore_drops.setFont(new Font("Tahoma", Font.BOLD, 14));
-		chk_soft_restore_drops.setBounds(6, 265, 149, 25);
+		chk_soft_restore_drops.setBounds(6, 265, 199, 25);
 		pan_arena_settings.add(chk_soft_restore_drops);
 
 		chk_require_inv_join = new JCheckBox(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_require_inv_join.text")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -1674,7 +1674,7 @@ public class MenuPrincipal extends JFrame {
 		chk_hellhounds.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_hellhounds.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_hellhounds.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_hellhounds.setFont(new Font("Tahoma", Font.BOLD, 14));
-		chk_hellhounds.setBounds(6, 376, 99, 25);
+		chk_hellhounds.setBounds(6, 376, 139, 25);
 		pan_arena_settings.add(chk_hellhounds);
 
 		chk_pvp = new JCheckBox(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_pvp.text")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -1682,7 +1682,7 @@ public class MenuPrincipal extends JFrame {
 		chk_pvp.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_pvp.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_pvp.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_pvp.setFont(new Font("Tahoma", Font.BOLD, 14));
-		chk_pvp.setBounds(117, 376, 108, 25);
+		chk_pvp.setBounds(153, 376, 108, 25);
 		pan_arena_settings.add(chk_pvp);
 
 		chk_monster_infight = new JCheckBox(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_monster_infight.text")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -1690,22 +1690,22 @@ public class MenuPrincipal extends JFrame {
 		chk_monster_infight.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_monster_infight.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_monster_infight.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_monster_infight.setFont(new Font("Tahoma", Font.BOLD, 14));
-		chk_monster_infight.setBounds(6, 413, 127, 25);
+		chk_monster_infight.setBounds(6, 413, 170, 25);
 		pan_arena_settings.add(chk_monster_infight);
 
 		chk_allow_tp = new JCheckBox(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_allow_tp.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_allow_tp.addItemListener(chkconfig_listener);
 		chk_allow_tp.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_allow_tp.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_allow_tp.setHorizontalTextPosition(SwingConstants.LEFT);
-		chk_allow_tp.setFont(new Font("Tahoma", Font.BOLD, 14));
-		chk_allow_tp.setBounds(145, 413, 139, 25);
+		chk_allow_tp.setFont(new Font("Tahoma", Font.BOLD, 13));
+		chk_allow_tp.setBounds(161, 450, 134, 25);
 		pan_arena_settings.add(chk_allow_tp);
 
 		chk_spectate_death = new JCheckBox(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_spectate_death.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_spectate_death.addItemListener(chkconfig_listener);
 		chk_spectate_death.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_spectate_death.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_spectate_death.setHorizontalTextPosition(SwingConstants.LEFT);
-		chk_spectate_death.setFont(new Font("Tahoma", Font.BOLD, 14));
+		chk_spectate_death.setFont(new Font("Tahoma", Font.BOLD, 12));
 		chk_spectate_death.setBounds(6, 450, 149, 25);
 		pan_arena_settings.add(chk_spectate_death);
 
@@ -1714,7 +1714,7 @@ public class MenuPrincipal extends JFrame {
 		chk_auto_respawn.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_auto_respawn.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_auto_respawn.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_auto_respawn.setFont(new Font("Tahoma", Font.BOLD, 14));
-		chk_auto_respawn.setBounds(307, 6, 119, 25);
+		chk_auto_respawn.setBounds(307, 6, 149, 25);
 		pan_arena_settings.add(chk_auto_respawn);
 
 		chk_share = new JCheckBox(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_share.text")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -1722,13 +1722,13 @@ public class MenuPrincipal extends JFrame {
 		chk_share.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_share.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_share.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_share.setFont(new Font("Tahoma", Font.BOLD, 14));
-		chk_share.setBounds(307, 43, 105, 25);
+		chk_share.setBounds(307, 43, 139, 25);
 		pan_arena_settings.add(chk_share);
 
 		lib_min_players = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_min_players.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_min_players.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_min_players.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_min_players.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lib_min_players.setBounds(307, 80, 84, 25);
+		lib_min_players.setBounds(307, 80, 95, 25);
 		pan_arena_settings.add(lib_min_players);
 
 		sai_min_players = new JFormattedTextField(NumberFormat.getIntegerInstance());
@@ -1743,7 +1743,7 @@ public class MenuPrincipal extends JFrame {
 		lib_max_players = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_max_players.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_max_players.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_max_players.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_max_players.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lib_max_players.setBounds(307, 117, 84, 25);
+		lib_max_players.setBounds(307, 117, 95, 25);
 		pan_arena_settings.add(lib_max_players);
 
 		sai_max_players = new JFormattedTextField(NumberFormat.getIntegerInstance());
@@ -1818,7 +1818,7 @@ public class MenuPrincipal extends JFrame {
 		lib_monster_limit = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_monster_limit.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_monster_limit.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_monster_limit.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_monster_limit.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lib_monster_limit.setBounds(307, 302, 119, 25);
+		lib_monster_limit.setBounds(307, 302, 127, 25);
 		pan_arena_settings.add(lib_monster_limit);
 
 		sai_monster_limit = new JFormattedTextField(NumberFormat.getIntegerInstance());
@@ -1835,7 +1835,7 @@ public class MenuPrincipal extends JFrame {
 		chk_monster_xp.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_monster_xp.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_monster_xp.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_monster_xp.setFont(new Font("Tahoma", Font.BOLD, 14));
-		chk_monster_xp.setBounds(307, 339, 149, 25);
+		chk_monster_xp.setBounds(307, 339, 181, 25);
 		pan_arena_settings.add(chk_monster_xp);
 
 		chk_keep_xp = new JCheckBox(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_keep_xp.text")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -1843,7 +1843,7 @@ public class MenuPrincipal extends JFrame {
 		chk_keep_xp.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_keep_xp.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_keep_xp.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_keep_xp.setFont(new Font("Tahoma", Font.BOLD, 14));
-		chk_keep_xp.setBounds(307, 376, 80, 25);
+		chk_keep_xp.setBounds(307, 376, 95, 25);
 		pan_arena_settings.add(chk_keep_xp);
 
 		chk_food_regen = new JCheckBox(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_food_regen.text")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -1859,7 +1859,7 @@ public class MenuPrincipal extends JFrame {
 		chk_lock_food.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_lock_food.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_lock_food.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_lock_food.setFont(new Font("Tahoma", Font.BOLD, 14));
-		chk_lock_food.setBounds(307, 450, 127, 25);
+		chk_lock_food.setBounds(307, 450, 170, 25);
 		pan_arena_settings.add(chk_lock_food);
 
 		lib_player_time = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_player_time.text")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -1884,8 +1884,8 @@ public class MenuPrincipal extends JFrame {
 
 		lib_auto_start = new JLabel(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_auto_start.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_auto_start.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.lib_auto_start.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
-		lib_auto_start.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lib_auto_start.setBounds(514, 117, 119, 25);
+		lib_auto_start.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lib_auto_start.setBounds(514, 117, 147, 25);
 		pan_arena_settings.add(lib_auto_start);
 
 		sai_auto_start = new JFormattedTextField(NumberFormat.getIntegerInstance());
@@ -1894,14 +1894,14 @@ public class MenuPrincipal extends JFrame {
 		sai_auto_start.setBackground(new Color(255, 255, 255));
 		sai_auto_start.setColumns(10);
 		sai_auto_start.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		sai_auto_start.setBounds(645, 118, 50, 25);
+		sai_auto_start.setBounds(662, 118, 50, 25);
 		pan_arena_settings.add(sai_auto_start);
 
 		chk_spout_class = new JCheckBox(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_spout_class.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_spout_class.addItemListener(chkconfig_listener);
 		chk_spout_class.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_spout_class.setFont(new Font("Tahoma", Font.BOLD, 14));
-		chk_spout_class.setBounds(514, 6, 149, 25);
+		chk_spout_class.setBounds(514, 6, 181, 25);
 		pan_arena_settings.add(chk_spout_class);
 
 		chk_auto_ignite = new JCheckBox(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_auto_ignite.text")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -1909,14 +1909,14 @@ public class MenuPrincipal extends JFrame {
 		chk_auto_ignite.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_auto_ignite.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_auto_ignite.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_auto_ignite.setFont(new Font("Tahoma", Font.BOLD, 14));
-		chk_auto_ignite.setBounds(514, 80, 149, 25);
+		chk_auto_ignite.setBounds(514, 80, 158, 25);
 		pan_arena_settings.add(chk_auto_ignite);
 
 		chk_use_class_chest = new JCheckBox(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_use_class_chest.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_use_class_chest.addItemListener(chkconfig_listener);
 		chk_use_class_chest.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_use_class_chest.setFont(new Font("Tahoma", Font.BOLD, 14));
-		chk_use_class_chest.setBounds(514, 154, 131, 25);
+		chk_use_class_chest.setBounds(514, 154, 147, 25);
 		pan_arena_settings.add(chk_use_class_chest);
 
 		chk_display_waves = new JCheckBox(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_display_waves.text")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -1940,7 +1940,7 @@ public class MenuPrincipal extends JFrame {
 		chk_auto_ready.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_auto_ready.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_auto_ready.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_auto_ready.setFont(new Font("Tahoma", Font.BOLD, 14));
-		chk_auto_ready.setBounds(514, 266, 99, 25);
+		chk_auto_ready.setBounds(514, 266, 181, 25);
 		pan_arena_settings.add(chk_auto_ready);
 
 		chk_scoreboard = new JCheckBox(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_scoreboard.text")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -1964,7 +1964,7 @@ public class MenuPrincipal extends JFrame {
 		chk_global_join.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_global_join.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_global_join.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_global_join.setFont(new Font("Tahoma", Font.BOLD, 14));
-		chk_global_join.setBounds(514, 376, 170, 25);
+		chk_global_join.setBounds(514, 376, 181, 25);
 		pan_arena_settings.add(chk_global_join);
 
 		chk_global_end = new JCheckBox(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.chk_global_end.text")); //$NON-NLS-1$ //$NON-NLS-2$
