@@ -18,6 +18,7 @@ import model.lists.ArmorList;
 import model.lists.ItemList;
 import view.JWideComboBox;
 import view.cells.*;
+import java.util.ResourceBundle;
 
 public class ItemSelector extends JDialog {
 
@@ -57,7 +58,7 @@ public class ItemSelector extends JDialog {
 	public ItemSelector(JFrame frame, ItemList items, int max, boolean isArmor, boolean classSelector) {
 		super();
 		setModalityType(ModalityType.APPLICATION_MODAL);
-		setTitle("Item Selector - "+frame.getTitle());
+		setTitle(ResourceBundle.getBundle("gui.lang").getString("ItemSelector.title")+" - "+frame.getTitle());
 		
 		setIconImage(new ImageIcon(ItemSelector.class.getResource("/gui/pics/mobarena.png")).getImage());
 		setResizable(false);
@@ -71,14 +72,14 @@ public class ItemSelector extends JDialog {
 		setLocationRelativeTo(frame);
 		getContentPane().setLayout(null);
 
-		lib_selectable = new JLabel("Items selectable");
+		lib_selectable = new JLabel(ResourceBundle.getBundle("gui.lang").getString("ItemSelector.lib_selectable.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_selectable.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lib_selectable.setBounds(6, 6, 121, 25);
+		lib_selectable.setBounds(6, 6, 154, 25);
 		getContentPane().add(lib_selectable);
 
-		lib_sort = new JLabel("Sort by");
+		lib_sort = new JLabel(ResourceBundle.getBundle("gui.lang").getString("ItemSelector.lib_sort.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_sort.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lib_sort.setBounds(6, 43, 55, 25);
+		lib_sort.setBounds(6, 43, 86, 25);
 		getContentPane().add(lib_sort);
 
 		combo_sort = new JWideComboBox();
@@ -102,12 +103,12 @@ public class ItemSelector extends JDialog {
 		String[] tab = {EItemCat.weapon.getGui_name()};
 		if(!this.isArmor) tab = EItemCat.namevalues();
 		combo_sort.setModel(new DefaultComboBoxModel<String>(tab));
-		combo_sort.setBounds(73, 43, 121, 25);
+		combo_sort.setBounds(104, 43, 121, 25);
 		getContentPane().add(combo_sort);
 
-		lib_search = new JLabel("Search");
+		lib_search = new JLabel(ResourceBundle.getBundle("gui.lang").getString("ItemSelector.lib_search.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_search.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lib_search.setBounds(6, 80, 55, 25);
+		lib_search.setBounds(6, 80, 86, 25);
 		getContentPane().add(lib_search);
 
 		try {
@@ -120,7 +121,7 @@ public class ItemSelector extends JDialog {
 			});
 		} catch (ParseException e) {}
 		sai_search.setBackground(new Color(255, 255, 255));
-		sai_search.setBounds(73, 80, 122, 25);
+		sai_search.setBounds(104, 80, 122, 25);
 		sai_search.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		getContentPane().add(sai_search);
 		sai_search.setColumns(10);
@@ -139,7 +140,7 @@ public class ItemSelector extends JDialog {
 		scrpan_selectable.setBounds(6, 117, 350, 200);
 		getContentPane().add(scrpan_selectable);
 
-		btn_add = new JButton("Add >>");
+		btn_add = new JButton(ResourceBundle.getBundle("gui.lang").getString("ItemSelector.btn_add.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		btn_add.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -150,7 +151,7 @@ public class ItemSelector extends JDialog {
 		btn_add.setBounds(368, 170, 101, 28);
 		getContentPane().add(btn_add);
 
-		btn_remove = new JButton("<< Remove");
+		btn_remove = new JButton(ResourceBundle.getBundle("gui.lang").getString("ItemSelector.btn_remove.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		btn_remove.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -161,9 +162,9 @@ public class ItemSelector extends JDialog {
 		btn_remove.setBounds(368, 210, 101, 28);
 		getContentPane().add(btn_remove);
 
-		lib_selected = new JLabel("Items selected");
+		lib_selected = new JLabel(ResourceBundle.getBundle("gui.lang").getString("ItemSelector.lib_selected.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_selected.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lib_selected.setBounds(481, 6, 121, 25);
+		lib_selected.setBounds(481, 6, 134, 25);
 		getContentPane().add(lib_selected);
 
 		list_selected = new JList<CellListItem>();
@@ -192,7 +193,7 @@ public class ItemSelector extends JDialog {
 			}
 		});
 
-		btn_enchant = new JButton("Enchant");
+		btn_enchant = new JButton(ResourceBundle.getBundle("gui.lang").getString("ItemSelector.btn_enchant.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		btn_enchant.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
