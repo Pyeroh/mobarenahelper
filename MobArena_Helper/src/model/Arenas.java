@@ -52,6 +52,16 @@ public class Arenas {
 		return arraylistarenas;
 	}
 	
+	public boolean containsArena(String name) {
+		boolean contains = false;
+		for(int i=0;i<arraylistarenas.size();i++) {
+			if(arraylistarenas.get(i).getNom().equalsIgnoreCase(name)) {
+				contains = true;
+			}
+		}
+		return contains;
+	}
+	
 	private void load(){
 		GestYaml gclasse = new GestYaml(listclasses);
 		//Extraction des classes

@@ -25,17 +25,17 @@ classes:
         items: stick
         armor: 302,303,304,305
 arenas:
-    default:
+    test:
         settings:
             world: world
             enabled: true
-            protect: true
+            protect: false
             entry-fee: ''
             clear-wave-before-next: false
             clear-boss-before-next: false
             clear-wave-before-boss: false
-            lightning: true
-            auto-equip-armor: true
+            lightning: false
+            auto-equip-armor: false
             soft-restore: false
             soft-restore-drops: false
             require-empty-inv-join: false
@@ -44,20 +44,20 @@ arenas:
             pvp-enabled: false
             monster-infight: false
             allow-teleporting: false
-            spectate-on-death: true
-            auto-respawn: true
-            share-items-in-arena: true
+            spectate-on-death: false
+            auto-respawn: false
+            share-items-in-arena: false
             min-players: 0
             max-players: 0
             max-join-distance: 0
-            first-wave-delay: 5
-            wave-interval: 15
+            first-wave-delay: 0
+            wave-interval: 0
             final-wave: 0
-            monster-limit: 100
+            monster-limit: 0
             monster-exp: false
-            keep-exp: true
+            keep-exp: false
             food-regen: false
-            lock-food-level: true
+            lock-food-level: false
             spout-class-select: false
             player-time-in-arena: world
             auto-ignite-tnt: false
@@ -72,103 +72,8 @@ arenas:
             global-join-announce: false
         waves:
             recurrent:
-                def1:
-                    type: default
+                New Wave:
+                    type: test
                     priority: 1
                     frequency: 1
-                    monsters:
-                        zombies: 10
-                        skeletons: 4
-                        exploding_sheep: 5
-                def2:
-                    type: default
-                    priority: 2
-                    frequency: 1
-                    wave: 5
-                    monsters:
-                        zombies: 10
-                        skeletons: 6
-                        creepers: 4
-                spec1:
-                    type: special
-                    priority: 5
-                    frequency: 4
-                    wave: 4
-                    monsters:
-                        powered_creepers: 10
-                        angry_wolves: 10
-                        zombie_pigmen: 10
-                upgrade1:
-                    type: upgrade
-                    priority: 7
-                    frequency: 10
-                    wave: 10
-                    upgrades:
-                        all: potion:8197:2
-                        Archer: arrow:64
-                        Oddjob: tnt:2, netherrack
-                    give-all-items: true
-            single:
-                swarm1:
-                    type: swarm
-                    wave: 7
-                    monster: slimes
-                    amount: medium
-                boss1:
-                    type: boss
-                    wave: 9
-                    monster: spider
-                    abilities: fire-aura, disorient-target, fireballs, throw-nearby
-                    ability-interval: 5
-                boss2:
-                    type: boss
-                    wave: 13
-                    monster: zombie_pigman
-                    health: high
-                    abilities: root-target, arrows, fire-aura
-                upgrade2:
-                    type: upgrade
-                    wave: 14
-                    upgrades:
-                        all: potion:8197:2
-                        Knight:
-                            armor: diamond_helmet
-                            items: diamond_sword 16:2;19:1
-                        Tank: iron_sword 19:3
-                        Oddjob:
-                            armor: 307,308
-                        Wizard:
-                            permissions:
-                            - magicspells.cast.ChainLightning
-                    give-all-items: true
-                boss3:
-                    type: boss
-                    wave: 16
-                    monster: wolf
-                    health: psycho
-                    abilities: warp-to-player, fire-aura, throw-nearby, fireballs, arrows
-                    ability-interval: 1
-                    reward: diamond_chestplate
-                supply1:
-                    type: supply
-                    wave: 19
-                    monsters:
-                        cows: 10
-                        pigs: 5
-                    drops: grilled_pork, cooked_chicken, cooked_beef, cooked_fish:2
-        rewards:
-            waves:
-                every:
-                    '3': feather, bone, stick
-                    '5': dirt:4, gravel:4, stone:4
-                    '10': iron_ingot:10, gold_ingot:8
-                after:
-                    '7': minecart, storage_minecart, powered_minecart
-                    '13': iron_sword, iron_pickaxe, iron_spade
-                    '16': diamond_sword
-        class-limits:
-            Archer: -1
-            Oddjob: -1
-            Chemist: -1
-            Tank: -1
-            Knight: -1
+            single: {}

@@ -187,8 +187,18 @@ public class MenuPrincipal extends JFrame {
 
 	public MenuPrincipal() throws ParseException{
 		super("MobArena Helper v2.0");
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				int choice = JOptionPane.showConfirmDialog(rootPane, BUNDLE.getString("MenuPrincipal.message.unsavedChangesQuit"), BUNDLE.getString("Message.title.confirmation"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+				if(choice==JOptionPane.YES_OPTION) {
+					System.exit(0);
+				}
+			}
+		});
 
 		loadLocale();
+		//BUNDLE = ResourceBundle.getBundle("gui.lang");
 
 		setIconImage(new ImageIcon(MenuPrincipal.class.getResource("/gui/pics/mobarena.png")).getImage());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -264,19 +274,19 @@ public class MenuPrincipal extends JFrame {
 				JRadioButtonMenuItem source = (JRadioButtonMenuItem) e.getSource();
 				if (e.getStateChange()==ItemEvent.SELECTED) {
 					if (!initializing) {
-						if (source == rdbtnmntmEnglish) {
-							Locale.setDefault(Locale.ENGLISH);
-						} else if (source == rdbtnmntmFrench) {
-							Locale.setDefault(Locale.FRENCH);
-						}
 						int choice = JOptionPane
 								.showConfirmDialog(
 										rootPane,
-										"Changing the language require the application to be restarted.\nDo you wish to restart the application ?",
-										"Confirmation",
+										BUNDLE.getString("MenuPrincipal.message.changeLang"),
+										BUNDLE.getString("Message.title.confirmation"),
 										JOptionPane.YES_NO_OPTION);
 						switch (choice) {
 						case JOptionPane.YES_OPTION:
+							if (source == rdbtnmntmEnglish) {
+								Locale.setDefault(Locale.ENGLISH);
+							} else if (source == rdbtnmntmFrench) {
+								Locale.setDefault(Locale.FRENCH);
+							}
 							MenuPrincipal.this.setVisible(false);
 							try {
 								new MenuPrincipal();
@@ -304,7 +314,9 @@ public class MenuPrincipal extends JFrame {
 				fchoose.showOpenDialog(null);
 				file = fchoose.getSelectedFile();
 				if (file!=null) {
+					raz();
 					try {
+						file = fchoose.getSelectedFile();
 						GestYaml.S_gestionnaire = new GestYaml(file);
 						GestYaml g = GestYaml.S_gestionnaire;
 						arenas = new Arenas(g.getMap("arenas"),g.getMap("global-settings"),g.getMap("classes"));
@@ -319,8 +331,7 @@ public class MenuPrincipal extends JFrame {
 					} catch (Exception e1) {
 						e1.printStackTrace();
 
-						raz();
-						JOptionPane.showMessageDialog(rootPane, "Incorrect file format, please check it at\nhttp://yaml-online-parser.appspot.com/\nand verify everything is okay in your config file","Critical error",JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(rootPane, BUNDLE.getString("MenuPrincipal.message.incorrectFileFormat"),BUNDLE.getString("Message.title.criticalError"),JOptionPane.ERROR_MESSAGE);
 
 					}
 
@@ -353,7 +364,7 @@ public class MenuPrincipal extends JFrame {
 							GestYaml dumper = new GestYaml(arenas.getMap());
 							dumper.dumpAsFile(fw);
 							JOptionPane.showMessageDialog(null,
-									"Finished saving", "",
+									BUNDLE.getString("MenuPrincipal.message.finishSaving"), "",
 									JOptionPane.INFORMATION_MESSAGE);
 
 						} catch (IOException e1) {
@@ -363,7 +374,7 @@ public class MenuPrincipal extends JFrame {
 
 				}
 				else {
-					JOptionPane.showMessageDialog(null, "You must load a file before saving it !\nElse, you can try to create your own config.","Saving error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, BUNDLE.getString("MenuPrincipal.message.mustLoad"),BUNDLE.getString("Message.title.savingError"), JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -408,15 +419,18 @@ public class MenuPrincipal extends JFrame {
 					raz();
 					arenas = new  Arenas();
 				}
-				String name = JOptionPane.showInputDialog(rootPane, "Which name will you give to this arena ?\n\nWARNING : you can't change an arena's name, \notherwise you will have to delete and re-create it.","Arena's name", JOptionPane.QUESTION_MESSAGE);
+				String name = JOptionPane.showInputDialog(rootPane, BUNDLE.getString("MenuPrincipal.message.arenaName"),BUNDLE.getString("Message.title.arenaName"), JOptionPane.QUESTION_MESSAGE);
 				if(name!=null) {
 					name = name.trim();
-					arenas.getALarenas().add(new Arena(name));
-					combo_arena.addItem(name);
-					combo_arena.setSelectedItem(name);
-					loadArena(combo_arena.getSelectedIndex());
-					tabpan_config.setEnabledAt(1, true);
-					tabpan_config.setEnabledAt(2, true);
+					if (!arenas.containsArena(name)) {
+						arenas.getALarenas().add(new Arena(name));
+						combo_arena.addItem(name);
+						combo_arena.setSelectedItem(name);
+						loadArena(combo_arena.getSelectedIndex());
+						tabpan_config.setEnabledAt(1, true);
+						tabpan_config.setEnabledAt(2, true);
+					}
+					else JOptionPane.showMessageDialog(rootPane, BUNDLE.getString("MenuPrincipal.message.errorArena"), BUNDLE.getString("Message.title.error"), JOptionPane.ERROR_MESSAGE);
 				}
 
 			}
@@ -431,11 +445,11 @@ public class MenuPrincipal extends JFrame {
 			public void mouseReleased(MouseEvent e) {
 				int index = combo_arena.getSelectedIndex();
 				if(index!=-1) {
-					int choice = JOptionPane.showConfirmDialog(rootPane, "Are you really sure you want to delete the "+combo_arena.getSelectedItem()+" arena ?", "Confirmation", JOptionPane.YES_NO_OPTION);
+					int choice = JOptionPane.showConfirmDialog(rootPane, String.format(BUNDLE.getString("MenuPrincipal.message.delArena1"), combo_arena.getSelectedItem()), BUNDLE.getString("Message.title.confirmation"), JOptionPane.YES_NO_OPTION);
 					if(choice==JOptionPane.YES_OPTION) {
-						choice = JOptionPane.showConfirmDialog(rootPane, "Okay, it's for real this time. You will delete this arena\nand EVERY data inside it !\nIs it really okay ?", "Confirmation", JOptionPane.YES_NO_OPTION);
+						choice = JOptionPane.showConfirmDialog(rootPane, BUNDLE.getString("MenuPrincipal.message.delArena2"), BUNDLE.getString("Message.title.confirmation"), JOptionPane.YES_NO_OPTION);
 						if(choice==JOptionPane.YES_OPTION) {
-							JOptionPane.showMessageDialog(rootPane,"As you want... Arena "+combo_arena.getSelectedItem()+" is deleted.","Confirmation",JOptionPane.INFORMATION_MESSAGE);
+							JOptionPane.showMessageDialog(rootPane,String.format(BUNDLE.getString("MenuPrincipal.message.delArena3"),combo_arena.getSelectedItem()),BUNDLE.getString("Message.title.confirmation"),JOptionPane.INFORMATION_MESSAGE);
 							arenas.getALarenas().remove(index);
 							combo_arena.removeItemAt(index);
 							combo_arena.setSelectedIndex(combo_arena.getModel().getSize()-1);
@@ -857,7 +871,7 @@ public class MenuPrincipal extends JFrame {
 						BossW bwave = (BossW) wave;
 						ArrayList<EAbilities> abilist = bwave.getAbilities();
 						if(abilist.contains(EAbilities.getByName(name))){
-							JOptionPane.showMessageDialog(null, "You can't add the same ability twice !", "Invalid value", JOptionPane.WARNING_MESSAGE);
+							JOptionPane.showMessageDialog(rootPane, BUNDLE.getString("MenuPrincipal.message.doubleAbility"), BUNDLE.getString("Message.title.invalidValue"), JOptionPane.WARNING_MESSAGE);
 						}
 						else {
 							abilist.add(EAbilities.getByName(name));
@@ -867,14 +881,14 @@ public class MenuPrincipal extends JFrame {
 
 					} else if (wave instanceof DefaultW	|| wave instanceof SpecialW) {
 						if(sai_nb_carac_wave.getValue().equals("")){
-							JOptionPane.showMessageDialog(null, "You must set a value for the spawn probability in order to add this monster to the list !","Invalid value",JOptionPane.WARNING_MESSAGE);
+							JOptionPane.showMessageDialog(rootPane, BUNDLE.getString("MenuPrincipal.message.monsterSpawnProba"),BUNDLE.getString("Message.title.invalidValue"),JOptionPane.WARNING_MESSAGE);
 						}
 						else {
 							MonsterList monsterlist = wave.getMonstres();
 							int proba = Integer.parseInt((String) sai_nb_carac_wave.getValue());
 
 							if(monsterlist.contains(EMonsters.getByName(name))) {
-								JOptionPane.showMessageDialog(null, "You can't add the same monster twice !","Invalid value", JOptionPane.WARNING_MESSAGE);
+								JOptionPane.showMessageDialog(rootPane, BUNDLE.getString("MenuPrincipal.message.doubleMonster"),BUNDLE.getString("Message.title.invalidValue"), JOptionPane.WARNING_MESSAGE);
 							}
 							else {
 								monsterlist.add(new Monstre(EMonsters.getByName(name),proba));
@@ -887,7 +901,7 @@ public class MenuPrincipal extends JFrame {
 
 				}
 				else {
-					JOptionPane.showMessageDialog(null, "You must select a value before adding it to the list !","Invalid value",JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(null, "You must select a value before adding it to the list !",BUNDLE.getString("Message.title.invalidValue"),JOptionPane.WARNING_MESSAGE);
 				}
 
 			}
@@ -964,7 +978,7 @@ public class MenuPrincipal extends JFrame {
 		mntmNewConfiguration.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int choice = JOptionPane.showConfirmDialog(rootPane, "There may be unsaved changes. Are you sure\nyou want to create a new configuration ?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+				int choice = JOptionPane.showConfirmDialog(rootPane, "There may be unsaved changes. Are you sure\nyou want to create a new configuration ?", BUNDLE.getString("Message.title.confirmation"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 				if(choice==JOptionPane.YES_OPTION) {
 					raz();
 				}
@@ -999,7 +1013,7 @@ public class MenuPrincipal extends JFrame {
 		mntmQuit = new JMenuItem(BUNDLE.getString("MenuPrincipal.mntmQuit.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		mntmQuit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int choice = JOptionPane.showConfirmDialog(rootPane, "There may be unsaved changes. Are you sure\nyou want to quit ?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+				int choice = JOptionPane.showConfirmDialog(rootPane, BUNDLE.getString("MenuPrincipal.message.unsavedChangesQuit"), BUNDLE.getString("Message.title.confirmation"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 				if(choice==JOptionPane.YES_OPTION) {
 					dispose();
 				}
@@ -1068,7 +1082,7 @@ public class MenuPrincipal extends JFrame {
 						int hoverIndex = ((HoverListCellRenderer) list_classes.getCellRenderer()).getHoverIndex();
 						if(hoverIndex!=-1) {
 							Classe classe = list_classes.getModel().getElementAt(hoverIndex).getClasse();
-							int choix = JOptionPane.showConfirmDialog(rootPane,"Are you sure you want to delete the "+classe.getName()+" class ?", "Confirmation", JOptionPane.YES_NO_OPTION);
+							int choix = JOptionPane.showConfirmDialog(rootPane,"Are you sure you want to delete the "+classe.getName()+" class ?", BUNDLE.getString("Message.title.confirmation"), JOptionPane.YES_NO_OPTION);
 							if(choix==JOptionPane.YES_OPTION) {
 								Classe.classe_list.remove(classe);
 								loadData_ClassConfig(Classe.classe_list);
@@ -1307,7 +1321,7 @@ public class MenuPrincipal extends JFrame {
 							int choice = JOptionPane.showConfirmDialog(rootPane,
 									"Are you sure you want to delete the "
 											+ perm_list.get(index)
-											+ lobby_perm + " permission ?", "Confirmation",
+											+ lobby_perm + " permission ?", BUNDLE.getString("Message.title.confirmation"),
 											JOptionPane.YES_NO_OPTION);
 							if (choice == JOptionPane.YES_OPTION) {
 								perm_list.remove(index);
@@ -1859,7 +1873,7 @@ public class MenuPrincipal extends JFrame {
 
 		chk_display_timer = new JCheckBox(BUNDLE.getString("MenuPrincipal.chk_display_timer.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_display_timer.addItemListener(chkconfig_listener);
-		chk_display_timer.setToolTipText(BUNDLE.getString("MenuPrincipal.chk_display_timer.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
+		chk_display_timer.setToolTipText(BUNDLE.getString("MenuPrincipal.chk_display_timer.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		chk_display_timer.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_display_timer.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_display_timer.setBounds(514, 229, 170, 25);
@@ -1867,7 +1881,7 @@ public class MenuPrincipal extends JFrame {
 
 		chk_auto_ready = new JCheckBox(BUNDLE.getString("MenuPrincipal.chk_auto_ready.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_auto_ready.addItemListener(chkconfig_listener);
-		chk_auto_ready.setToolTipText(BUNDLE.getString("MenuPrincipal.chk_auto_ready.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
+		chk_auto_ready.setToolTipText(BUNDLE.getString("MenuPrincipal.chk_auto_ready.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		chk_auto_ready.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_auto_ready.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_auto_ready.setBounds(514, 266, 181, 25);
@@ -1875,7 +1889,7 @@ public class MenuPrincipal extends JFrame {
 
 		chk_scoreboard = new JCheckBox(BUNDLE.getString("MenuPrincipal.chk_scoreboard.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_scoreboard.addItemListener(chkconfig_listener);
-		chk_scoreboard.setToolTipText(BUNDLE.getString("MenuPrincipal.chk_scoreboard.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
+		chk_scoreboard.setToolTipText(BUNDLE.getString("MenuPrincipal.chk_scoreboard.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		chk_scoreboard.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_scoreboard.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_scoreboard.setBounds(514, 306, 139, 25);
@@ -1883,7 +1897,7 @@ public class MenuPrincipal extends JFrame {
 
 		chk_isolated_chat = new JCheckBox(BUNDLE.getString("MenuPrincipal.chk_isolated_chat.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_isolated_chat.addItemListener(chkconfig_listener);
-		chk_isolated_chat.setToolTipText(BUNDLE.getString("MenuPrincipal.chk_isolated_chat.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
+		chk_isolated_chat.setToolTipText(BUNDLE.getString("MenuPrincipal.chk_isolated_chat.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		chk_isolated_chat.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_isolated_chat.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_isolated_chat.setBounds(514, 342, 119, 25);
@@ -1891,7 +1905,7 @@ public class MenuPrincipal extends JFrame {
 
 		chk_global_join = new JCheckBox(BUNDLE.getString("MenuPrincipal.chk_global_join.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_global_join.addItemListener(chkconfig_listener);
-		chk_global_join.setToolTipText(BUNDLE.getString("MenuPrincipal.chk_global_join.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
+		chk_global_join.setToolTipText(BUNDLE.getString("MenuPrincipal.chk_global_join.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		chk_global_join.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_global_join.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_global_join.setBounds(514, 376, 181, 25);
@@ -1899,7 +1913,7 @@ public class MenuPrincipal extends JFrame {
 
 		chk_global_end = new JCheckBox(BUNDLE.getString("MenuPrincipal.chk_global_end.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_global_end.addItemListener(chkconfig_listener);
-		chk_global_end.setToolTipText(BUNDLE.getString("MenuPrincipal.chk_global_end.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
+		chk_global_end.setToolTipText(BUNDLE.getString("MenuPrincipal.chk_global_end.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		chk_global_end.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_global_end.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_global_end.setBounds(514, 413, 170, 25);
@@ -1937,7 +1951,7 @@ public class MenuPrincipal extends JFrame {
 		if(def==Locale.ENGLISH || def==Locale.CANADA || def==Locale.UK || def==Locale.US) {
 			Locale.setDefault(Locale.ENGLISH);
 		}
-		else if(def==Locale.CANADA_FRENCH || def==Locale.FRANCE) {
+		else if(def==Locale.FRENCH || def==Locale.CANADA_FRENCH || def==Locale.FRANCE) {
 			Locale.setDefault(Locale.FRENCH);
 		}
 	}
@@ -2026,7 +2040,7 @@ public class MenuPrincipal extends JFrame {
 										+ wave.getCategory().name()
 										+ " wave named "
 										+ wave.getNom() + " ?",
-										"Confirmation",
+										BUNDLE.getString("Message.title.confirmation"),
 										JOptionPane.YES_NO_OPTION,
 										JOptionPane.QUESTION_MESSAGE);
 						switch (reponse) {
@@ -2076,7 +2090,7 @@ public class MenuPrincipal extends JFrame {
 								null,
 								"Are you sure you want to delete the "
 										+ toDelete + " " + name + "?",
-										"Confirmation",
+										BUNDLE.getString("Message.title.confirmation"),
 										JOptionPane.YES_NO_OPTION,
 										JOptionPane.QUESTION_MESSAGE);
 						@SuppressWarnings("rawtypes")
