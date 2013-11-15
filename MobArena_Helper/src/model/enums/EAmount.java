@@ -1,17 +1,19 @@
 package model.enums;
 
+import model.EnumName;
+
 /**
  * La quantité de monstres
  * @author Pyeroh
  *
  */
 public enum EAmount {
-	verylow("Very low"),
-	low("Low"),
-	medium("Medium"),
-	high("High"),
-	veryhigh("Very high"),
-	psycho("Psycho");
+	verylow(EnumName.getString("EAmount.0")), //$NON-NLS-1$
+	low(EnumName.getString("EAmount.1")), //$NON-NLS-1$
+	medium(EnumName.getString("EAmount.2")), //$NON-NLS-1$
+	high(EnumName.getString("EAmount.3")), //$NON-NLS-1$
+	veryhigh(EnumName.getString("EAmount.4")), //$NON-NLS-1$
+	psycho(EnumName.getString("EAmount.5")); //$NON-NLS-1$
 
 	private String nom;
 
@@ -25,7 +27,7 @@ public enum EAmount {
 	
 	public String getName() {
 		String name = nom;
-		name.replace(" ", "_");
+		name.replace(" ", "_"); //$NON-NLS-1$ //$NON-NLS-2$
 		name = name.toLowerCase();
 		return name;
 	}
@@ -63,11 +65,11 @@ public enum EAmount {
 				return values[i];
 			} else {
 				throw new IllegalArgumentException(
-						"No enum constant EAmount." + name);
+						"No enum constant EAmount." + name); //$NON-NLS-1$
 			}
 		}
 		else {
-			throw new NullPointerException("Name is null");
+			throw new NullPointerException("Name is null"); //$NON-NLS-1$
 		}
 
 	}

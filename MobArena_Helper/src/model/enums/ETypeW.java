@@ -4,25 +4,27 @@ import java.awt.Image;
 
 import javax.swing.ImageIcon;
 
+import model.EnumName;
+
 /**
  * Les types de vague possibles
  * @author Pyeroh
  *
  */
 public enum ETypeW {
-	Default("default"),
-	Special("special"),
-	Swarm("swarm"),
-	Boss("boss"),
-	Supply("supply"),
-	Upgrade("upgrade");
+	Default(EnumName.getString("ETypeW.0")), //$NON-NLS-1$
+	Special(EnumName.getString("ETypeW.1")), //$NON-NLS-1$
+	Swarm(EnumName.getString("ETypeW.2")), //$NON-NLS-1$
+	Boss(EnumName.getString("ETypeW.3")), //$NON-NLS-1$
+	Supply(EnumName.getString("ETypeW.4")), //$NON-NLS-1$
+	Upgrade(EnumName.getString("ETypeW.5")); //$NON-NLS-1$
 
 	private String nom;
 	private Image image;
 
 	ETypeW(String nom){
 		this.nom = nom;
-		this.image = new ImageIcon(getClass().getClassLoader().getResource("gui/pics/"+nom+".png")).getImage();
+		this.image = new ImageIcon(getClass().getClassLoader().getResource("gui/pics/"+nom+".png")).getImage(); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	public String getNom() {
@@ -42,8 +44,7 @@ public enum ETypeW {
 		ETypeW[] values = values();
 		String[] namevalues = new String[values.length];
 		for (int i=0;i<namevalues.length;i++) {
-			StringBuffer nom = new StringBuffer(values[i].name());
-			namevalues[i] = nom.toString();
+			namevalues[i] = values[i].getNom();
 		}
 		return namevalues;
 	}

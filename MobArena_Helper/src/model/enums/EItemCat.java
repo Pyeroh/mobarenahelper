@@ -1,22 +1,24 @@
 package model.enums;
 
+import model.EnumName;
+
 /**
  * Les catégories d'item existant
  * @author Pyeroh
  *
  */
 public enum EItemCat {
-	all("All"),
-	block("Building blocks"),
-	decoration("Decoration blocks"),
-	redstone("Redstone"),
-	transport("Transportation"),
-	misc("Miscellaneous"),
-	food("Foodstuffs"),
-	tool("Tools"),
-	weapon("Combat"),
-	potion("Brewing"),
-	materials("Materials");
+	all(EnumName.getString("EItemCat.0")), //$NON-NLS-1$
+	block(EnumName.getString("EItemCat.1")), //$NON-NLS-1$
+	decoration(EnumName.getString("EItemCat.2")), //$NON-NLS-1$
+	redstone(EnumName.getString("EItemCat.3")), //$NON-NLS-1$
+	transport(EnumName.getString("EItemCat.4")), //$NON-NLS-1$
+	misc(EnumName.getString("EItemCat.5")), //$NON-NLS-1$
+	food(EnumName.getString("EItemCat.6")), //$NON-NLS-1$
+	tool(EnumName.getString("EItemCat.7")), //$NON-NLS-1$
+	weapon(EnumName.getString("EItemCat.8")), //$NON-NLS-1$
+	potion(EnumName.getString("EItemCat.9")), //$NON-NLS-1$
+	materials(EnumName.getString("EItemCat.10")); //$NON-NLS-1$
 	
 	private String gui_name;
 	
@@ -61,11 +63,11 @@ public enum EItemCat {
 				return values[i];
 			} else {
 				throw new IllegalArgumentException(
-						"No enum constant EItemCat." + name);
+						"No enum constant EItemCat." + name); //$NON-NLS-1$
 			}
 		}
 		else {
-			throw new NullPointerException("Name is null");
+			throw new NullPointerException("Name is null"); //$NON-NLS-1$
 		}
 
 	}

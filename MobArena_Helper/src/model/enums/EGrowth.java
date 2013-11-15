@@ -1,16 +1,18 @@
 package model.enums;
 
+import model.EnumName;
+
 /**
  * La croissance d'une vague
  * @author Pyeroh
  *
  */
 public enum EGrowth {
-	old("Old"),
-	slow("Slow"),
-	medium("Medium"),
-	fast("Fast"),
-	psycho("Psycho");
+	old(EnumName.getString("EGrowth.0")), //$NON-NLS-1$
+	slow(EnumName.getString("EGrowth.1")), //$NON-NLS-1$
+	medium(EnumName.getString("EGrowth.2")), //$NON-NLS-1$
+	fast(EnumName.getString("EGrowth.3")), //$NON-NLS-1$
+	psycho(EnumName.getString("EGrowth.4")); //$NON-NLS-1$
 
 	private String nom;
 

@@ -1,13 +1,15 @@
 package model.enums;
 
+import model.EnumName;
+
 /**
  * Les deux catégories de vague
  * @author Pyeroh
  *
  */
 public enum ECatW {
-	recurrent("Recurrent"),
-	single("Single");
+	recurrent(EnumName.getString("ECatW.0")), //$NON-NLS-1$
+	single(EnumName.getString("ECatW.1")); //$NON-NLS-1$
 
 	private String nom;
 

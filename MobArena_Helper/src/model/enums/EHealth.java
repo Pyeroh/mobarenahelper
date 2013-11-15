@@ -1,17 +1,19 @@
 package model.enums;
 
+import model.EnumName;
+
 /**
  * Les différentes valeurs de santé existant
  * @author Pyeroh
  *
  */
 public enum EHealth {
-	verylow("Very low"),
-	low("Low"),
-	medium("Medium"),
-	high("High"),
-	veryhigh("Very high"),
-	psycho("Psycho");
+	verylow(EnumName.getString("EHealth.0")), //$NON-NLS-1$
+	low(EnumName.getString("EHealth.1")), //$NON-NLS-1$
+	medium(EnumName.getString("EHealth.2")), //$NON-NLS-1$
+	high(EnumName.getString("EHealth.3")), //$NON-NLS-1$
+	veryhigh(EnumName.getString("EHealth.4")), //$NON-NLS-1$
+	psycho(EnumName.getString("EHealth.5")); //$NON-NLS-1$
 
 	private String nom;
 
@@ -56,11 +58,11 @@ public enum EHealth {
 				return values[i];
 			} else {
 				throw new IllegalArgumentException(
-						"No enum constant EHealth." + name);
+						"No enum constant EHealth." + name); //$NON-NLS-1$
 			}
 		}
 		else {
-			throw new NullPointerException("Name is null");
+			throw new NullPointerException("Name is null"); //$NON-NLS-1$
 		}
 
 	}
