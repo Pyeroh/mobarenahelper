@@ -3,6 +3,7 @@ package view.dialogs;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.*;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -62,7 +63,7 @@ public class UpgradeWaveChanger extends JDialog {
 			public void mouseReleased(MouseEvent e) {
 
 				int index = list_classes.getSelectedIndex();
-				
+
 				ArrayList<UpgradeSet> upsetlist = upgradew.getUpgrades();
 
 				if (index!=-1) {
@@ -77,10 +78,8 @@ public class UpgradeWaveChanger extends JDialog {
 					else if (e.getButton() == MouseEvent.BUTTON2) {
 
 						int choice = JOptionPane.showConfirmDialog(rootPane,
-								"Are you sure you want to delete upgrades for the "
-										+ upsetlist.get(index).getClasse()
-										.getName() + " class ?",
-										"Confirmation", JOptionPane.YES_NO_OPTION);
+								String.format(ResourceBundle.getBundle("gui.lang").getString("UpgradeWaveChanger.message.delUpgrade"),upsetlist.get(index).getClasse().getName()),
+								ResourceBundle.getBundle("gui.lang").getString("Message.title.confirmation"), JOptionPane.YES_NO_OPTION);
 						if (choice == JOptionPane.YES_OPTION) {
 							upsetlist.remove(index);
 							load();
@@ -121,13 +120,12 @@ public class UpgradeWaveChanger extends JDialog {
 				}
 
 				if (tab_classe.length!=0) {
-					String selection = (String) JOptionPane
-							.showInputDialog(
-									rootPane,
-									"Which class do you want to add to the upgrade list ?",
-									"Class selection",
-									JOptionPane.QUESTION_MESSAGE, null,
-									tab_classe, null);
+					String selection = (String) JOptionPane.showInputDialog(
+							rootPane,
+							ResourceBundle.getBundle("gui.lang").getString("UpgradeWaveChanger.message.addUpgrade"),
+							ResourceBundle.getBundle("gui.lang").getString("Message.title.classSelection"),
+							JOptionPane.QUESTION_MESSAGE, null,
+							tab_classe, null);
 					if (selection != null) {
 						Classe classe = Classe.getByName(selection);
 						UpgradeSet upset = new UpgradeSet(classe);
@@ -225,10 +223,9 @@ public class UpgradeWaveChanger extends JDialog {
 				if (index!=-1) {
 					if (e.getButton() == MouseEvent.BUTTON2) {
 						int choice = JOptionPane.showConfirmDialog(rootPane,
-								"Are you sure you want to delete the "
-										+ perm_list.get(index)
-										+ " permission ?", "Confirmation",
-										JOptionPane.YES_NO_OPTION);
+								MessageFormat.format(ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.message.delPerm"), perm_list.get(index),""), 
+								ResourceBundle.getBundle("gui.lang").getString("Message.title.confirmation"),
+								JOptionPane.YES_NO_OPTION);
 						if (choice == JOptionPane.YES_OPTION) {
 							perm_list.remove(index);
 							loadUpgradeSet(upset);
@@ -249,9 +246,9 @@ public class UpgradeWaveChanger extends JDialog {
 			public void mouseReleased(MouseEvent e) {
 				String perm = JOptionPane.showInputDialog(
 						rootPane,
-						"What is the permission you want to add ?\nWARNING : as MobArena Helper can't see plugins you have \non your server, it can't control permissions you add in the config file.",
-						"Permission", JOptionPane.QUESTION_MESSAGE);
-
+						ResourceBundle.getBundle("gui.lang").getString("MenuPrincipal.message.addPerm"),
+						ResourceBundle.getBundle("gui.lang").getString("Message.title.permissions"), 
+						JOptionPane.QUESTION_MESSAGE);
 				if(perm!=null) {
 					upset.getPermissions().add(perm);
 					loadUpgradeSet(upset);
@@ -264,12 +261,12 @@ public class UpgradeWaveChanger extends JDialog {
 		scrpan_permissions = new JScrollPane(list_permissions);
 		scrpan_permissions.setBounds(6, 123, 300, 127);
 		pan_upgrade_config.add(scrpan_permissions);
-		
+
 		this.frame = frame;
 
 		load();
 		setInvisibleComponents();
-		
+
 		setVisible(true);
 
 	}

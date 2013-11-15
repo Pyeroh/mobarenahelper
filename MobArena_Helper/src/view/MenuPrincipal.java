@@ -3,8 +3,7 @@ package view;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
-import java.text.NumberFormat;
-import java.text.ParseException;
+import java.text.*;
 import java.util.*;
 
 import javax.swing.*;
@@ -198,10 +197,10 @@ public class MenuPrincipal extends JFrame {
 		});
 
 		loadLocale();
-		//BUNDLE = ResourceBundle.getBundle("gui.lang");
+		//TODO BUNDLE = ResourceBundle.getBundle("gui.lang");
 
 		setIconImage(new ImageIcon(MenuPrincipal.class.getResource("/gui/pics/mobarena.png")).getImage());
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setResizable(false);
 		getContentPane().setLayout(null);
 		getContentPane().setVisible(true);
@@ -265,7 +264,7 @@ public class MenuPrincipal extends JFrame {
 
 			}
 		};
-		
+
 		ItemListener language_listener = new ItemListener() {
 			@SuppressWarnings("unused")
 			private JRadioButtonMenuItem deselected_one;
@@ -422,15 +421,23 @@ public class MenuPrincipal extends JFrame {
 				String name = JOptionPane.showInputDialog(rootPane, BUNDLE.getString("MenuPrincipal.message.arenaName"),BUNDLE.getString("Message.title.arenaName"), JOptionPane.QUESTION_MESSAGE);
 				if(name!=null) {
 					name = name.trim();
-					if (!arenas.containsArena(name)) {
-						arenas.getALarenas().add(new Arena(name));
-						combo_arena.addItem(name);
-						combo_arena.setSelectedItem(name);
-						loadArena(combo_arena.getSelectedIndex());
-						tabpan_config.setEnabledAt(1, true);
-						tabpan_config.setEnabledAt(2, true);
+					if (!name.equals("")) {
+						if (!arenas.containsArena(name)) {
+							arenas.getALarenas().add(new Arena(name));
+							combo_arena.addItem(name);
+							combo_arena.setSelectedItem(name);
+							loadArena(combo_arena.getSelectedIndex());
+							tabpan_config.setEnabledAt(1, true);
+							tabpan_config.setEnabledAt(2, true);
+						} else
+							JOptionPane
+							.showMessageDialog(
+									rootPane,
+									BUNDLE.getString("MenuPrincipal.message.errorArena"),
+									BUNDLE.getString("Message.title.error"),
+									JOptionPane.ERROR_MESSAGE);
 					}
-					else JOptionPane.showMessageDialog(rootPane, BUNDLE.getString("MenuPrincipal.message.errorArena"), BUNDLE.getString("Message.title.error"), JOptionPane.ERROR_MESSAGE);
+					else JOptionPane.showMessageDialog(rootPane,BUNDLE.getString("MenuPrincipal.message.noNameForArena"),BUNDLE.getString("Message.title.invalidValue"),JOptionPane.ERROR_MESSAGE);
 				}
 
 			}
@@ -879,20 +886,32 @@ public class MenuPrincipal extends JFrame {
 							combo_carac_wave.setSelectedIndex(-1);
 						}
 
-					} else if (wave instanceof DefaultW	|| wave instanceof SpecialW) {
-						if(sai_nb_carac_wave.getValue().equals("")){
-							JOptionPane.showMessageDialog(rootPane, BUNDLE.getString("MenuPrincipal.message.monsterSpawnProba"),BUNDLE.getString("Message.title.invalidValue"),JOptionPane.WARNING_MESSAGE);
-						}
-						else {
+					} 
+					else if (wave instanceof DefaultW|| wave instanceof SpecialW || wave instanceof SupplyW) {
+						if (sai_nb_carac_wave.getValue()==null) {
+							JOptionPane
+							.showMessageDialog(
+									rootPane,
+									BUNDLE.getString("MenuPrincipal.message.monsterSpawnProba"),
+									BUNDLE.getString("Message.title.invalidValue"),
+									JOptionPane.WARNING_MESSAGE);
+						} else {
 							MonsterList monsterlist = wave.getMonstres();
-							int proba = Integer.parseInt((String) sai_nb_carac_wave.getValue());
+							int proba = (int)((long) sai_nb_carac_wave.getValue());
 
-							if(monsterlist.contains(EMonsters.getByName(name))) {
-								JOptionPane.showMessageDialog(rootPane, BUNDLE.getString("MenuPrincipal.message.doubleMonster"),BUNDLE.getString("Message.title.invalidValue"), JOptionPane.WARNING_MESSAGE);
-							}
-							else {
-								monsterlist.add(new Monstre(EMonsters.getByName(name),proba));
-								loadListCaracs_Arena(monsterlist, list_carac_wave);
+							if (monsterlist.contains(EMonsters
+									.getByName(name))) {
+								JOptionPane
+								.showMessageDialog(
+										rootPane,
+										BUNDLE.getString("MenuPrincipal.message.doubleMonster"),
+										BUNDLE.getString("Message.title.invalidValue"),
+										JOptionPane.WARNING_MESSAGE);
+							} else {
+								monsterlist.add(new Monstre(EMonsters
+										.getByName(name), proba));
+								loadListCaracs_Arena(monsterlist,
+										list_carac_wave);
 								combo_carac_wave.setSelectedIndex(-1);
 								sai_nb_carac_wave.setValue(null);
 							}
@@ -901,7 +920,7 @@ public class MenuPrincipal extends JFrame {
 
 				}
 				else {
-					JOptionPane.showMessageDialog(null, "You must select a value before adding it to the list !",BUNDLE.getString("Message.title.invalidValue"),JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(rootPane, BUNDLE.getString("MenuPrincipal.message.noValue"),BUNDLE.getString("Message.title.invalidValue"),JOptionPane.WARNING_MESSAGE);
 				}
 
 			}
@@ -978,7 +997,7 @@ public class MenuPrincipal extends JFrame {
 		mntmNewConfiguration.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int choice = JOptionPane.showConfirmDialog(rootPane, "There may be unsaved changes. Are you sure\nyou want to create a new configuration ?", BUNDLE.getString("Message.title.confirmation"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+				int choice = JOptionPane.showConfirmDialog(rootPane, BUNDLE.getString("MenuPrincipal.message.unsavedChangesNew"), BUNDLE.getString("Message.title.confirmation"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 				if(choice==JOptionPane.YES_OPTION) {
 					raz();
 				}
@@ -1082,7 +1101,7 @@ public class MenuPrincipal extends JFrame {
 						int hoverIndex = ((HoverListCellRenderer) list_classes.getCellRenderer()).getHoverIndex();
 						if(hoverIndex!=-1) {
 							Classe classe = list_classes.getModel().getElementAt(hoverIndex).getClasse();
-							int choix = JOptionPane.showConfirmDialog(rootPane,"Are you sure you want to delete the "+classe.getName()+" class ?", BUNDLE.getString("Message.title.confirmation"), JOptionPane.YES_NO_OPTION);
+							int choix = JOptionPane.showConfirmDialog(rootPane,String.format(BUNDLE.getString("MenuPrincipal.message.delClass"), classe.getName()), BUNDLE.getString("Message.title.confirmation"), JOptionPane.YES_NO_OPTION);
 							if(choix==JOptionPane.YES_OPTION) {
 								Classe.classe_list.remove(classe);
 								loadData_ClassConfig(Classe.classe_list);
@@ -1099,17 +1118,18 @@ public class MenuPrincipal extends JFrame {
 
 			}
 		});
+		HoverListCellRenderer renderer = new HoverListCellRenderer(list_classes);
+		list_classes.setCellRenderer(renderer);
+		list_classes.addMouseListener(renderer.getHandler());
+		list_classes.addMouseMotionListener(renderer.getHandler());
 
 		btn_new_class = new JButton(BUNDLE.getString("MenuPrincipal.btn_new_class.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		btn_new_class.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				classe = new Classe("New_Class");
-				Classe.classe_list.add(classe);
-				int index = Classe.classe_list.indexOf(classe);
-				loadData_ClassConfig(Classe.classe_list);
-				list_classes.setSelectedIndex(index);
-				list_classes.ensureIndexIsVisible(index);
+				int index = Classe.classe_list.indexOf(classe)-1;
+				loadData_ClassConfig(Classe.classe_list, index);
 				loadClass_ClassConfig(classe);
 			}
 		});
@@ -1277,8 +1297,8 @@ public class MenuPrincipal extends JFrame {
 
 				String perm = JOptionPane.showInputDialog(
 						rootPane,
-						"What is the permission you want to add ?\nWARNING : as MobArena Helper can't see plugins you have \non your server, it can't control permissions you add in the config file.",
-						"Permission", JOptionPane.QUESTION_MESSAGE);
+						BUNDLE.getString("MenuPrincipal.message.addPerm"),
+						BUNDLE.getString("Message.title.permissions"), JOptionPane.QUESTION_MESSAGE);
 				if(perm!=null){
 					ArrayList<String> perm_list = null;
 
@@ -1309,20 +1329,19 @@ public class MenuPrincipal extends JFrame {
 					String lobby_perm = "";
 					ArrayList<String> perm_list = null;
 					if(source==list_lobby_permissions) {
-						lobby_perm=" lobby";
+						lobby_perm=BUNDLE.getString("MenuPrincipal.message.delPerm1");
 						perm_list = classe.getLobby_permissions();
 					}
 					else if(source==list_permissions) {
 						perm_list = classe.getPermissions();						
 					}
-					int index = list_permissions.getSelectedIndex();
+					int index = ((HoverListCellRenderer) source.getCellRenderer()).getHoverIndex();
 					if (index!=-1) {
 						if (e.getButton() == MouseEvent.BUTTON2) {
 							int choice = JOptionPane.showConfirmDialog(rootPane,
-									"Are you sure you want to delete the "
-											+ perm_list.get(index)
-											+ lobby_perm + " permission ?", BUNDLE.getString("Message.title.confirmation"),
-											JOptionPane.YES_NO_OPTION);
+									MessageFormat.format(BUNDLE.getString("MenuPrincipal.message.delPerm"),perm_list.get(index),lobby_perm), 
+									BUNDLE.getString("Message.title.confirmation"),
+									JOptionPane.YES_NO_OPTION);
 							if (choice == JOptionPane.YES_OPTION) {
 								perm_list.remove(index);
 								loadClass_ClassConfig(classe);
@@ -1338,8 +1357,9 @@ public class MenuPrincipal extends JFrame {
 		};
 
 		ListSelectionListener clear_list_perm = new ListSelectionListener() {
+			@SuppressWarnings("unchecked")
 			public void valueChanged(ListSelectionEvent e) {
-				list_permissions.clearSelection();
+				((JList<CellListCaracs>) e.getSource()).clearSelection();
 			}
 		};
 
@@ -1349,8 +1369,8 @@ public class MenuPrincipal extends JFrame {
 		pan_caracs_class.add(btn_add_perm);
 
 		list_permissions = new JList<CellListCaracs>();
-		list_permissions.addMouseListener(list_perm_adapter);
 		list_permissions.addListSelectionListener(clear_list_perm);
+		list_permissions.addMouseListener(list_perm_adapter);
 
 		scrpan_permissions = new JScrollPane(list_permissions);
 		scrpan_permissions.setBounds(273, 34, 212, 200);
@@ -1372,8 +1392,8 @@ public class MenuPrincipal extends JFrame {
 		pan_caracs_class.add(btn_add_lobby_permissions);
 
 		list_lobby_permissions = new JList<CellListCaracs>();
-		list_lobby_permissions.addMouseListener(list_perm_adapter);
 		list_lobby_permissions.addListSelectionListener(clear_list_perm);
+		list_lobby_permissions.addMouseListener(list_perm_adapter);
 
 		scrpan_lobby_permissions = new JScrollPane(list_lobby_permissions);
 		scrpan_lobby_permissions.setBounds(511, 34, 212, 200);
@@ -1947,7 +1967,7 @@ public class MenuPrincipal extends JFrame {
 
 	private void loadLocale() {
 		Locale def = Locale.getDefault();
-		
+
 		if(def==Locale.ENGLISH || def==Locale.CANADA || def==Locale.UK || def==Locale.US) {
 			Locale.setDefault(Locale.ENGLISH);
 		}
@@ -1964,12 +1984,14 @@ public class MenuPrincipal extends JFrame {
 		config = null;
 		tabpan_config.setEnabledAt(1, false);
 		tabpan_config.setEnabledAt(2, false);
+		tabpan_config.setSelectedIndex(0);
+		pan_caracs_class.setVisible(false);
 		list_recurrent.setModel(new DefaultListModel<CellListWave>());
 		list_single.setModel(new DefaultListModel<CellListWave>());
 		combo_arena.setModel(new DefaultComboBoxModel<String>());
 		setInvisibleComponents_Arena();
 	}
-	
+
 	public void newWave(MouseEvent e) {
 		if (combo_arena.getSelectedIndex()!=-1) {
 
@@ -2001,7 +2023,7 @@ public class MenuPrincipal extends JFrame {
 
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public void cellMouseAdapter(MouseEvent e) {
 		//On récupère la liste source en tant que liste de caracs pour l'évaluation de situation
@@ -2032,17 +2054,13 @@ public class MenuPrincipal extends JFrame {
 
 						setInvisibleComponents_Arena();
 
-						wave = jList.getModel()
-								.getElementAt(hoverIndex).getWave();
+						wave = jList.getModel().getElementAt(hoverIndex).getWave();
 						int reponse = JOptionPane.showConfirmDialog(
 								null,
-								"Are you sure you want to delete the "
-										+ wave.getCategory().name()
-										+ " wave named "
-										+ wave.getNom() + " ?",
-										BUNDLE.getString("Message.title.confirmation"),
-										JOptionPane.YES_NO_OPTION,
-										JOptionPane.QUESTION_MESSAGE);
+								MessageFormat.format(BUNDLE.getString("MenuPrincipal.message.delWave"), wave.getCategory().name(),wave.getNom()),
+								BUNDLE.getString("Message.title.confirmation"),
+								JOptionPane.YES_NO_OPTION,
+								JOptionPane.QUESTION_MESSAGE);
 						switch (reponse) {
 						case 0:
 							//Récupération de l'arène en cours
@@ -2076,23 +2094,22 @@ public class MenuPrincipal extends JFrame {
 						String toDelete = "";
 						String name = "";
 						if (cellcarac instanceof CellListMonster) {
-							toDelete = "monster";
+							toDelete = BUNDLE.getString("MenuPrincipal.message.delMonster1");
 							cellmonster = (CellListMonster) cellcarac;
 							name = cellmonster.getMonstre()
 									.getMonstre().getNom();
 						} else {
-							toDelete = "ability";
+							toDelete = BUNDLE.getString("MenuPrincipal.message.delAbility1");
 							cellabi = (CellListAbility) cellcarac;
 							name = cellabi.getAbility().getNom();
 						}
 
 						int reponse = JOptionPane.showConfirmDialog(
 								null,
-								"Are you sure you want to delete the "
-										+ toDelete + " " + name + "?",
-										BUNDLE.getString("Message.title.confirmation"),
-										JOptionPane.YES_NO_OPTION,
-										JOptionPane.QUESTION_MESSAGE);
+								MessageFormat.format(BUNDLE.getString("MenuPrincipal.message.delMonsterAbility"),toDelete,name),
+								BUNDLE.getString("Message.title.confirmation"),
+								JOptionPane.YES_NO_OPTION,
+								JOptionPane.QUESTION_MESSAGE);
 						@SuppressWarnings("rawtypes")
 						ArrayList listdata = null;
 						switch (reponse) {
@@ -2467,9 +2484,10 @@ public class MenuPrincipal extends JFrame {
 	}
 
 	public void loadData_ClassConfig(ArrayList<Classe> aLclasses) {
+		loadData_ClassConfig(aLclasses, list_classes.getSelectedIndex());
+	}
 
-		int index = list_classes.getSelectedIndex();
-
+	public void loadData_ClassConfig(ArrayList<Classe> aLclasses, int index) {
 		DefaultListModel<CellListClass> mod_Class = new DefaultListModel<>();
 		for(int i=0;i<aLclasses.size();i++) {
 			Classe iclasse = aLclasses.get(i);
@@ -2478,16 +2496,12 @@ public class MenuPrincipal extends JFrame {
 			}
 		}
 		list_classes.setModel(mod_Class);
-		HoverListCellRenderer renderer = new HoverListCellRenderer(list_classes);
-		list_classes.setCellRenderer(renderer);
-		list_classes.addMouseListener(renderer.getHandler());
-		list_classes.addMouseMotionListener(renderer.getHandler());
 
 		if(index==-1) pan_caracs_class.setVisible(false);
 		else {
 			list_classes.setSelectedIndex(index);
+			list_classes.ensureIndexIsVisible(index);
 		}
-
 	}
 
 	public void loadClass_ClassConfig(Classe classe) {

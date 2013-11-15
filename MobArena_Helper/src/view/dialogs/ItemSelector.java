@@ -244,14 +244,14 @@ public class ItemSelector extends JDialog {
 			if (nb_items == max) {
 				JOptionPane.showMessageDialog(
 						rootPane,
-						"You can't add more items !", "Warning",
+						ResourceBundle.getBundle("gui.lang").getString("ItemSelector.message.noMore"), ResourceBundle.getBundle("gui.lang").getString("Message.title.warning"),
 						JOptionPane.WARNING_MESSAGE);
 			} else {
 
 				EItem eitem = list_selectable.getSelectedValue().getEItem();
 				if(!isArmor()) {
 
-					String input = JOptionPane.showInputDialog(rootPane, "How many items do you wish to add ?",1);
+					String input = JOptionPane.showInputDialog(rootPane, ResourceBundle.getBundle("gui.lang").getString("ItemSelector.message.howMany"),1);
 					if (input!=null) {
 						input = input.trim();
 						if (input.matches("^[1-9][0-9]{0,2}$")) {
@@ -262,7 +262,7 @@ public class ItemSelector extends JDialog {
 							loadSelectable(crossSearch());
 
 						}
-						else JOptionPane.showMessageDialog(rootPane,"Incorrect number format\nMust be a number, between 1 and 999","Error",JOptionPane.ERROR_MESSAGE);
+						else JOptionPane.showMessageDialog(rootPane,ResourceBundle.getBundle("gui.lang").getString("ItemSelector.message.incorectNumberFormat"),ResourceBundle.getBundle("gui.lang").getString("Message.title.error"),JOptionPane.ERROR_MESSAGE);
 					}
 
 				}
@@ -278,7 +278,7 @@ public class ItemSelector extends JDialog {
 						}
 					}
 					if(present) {
-						JOptionPane.showMessageDialog(rootPane, "You can't add the same armor type twice !", "Warning", JOptionPane.WARNING_MESSAGE);
+						JOptionPane.showMessageDialog(rootPane, ResourceBundle.getBundle("gui.lang").getString("ItemSelector.message.doubleArmor"), ResourceBundle.getBundle("gui.lang").getString("Message.title.warning"), JOptionPane.WARNING_MESSAGE);
 					}
 					else {
 						items.add(new Armor(eitem, null));

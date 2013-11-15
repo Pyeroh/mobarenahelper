@@ -20,7 +20,7 @@ public class DefaultW extends Wave{
 	}
 	
 	public DefaultW(ECatW category) {
-		super("New Wave", ETypeW.Default);
+		super("New_Wave", ETypeW.Default);
 		setCategory(category);
 	}
 

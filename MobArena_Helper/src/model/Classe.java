@@ -32,7 +32,7 @@ public class Classe {
 		private static final long serialVersionUID = -5427655124441902011L;
 		public void clear() {
 			super.clear();
-			this.add(new Classe("all"));
+			new Classe("all");
 		}
 	};
 
@@ -54,6 +54,8 @@ public class Classe {
 	 * @param name le nom de la classe
 	 */
 	public Classe(String name) {
+		classe_list.add(this);
+		
 		this.name = name;
 	}
 	

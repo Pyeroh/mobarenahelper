@@ -3,6 +3,7 @@ package view.dialogs;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.*;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -65,7 +66,7 @@ public class Enchanter extends JDialog {
 		list_enchant.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				
+
 				if(list_enchant.getModel().getSize()!=0) {
 					list_enchant.ensureIndexIsVisible(list_enchant.getSelectedIndex());
 					if(e.getButton()==MouseEvent.BUTTON2) {
@@ -74,14 +75,9 @@ public class Enchanter extends JDialog {
 							Enchantment enchant = Enchanter.this.item.getEnchantements().get(hoverIndex);
 							int choice = JOptionPane.showConfirmDialog(
 									rootPane,
-									"Are you sure you want to delete the "
-											+ enchant.toString()
-											+ " effect on this "
-											+ Enchanter.this.item.getItem()
-											.getName()
-											.toLowerCase() + " ?",
-											"Confirmation",
-											JOptionPane.YES_NO_OPTION);
+									MessageFormat.format(ResourceBundle.getBundle("gui.lang").getString("Enchanter.message.delEnchant"),enchant.toString(),Enchanter.this.item.getItem().getName()),
+									ResourceBundle.getBundle("gui.lang").getString("Message.title.confirmation"),
+									JOptionPane.YES_NO_OPTION);
 							if(choice==JOptionPane.YES_OPTION) {
 								Enchanter.this.item.getEnchantements().remove(enchant);
 								load();
@@ -89,7 +85,7 @@ public class Enchanter extends JDialog {
 						}
 					}
 				}
-				
+
 			}
 		});
 
@@ -142,7 +138,7 @@ public class Enchanter extends JDialog {
 		});
 		btn_add.setBounds(270, 151, 144, 28);
 		getContentPane().add(btn_add);
-		
+
 		lib_help = new JLabel("");
 		lib_help.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("Enchanter.lib_help.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_help.setBounds(220, 6, 24, 24);

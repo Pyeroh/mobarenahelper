@@ -63,16 +63,13 @@ public class About extends JDialog {
 						desktop.browse(uri);
 						dispose();
 					} catch (IOException e1) {
-						JOptionPane.showMessageDialog(null,
-								"Failed to launch the link, " +
-										"your computer is likely misconfigured.",
-										"Cannot Launch Link",JOptionPane.WARNING_MESSAGE);
+						JOptionPane.showMessageDialog(null,ResourceBundle.getBundle("gui.lang").getString("About.message.failLaunchLink"),ResourceBundle.getBundle("gui.lang").getString("Message.title.cannotLaunch"),JOptionPane.WARNING_MESSAGE);
 						return;
 					}
 				} else {
 					JOptionPane.showMessageDialog(null,
-							"Java is not able to launch links on your computer.",
-							"Cannot Launch Link",JOptionPane.WARNING_MESSAGE);
+							ResourceBundle.getBundle("gui.lang").getString("About.message.javaFailLaunchLink"),
+							ResourceBundle.getBundle("gui.lang").getString("Message.title.cannotLaunch"),JOptionPane.WARNING_MESSAGE);
 					return;
 				}
 			}
