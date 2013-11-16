@@ -120,14 +120,16 @@ public class Arena {
 			for(int j=0;j<waves[i].size();j++){
 
 				Wave wave = waves[i].get(j);
-				wavesbycat.put(wave.getNom(), wave.getMap());
+				wavesbycat.put(wave.getNom().toLowerCase(), wave.getMap());
 
 			}
-			mapwaves.put(catvague[i], wavesbycat);
+			if (waves[i].size()!=0) {
+				mapwaves.put(catvague[i], wavesbycat);
+			}
 
 		}
 
-		arena.put("waves", mapwaves);
+		if(!mapwaves.isEmpty()) arena.put("waves", mapwaves);
 		if(rewards!=null) arena.put("rewards", rewards);
 		if (classlimits!=null) arena.put("class-limits", classlimits);
 		if(coords!=null) arena.put("coords", coords);

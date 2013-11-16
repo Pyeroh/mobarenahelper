@@ -170,8 +170,8 @@ public abstract class Wave implements Comparable<Wave> {
 	public String toString() {
 		String ret = "Classe : "+getClass()
 				+"\nname : "+nom
-				+"\ncategory : "+category.getNom()
-				+"\ntype : "+type.getNom()
+				+"\ncategory : "+category.name()
+				+"\ntype : "+type.name()
 				+"\nwave : "+numwave
 				+"\npriority : "+priority
 				+"\nfrequency : "+frequency
@@ -186,7 +186,7 @@ public abstract class Wave implements Comparable<Wave> {
 	public LinkedHashMap<String, Object> getMap() {
 		LinkedHashMap<String, Object> vague = new LinkedHashMap<>();
 
-		vague.put("type", type.getNom());
+		vague.put("type", type.name().toLowerCase());
 
 		if(category==ECatW.recurrent){
 			vague.put("priority", priority);

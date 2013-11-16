@@ -24,7 +24,7 @@ public enum ETypeW {
 
 	ETypeW(String nom){
 		this.nom = nom;
-		this.image = new ImageIcon(getClass().getClassLoader().getResource("gui/pics/"+nom+".png")).getImage(); //$NON-NLS-1$ //$NON-NLS-2$
+		this.image = new ImageIcon(getClass().getClassLoader().getResource("gui/pics/"+name().toLowerCase()+".png")).getImage(); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	public String getNom() {

@@ -185,7 +185,7 @@ public class MenuPrincipal extends JFrame {
 	private JRadioButtonMenuItem rdbtnmntmEnglish;
 
 	public MenuPrincipal() throws ParseException{
-		super("MobArena Helper v2.0");
+		super("MobArena Helper v2.1");
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
@@ -197,7 +197,7 @@ public class MenuPrincipal extends JFrame {
 		});
 
 		loadLocale();
-		//TODO BUNDLE = ResourceBundle.getBundle("gui.lang");
+		BUNDLE = ResourceBundle.getBundle("gui.lang");
 
 		setIconImage(new ImageIcon(MenuPrincipal.class.getResource("/gui/pics/mobarena.png")).getImage());
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -349,7 +349,11 @@ public class MenuPrincipal extends JFrame {
 			public void mouseReleased(MouseEvent e) {
 				if(arenas!=null){
 
-					YmlJFileChooser fchoose = new YmlJFileChooser(file.getPath());
+					YmlJFileChooser fchoose;
+					if (file!=null) {
+						fchoose = new YmlJFileChooser(file.getPath());
+					}
+					else fchoose = new YmlJFileChooser();
 					fchoose.showOpenDialog(null);
 					File f = fchoose.getSelectedFile();
 					if (f!=null) {
@@ -528,12 +532,12 @@ public class MenuPrincipal extends JFrame {
 			@Override
 			public void keyReleased(KeyEvent e) {
 
-				String category = wave.getCategory().name();
-				JList<CellListWave> list_sel = category.equals("recurrent") ? list_recurrent : list_single;
+				ECatW category = wave.getCategory();
+				JList<CellListWave> list_sel = category==ECatW.recurrent ? list_recurrent : list_single;
 				int index_sel = list_sel.getSelectedIndex();
 				Arena lArene = arenas.getALarenas().get(combo_arena.getSelectedIndex());
 
-				ArrayList<Wave> waveList = lArene.getWavesType(ECatW.valueOf(category));
+				ArrayList<Wave> waveList = lArene.getWavesType(category);
 
 				String wavename = sai_name.getText().equals("") ? "New_Wave" : sai_name.getText();
 
@@ -562,14 +566,12 @@ public class MenuPrincipal extends JFrame {
 
 				if(e.getStateChange() == ItemEvent.DESELECTED && combo_category.isFocusOwner()) {
 
-					String scategory = wave.getCategory().name();
+					ECatW category = wave.getCategory();
+					ECatW othercat = category==ECatW.recurrent ? ECatW.single : ECatW.recurrent;
 
-					JList<CellListWave> list_sel = scategory.equals("recurrent") ? list_recurrent : list_single;
+					JList<CellListWave> list_sel = category==ECatW.recurrent ? list_recurrent : list_single;
 					JList<CellListWave> otherList_sel = list_sel==list_recurrent ? list_single : list_recurrent;
 					Arena lArene = arenas.getALarenas().get(combo_arena.getSelectedIndex());
-
-					ECatW category = ECatW.valueOf(scategory);
-					ECatW othercat = category==ECatW.recurrent ? ECatW.single : ECatW.recurrent;
 
 					ArrayList<Wave> waveList = lArene.getWavesType(category);
 					ArrayList<Wave> otherWaveList = lArene.getWavesType(othercat);
@@ -962,20 +964,20 @@ public class MenuPrincipal extends JFrame {
 		btn_set.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				String type = wave.getType().name();
+				ETypeW type = wave.getType();
 
 				switch (type) {
-				case "Supply":
+				case Supply:
 					SupplyW supw = (SupplyW) wave;
 					ItemList drops = new ItemSelector(MenuPrincipal.this,supw.getDrops(), 0, false).getItemList();
 					supw.setDrops(drops);
 					break;
-				case "Boss":
+				case Boss:
 					BossW bwave = (BossW) wave;
 					ItemList reward = new ItemSelector(MenuPrincipal.this,bwave.getReward(), 1, false).getItemList();
 					bwave.setReward(reward);
 					break;
-				case "Upgrade":
+				case Upgrade:
 					UpgradeW upw = (UpgradeW) wave;
 					new UpgradeWaveChanger(MenuPrincipal.this, upw);
 					break;
@@ -2057,7 +2059,7 @@ public class MenuPrincipal extends JFrame {
 						wave = jList.getModel().getElementAt(hoverIndex).getWave();
 						int reponse = JOptionPane.showConfirmDialog(
 								null,
-								MessageFormat.format(BUNDLE.getString("MenuPrincipal.message.delWave"), wave.getCategory().name(),wave.getNom()),
+								MessageFormat.format(BUNDLE.getString("MenuPrincipal.message.delWave"), wave.getCategory().getNom().toLowerCase(),wave.getNom()),
 								BUNDLE.getString("Message.title.confirmation"),
 								JOptionPane.YES_NO_OPTION,
 								JOptionPane.QUESTION_MESSAGE);
@@ -2185,7 +2187,7 @@ public class MenuPrincipal extends JFrame {
 			lib_abi_announce.setVisible(true);
 
 			chk_abi_announce.setVisible(true);
-			lib_abi_announce.setText("Fixed :");
+			lib_abi_announce.setText(BUNDLE.getString("MenuPrincipal.fixed"));
 			lib_carac_wave.setText(BUNDLE.getString("MenuPrincipal.monsters"));
 			combo_carac_wave.setModel(new DefaultComboBoxModel<String>(EMonsters.namevalues()));
 			combo_carac_wave.setSelectedIndex(-1);
@@ -2322,7 +2324,7 @@ public class MenuPrincipal extends JFrame {
 	public void loadData_Arena(Wave wave) {
 		sai_name.setText(wave.getNom());
 		combo_category.setSelectedItem(wave.getCategory().getNom());
-		combo_type.setSelectedItem(wave.getType().name());
+		combo_type.setSelectedItem(wave.getType().getNom());
 		sai_wave.setValue(wave.getNumwave());
 
 		sai_priority.setValue(wave.getPriority());

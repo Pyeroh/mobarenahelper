@@ -27,7 +27,10 @@ public enum EAbilities {
 	throw_distant(EnumName.getString("EAbilities.16")), //$NON-NLS-1$
 	pull_target(EnumName.getString("EAbilities.17")), //$NON-NLS-1$
 	pull_nearby(EnumName.getString("EAbilities.18")), //$NON-NLS-1$
-	pull_distant(EnumName.getString("EAbilities.19")); //$NON-NLS-1$
+	pull_distant(EnumName.getString("EAbilities.19")), //$NON-NLS-1$
+	fetch_target(EnumName.getString("EAbilities.20")), //$NON-NLS-1$
+	fetch_nearby(EnumName.getString("EAbilities.21")), //$NON-NLS-1$
+	fetch_distant(EnumName.getString("EAbilities.22")); //$NON-NLS-1$
 
 	private String nom;
 
