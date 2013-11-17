@@ -197,7 +197,7 @@ public class MenuPrincipal extends JFrame {
 		});
 
 		loadLocale();
-		BUNDLE = ResourceBundle.getBundle("gui.lang");
+		//TODO BUNDLE = ResourceBundle.getBundle("gui.lang");
 
 		setIconImage(new ImageIcon(MenuPrincipal.class.getResource("/gui/pics/mobarena.png")).getImage());
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -620,7 +620,7 @@ public class MenuPrincipal extends JFrame {
 				Wave nextWave = null;
 				if(e.getStateChange() == ItemEvent.DESELECTED && combo_type.isFocusOwner()) {
 
-					ETypeW type = ETypeW.valueOf((String) combo_type.getSelectedItem());
+					ETypeW type = ETypeW.getByName((String) combo_type.getSelectedItem());
 					Arena lArene = arenas.getALarenas().get(combo_arena.getSelectedIndex());
 					String category = wave.getCategory().name();
 					JList<CellListWave> list_sel = category.equals("recurrent") ? list_recurrent : list_single;
@@ -1183,7 +1183,7 @@ public class MenuPrincipal extends JFrame {
 		btn_items.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				classe.setItems(new ItemSelector(MenuPrincipal.this, classe.getItems(), 0, false, true).getItemList());
+				classe.setItems(new ItemSelector(MenuPrincipal.this, classe.getItems(), -1, false, true).getItemList());
 			}
 		});
 		btn_items.setBounds(110, 46, 137, 28);
@@ -2044,6 +2044,7 @@ public class MenuPrincipal extends JFrame {
 					setVisibleComponents_Arena(wave);
 					loadData_Arena(wave);
 					deselectWaveLists_Arena(jList);
+					sai_name.selectAll();
 				}
 				break;
 				//Clic molette (suppression)

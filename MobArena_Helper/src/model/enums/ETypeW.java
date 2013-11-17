@@ -48,5 +48,33 @@ public enum ETypeW {
 		}
 		return namevalues;
 	}
+	
+	/**
+	 * Renvoie la constante associée au nom passé en paramètre.
+	 * @param name ce qui peut être renvoyé par {@link ETypeW#getNom()}
+	 * @return la constante
+	 * @throws IllegalArgumentException si la constante n'existe pas
+	 * @throws NullPointerException si le paramètre vaut {@code null}
+	 */
+	public static ETypeW getByName(String name) {
+
+		if (name!=null) {
+			ETypeW[] values = values();
+			int i = 0;
+			while (i < values.length && !values[i].getNom().equals(name)) {
+				i++;
+			}
+			if (i < values.length) {
+				return values[i];
+			} else {
+				throw new IllegalArgumentException(
+						"No enum constant ETypeW." + name); //$NON-NLS-1$
+			}
+		}
+		else {
+			throw new NullPointerException("Name is null"); //$NON-NLS-1$
+		}
+
+	}
 
 }

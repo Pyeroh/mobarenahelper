@@ -4,21 +4,18 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.*;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.text.MaskFormatter;
 
-import model.Armor;
-import model.Item;
+import model.*;
 import model.enums.*;
 import model.lists.ArmorList;
 import model.lists.ItemList;
 import view.JWideComboBox;
 import view.cells.*;
-import java.util.ResourceBundle;
 
 public class ItemSelector extends JDialog {
 
@@ -328,7 +325,7 @@ public class ItemSelector extends JDialog {
 	private ArrayList<EItem> switchValues() {
 		ArrayList<EItem> values;
 		String sort = (String) combo_sort.getSelectedItem();
-		if(sort.equals("All")) values = new ArrayList<EItem>(Arrays.asList(EItem.values()));
+		if(sort.equals(EItemCat.all.getGui_name())) values = new ArrayList<EItem>(Arrays.asList(EItem.values()));
 		else if (isArmor) {
 			values = new ArrayList<>();
 			for(int i=298;i<=317;i++){
