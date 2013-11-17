@@ -34,5 +34,12 @@ public enum ECatW {
 		}
 		return namevalues;
 	}
+	
+	public static void load() {
+		ECatW[] values = values();
+		for(int i=0;i<values.length;i++) {
+			values[i].nom = EnumName.getString("ECatW."+i);
+		}
+	}
 
 }

@@ -969,7 +969,7 @@ public class MenuPrincipal extends JFrame {
 				switch (type) {
 				case Supply:
 					SupplyW supw = (SupplyW) wave;
-					ItemList drops = new ItemSelector(MenuPrincipal.this,supw.getDrops(), 0, false).getItemList();
+					ItemList drops = new ItemSelector(MenuPrincipal.this,supw.getDrops(), -1, false).getItemList();
 					supw.setDrops(drops);
 					break;
 				case Boss:
@@ -1969,13 +1969,16 @@ public class MenuPrincipal extends JFrame {
 
 	private void loadLocale() {
 		Locale def = Locale.getDefault();
+		Locale newdef = Locale.getDefault();
 
 		if(def==Locale.ENGLISH || def==Locale.CANADA || def==Locale.UK || def==Locale.US) {
-			Locale.setDefault(Locale.ENGLISH);
+			newdef = Locale.ENGLISH;
 		}
 		else if(def==Locale.FRENCH || def==Locale.CANADA_FRENCH || def==Locale.FRANCE) {
-			Locale.setDefault(Locale.FRENCH);
+			newdef = Locale.FRENCH;
 		}
+		Locale.setDefault(newdef);
+		EnumName.load();
 	}
 
 	public void raz() {

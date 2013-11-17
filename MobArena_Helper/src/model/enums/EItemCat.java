@@ -71,5 +71,13 @@ public enum EItemCat {
 		}
 
 	}
+	
+	public static void load() {
+		EItemCat[] values = values();
+		for(int i=0;i<values.length;i++) {
+			values[i].gui_name = EnumName.getString("EItemCat."+i);
+		}
+	}
+	
 
 }

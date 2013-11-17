@@ -73,5 +73,12 @@ public enum EAmount {
 		}
 
 	}
+	
+	public static void load() {
+		EAmount[] values = values();
+		for(int i=0;i<values.length;i++) {
+			values[i].nom = EnumName.getString("EAmount."+i);
+		}
+	}
 
 }

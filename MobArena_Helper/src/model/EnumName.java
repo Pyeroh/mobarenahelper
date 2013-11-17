@@ -1,13 +1,13 @@
 package model;
 
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
+import java.util.*;
+
+import model.enums.*;
 
 public class EnumName {
-	private static final String BUNDLE_NAME = "gui.enums"; //$NON-NLS-1$
 
-	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle
-			.getBundle(BUNDLE_NAME);
+	private static ResourceBundle RESOURCE_BUNDLE = ResourceBundle
+			.getBundle("gui.enums");
 
 	private EnumName() {
 	}
@@ -18,5 +18,17 @@ public class EnumName {
 		} catch (MissingResourceException e) {
 			return '!' + key + '!';
 		}
+	}
+
+	public static void load() {
+		RESOURCE_BUNDLE = ResourceBundle.getBundle("gui.enums");
+		EAbilities.load();
+		EAmount.load();
+		ECatW.load();
+		EGrowth.load();
+		EHealth.load();
+		EItemCat.load();
+		EMonsters.load();
+		ETypeW.load();
 	}
 }

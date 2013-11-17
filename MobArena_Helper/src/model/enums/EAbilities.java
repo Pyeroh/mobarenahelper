@@ -87,5 +87,12 @@ public enum EAbilities {
 		}
 
 	}
+	
+	public static void load() {
+		EAbilities[] values = values();
+		for(int i=0;i<values.length;i++) {
+			values[i].nom = EnumName.getString("EAbilities."+i);
+		}
+	}
 
 }

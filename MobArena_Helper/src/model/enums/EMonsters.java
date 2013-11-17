@@ -104,4 +104,12 @@ public enum EMonsters {
 		
 	}
 	
+	public static void load() {
+		EMonsters[] values = values();
+		for(int i=0;i<values.length;i++) {
+			values[i].nom = EnumName.getString("EMonsters."+i);
+		}
+	}
+	
+	
 }

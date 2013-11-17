@@ -65,4 +65,12 @@ public enum EGrowth {
 		}
 
 	}
+	
+	public static void load() {
+		EGrowth[] values = values();
+		for(int i=0;i<values.length;i++) {
+			values[i].nom = EnumName.getString("EGrowth."+i);
+		}
+	}
+	
 }

@@ -179,7 +179,7 @@ public class UpgradeWaveChanger extends JDialog {
 
 				JFrame frame = UpgradeWaveChanger.this.frame;
 				if(e.getSource() == btn_set_items) {
-					upset.setItems(new ItemSelector(frame,upset.getItems(),0,false).getItemList());
+					upset.setItems(new ItemSelector(frame,upset.getItems(),-1,false).getItemList());
 				}
 				else if(e.getSource()== btn_set_armor) {
 					upset.setArmor((ArmorList) new ItemSelector(frame,upset.getArmor(),4,true).getItemList());

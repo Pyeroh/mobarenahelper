@@ -66,5 +66,13 @@ public enum EHealth {
 		}
 
 	}
+	
+	public static void load() {
+		EHealth[] values = values();
+		for(int i=0;i<values.length;i++) {
+			values[i].nom = EnumName.getString("EHealth."+i);
+		}
+	}
+	
 
 }

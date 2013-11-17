@@ -76,5 +76,13 @@ public enum ETypeW {
 		}
 
 	}
+	
+	public static void load() {
+		ETypeW[] values = values();
+		for(int i=0;i<values.length;i++) {
+			values[i].nom = EnumName.getString("ETypeW."+i);
+		}
+	}
+	
 
 }
