@@ -37,4 +37,32 @@ public enum EGrowth {
 		}
 		return namevalues;
 	}
+	
+	/**
+	 * Renvoie la constante associée au nom passé en paramètre.
+	 * @param name ce qui peut être renvoyé par {@link EGrowth#getNom()}
+	 * @return la constante
+	 * @throws IllegalArgumentException si la constante n'existe pas
+	 * @throws NullPointerException si le paramètre vaut {@code null}
+	 */
+	public static EGrowth getByName(String name) {
+
+		if (name!=null) {
+			EGrowth[] values = values();
+			int i = 0;
+			while (i < values.length && !values[i].getNom().equals(name)) {
+				i++;
+			}
+			if (i < values.length) {
+				return values[i];
+			} else {
+				throw new IllegalArgumentException(
+						"No enum constant EGrowth." + name); //$NON-NLS-1$
+			}
+		}
+		else {
+			throw new NullPointerException("Name is null"); //$NON-NLS-1$
+		}
+
+	}
 }

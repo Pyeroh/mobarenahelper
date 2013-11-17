@@ -724,7 +724,7 @@ public class MenuPrincipal extends JFrame {
 
 				if(e.getStateChange() == ItemEvent.DESELECTED && combo_growth.isFocusOwner()) {
 
-					EGrowth growth = EGrowth.valueOf(((String) combo_growth.getSelectedItem()).toLowerCase());
+					EGrowth growth = EGrowth.getByName(((String) combo_growth.getSelectedItem()).toLowerCase());
 
 					DefaultW defwave = (DefaultW) wave;
 					defwave.setGrowth(growth);
