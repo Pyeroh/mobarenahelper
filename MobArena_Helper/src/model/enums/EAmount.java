@@ -27,7 +27,7 @@ public enum EAmount {
 	
 	public String getName() {
 		String name = nom;
-		name.replace(" ", "_"); //$NON-NLS-1$ //$NON-NLS-2$
+		name = name.replace(" ", "_"); //$NON-NLS-1$ //$NON-NLS-2$
 		name = name.toLowerCase();
 		return name;
 	}
