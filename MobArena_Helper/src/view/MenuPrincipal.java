@@ -360,24 +360,29 @@ public class MenuPrincipal extends JFrame {
 						if (!f.getPath().endsWith(".yml")) {
 							f = new File(f.getPath() + ".yml");
 						}
-						f.delete();
-						try {
-							f.createNewFile();
-							FileWriter fw = new FileWriter(f);
-							GestYaml dumper = new GestYaml(arenas.getMap());
-							dumper.dumpAsFile(fw);
-							JOptionPane.showMessageDialog(null,
-									Messages.getString("MenuPrincipal.message.finishSaving"), "",
-									JOptionPane.INFORMATION_MESSAGE);
+						int choice = JOptionPane.showConfirmDialog(rootPane, Messages.getString("MenuPrincipal.message.overwrite"),Messages.getString("Message.title.confirmation"),JOptionPane.YES_NO_OPTION);
+						if (choice==JOptionPane.YES_OPTION) {
+							f.delete();
+							try {
+								f.createNewFile();
+								FileWriter fw = new FileWriter(f);
+								GestYaml dumper = new GestYaml(arenas.getMap());
+								dumper.dumpAsFile(fw);
+								JOptionPane.showMessageDialog(
+										rootPane,
+										Messages.getString("MenuPrincipal.message.finishSaving"),
+										"",
+										JOptionPane.INFORMATION_MESSAGE);
 
-						} catch (IOException e1) {
-							e1.printStackTrace();
+							} catch (IOException e1) {
+								e1.printStackTrace();
+							}
 						}
 					}
 
 				}
 				else {
-					JOptionPane.showMessageDialog(null, Messages.getString("MenuPrincipal.message.mustLoad"),Messages.getString("Message.title.savingError"), JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(rootPane, Messages.getString("MenuPrincipal.message.mustLoad"),Messages.getString("Message.title.savingError"), JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -1957,13 +1962,13 @@ public class MenuPrincipal extends JFrame {
 
 		tabpan_config.addTab(Messages.getString("MenuPrincipal.tabpan_arena_wave.title"), pan_arena_wave); //$NON-NLS-2$ //$NON-NLS-1$
 		tabpan_config.addTab(Messages.getString("MenuPrincipal.tabpan_classes.title"), pan_classes); //$NON-NLS-2$ //$NON-NLS-1$
-		
+
 		pan_class_limit = new JPanel();
 		pan_class_limit.setLayout(null);
 		pan_class_limit.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		pan_class_limit.setBounds(448, 7, 300, 94);
 		pan_classes.add(pan_class_limit);
-		
+
 		sai_class_limit = new JFormattedTextField(NumberFormat.getIntegerInstance());
 		pan_class_limit.add(sai_class_limit);
 		sai_class_limit.setColumns(10);

@@ -72,7 +72,7 @@ public class ArmorList extends ItemList {
 		if(this.size()==1){
 			sArmor.append(((Armor)(this.get(0))).getString(false));
 		}
-		else {
+		else if(this.size()>1){
 			for(int i=0;i<this.size();i++) {
 				sArmor.append(this.get(i).getString()+",");
 			}

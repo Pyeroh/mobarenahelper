@@ -182,8 +182,12 @@ public class Classe {
 		//Armor
 		map.put("armor", armor.getString());
 
-		if(permissions!=null) map.put("permissions", permissions);
-		if(lobby_permissions!=null) map.put("lobby-permissions", lobby_permissions);
+		if(permissions!=null) {
+			if(permissions.size()!=0) map.put("permissions", permissions);
+		}
+		if(lobby_permissions!=null) {
+			if(lobby_permissions.size()!=0) map.put("lobby-permissions", lobby_permissions);
+		}
 		if(!unbreakable_armor) map.put("unbreakable-armor", unbreakable_armor);
 		if(!unbreakable_weapons) map.put("unbreakable-weapons", unbreakable_weapons);
 

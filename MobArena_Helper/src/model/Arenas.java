@@ -12,7 +12,6 @@ public class Arenas {
 	private LinkedHashMap<String, Object> globalsettings = new LinkedHashMap<>();
 	private LinkedHashMap<String, Object> listclasses;
 	private LinkedHashMap<String, Object> listarenas;
-	private ArrayList<Classe> arraylistclasses = new ArrayList<Classe>();
 	private ArrayList<Arena> arraylistarenas = new ArrayList<Arena>();
 	
 	/**
@@ -20,7 +19,7 @@ public class Arenas {
 	 * chaque Arena ayant un nom et des vagues (voir description Arena)
 	 * @param listarenas la liste des arènes
 	 * @param globalsettings les settings généraux du fichier
-	 * @param arraylistclasses les classes dans les settings du fichier
+	 * @param listclasses les classes dans les settings du fichier
 	 */
 	public Arenas(LinkedHashMap<String, Object> listarenas, LinkedHashMap<String, Object> globalsettings, LinkedHashMap<String, Object> listclasses) {
 		this.listarenas = listarenas;
@@ -45,7 +44,7 @@ public class Arenas {
 	}
 	
 	public ArrayList<Classe> getALclasses() {
-		return arraylistclasses;
+		return Classe.classe_list;
 	}
 	
 	public ArrayList<Arena> getALarenas() {
@@ -67,7 +66,7 @@ public class Arenas {
 		//Extraction des classes
 		for (Iterator<String> it = listclasses.keySet().iterator(); it.hasNext();) {
 			String nomclasse = (String) it.next();
-			arraylistclasses.add(new Classe(nomclasse, gclasse.getMap(nomclasse)));
+			new Classe(nomclasse, gclasse.getMap(nomclasse));
 		}
 		
 		GestYaml garena = new GestYaml(listarenas);
@@ -90,9 +89,11 @@ public class Arenas {
 		}
 		
 		listclasses = new LinkedHashMap<>();
-		for(int i=0;i<arraylistclasses.size();i++) {
-			Classe classe = arraylistclasses.get(i);
-			listclasses.put(classe.getName(), classe.getMap());
+		for(int i=0;i<getALclasses().size();i++) {
+			Classe classe = getALclasses().get(i);
+			if (!classe.getName().equals("all")) {
+				listclasses.put(classe.getName(), classe.getMap());
+			}
 		}
 		
 		LinkedHashMap<String, Object> file = new LinkedHashMap<>();
