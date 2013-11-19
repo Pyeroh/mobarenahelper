@@ -22,7 +22,6 @@ import view.dialogs.*;
 public class MenuPrincipal extends JFrame {
 
 	private static final long serialVersionUID = 7504976316824014595L;
-	private static ResourceBundle BUNDLE = ResourceBundle.getBundle("gui.lang");
 
 	private Arenas arenas = null;
 	private File file = null;
@@ -183,13 +182,15 @@ public class MenuPrincipal extends JFrame {
 	private JMenu mnLanguage;
 	private JRadioButtonMenuItem rdbtnmntmFrench;
 	private JRadioButtonMenuItem rdbtnmntmEnglish;
+	private JPanel pan_class_limit;
+	private JTextField sai_class_limit;
 
 	public MenuPrincipal() throws ParseException{
 		super("MobArena Helper v2.1");
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
-				int choice = JOptionPane.showConfirmDialog(rootPane, BUNDLE.getString("MenuPrincipal.message.unsavedChangesQuit"), BUNDLE.getString("Message.title.confirmation"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+				int choice = JOptionPane.showConfirmDialog(rootPane, Messages.getString("MenuPrincipal.message.unsavedChangesQuit"), Messages.getString("Message.title.confirmation"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 				if(choice==JOptionPane.YES_OPTION) {
 					System.exit(0);
 				}
@@ -197,7 +198,6 @@ public class MenuPrincipal extends JFrame {
 		});
 
 		loadLocale();
-		BUNDLE = ResourceBundle.getBundle("gui.lang");
 
 		setIconImage(new ImageIcon(MenuPrincipal.class.getResource("/gui/pics/mobarena.png")).getImage());
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -276,8 +276,8 @@ public class MenuPrincipal extends JFrame {
 						int choice = JOptionPane
 								.showConfirmDialog(
 										rootPane,
-										BUNDLE.getString("MenuPrincipal.message.changeLang"),
-										BUNDLE.getString("Message.title.confirmation"),
+										Messages.getString("MenuPrincipal.message.changeLang"),
+										Messages.getString("Message.title.confirmation"),
 										JOptionPane.YES_NO_OPTION);
 						switch (choice) {
 						case JOptionPane.YES_OPTION:
@@ -304,7 +304,7 @@ public class MenuPrincipal extends JFrame {
 			}
 		};
 
-		btn_load = new JButton(BUNDLE.getString("MenuPrincipal.btn_load.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		btn_load = new JButton(Messages.getString("MenuPrincipal.btn_load.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		btn_load.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -330,7 +330,7 @@ public class MenuPrincipal extends JFrame {
 					} catch (Exception e1) {
 						e1.printStackTrace();
 
-						JOptionPane.showMessageDialog(rootPane, BUNDLE.getString("MenuPrincipal.message.incorrectFileFormat"),BUNDLE.getString("Message.title.criticalError"),JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(rootPane, Messages.getString("MenuPrincipal.message.incorrectFileFormat"),Messages.getString("Message.title.criticalError"),JOptionPane.ERROR_MESSAGE);
 
 					}
 
@@ -343,7 +343,7 @@ public class MenuPrincipal extends JFrame {
 		btn_load.setBounds(526, 533, 97, 23);
 		getContentPane().add(btn_load);
 
-		btn_save = new JButton(BUNDLE.getString("MenuPrincipal.btn_save.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		btn_save = new JButton(Messages.getString("MenuPrincipal.btn_save.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		btn_save.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -367,7 +367,7 @@ public class MenuPrincipal extends JFrame {
 							GestYaml dumper = new GestYaml(arenas.getMap());
 							dumper.dumpAsFile(fw);
 							JOptionPane.showMessageDialog(null,
-									BUNDLE.getString("MenuPrincipal.message.finishSaving"), "",
+									Messages.getString("MenuPrincipal.message.finishSaving"), "",
 									JOptionPane.INFORMATION_MESSAGE);
 
 						} catch (IOException e1) {
@@ -377,7 +377,7 @@ public class MenuPrincipal extends JFrame {
 
 				}
 				else {
-					JOptionPane.showMessageDialog(null, BUNDLE.getString("MenuPrincipal.message.mustLoad"),BUNDLE.getString("Message.title.savingError"), JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, Messages.getString("MenuPrincipal.message.mustLoad"),Messages.getString("Message.title.savingError"), JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -395,7 +395,7 @@ public class MenuPrincipal extends JFrame {
 		pan_arena_wave.setBounds(43, 54, 732, 443);
 		pan_arena_wave.setLayout(null);
 
-		lib_arena = new JLabel(BUNDLE.getString("MenuPrincipal.lib_arena.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_arena = new JLabel(Messages.getString("MenuPrincipal.lib_arena.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_arena.setBounds(9, 8, 46, 17);
 		pan_arena_wave.add(lib_arena);
 		lib_arena.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -414,7 +414,7 @@ public class MenuPrincipal extends JFrame {
 		combo_arena.setFont(new Font("Tahoma", Font.PLAIN, 14));
 
 		btn_plus = new JButton("+");
-		btn_plus.setToolTipText(BUNDLE.getString("MenuPrincipal.btn_plus.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
+		btn_plus.setToolTipText(Messages.getString("MenuPrincipal.btn_plus.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		btn_plus.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -422,7 +422,7 @@ public class MenuPrincipal extends JFrame {
 					raz();
 					arenas = new  Arenas();
 				}
-				String name = JOptionPane.showInputDialog(rootPane, BUNDLE.getString("MenuPrincipal.message.arenaName"),BUNDLE.getString("Message.title.arenaName"), JOptionPane.QUESTION_MESSAGE);
+				String name = JOptionPane.showInputDialog(rootPane, Messages.getString("MenuPrincipal.message.arenaName"),Messages.getString("Message.title.arenaName"), JOptionPane.QUESTION_MESSAGE);
 				if(name!=null) {
 					name = name.trim();
 					if (!name.equals("")) {
@@ -437,11 +437,11 @@ public class MenuPrincipal extends JFrame {
 							JOptionPane
 							.showMessageDialog(
 									rootPane,
-									BUNDLE.getString("MenuPrincipal.message.errorArena"),
-									BUNDLE.getString("Message.title.error"),
+									Messages.getString("MenuPrincipal.message.errorArena"),
+									Messages.getString("Message.title.error"),
 									JOptionPane.ERROR_MESSAGE);
 					}
-					else JOptionPane.showMessageDialog(rootPane,BUNDLE.getString("MenuPrincipal.message.noNameForArena"),BUNDLE.getString("Message.title.invalidValue"),JOptionPane.ERROR_MESSAGE);
+					else JOptionPane.showMessageDialog(rootPane,Messages.getString("MenuPrincipal.message.noNameForArena"),Messages.getString("Message.title.invalidValue"),JOptionPane.ERROR_MESSAGE);
 				}
 
 			}
@@ -456,11 +456,11 @@ public class MenuPrincipal extends JFrame {
 			public void mouseReleased(MouseEvent e) {
 				int index = combo_arena.getSelectedIndex();
 				if(index!=-1) {
-					int choice = JOptionPane.showConfirmDialog(rootPane, String.format(BUNDLE.getString("MenuPrincipal.message.delArena1"), combo_arena.getSelectedItem()), BUNDLE.getString("Message.title.confirmation"), JOptionPane.YES_NO_OPTION);
+					int choice = JOptionPane.showConfirmDialog(rootPane, String.format(Messages.getString("MenuPrincipal.message.delArena1"), combo_arena.getSelectedItem()), Messages.getString("Message.title.confirmation"), JOptionPane.YES_NO_OPTION);
 					if(choice==JOptionPane.YES_OPTION) {
-						choice = JOptionPane.showConfirmDialog(rootPane, BUNDLE.getString("MenuPrincipal.message.delArena2"), BUNDLE.getString("Message.title.confirmation"), JOptionPane.YES_NO_OPTION);
+						choice = JOptionPane.showConfirmDialog(rootPane, Messages.getString("MenuPrincipal.message.delArena2"), Messages.getString("Message.title.confirmation"), JOptionPane.YES_NO_OPTION);
 						if(choice==JOptionPane.YES_OPTION) {
-							JOptionPane.showMessageDialog(rootPane,String.format(BUNDLE.getString("MenuPrincipal.message.delArena3"),combo_arena.getSelectedItem()),BUNDLE.getString("Message.title.confirmation"),JOptionPane.INFORMATION_MESSAGE);
+							JOptionPane.showMessageDialog(rootPane,String.format(Messages.getString("MenuPrincipal.message.delArena3"),combo_arena.getSelectedItem()),Messages.getString("Message.title.confirmation"),JOptionPane.INFORMATION_MESSAGE);
 							arenas.getALarenas().remove(index);
 							combo_arena.removeItemAt(index);
 							combo_arena.setSelectedIndex(combo_arena.getModel().getSize()-1);
@@ -474,17 +474,17 @@ public class MenuPrincipal extends JFrame {
 				}
 			}
 		});
-		btn_moins.setToolTipText(BUNDLE.getString("MenuPrincipal.btn_moins.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
+		btn_moins.setToolTipText(Messages.getString("MenuPrincipal.btn_moins.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		btn_moins.setBorder(new CompoundBorder());
 		btn_moins.setBounds(238, 27, 20, 20);
 		pan_arena_wave.add(btn_moins);
 
-		lib_recurrent = new JLabel(BUNDLE.getString("MenuPrincipal.lib_recurrent.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_recurrent = new JLabel(Messages.getString("MenuPrincipal.lib_recurrent.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_recurrent.setBounds(9, 60, 146, 17);
 		pan_arena_wave.add(lib_recurrent);
 		lib_recurrent.setFont(new Font("Tahoma", Font.BOLD, 14));
 
-		btn_newrecurrent = new JButton(BUNDLE.getString("MenuPrincipal.btn_newrecurrent.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		btn_newrecurrent = new JButton(Messages.getString("MenuPrincipal.btn_newrecurrent.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		btn_newrecurrent.setBounds(167, 59, 91, 23);
 		pan_arena_wave.add(btn_newrecurrent);
 		btn_newrecurrent.addMouseListener(newWave);
@@ -497,12 +497,12 @@ public class MenuPrincipal extends JFrame {
 		scrpan_recurrent.setBounds(9, 84, 252, 180);
 		pan_arena_wave.add(scrpan_recurrent);
 
-		lib_single = new JLabel(BUNDLE.getString("MenuPrincipal.lib_single.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_single = new JLabel(Messages.getString("MenuPrincipal.lib_single.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_single.setBounds(9, 276, 132, 17);
 		pan_arena_wave.add(lib_single);
 		lib_single.setFont(new Font("Tahoma", Font.BOLD, 14));
 
-		btn_newsingle = new JButton(BUNDLE.getString("MenuPrincipal.btn_newsingle.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		btn_newsingle = new JButton(Messages.getString("MenuPrincipal.btn_newsingle.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		btn_newsingle.setBounds(167, 270, 91, 23);
 		pan_arena_wave.add(btn_newsingle);
 		btn_newsingle.addMouseListener(newWave);
@@ -521,7 +521,7 @@ public class MenuPrincipal extends JFrame {
 		pan_conf.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		pan_conf.setLayout(null);
 
-		lib_name = new JLabel(BUNDLE.getString("MenuPrincipal.lib_name.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_name = new JLabel(Messages.getString("MenuPrincipal.lib_name.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_name.setForeground(new Color(81, 133, 190));
 		lib_name.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lib_name.setBounds(10, 11, 58, 20);
@@ -554,7 +554,7 @@ public class MenuPrincipal extends JFrame {
 		pan_conf.add(sai_name);
 		sai_name.setColumns(10);
 
-		lib_category = new JLabel(BUNDLE.getString("MenuPrincipal.lib_category.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_category = new JLabel(Messages.getString("MenuPrincipal.lib_category.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_category.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lib_category.setBounds(10, 42, 82, 20);
 		pan_conf.add(lib_category);
@@ -607,7 +607,7 @@ public class MenuPrincipal extends JFrame {
 		combo_category.setBounds(104, 42, 105, 20);
 		pan_conf.add(combo_category);
 
-		lib_type = new JLabel(BUNDLE.getString("MenuPrincipal.lib_type.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_type = new JLabel(Messages.getString("MenuPrincipal.lib_type.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_type.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lib_type.setBounds(10, 73, 82, 20);
 		pan_conf.add(lib_type);
@@ -670,7 +670,7 @@ public class MenuPrincipal extends JFrame {
 		combo_type.setBounds(104, 73, 105, 20);
 		pan_conf.add(combo_type);
 
-		lib_wave = new JLabel(BUNDLE.getString("MenuPrincipal.lib_wave.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_wave = new JLabel(Messages.getString("MenuPrincipal.lib_wave.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_wave.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lib_wave.setBounds(10, 104, 82, 20);
 		pan_conf.add(lib_wave);
@@ -684,7 +684,7 @@ public class MenuPrincipal extends JFrame {
 		pan_conf.add(sai_wave);
 		sai_wave.setColumns(10);
 
-		lib_priority = new JLabel(BUNDLE.getString("MenuPrincipal.lib_priority.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_priority = new JLabel(Messages.getString("MenuPrincipal.lib_priority.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_priority.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lib_priority.setBounds(10, 135, 82, 20);
 		pan_conf.add(lib_priority);
@@ -698,7 +698,7 @@ public class MenuPrincipal extends JFrame {
 		sai_priority.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		pan_conf.add(sai_priority);
 
-		lib_frequency = new JLabel(BUNDLE.getString("MenuPrincipal.lib_frequency.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_frequency = new JLabel(Messages.getString("MenuPrincipal.lib_frequency.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_frequency.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lib_frequency.setBounds(10, 166, 82, 20);
 		pan_conf.add(lib_frequency);
@@ -712,7 +712,7 @@ public class MenuPrincipal extends JFrame {
 		sai_frequency.setBounds(104, 166, 105, 20);
 		pan_conf.add(sai_frequency);
 
-		lib_growth = new JLabel(BUNDLE.getString("MenuPrincipal.lib_growth.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_growth = new JLabel(Messages.getString("MenuPrincipal.lib_growth.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_growth.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lib_growth.setBounds(10, 197, 82, 20);
 		pan_conf.add(lib_growth);
@@ -756,7 +756,7 @@ public class MenuPrincipal extends JFrame {
 		scrpan_carac_wave.setBounds(219, 42, 245, 389);
 		pan_conf.add(scrpan_carac_wave);
 
-		lib_monster = new JLabel(BUNDLE.getString("MenuPrincipal.lib_monster.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_monster = new JLabel(Messages.getString("MenuPrincipal.lib_monster.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_monster.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lib_monster.setBounds(10, 228, 82, 20);
 		pan_conf.add(lib_monster);
@@ -767,7 +767,7 @@ public class MenuPrincipal extends JFrame {
 		combo_monster.setBounds(104, 228, 105, 20);
 		pan_conf.add(combo_monster);
 
-		lib_amount = new JLabel(BUNDLE.getString("MenuPrincipal.lib_amount.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_amount = new JLabel(Messages.getString("MenuPrincipal.lib_amount.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_amount.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lib_amount.setBounds(10, 259, 82, 20);
 		pan_conf.add(lib_amount);
@@ -779,7 +779,7 @@ public class MenuPrincipal extends JFrame {
 		combo_amount.setBounds(104, 259, 105, 20);
 		pan_conf.add(combo_amount);
 
-		lib_health = new JLabel(BUNDLE.getString("MenuPrincipal.lib_health.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_health = new JLabel(Messages.getString("MenuPrincipal.lib_health.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_health.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lib_health.setBounds(10, 290, 82, 20);
 		pan_conf.add(lib_health);
@@ -847,7 +847,7 @@ public class MenuPrincipal extends JFrame {
 		chk_abi_announce.setBounds(104, 322, 105, 20);
 		pan_conf.add(chk_abi_announce);
 
-		lib_abi_interval = new JTextArea(BUNDLE.getString("MenuPrincipal.lib_abi_interval.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_abi_interval = new JTextArea(Messages.getString("MenuPrincipal.lib_abi_interval.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_abi_interval.setWrapStyleWord(true);
 		lib_abi_interval.setLineWrap(true);
 		lib_abi_interval.setFont(new Font("Tahoma", Font.BOLD, 12));
@@ -866,7 +866,7 @@ public class MenuPrincipal extends JFrame {
 		sai_abi_interval.setBounds(104, 369, 105, 20);
 		pan_conf.add(sai_abi_interval);
 
-		btn_add = new JButton(BUNDLE.getString("MenuPrincipal.btn_add.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		btn_add = new JButton(Messages.getString("MenuPrincipal.btn_add.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		btn_add.setBorder(new CompoundBorder());
 		btn_add.setMargin(new Insets(0, 0, 0, 0));
 		btn_add.addMouseListener(new MouseAdapter() {
@@ -880,7 +880,7 @@ public class MenuPrincipal extends JFrame {
 						BossW bwave = (BossW) wave;
 						ArrayList<EAbilities> abilist = bwave.getAbilities();
 						if(abilist.contains(EAbilities.getByName(name))){
-							JOptionPane.showMessageDialog(rootPane, BUNDLE.getString("MenuPrincipal.message.doubleAbility"), BUNDLE.getString("Message.title.invalidValue"), JOptionPane.WARNING_MESSAGE);
+							JOptionPane.showMessageDialog(rootPane, Messages.getString("MenuPrincipal.message.doubleAbility"), Messages.getString("Message.title.invalidValue"), JOptionPane.WARNING_MESSAGE);
 						}
 						else {
 							abilist.add(EAbilities.getByName(name));
@@ -894,8 +894,8 @@ public class MenuPrincipal extends JFrame {
 							JOptionPane
 							.showMessageDialog(
 									rootPane,
-									BUNDLE.getString("MenuPrincipal.message.monsterSpawnProba"),
-									BUNDLE.getString("Message.title.invalidValue"),
+									Messages.getString("MenuPrincipal.message.monsterSpawnProba"),
+									Messages.getString("Message.title.invalidValue"),
 									JOptionPane.WARNING_MESSAGE);
 						} else {
 							MonsterList monsterlist = wave.getMonstres();
@@ -906,8 +906,8 @@ public class MenuPrincipal extends JFrame {
 								JOptionPane
 								.showMessageDialog(
 										rootPane,
-										BUNDLE.getString("MenuPrincipal.message.doubleMonster"),
-										BUNDLE.getString("Message.title.invalidValue"),
+										Messages.getString("MenuPrincipal.message.doubleMonster"),
+										Messages.getString("Message.title.invalidValue"),
 										JOptionPane.WARNING_MESSAGE);
 							} else {
 								monsterlist.add(new Monstre(EMonsters
@@ -922,7 +922,7 @@ public class MenuPrincipal extends JFrame {
 
 				}
 				else {
-					JOptionPane.showMessageDialog(rootPane, BUNDLE.getString("MenuPrincipal.message.noValue"),BUNDLE.getString("Message.title.invalidValue"),JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(rootPane, Messages.getString("MenuPrincipal.message.noValue"),Messages.getString("Message.title.invalidValue"),JOptionPane.WARNING_MESSAGE);
 				}
 
 			}
@@ -944,7 +944,7 @@ public class MenuPrincipal extends JFrame {
 		pan_conf.add(sai_nb_carac_wave);
 		sai_nb_carac_wave.setColumns(10);
 
-		lib_boss_name = new JLabel(BUNDLE.getString("MenuPrincipal.lib_boss_name.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_boss_name = new JLabel(Messages.getString("MenuPrincipal.lib_boss_name.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_boss_name.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lib_boss_name.setBounds(10, 401, 92, 20);
 		pan_conf.add(lib_boss_name);
@@ -960,7 +960,7 @@ public class MenuPrincipal extends JFrame {
 		lib_set.setBounds(10, 433, 92, 28);
 		pan_conf.add(lib_set);
 
-		btn_set = new JButton(BUNDLE.getString("MenuPrincipal.btn_set.text"));
+		btn_set = new JButton(Messages.getString("MenuPrincipal.btn_set.text"));
 		btn_set.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -992,14 +992,14 @@ public class MenuPrincipal extends JFrame {
 		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 
-		mnApplication = new JMenu(BUNDLE.getString("MenuPrincipal.mnApplication.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		mnApplication = new JMenu(Messages.getString("MenuPrincipal.mnApplication.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		menuBar.add(mnApplication);
 
-		mntmNewConfiguration = new JMenuItem(BUNDLE.getString("MenuPrincipal.mntmNewConfiguration.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		mntmNewConfiguration = new JMenuItem(Messages.getString("MenuPrincipal.mntmNewConfiguration.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		mntmNewConfiguration.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int choice = JOptionPane.showConfirmDialog(rootPane, BUNDLE.getString("MenuPrincipal.message.unsavedChangesNew"), BUNDLE.getString("Message.title.confirmation"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+				int choice = JOptionPane.showConfirmDialog(rootPane, Messages.getString("MenuPrincipal.message.unsavedChangesNew"), Messages.getString("Message.title.confirmation"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 				if(choice==JOptionPane.YES_OPTION) {
 					raz();
 				}
@@ -1007,14 +1007,14 @@ public class MenuPrincipal extends JFrame {
 		});
 		mnApplication.add(mntmNewConfiguration);
 
-		mnLanguage = new JMenu(BUNDLE.getString("MenuPrincipal.mnLanguage.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		mnLanguage = new JMenu(Messages.getString("MenuPrincipal.mnLanguage.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		mnApplication.add(mnLanguage);
 
-		rdbtnmntmEnglish = new JRadioButtonMenuItem(BUNDLE.getString("MenuPrincipal.rdbtnmntmEnglish.text"),new ImageIcon(MenuPrincipal.class.getResource("/gui/pics/gb-icon.png"))); //$NON-NLS-1$ //$NON-NLS-2$
+		rdbtnmntmEnglish = new JRadioButtonMenuItem(Messages.getString("MenuPrincipal.rdbtnmntmEnglish.text"),new ImageIcon(MenuPrincipal.class.getResource("/gui/pics/gb-icon.png"))); //$NON-NLS-1$ //$NON-NLS-2$
 		rdbtnmntmEnglish.addItemListener(language_listener);
 		mnLanguage.add(rdbtnmntmEnglish);
 
-		rdbtnmntmFrench = new JRadioButtonMenuItem(BUNDLE.getString("MenuPrincipal.rdbtnmntmFrench.text"),new ImageIcon(MenuPrincipal.class.getResource("/gui/pics/fr-icon.png"))); //$NON-NLS-1$ //$NON-NLS-2$
+		rdbtnmntmFrench = new JRadioButtonMenuItem(Messages.getString("MenuPrincipal.rdbtnmntmFrench.text"),new ImageIcon(MenuPrincipal.class.getResource("/gui/pics/fr-icon.png"))); //$NON-NLS-1$ //$NON-NLS-2$
 		rdbtnmntmFrench.addItemListener(language_listener);
 		mnLanguage.add(rdbtnmntmFrench);
 
@@ -1031,10 +1031,10 @@ public class MenuPrincipal extends JFrame {
 
 		mnApplication.addSeparator();
 
-		mntmQuit = new JMenuItem(BUNDLE.getString("MenuPrincipal.mntmQuit.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		mntmQuit = new JMenuItem(Messages.getString("MenuPrincipal.mntmQuit.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		mntmQuit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int choice = JOptionPane.showConfirmDialog(rootPane, BUNDLE.getString("MenuPrincipal.message.unsavedChangesQuit"), BUNDLE.getString("Message.title.confirmation"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+				int choice = JOptionPane.showConfirmDialog(rootPane, Messages.getString("MenuPrincipal.message.unsavedChangesQuit"), Messages.getString("Message.title.confirmation"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 				if(choice==JOptionPane.YES_OPTION) {
 					dispose();
 				}
@@ -1042,10 +1042,10 @@ public class MenuPrincipal extends JFrame {
 		});
 		mnApplication.add(mntmQuit);
 
-		mnPlanned = new JMenu(BUNDLE.getString("MenuPrincipal.mnPlanned.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		mnPlanned = new JMenu(Messages.getString("MenuPrincipal.mnPlanned.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		menuBar.add(mnPlanned);
 
-		mntmTodoList = new JMenuItem(BUNDLE.getString("MenuPrincipal.mntmTodoList.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		mntmTodoList = new JMenuItem(Messages.getString("MenuPrincipal.mntmTodoList.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		mntmTodoList.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -1054,10 +1054,10 @@ public class MenuPrincipal extends JFrame {
 		});
 		mnPlanned.add(mntmTodoList);
 
-		mnHelp = new JMenu(BUNDLE.getString("MenuPrincipal.mnHelp.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		mnHelp = new JMenu(Messages.getString("MenuPrincipal.mnHelp.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		menuBar.add(mnHelp);
 
-		mntmHowToUse = new JMenuItem(BUNDLE.getString("MenuPrincipal.mntmHowToUse.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		mntmHowToUse = new JMenuItem(Messages.getString("MenuPrincipal.mntmHowToUse.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		mntmHowToUse.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -1068,7 +1068,7 @@ public class MenuPrincipal extends JFrame {
 
 		mnHelp.addSeparator();
 
-		mntmAbout = new JMenuItem(BUNDLE.getString("MenuPrincipal.mntmAbout.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		mntmAbout = new JMenuItem(Messages.getString("MenuPrincipal.mntmAbout.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		mntmAbout.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -1080,7 +1080,7 @@ public class MenuPrincipal extends JFrame {
 		pan_classes = new JPanel();
 		pan_classes.setLayout(null);
 
-		lib_classes = new JLabel(BUNDLE.getString("MenuPrincipal.lib_classes.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_classes = new JLabel(Messages.getString("MenuPrincipal.lib_classes.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_classes.setBounds(7, 7, 64, 22);
 		lib_classes.setFont(new Font("Tahoma", Font.BOLD, 14));
 		pan_classes.add(lib_classes);
@@ -1103,7 +1103,7 @@ public class MenuPrincipal extends JFrame {
 						int hoverIndex = ((HoverListCellRenderer) list_classes.getCellRenderer()).getHoverIndex();
 						if(hoverIndex!=-1) {
 							Classe classe = list_classes.getModel().getElementAt(hoverIndex).getClasse();
-							int choix = JOptionPane.showConfirmDialog(rootPane,String.format(BUNDLE.getString("MenuPrincipal.message.delClass"), classe.getName()), BUNDLE.getString("Message.title.confirmation"), JOptionPane.YES_NO_OPTION);
+							int choix = JOptionPane.showConfirmDialog(rootPane,String.format(Messages.getString("MenuPrincipal.message.delClass"), classe.getName()), Messages.getString("Message.title.confirmation"), JOptionPane.YES_NO_OPTION);
 							if(choix==JOptionPane.YES_OPTION) {
 								Classe.classe_list.remove(classe);
 								loadData_ClassConfig(Classe.classe_list);
@@ -1125,7 +1125,7 @@ public class MenuPrincipal extends JFrame {
 		list_classes.addMouseListener(renderer.getHandler());
 		list_classes.addMouseMotionListener(renderer.getHandler());
 
-		btn_new_class = new JButton(BUNDLE.getString("MenuPrincipal.btn_new_class.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		btn_new_class = new JButton(Messages.getString("MenuPrincipal.btn_new_class.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		btn_new_class.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -1148,7 +1148,7 @@ public class MenuPrincipal extends JFrame {
 		pan_classes.add(pan_caracs_class);
 		pan_caracs_class.setLayout(null);
 
-		lib_class = new JLabel(BUNDLE.getString("MenuPrincipal.lib_class.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_class = new JLabel(Messages.getString("MenuPrincipal.lib_class.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_class.setBounds(8, 6, 99, 25);
 		pan_caracs_class.add(lib_class);
 		lib_class.setFont(new Font("Tahoma", Font.BOLD, 12));
@@ -1174,12 +1174,12 @@ public class MenuPrincipal extends JFrame {
 		pan_caracs_class.add(sai_class);
 		sai_class.setColumns(10);
 
-		lib_items = new JLabel(BUNDLE.getString("MenuPrincipal.lib_items.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_items = new JLabel(Messages.getString("MenuPrincipal.lib_items.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_items.setBounds(8, 46, 90, 25);
 		lib_items.setFont(new Font("Tahoma", Font.BOLD, 13));
 		pan_caracs_class.add(lib_items);
 
-		btn_items = new JButton(BUNDLE.getString("MenuPrincipal.btn_items.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		btn_items = new JButton(Messages.getString("MenuPrincipal.btn_items.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		btn_items.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -1189,12 +1189,12 @@ public class MenuPrincipal extends JFrame {
 		btn_items.setBounds(110, 46, 137, 28);
 		pan_caracs_class.add(btn_items);
 
-		lib_armor = new JLabel(BUNDLE.getString("MenuPrincipal.lib_armor.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_armor = new JLabel(Messages.getString("MenuPrincipal.lib_armor.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_armor.setBounds(8, 86, 90, 25);
 		lib_armor.setFont(new Font("Tahoma", Font.BOLD, 13));
 		pan_caracs_class.add(lib_armor);
 
-		btn_armor = new JButton(BUNDLE.getString("MenuPrincipal.btn_armor.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		btn_armor = new JButton(Messages.getString("MenuPrincipal.btn_armor.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		btn_armor.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -1204,7 +1204,7 @@ public class MenuPrincipal extends JFrame {
 		btn_armor.setBounds(110, 86, 137, 28);
 		pan_caracs_class.add(btn_armor);
 
-		lib_dogs = new JLabel(BUNDLE.getString("MenuPrincipal.lib_dogs.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_dogs = new JLabel(Messages.getString("MenuPrincipal.lib_dogs.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_dogs.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lib_dogs.setBounds(8, 126, 99, 25);
 		pan_caracs_class.add(lib_dogs);
@@ -1224,7 +1224,7 @@ public class MenuPrincipal extends JFrame {
 		sai_dogs.setBounds(110, 126, 137, 28);
 		pan_caracs_class.add(sai_dogs);
 
-		lib_horse = new JLabel(BUNDLE.getString("MenuPrincipal.lib_horse.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_horse = new JLabel(Messages.getString("MenuPrincipal.lib_horse.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_horse.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lib_horse.setBounds(8, 166, 90, 28);
 		pan_caracs_class.add(lib_horse);
@@ -1257,7 +1257,7 @@ public class MenuPrincipal extends JFrame {
 		combo_horse.setBounds(110, 166, 137, 26);
 		pan_caracs_class.add(combo_horse);
 
-		lib_hArmor = new JLabel(BUNDLE.getString("MenuPrincipal.lib_hArmor.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_hArmor = new JLabel(Messages.getString("MenuPrincipal.lib_hArmor.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_hArmor.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lib_hArmor.setBounds(8, 206, 99, 28);
 		pan_caracs_class.add(lib_hArmor);
@@ -1286,7 +1286,7 @@ public class MenuPrincipal extends JFrame {
 		separator_2.setBounds(259, 6, 2, 228);
 		pan_caracs_class.add(separator_2);
 
-		lib_permissions = new JLabel(BUNDLE.getString("MenuPrincipal.lib_permissions.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_permissions = new JLabel(Messages.getString("MenuPrincipal.lib_permissions.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_permissions.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lib_permissions.setBounds(273, 10, 76, 25);
 		pan_caracs_class.add(lib_permissions);
@@ -1299,8 +1299,8 @@ public class MenuPrincipal extends JFrame {
 
 				String perm = JOptionPane.showInputDialog(
 						rootPane,
-						BUNDLE.getString("MenuPrincipal.message.addPerm"),
-						BUNDLE.getString("Message.title.permissions"), JOptionPane.QUESTION_MESSAGE);
+						Messages.getString("MenuPrincipal.message.addPerm"),
+						Messages.getString("Message.title.permissions"), JOptionPane.QUESTION_MESSAGE);
 				if(perm!=null){
 					ArrayList<String> perm_list = null;
 
@@ -1331,7 +1331,7 @@ public class MenuPrincipal extends JFrame {
 					String lobby_perm = "";
 					ArrayList<String> perm_list = null;
 					if(source==list_lobby_permissions) {
-						lobby_perm=BUNDLE.getString("MenuPrincipal.message.delPerm1");
+						lobby_perm=Messages.getString("MenuPrincipal.message.delPerm1");
 						perm_list = classe.getLobby_permissions();
 					}
 					else if(source==list_permissions) {
@@ -1341,8 +1341,8 @@ public class MenuPrincipal extends JFrame {
 					if (index!=-1) {
 						if (e.getButton() == MouseEvent.BUTTON2) {
 							int choice = JOptionPane.showConfirmDialog(rootPane,
-									MessageFormat.format(BUNDLE.getString("MenuPrincipal.message.delPerm"),perm_list.get(index),lobby_perm), 
-									BUNDLE.getString("Message.title.confirmation"),
+									MessageFormat.format(Messages.getString("MenuPrincipal.message.delPerm"),perm_list.get(index),lobby_perm), 
+									Messages.getString("Message.title.confirmation"),
 									JOptionPane.YES_NO_OPTION);
 							if (choice == JOptionPane.YES_OPTION) {
 								perm_list.remove(index);
@@ -1365,7 +1365,7 @@ public class MenuPrincipal extends JFrame {
 			}
 		};
 
-		btn_add_perm = new JButton(BUNDLE.getString("MenuPrincipal.btn_add_perm.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		btn_add_perm = new JButton(Messages.getString("MenuPrincipal.btn_add_perm.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		btn_add_perm.addMouseListener(add_perm_adapter);
 		btn_add_perm.setBounds(395, 9, 90, 22);
 		pan_caracs_class.add(btn_add_perm);
@@ -1383,12 +1383,12 @@ public class MenuPrincipal extends JFrame {
 		separator_3.setBounds(497, 6, 2, 228);
 		pan_caracs_class.add(separator_3);
 
-		lib_lobby_permissions = new JLabel(BUNDLE.getString("MenuPrincipal.lib_lobby_permissions.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_lobby_permissions = new JLabel(Messages.getString("MenuPrincipal.lib_lobby_permissions.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_lobby_permissions.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lib_lobby_permissions.setBounds(511, 10, 123, 25);
 		pan_caracs_class.add(lib_lobby_permissions);
 
-		btn_add_lobby_permissions = new JButton(BUNDLE.getString("MenuPrincipal.btn_add_lobby_permissions.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		btn_add_lobby_permissions = new JButton(Messages.getString("MenuPrincipal.btn_add_lobby_permissions.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		btn_add_lobby_permissions.addMouseListener(add_perm_adapter);
 		btn_add_lobby_permissions.setBounds(633, 9, 90, 22);
 		pan_caracs_class.add(btn_add_lobby_permissions);
@@ -1406,8 +1406,8 @@ public class MenuPrincipal extends JFrame {
 		pan_arena_settings.setBounds(6, 6, 567, 341);
 		pan_arena_settings.setLayout(null);
 
-		lib_world = new JLabel(BUNDLE.getString("MenuPrincipal.lib_world.text")); //$NON-NLS-1$ //$NON-NLS-2$
-		lib_world.setToolTipText(BUNDLE.getString("MenuPrincipal.lib_world.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_world = new JLabel(Messages.getString("MenuPrincipal.lib_world.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_world.setToolTipText(Messages.getString("MenuPrincipal.lib_world.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_world.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lib_world.setBounds(6, 6, 73, 25);
 		pan_arena_settings.add(lib_world);
@@ -1426,7 +1426,7 @@ public class MenuPrincipal extends JFrame {
 			}
 		});
 		sai_world.setFocusLostBehavior(JFormattedTextField.COMMIT);
-		sai_world.setToolTipText(BUNDLE.getString("MenuPrincipal.lib_world.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
+		sai_world.setToolTipText(Messages.getString("MenuPrincipal.lib_world.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		sai_world.setBounds(91, 5, 127, 28);
 		sai_world.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		pan_arena_settings.add(sai_world);
@@ -1490,18 +1490,18 @@ public class MenuPrincipal extends JFrame {
 			}
 		};
 
-		chk_enabled = new JCheckBox(BUNDLE.getString("MenuPrincipal.chk_enabled.text"));
+		chk_enabled = new JCheckBox(Messages.getString("MenuPrincipal.chk_enabled.text"));
 		chk_enabled.setHorizontalAlignment(SwingConstants.CENTER);
 		chk_enabled.addItemListener(chkconfig_listener);
-		chk_enabled.setToolTipText(BUNDLE.getString("MenuPrincipal.chk_enabled.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
+		chk_enabled.setToolTipText(Messages.getString("MenuPrincipal.chk_enabled.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_enabled.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_enabled.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_enabled.setBounds(6, 43, 84, 25);
 		pan_arena_settings.add(chk_enabled);
 
-		chk_protect = new JCheckBox(BUNDLE.getString("MenuPrincipal.chk_protect.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		chk_protect = new JCheckBox(Messages.getString("MenuPrincipal.chk_protect.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_protect.addItemListener(chkconfig_listener);
-		chk_protect.setToolTipText(BUNDLE.getString("MenuPrincipal.chk_protect.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
+		chk_protect.setToolTipText(Messages.getString("MenuPrincipal.chk_protect.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_protect.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_protect.setFont(new Font("Tahoma", Font.BOLD, 12));
 		chk_protect.setBounds(91, 43, 73, 25);
@@ -1530,22 +1530,22 @@ public class MenuPrincipal extends JFrame {
 			}
 		};
 
-		lib_entry = new JLabel(BUNDLE.getString("MenuPrincipal.lib_entry.text")); //$NON-NLS-1$ //$NON-NLS-2$
-		lib_entry.setToolTipText(BUNDLE.getString("MenuPrincipal.lib_entry.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_entry = new JLabel(Messages.getString("MenuPrincipal.lib_entry.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_entry.setToolTipText(Messages.getString("MenuPrincipal.lib_entry.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_entry.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lib_entry.setBounds(6, 80, 84, 25);
 		pan_arena_settings.add(lib_entry);
 
 		sai_entry = new JFormattedTextField(NumberFormat.getIntegerInstance());
 		sai_entry.addKeyListener(int_config_adapter);
-		sai_entry.setToolTipText(BUNDLE.getString("MenuPrincipal.lib_entry.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
+		sai_entry.setToolTipText(Messages.getString("MenuPrincipal.lib_entry.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		sai_entry.setBackground(new Color(255, 255, 255));
 		sai_entry.setBounds(91, 81, 50, 25);
 		sai_entry.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		pan_arena_settings.add(sai_entry);
 		sai_entry.setColumns(10);
 
-		btn_entry = new JButton(BUNDLE.getString("MenuPrincipal.btn_entry.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		btn_entry = new JButton(Messages.getString("MenuPrincipal.btn_entry.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		btn_entry.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -1558,278 +1558,278 @@ public class MenuPrincipal extends JFrame {
 				if(il.size()!=0) config.setEntry_fee_item(il.get(0));
 			}
 		});
-		btn_entry.setToolTipText(BUNDLE.getString("MenuPrincipal.lib_entry.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
+		btn_entry.setToolTipText(Messages.getString("MenuPrincipal.lib_entry.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		btn_entry.setBounds(153, 81, 90, 25);
 		pan_arena_settings.add(btn_entry);
 
-		chk_clear_wave_next = new JCheckBox(BUNDLE.getString("MenuPrincipal.chk_clear_wave_next.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		chk_clear_wave_next = new JCheckBox(Messages.getString("MenuPrincipal.chk_clear_wave_next.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_clear_wave_next.addItemListener(chkconfig_listener);
-		chk_clear_wave_next.setToolTipText(BUNDLE.getString("MenuPrincipal.chk_clear_wave_next.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
+		chk_clear_wave_next.setToolTipText(Messages.getString("MenuPrincipal.chk_clear_wave_next.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_clear_wave_next.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_clear_wave_next.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_clear_wave_next.setBounds(6, 117, 212, 25);
 		pan_arena_settings.add(chk_clear_wave_next);
 
-		chk_clear_boss_next = new JCheckBox(BUNDLE.getString("MenuPrincipal.chk_clear_boss_next.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		chk_clear_boss_next = new JCheckBox(Messages.getString("MenuPrincipal.chk_clear_boss_next.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_clear_boss_next.addItemListener(chkconfig_listener);
-		chk_clear_boss_next.setToolTipText(BUNDLE.getString("MenuPrincipal.chk_clear_boss_next.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
+		chk_clear_boss_next.setToolTipText(Messages.getString("MenuPrincipal.chk_clear_boss_next.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_clear_boss_next.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_clear_boss_next.setFont(new Font("Tahoma", Font.BOLD, 13));
 		chk_clear_boss_next.setBounds(6, 154, 228, 25);
 		pan_arena_settings.add(chk_clear_boss_next);
 
-		chk_clear_wave_boss = new JCheckBox(BUNDLE.getString("MenuPrincipal.chk_clear_wave_boss.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		chk_clear_wave_boss = new JCheckBox(Messages.getString("MenuPrincipal.chk_clear_wave_boss.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_clear_wave_boss.addItemListener(chkconfig_listener);
-		chk_clear_wave_boss.setToolTipText(BUNDLE.getString("MenuPrincipal.chk_clear_wave_boss.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
+		chk_clear_wave_boss.setToolTipText(Messages.getString("MenuPrincipal.chk_clear_wave_boss.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_clear_wave_boss.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_clear_wave_boss.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_clear_wave_boss.setBounds(6, 191, 182, 25);
 		pan_arena_settings.add(chk_clear_wave_boss);
 
-		chk_lightning = new JCheckBox(BUNDLE.getString("MenuPrincipal.chk_lightning.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		chk_lightning = new JCheckBox(Messages.getString("MenuPrincipal.chk_lightning.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_lightning.setHorizontalAlignment(SwingConstants.CENTER);
 		chk_lightning.addItemListener(chkconfig_listener);
-		chk_lightning.setToolTipText(BUNDLE.getString("MenuPrincipal.chk_lightning.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
+		chk_lightning.setToolTipText(Messages.getString("MenuPrincipal.chk_lightning.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_lightning.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_lightning.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_lightning.setBounds(191, 45, 90, 25);
 		pan_arena_settings.add(chk_lightning);
 
-		chk_auto_equip = new JCheckBox(BUNDLE.getString("MenuPrincipal.chk_auto_equip.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		chk_auto_equip = new JCheckBox(Messages.getString("MenuPrincipal.chk_auto_equip.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_auto_equip.addItemListener(chkconfig_listener);
-		chk_auto_equip.setToolTipText(BUNDLE.getString("MenuPrincipal.chk_auto_equip.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
+		chk_auto_equip.setToolTipText(Messages.getString("MenuPrincipal.chk_auto_equip.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_auto_equip.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_auto_equip.setFont(new Font("Tahoma", Font.BOLD, 12));
 		chk_auto_equip.setBounds(6, 228, 158, 25);
 		pan_arena_settings.add(chk_auto_equip);
 
-		chk_soft_restore = new JCheckBox(BUNDLE.getString("MenuPrincipal.chk_soft_restore.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		chk_soft_restore = new JCheckBox(Messages.getString("MenuPrincipal.chk_soft_restore.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_soft_restore.addItemListener(chkconfig_listener);
-		chk_soft_restore.setToolTipText(BUNDLE.getString("MenuPrincipal.chk_soft_restore.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
+		chk_soft_restore.setToolTipText(Messages.getString("MenuPrincipal.chk_soft_restore.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_soft_restore.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_soft_restore.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_soft_restore.setBounds(161, 228, 120, 25);
 		pan_arena_settings.add(chk_soft_restore);
 
-		chk_soft_restore_drops = new JCheckBox(BUNDLE.getString("MenuPrincipal.chk_soft_restore_drops.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		chk_soft_restore_drops = new JCheckBox(Messages.getString("MenuPrincipal.chk_soft_restore_drops.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_soft_restore_drops.addItemListener(chkconfig_listener);
-		chk_soft_restore_drops.setToolTipText(BUNDLE.getString("MenuPrincipal.chk_soft_restore_drops.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
+		chk_soft_restore_drops.setToolTipText(Messages.getString("MenuPrincipal.chk_soft_restore_drops.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_soft_restore_drops.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_soft_restore_drops.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_soft_restore_drops.setBounds(6, 265, 199, 25);
 		pan_arena_settings.add(chk_soft_restore_drops);
 
-		chk_require_inv_join = new JCheckBox(BUNDLE.getString("MenuPrincipal.chk_require_inv_join.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		chk_require_inv_join = new JCheckBox(Messages.getString("MenuPrincipal.chk_require_inv_join.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_require_inv_join.addItemListener(chkconfig_listener);
-		chk_require_inv_join.setToolTipText(BUNDLE.getString("MenuPrincipal.chk_require_inv_join.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
+		chk_require_inv_join.setToolTipText(Messages.getString("MenuPrincipal.chk_require_inv_join.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		chk_require_inv_join.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_require_inv_join.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_require_inv_join.setBounds(6, 300, 242, 28);
 		pan_arena_settings.add(chk_require_inv_join);
 
-		chk_require_inv_spec = new JCheckBox(BUNDLE.getString("MenuPrincipal.chk_require_inv_spec.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		chk_require_inv_spec = new JCheckBox(Messages.getString("MenuPrincipal.chk_require_inv_spec.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_require_inv_spec.addItemListener(chkconfig_listener);
-		chk_require_inv_spec.setToolTipText(BUNDLE.getString("MenuPrincipal.chk_require_inv_spec.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
+		chk_require_inv_spec.setToolTipText(Messages.getString("MenuPrincipal.chk_require_inv_spec.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_require_inv_spec.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_require_inv_spec.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_require_inv_spec.setBounds(6, 336, 275, 28);
 		pan_arena_settings.add(chk_require_inv_spec);
 
-		chk_hellhounds = new JCheckBox(BUNDLE.getString("MenuPrincipal.chk_hellhounds.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		chk_hellhounds = new JCheckBox(Messages.getString("MenuPrincipal.chk_hellhounds.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_hellhounds.addItemListener(chkconfig_listener);
-		chk_hellhounds.setToolTipText(BUNDLE.getString("MenuPrincipal.chk_hellhounds.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
+		chk_hellhounds.setToolTipText(Messages.getString("MenuPrincipal.chk_hellhounds.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		chk_hellhounds.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_hellhounds.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_hellhounds.setBounds(6, 376, 139, 25);
 		pan_arena_settings.add(chk_hellhounds);
 
-		chk_pvp = new JCheckBox(BUNDLE.getString("MenuPrincipal.chk_pvp.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		chk_pvp = new JCheckBox(Messages.getString("MenuPrincipal.chk_pvp.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_pvp.addItemListener(chkconfig_listener);
-		chk_pvp.setToolTipText(BUNDLE.getString("MenuPrincipal.chk_pvp.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
+		chk_pvp.setToolTipText(Messages.getString("MenuPrincipal.chk_pvp.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		chk_pvp.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_pvp.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_pvp.setBounds(153, 376, 108, 25);
 		pan_arena_settings.add(chk_pvp);
 
-		chk_monster_infight = new JCheckBox(BUNDLE.getString("MenuPrincipal.chk_monster_infight.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		chk_monster_infight = new JCheckBox(Messages.getString("MenuPrincipal.chk_monster_infight.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_monster_infight.addItemListener(chkconfig_listener);
-		chk_monster_infight.setToolTipText(BUNDLE.getString("MenuPrincipal.chk_monster_infight.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
+		chk_monster_infight.setToolTipText(Messages.getString("MenuPrincipal.chk_monster_infight.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		chk_monster_infight.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_monster_infight.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_monster_infight.setBounds(6, 413, 170, 25);
 		pan_arena_settings.add(chk_monster_infight);
 
-		chk_allow_tp = new JCheckBox(BUNDLE.getString("MenuPrincipal.chk_allow_tp.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		chk_allow_tp = new JCheckBox(Messages.getString("MenuPrincipal.chk_allow_tp.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_allow_tp.addItemListener(chkconfig_listener);
-		chk_allow_tp.setToolTipText(BUNDLE.getString("MenuPrincipal.chk_allow_tp.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
+		chk_allow_tp.setToolTipText(Messages.getString("MenuPrincipal.chk_allow_tp.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		chk_allow_tp.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_allow_tp.setFont(new Font("Tahoma", Font.BOLD, 13));
 		chk_allow_tp.setBounds(161, 450, 134, 25);
 		pan_arena_settings.add(chk_allow_tp);
 
-		chk_spectate_death = new JCheckBox(BUNDLE.getString("MenuPrincipal.chk_spectate_death.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		chk_spectate_death = new JCheckBox(Messages.getString("MenuPrincipal.chk_spectate_death.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_spectate_death.addItemListener(chkconfig_listener);
-		chk_spectate_death.setToolTipText(BUNDLE.getString("MenuPrincipal.chk_spectate_death.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
+		chk_spectate_death.setToolTipText(Messages.getString("MenuPrincipal.chk_spectate_death.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		chk_spectate_death.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_spectate_death.setFont(new Font("Tahoma", Font.BOLD, 12));
 		chk_spectate_death.setBounds(6, 450, 149, 25);
 		pan_arena_settings.add(chk_spectate_death);
 
-		chk_auto_respawn = new JCheckBox(BUNDLE.getString("MenuPrincipal.chk_auto_respawn.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		chk_auto_respawn = new JCheckBox(Messages.getString("MenuPrincipal.chk_auto_respawn.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_auto_respawn.addItemListener(chkconfig_listener);
-		chk_auto_respawn.setToolTipText(BUNDLE.getString("MenuPrincipal.chk_auto_respawn.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
+		chk_auto_respawn.setToolTipText(Messages.getString("MenuPrincipal.chk_auto_respawn.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		chk_auto_respawn.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_auto_respawn.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_auto_respawn.setBounds(307, 6, 149, 25);
 		pan_arena_settings.add(chk_auto_respawn);
 
-		chk_share = new JCheckBox(BUNDLE.getString("MenuPrincipal.chk_share.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		chk_share = new JCheckBox(Messages.getString("MenuPrincipal.chk_share.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_share.addItemListener(chkconfig_listener);
-		chk_share.setToolTipText(BUNDLE.getString("MenuPrincipal.chk_share.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
+		chk_share.setToolTipText(Messages.getString("MenuPrincipal.chk_share.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		chk_share.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_share.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_share.setBounds(307, 43, 139, 25);
 		pan_arena_settings.add(chk_share);
 
-		lib_min_players = new JLabel(BUNDLE.getString("MenuPrincipal.lib_min_players.text")); //$NON-NLS-1$ //$NON-NLS-2$
-		lib_min_players.setToolTipText(BUNDLE.getString("MenuPrincipal.lib_min_players.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
+		lib_min_players = new JLabel(Messages.getString("MenuPrincipal.lib_min_players.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_min_players.setToolTipText(Messages.getString("MenuPrincipal.lib_min_players.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		lib_min_players.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lib_min_players.setBounds(307, 80, 95, 25);
 		pan_arena_settings.add(lib_min_players);
 
 		sai_min_players = new JFormattedTextField(NumberFormat.getIntegerInstance());
 		sai_min_players.addKeyListener(int_config_adapter);
-		sai_min_players.setToolTipText(BUNDLE.getString("MenuPrincipal.lib_min_players.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
+		sai_min_players.setToolTipText(Messages.getString("MenuPrincipal.lib_min_players.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		sai_min_players.setBackground(new Color(255, 255, 255));
 		sai_min_players.setColumns(10);
 		sai_min_players.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		sai_min_players.setBounds(438, 81, 50, 25);
 		pan_arena_settings.add(sai_min_players);
 
-		lib_max_players = new JLabel(BUNDLE.getString("MenuPrincipal.lib_max_players.text")); //$NON-NLS-1$ //$NON-NLS-2$
-		lib_max_players.setToolTipText(BUNDLE.getString("MenuPrincipal.lib_max_players.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
+		lib_max_players = new JLabel(Messages.getString("MenuPrincipal.lib_max_players.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_max_players.setToolTipText(Messages.getString("MenuPrincipal.lib_max_players.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		lib_max_players.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lib_max_players.setBounds(307, 117, 95, 25);
 		pan_arena_settings.add(lib_max_players);
 
 		sai_max_players = new JFormattedTextField(NumberFormat.getIntegerInstance());
 		sai_max_players.addKeyListener(int_config_adapter);
-		sai_max_players.setToolTipText(BUNDLE.getString("MenuPrincipal.lib_max_players.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
+		sai_max_players.setToolTipText(Messages.getString("MenuPrincipal.lib_max_players.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		sai_max_players.setBackground(new Color(255, 255, 255));
 		sai_max_players.setColumns(10);
 		sai_max_players.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		sai_max_players.setBounds(438, 118, 50, 25);
 		pan_arena_settings.add(sai_max_players);
 
-		lib_max_join_distance = new JLabel(BUNDLE.getString("MenuPrincipal.lib_max_join_distance.text")); //$NON-NLS-1$ //$NON-NLS-2$
-		lib_max_join_distance.setToolTipText(BUNDLE.getString("MenuPrincipal.lib_max_join_distance.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
+		lib_max_join_distance = new JLabel(Messages.getString("MenuPrincipal.lib_max_join_distance.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_max_join_distance.setToolTipText(Messages.getString("MenuPrincipal.lib_max_join_distance.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		lib_max_join_distance.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lib_max_join_distance.setBounds(307, 154, 119, 25);
 		pan_arena_settings.add(lib_max_join_distance);
 
 		sai_max_join_distance = new JFormattedTextField(NumberFormat.getIntegerInstance());
 		sai_max_join_distance.addKeyListener(int_config_adapter);
-		sai_max_join_distance.setToolTipText(BUNDLE.getString("MenuPrincipal.lib_max_join_distance.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
+		sai_max_join_distance.setToolTipText(Messages.getString("MenuPrincipal.lib_max_join_distance.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		sai_max_join_distance.setBackground(new Color(255, 255, 255));
 		sai_max_join_distance.setColumns(10);
 		sai_max_join_distance.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		sai_max_join_distance.setBounds(438, 155, 50, 25);
 		pan_arena_settings.add(sai_max_join_distance);
 
-		lib_first_delay = new JLabel(BUNDLE.getString("MenuPrincipal.lib_first_delay.text")); //$NON-NLS-1$ //$NON-NLS-2$
-		lib_first_delay.setToolTipText(BUNDLE.getString("MenuPrincipal.lib_first_delay.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
+		lib_first_delay = new JLabel(Messages.getString("MenuPrincipal.lib_first_delay.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_first_delay.setToolTipText(Messages.getString("MenuPrincipal.lib_first_delay.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		lib_first_delay.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lib_first_delay.setBounds(307, 191, 119, 25);
 		pan_arena_settings.add(lib_first_delay);
 
 		sai_first_delay = new JFormattedTextField(NumberFormat.getIntegerInstance());
 		sai_first_delay.addKeyListener(int_config_adapter);
-		sai_first_delay.setToolTipText(BUNDLE.getString("MenuPrincipal.lib_first_delay.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
+		sai_first_delay.setToolTipText(Messages.getString("MenuPrincipal.lib_first_delay.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		sai_first_delay.setBackground(new Color(255, 255, 255));
 		sai_first_delay.setColumns(10);
 		sai_first_delay.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		sai_first_delay.setBounds(438, 192, 50, 25);
 		pan_arena_settings.add(sai_first_delay);
 
-		lib_interval = new JLabel(BUNDLE.getString("MenuPrincipal.lib_interval.text")); //$NON-NLS-1$ //$NON-NLS-2$
-		lib_interval.setToolTipText(BUNDLE.getString("MenuPrincipal.lib_interval.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
+		lib_interval = new JLabel(Messages.getString("MenuPrincipal.lib_interval.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_interval.setToolTipText(Messages.getString("MenuPrincipal.lib_interval.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		lib_interval.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lib_interval.setBounds(307, 227, 119, 25);
 		pan_arena_settings.add(lib_interval);
 
 		sai_interval = new JFormattedTextField(NumberFormat.getIntegerInstance());
 		sai_interval.addKeyListener(int_config_adapter);
-		sai_interval.setToolTipText(BUNDLE.getString("MenuPrincipal.lib_interval.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
+		sai_interval.setToolTipText(Messages.getString("MenuPrincipal.lib_interval.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		sai_interval.setBackground(new Color(255, 255, 255));
 		sai_interval.setColumns(10);
 		sai_interval.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		sai_interval.setBounds(438, 228, 50, 25);
 		pan_arena_settings.add(sai_interval);
 
-		lib_final_wave = new JLabel(BUNDLE.getString("MenuPrincipal.lib_final_wave.text")); //$NON-NLS-1$ //$NON-NLS-2$
-		lib_final_wave.setToolTipText(BUNDLE.getString("MenuPrincipal.lib_final_wave.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
+		lib_final_wave = new JLabel(Messages.getString("MenuPrincipal.lib_final_wave.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_final_wave.setToolTipText(Messages.getString("MenuPrincipal.lib_final_wave.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		lib_final_wave.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lib_final_wave.setBounds(307, 264, 119, 25);
 		pan_arena_settings.add(lib_final_wave);
 
 		sai_final_wave = new JFormattedTextField(NumberFormat.getIntegerInstance());
 		sai_final_wave.addKeyListener(int_config_adapter);
-		sai_final_wave.setToolTipText(BUNDLE.getString("MenuPrincipal.lib_final_wave.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
+		sai_final_wave.setToolTipText(Messages.getString("MenuPrincipal.lib_final_wave.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		sai_final_wave.setBackground(new Color(255, 255, 255));
 		sai_final_wave.setColumns(10);
 		sai_final_wave.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		sai_final_wave.setBounds(438, 266, 50, 25);
 		pan_arena_settings.add(sai_final_wave);
 
-		lib_monster_limit = new JLabel(BUNDLE.getString("MenuPrincipal.lib_monster_limit.text")); //$NON-NLS-1$ //$NON-NLS-2$
-		lib_monster_limit.setToolTipText(BUNDLE.getString("MenuPrincipal.lib_monster_limit.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
+		lib_monster_limit = new JLabel(Messages.getString("MenuPrincipal.lib_monster_limit.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_monster_limit.setToolTipText(Messages.getString("MenuPrincipal.lib_monster_limit.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		lib_monster_limit.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lib_monster_limit.setBounds(307, 302, 127, 25);
 		pan_arena_settings.add(lib_monster_limit);
 
 		sai_monster_limit = new JFormattedTextField(NumberFormat.getIntegerInstance());
 		sai_monster_limit.addKeyListener(int_config_adapter);
-		sai_monster_limit.setToolTipText(BUNDLE.getString("MenuPrincipal.lib_monster_limit.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
+		sai_monster_limit.setToolTipText(Messages.getString("MenuPrincipal.lib_monster_limit.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		sai_monster_limit.setBackground(new Color(255, 255, 255));
 		sai_monster_limit.setColumns(10);
 		sai_monster_limit.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		sai_monster_limit.setBounds(438, 303, 50, 25);
 		pan_arena_settings.add(sai_monster_limit);
 
-		chk_monster_xp = new JCheckBox(BUNDLE.getString("MenuPrincipal.chk_monster_xp.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		chk_monster_xp = new JCheckBox(Messages.getString("MenuPrincipal.chk_monster_xp.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_monster_xp.addItemListener(chkconfig_listener);
-		chk_monster_xp.setToolTipText(BUNDLE.getString("MenuPrincipal.chk_monster_xp.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
+		chk_monster_xp.setToolTipText(Messages.getString("MenuPrincipal.chk_monster_xp.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		chk_monster_xp.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_monster_xp.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_monster_xp.setBounds(307, 339, 181, 25);
 		pan_arena_settings.add(chk_monster_xp);
 
-		chk_keep_xp = new JCheckBox(BUNDLE.getString("MenuPrincipal.chk_keep_xp.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		chk_keep_xp = new JCheckBox(Messages.getString("MenuPrincipal.chk_keep_xp.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_keep_xp.addItemListener(chkconfig_listener);
-		chk_keep_xp.setToolTipText(BUNDLE.getString("MenuPrincipal.chk_keep_xp.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
+		chk_keep_xp.setToolTipText(Messages.getString("MenuPrincipal.chk_keep_xp.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		chk_keep_xp.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_keep_xp.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_keep_xp.setBounds(307, 376, 95, 25);
 		pan_arena_settings.add(chk_keep_xp);
 
-		chk_food_regen = new JCheckBox(BUNDLE.getString("MenuPrincipal.chk_food_regen.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		chk_food_regen = new JCheckBox(Messages.getString("MenuPrincipal.chk_food_regen.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_food_regen.addItemListener(chkconfig_listener);
-		chk_food_regen.setToolTipText(BUNDLE.getString("MenuPrincipal.chk_food_regen.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
+		chk_food_regen.setToolTipText(Messages.getString("MenuPrincipal.chk_food_regen.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		chk_food_regen.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_food_regen.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_food_regen.setBounds(307, 413, 150, 25);
 		pan_arena_settings.add(chk_food_regen);
 
-		chk_lock_food = new JCheckBox(BUNDLE.getString("MenuPrincipal.chk_lock_food.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		chk_lock_food = new JCheckBox(Messages.getString("MenuPrincipal.chk_lock_food.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_lock_food.addItemListener(chkconfig_listener);
-		chk_lock_food.setToolTipText(BUNDLE.getString("MenuPrincipal.chk_lock_food.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
+		chk_lock_food.setToolTipText(Messages.getString("MenuPrincipal.chk_lock_food.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		chk_lock_food.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_lock_food.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_lock_food.setBounds(307, 450, 170, 25);
 		pan_arena_settings.add(chk_lock_food);
 
-		lib_player_time = new JLabel(BUNDLE.getString("MenuPrincipal.lib_player_time.text")); //$NON-NLS-1$ //$NON-NLS-2$
-		lib_player_time.setToolTipText(BUNDLE.getString("MenuPrincipal.lib_player_time.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
+		lib_player_time = new JLabel(Messages.getString("MenuPrincipal.lib_player_time.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_player_time.setToolTipText(Messages.getString("MenuPrincipal.lib_player_time.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		lib_player_time.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lib_player_time.setBounds(514, 43, 127, 25);
 		pan_arena_settings.add(lib_player_time);
@@ -1843,99 +1843,99 @@ public class MenuPrincipal extends JFrame {
 				}
 			}
 		});
-		combo_player_time.setToolTipText(BUNDLE.getString("MenuPrincipal.lib_player_time.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
+		combo_player_time.setToolTipText(Messages.getString("MenuPrincipal.lib_player_time.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		combo_player_time.setModel(new DefaultComboBoxModel<String>(new String[] {"world", "dawn", "sunrise", "morning", "midday", "noon", "day", "afternoon", "evening", "sunset", "dusk", "night", "midnight"}));
 		combo_player_time.setBounds(653, 43, 95, 26);
 		pan_arena_settings.add(combo_player_time);
 
-		lib_auto_start = new JLabel(BUNDLE.getString("MenuPrincipal.lib_auto_start.text")); //$NON-NLS-1$ //$NON-NLS-2$
-		lib_auto_start.setToolTipText(BUNDLE.getString("MenuPrincipal.lib_auto_start.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
+		lib_auto_start = new JLabel(Messages.getString("MenuPrincipal.lib_auto_start.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_auto_start.setToolTipText(Messages.getString("MenuPrincipal.lib_auto_start.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		lib_auto_start.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lib_auto_start.setBounds(514, 117, 147, 25);
 		pan_arena_settings.add(lib_auto_start);
 
 		sai_auto_start = new JFormattedTextField(NumberFormat.getIntegerInstance());
 		sai_auto_start.addKeyListener(int_config_adapter);
-		sai_auto_start.setToolTipText(BUNDLE.getString("MenuPrincipal.lib_auto_start.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
+		sai_auto_start.setToolTipText(Messages.getString("MenuPrincipal.lib_auto_start.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		sai_auto_start.setBackground(new Color(255, 255, 255));
 		sai_auto_start.setColumns(10);
 		sai_auto_start.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		sai_auto_start.setBounds(662, 118, 50, 25);
 		pan_arena_settings.add(sai_auto_start);
 
-		chk_spout_class = new JCheckBox(BUNDLE.getString("MenuPrincipal.chk_spout_class.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		chk_spout_class = new JCheckBox(Messages.getString("MenuPrincipal.chk_spout_class.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_spout_class.addItemListener(chkconfig_listener);
 		chk_spout_class.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_spout_class.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_spout_class.setBounds(514, 6, 181, 25);
 		pan_arena_settings.add(chk_spout_class);
 
-		chk_auto_ignite = new JCheckBox(BUNDLE.getString("MenuPrincipal.chk_auto_ignite.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		chk_auto_ignite = new JCheckBox(Messages.getString("MenuPrincipal.chk_auto_ignite.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_auto_ignite.addItemListener(chkconfig_listener);
-		chk_auto_ignite.setToolTipText(BUNDLE.getString("MenuPrincipal.chk_auto_ignite.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
+		chk_auto_ignite.setToolTipText(Messages.getString("MenuPrincipal.chk_auto_ignite.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		chk_auto_ignite.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_auto_ignite.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_auto_ignite.setBounds(514, 80, 158, 25);
 		pan_arena_settings.add(chk_auto_ignite);
 
-		chk_use_class_chest = new JCheckBox(BUNDLE.getString("MenuPrincipal.chk_use_class_chest.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		chk_use_class_chest = new JCheckBox(Messages.getString("MenuPrincipal.chk_use_class_chest.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_use_class_chest.addItemListener(chkconfig_listener);
 		chk_use_class_chest.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_use_class_chest.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_use_class_chest.setBounds(514, 154, 147, 25);
 		pan_arena_settings.add(chk_use_class_chest);
 
-		chk_display_waves = new JCheckBox(BUNDLE.getString("MenuPrincipal.chk_display_waves.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		chk_display_waves = new JCheckBox(Messages.getString("MenuPrincipal.chk_display_waves.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_display_waves.addItemListener(chkconfig_listener);
-		chk_display_waves.setToolTipText(BUNDLE.getString("MenuPrincipal.chk_display_waves.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
+		chk_display_waves.setToolTipText(Messages.getString("MenuPrincipal.chk_display_waves.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		chk_display_waves.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_display_waves.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_display_waves.setBounds(514, 192, 170, 25);
 		pan_arena_settings.add(chk_display_waves);
 
-		chk_display_timer = new JCheckBox(BUNDLE.getString("MenuPrincipal.chk_display_timer.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		chk_display_timer = new JCheckBox(Messages.getString("MenuPrincipal.chk_display_timer.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_display_timer.addItemListener(chkconfig_listener);
-		chk_display_timer.setToolTipText(BUNDLE.getString("MenuPrincipal.chk_display_timer.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
+		chk_display_timer.setToolTipText(Messages.getString("MenuPrincipal.chk_display_timer.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		chk_display_timer.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_display_timer.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_display_timer.setBounds(514, 229, 170, 25);
 		pan_arena_settings.add(chk_display_timer);
 
-		chk_auto_ready = new JCheckBox(BUNDLE.getString("MenuPrincipal.chk_auto_ready.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		chk_auto_ready = new JCheckBox(Messages.getString("MenuPrincipal.chk_auto_ready.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_auto_ready.addItemListener(chkconfig_listener);
-		chk_auto_ready.setToolTipText(BUNDLE.getString("MenuPrincipal.chk_auto_ready.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
+		chk_auto_ready.setToolTipText(Messages.getString("MenuPrincipal.chk_auto_ready.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		chk_auto_ready.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_auto_ready.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_auto_ready.setBounds(514, 266, 181, 25);
 		pan_arena_settings.add(chk_auto_ready);
 
-		chk_scoreboard = new JCheckBox(BUNDLE.getString("MenuPrincipal.chk_scoreboard.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		chk_scoreboard = new JCheckBox(Messages.getString("MenuPrincipal.chk_scoreboard.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_scoreboard.addItemListener(chkconfig_listener);
-		chk_scoreboard.setToolTipText(BUNDLE.getString("MenuPrincipal.chk_scoreboard.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
+		chk_scoreboard.setToolTipText(Messages.getString("MenuPrincipal.chk_scoreboard.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		chk_scoreboard.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_scoreboard.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_scoreboard.setBounds(514, 306, 139, 25);
 		pan_arena_settings.add(chk_scoreboard);
 
-		chk_isolated_chat = new JCheckBox(BUNDLE.getString("MenuPrincipal.chk_isolated_chat.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		chk_isolated_chat = new JCheckBox(Messages.getString("MenuPrincipal.chk_isolated_chat.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_isolated_chat.addItemListener(chkconfig_listener);
-		chk_isolated_chat.setToolTipText(BUNDLE.getString("MenuPrincipal.chk_isolated_chat.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
+		chk_isolated_chat.setToolTipText(Messages.getString("MenuPrincipal.chk_isolated_chat.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		chk_isolated_chat.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_isolated_chat.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_isolated_chat.setBounds(514, 342, 119, 25);
 		pan_arena_settings.add(chk_isolated_chat);
 
-		chk_global_join = new JCheckBox(BUNDLE.getString("MenuPrincipal.chk_global_join.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		chk_global_join = new JCheckBox(Messages.getString("MenuPrincipal.chk_global_join.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_global_join.addItemListener(chkconfig_listener);
-		chk_global_join.setToolTipText(BUNDLE.getString("MenuPrincipal.chk_global_join.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
+		chk_global_join.setToolTipText(Messages.getString("MenuPrincipal.chk_global_join.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		chk_global_join.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_global_join.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_global_join.setBounds(514, 376, 181, 25);
 		pan_arena_settings.add(chk_global_join);
 
-		chk_global_end = new JCheckBox(BUNDLE.getString("MenuPrincipal.chk_global_end.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		chk_global_end = new JCheckBox(Messages.getString("MenuPrincipal.chk_global_end.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_global_end.addItemListener(chkconfig_listener);
-		chk_global_end.setToolTipText(BUNDLE.getString("MenuPrincipal.chk_global_end.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
+		chk_global_end.setToolTipText(Messages.getString("MenuPrincipal.chk_global_end.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		chk_global_end.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_global_end.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_global_end.setBounds(514, 413, 170, 25);
@@ -1955,9 +1955,19 @@ public class MenuPrincipal extends JFrame {
 
 		setSize(760,618);
 
-		tabpan_config.addTab(BUNDLE.getString("MenuPrincipal.tabpan_arena_wave.title"), pan_arena_wave); //$NON-NLS-2$ //$NON-NLS-1$
-		tabpan_config.addTab(BUNDLE.getString("MenuPrincipal.tabpan_classes.title"), pan_classes); //$NON-NLS-2$ //$NON-NLS-1$
-		tabpan_config.addTab(BUNDLE.getString("MenuPrincipal.tabpan_arena_settings.title"), pan_arena_settings); //$NON-NLS-2$ //$NON-NLS-1$
+		tabpan_config.addTab(Messages.getString("MenuPrincipal.tabpan_arena_wave.title"), pan_arena_wave); //$NON-NLS-2$ //$NON-NLS-1$
+		tabpan_config.addTab(Messages.getString("MenuPrincipal.tabpan_classes.title"), pan_classes); //$NON-NLS-2$ //$NON-NLS-1$
+		
+		pan_class_limit = new JPanel();
+		pan_class_limit.setLayout(null);
+		pan_class_limit.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
+		pan_class_limit.setBounds(448, 7, 300, 94);
+		pan_classes.add(pan_class_limit);
+		
+		sai_class_limit = new JFormattedTextField(NumberFormat.getIntegerInstance());
+		pan_class_limit.add(sai_class_limit);
+		sai_class_limit.setColumns(10);
+		tabpan_config.addTab(Messages.getString("MenuPrincipal.tabpan_arena_settings.title"), pan_arena_settings); //$NON-NLS-2$ //$NON-NLS-1$
 
 		tabpan_config.setEnabledAt(1, false);
 		tabpan_config.setEnabledAt(2, false);
@@ -1978,6 +1988,8 @@ public class MenuPrincipal extends JFrame {
 			newdef = Locale.FRENCH;
 		}
 		Locale.setDefault(newdef);
+		YmlJFileChooser.setDefaultLocale(newdef);
+		Messages.load();
 		EnumName.load();
 	}
 
@@ -2063,8 +2075,8 @@ public class MenuPrincipal extends JFrame {
 						wave = jList.getModel().getElementAt(hoverIndex).getWave();
 						int reponse = JOptionPane.showConfirmDialog(
 								null,
-								MessageFormat.format(BUNDLE.getString("MenuPrincipal.message.delWave"), wave.getCategory().getNom().toLowerCase(),wave.getNom()),
-								BUNDLE.getString("Message.title.confirmation"),
+								MessageFormat.format(Messages.getString("MenuPrincipal.message.delWave"), wave.getCategory().getNom().toLowerCase(),wave.getNom()),
+								Messages.getString("Message.title.confirmation"),
 								JOptionPane.YES_NO_OPTION,
 								JOptionPane.QUESTION_MESSAGE);
 						switch (reponse) {
@@ -2100,20 +2112,20 @@ public class MenuPrincipal extends JFrame {
 						String toDelete = "";
 						String name = "";
 						if (cellcarac instanceof CellListMonster) {
-							toDelete = BUNDLE.getString("MenuPrincipal.message.delMonster1");
+							toDelete = Messages.getString("MenuPrincipal.message.delMonster1");
 							cellmonster = (CellListMonster) cellcarac;
 							name = cellmonster.getMonstre()
 									.getMonstre().getNom();
 						} else {
-							toDelete = BUNDLE.getString("MenuPrincipal.message.delAbility1");
+							toDelete = Messages.getString("MenuPrincipal.message.delAbility1");
 							cellabi = (CellListAbility) cellcarac;
 							name = cellabi.getAbility().getNom();
 						}
 
 						int reponse = JOptionPane.showConfirmDialog(
 								null,
-								MessageFormat.format(BUNDLE.getString("MenuPrincipal.message.delMonsterAbility"),toDelete,name),
-								BUNDLE.getString("Message.title.confirmation"),
+								MessageFormat.format(Messages.getString("MenuPrincipal.message.delMonsterAbility"),toDelete,name),
+								Messages.getString("Message.title.confirmation"),
 								JOptionPane.YES_NO_OPTION,
 								JOptionPane.QUESTION_MESSAGE);
 						@SuppressWarnings("rawtypes")
@@ -2191,8 +2203,8 @@ public class MenuPrincipal extends JFrame {
 			lib_abi_announce.setVisible(true);
 
 			chk_abi_announce.setVisible(true);
-			lib_abi_announce.setText(BUNDLE.getString("MenuPrincipal.fixed"));
-			lib_carac_wave.setText(BUNDLE.getString("MenuPrincipal.monsters"));
+			lib_abi_announce.setText(Messages.getString("MenuPrincipal.fixed"));
+			lib_carac_wave.setText(Messages.getString("MenuPrincipal.monsters"));
 			combo_carac_wave.setModel(new DefaultComboBoxModel<String>(EMonsters.namevalues()));
 			combo_carac_wave.setSelectedIndex(-1);
 			break;
@@ -2208,17 +2220,17 @@ public class MenuPrincipal extends JFrame {
 			lib_abi_interval.setVisible(true);
 			sai_abi_interval.setVisible(true);
 
-			lib_set.setText(BUNDLE.getString("MenuPrincipal.reward"));
+			lib_set.setText(Messages.getString("MenuPrincipal.reward"));
 			lib_set.setVisible(true);
 			btn_set.setVisible(true);
 
-			lib_carac_wave.setText(BUNDLE.getString("MenuPrincipal.abilities"));
+			lib_carac_wave.setText(Messages.getString("MenuPrincipal.abilities"));
 			combo_carac_wave.setModel(new DefaultComboBoxModel<String>(EAbilities.namevalues()));
 			combo_carac_wave.setSelectedIndex(-1);
 			sai_nb_carac_wave.setVisible(false);
 			break;
 		case Special:
-			lib_carac_wave.setText(BUNDLE.getString("MenuPrincipal.monsters"));
+			lib_carac_wave.setText(Messages.getString("MenuPrincipal.monsters"));
 			combo_carac_wave.setModel(new DefaultComboBoxModel<String>(EMonsters.namevalues()));
 			combo_carac_wave.setSelectedIndex(-1);
 			break;
@@ -2235,20 +2247,20 @@ public class MenuPrincipal extends JFrame {
 			sai_nb_carac_wave.setVisible(false);
 			break;
 		case Supply:
-			lib_carac_wave.setText(BUNDLE.getString("MenuPrincipal.monsters"));
+			lib_carac_wave.setText(Messages.getString("MenuPrincipal.monsters"));
 			combo_carac_wave.setModel(new DefaultComboBoxModel<String>(EMonsters.namevalues()));
 			combo_carac_wave.setSelectedIndex(-1);
 
 			lib_set.setVisible(true);
-			lib_set.setText(BUNDLE.getString("MenuPrincipal.drops"));
+			lib_set.setText(Messages.getString("MenuPrincipal.drops"));
 			btn_set.setVisible(true);
 			break;
 		case Upgrade:
 			lib_abi_announce.setVisible(true);
-			lib_abi_announce.setText(BUNDLE.getString("MenuPrincipal.give_all_items"));
+			lib_abi_announce.setText(Messages.getString("MenuPrincipal.give_all_items"));
 			chk_abi_announce.setVisible(true);
 			lib_set.setVisible(true);
-			lib_set.setText(BUNDLE.getString("MenuPrincipal.configure"));
+			lib_set.setText(Messages.getString("MenuPrincipal.configure"));
 			btn_set.setVisible(true);
 
 			lib_carac_wave.setVisible(false);
@@ -2310,10 +2322,10 @@ public class MenuPrincipal extends JFrame {
 		lib_set.setVisible(false);
 		btn_set.setVisible(false);
 
-		lib_abi_announce.setText(BUNDLE.getString("MenuPrincipal.lib_abi_announce.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_abi_announce.setText(Messages.getString("MenuPrincipal.lib_abi_announce.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		list_carac_wave.setModel(new DefaultListModel<CellListCaracs>());
 		lib_set.setText("");
-		btn_set.setText(BUNDLE.getString("MenuPrincipal.btn_set.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		btn_set.setText(Messages.getString("MenuPrincipal.btn_set.text")); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	public void deselectWaveLists_Arena(JList<CellListWave> jList){
