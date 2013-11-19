@@ -46,7 +46,7 @@ public class Item {
 	
 	@Override
 	public String toString() {
-		return quantity+" "+item.getName();
+		return quantity+" "+item.getGuiName();
 	}
 
 	public EnchantList getEnchantements() {

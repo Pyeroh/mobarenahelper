@@ -35,7 +35,7 @@ public class EItemTest {
 			String name = real.replaceFirst("^l_", "light_").replaceFirst("^p_", "potion_of_").replaceFirst("^s_p_", "splash_potion_of_").replaceFirst("_ext", "_extended").replace('_', ' ').trim();
 			String first = ""+name.charAt(0);
 			name = name.replaceFirst("^[a-z]", first.toUpperCase());
-			assertEquals(values[i].getName(), name);
+			assertEquals(values[i].getGuiName(), name);
 		}
 	}
 

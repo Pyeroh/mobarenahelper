@@ -25,7 +25,7 @@ public class Armor extends Item {
 	
 	@Override
 	public String toString() {
-		return getItem().getName();
+		return getItem().getGuiName();
 	}
 	
 	@Override

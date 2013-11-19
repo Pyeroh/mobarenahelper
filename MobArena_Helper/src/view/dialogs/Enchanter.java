@@ -75,7 +75,7 @@ public class Enchanter extends JDialog {
 							Enchantment enchant = Enchanter.this.item.getEnchantements().get(hoverIndex);
 							int choice = JOptionPane.showConfirmDialog(
 									rootPane,
-									MessageFormat.format(ResourceBundle.getBundle("gui.lang").getString("Enchanter.message.delEnchant"),enchant.toString(),Enchanter.this.item.getItem().getName()),
+									MessageFormat.format(ResourceBundle.getBundle("gui.lang").getString("Enchanter.message.delEnchant"),enchant.toString(),Enchanter.this.item.getItem().getGuiName()),
 									ResourceBundle.getBundle("gui.lang").getString("Message.title.confirmation"),
 									JOptionPane.YES_NO_OPTION);
 							if(choice==JOptionPane.YES_OPTION) {

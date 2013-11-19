@@ -6,6 +6,8 @@ import java.util.Arrays;
 
 import javax.swing.ImageIcon;
 
+import model.EnumName;
+
 /**
  * Les items Minecraft, sans les objets techniques et certains autres...
  * @author Pyeroh
@@ -27,8 +29,10 @@ public enum EItem {
 	birch_sapling(6,2,"SAPLING",EItemCat.decoration),
 	jungle_sapling(6,3,"SAPLING",EItemCat.decoration),
 	sand(12,0,"SAND",EItemCat.block),
+	
 	//TODO
 	redsand(12,1,"SAND",EItemCat.block),
+	
 	gravel(13,0,"GRAVEL",EItemCat.block),
 	gold_ore(14,0,"GOLD_ORE",EItemCat.block),
 	iron_ore(15,0,"IRON_ORE",EItemCat.block),
@@ -405,7 +409,7 @@ public enum EItem {
 	carrot_on_a_stick(398,0,"CARROT_STICK",EItemCat.transport),
 	nether_star(399,0,"NETHER_STAR",EItemCat.materials),
 	pumpkin_pie(400,0,"PUMPKIN_PIE",EItemCat.food),
-	firework(401,0,"FIREWORK",EItemCat.misc),
+	enchanted_book(403,0,"ENCHANTED_BOOK",EItemCat.misc),
 	redstone_comparator(404,0,"REDSTONE_COMPARATOR",EItemCat.redstone),
 	nether_brick_(405,0,"NETHER_BRICK_ITEM",EItemCat.materials),
 	quartz(406,0,"QUARTZ",EItemCat.materials),
@@ -561,6 +565,7 @@ public enum EItem {
 	 * Renvoie le nom correctement formaté pour l'affichage
 	 * @return
 	 */
+	@Deprecated
 	public String getName() {
 		String name = name();
 		if(name.endsWith("wool") || name.endsWith("stained_clay") || name.endsWith("carpet") || name.endsWith("dye")) {
@@ -581,6 +586,14 @@ public enum EItem {
 		name = name.replaceFirst("^[a-z]", first.toUpperCase());
 
 		return name;
+	}
+	
+	/**
+	 * Renvoie le nom correctement formaté pour l'affichage
+	 * @return
+	 */
+	public String getGuiName() {
+		return EnumName.getString("EItem."+id+"."+meta);
 	}
 
 	public String toString() {

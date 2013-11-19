@@ -197,7 +197,7 @@ public class MenuPrincipal extends JFrame {
 		});
 
 		loadLocale();
-		//TODO BUNDLE = ResourceBundle.getBundle("gui.lang");
+		BUNDLE = ResourceBundle.getBundle("gui.lang");
 
 		setIconImage(new ImageIcon(MenuPrincipal.class.getResource("/gui/pics/mobarena.png")).getImage());
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);

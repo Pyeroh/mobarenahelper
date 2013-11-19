@@ -11,7 +11,7 @@ public class CellListItem extends CellListEItem {
 		super(item.getItem());
 		this.item = item;
 		
-		lib_desc.setText(this.item.getItem().getName() + (item.getQuantity()!=1 ? " x"+item.getQuantity() : ""));
+		lib_desc.setText(this.item.getItem().getGuiName() + (item.getQuantity()!=1 ? " x"+item.getQuantity() : ""));
 	}
 	
 	public Item getItem() {

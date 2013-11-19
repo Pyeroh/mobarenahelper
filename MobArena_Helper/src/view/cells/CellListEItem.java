@@ -12,7 +12,7 @@ public class CellListEItem extends CellListCaracs{
 	private EItem eitem;
 	
 	public CellListEItem(EItem eitem) {
-		super(eitem.getName());
+		super(eitem.getGuiName());
 		this.eitem = eitem;
 		
 		lib_desc.setBounds(44, 0, 256, 30);
