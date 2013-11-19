@@ -21,12 +21,12 @@ public class Launch {
 			System.out.println("EItem."+e.getId()+"."+e.getMeta()+"="+e.getGuiName());
 		}
 		Locale.setDefault(Locale.ENGLISH);
-		EnumName.load();
+		/*EnumName.load();
 		values = EItem.values();
 		for(int i=0;i<values.length;i++) {
 			EItem e = values[i];
 			System.out.println("EItem."+e.getId()+"."+e.getMeta()+"="+e.getGuiName());
-		}
+		}*/
 		
 	}
 
