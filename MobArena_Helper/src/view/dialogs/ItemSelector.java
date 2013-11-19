@@ -4,7 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.*;
 import java.text.ParseException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
@@ -17,6 +18,7 @@ import model.lists.ItemList;
 import view.JWideComboBox;
 import view.cells.*;
 
+//TODO Ajouter la gestion des items personnalisés (id et meta perso)
 public class ItemSelector extends JDialog {
 
 	private static final long serialVersionUID = 7238413511342140781L;
@@ -55,7 +57,7 @@ public class ItemSelector extends JDialog {
 	public ItemSelector(JFrame frame, ItemList items, int max, boolean isArmor, boolean classSelector) {
 		super();
 		setModalityType(ModalityType.APPLICATION_MODAL);
-		setTitle(ResourceBundle.getBundle("gui.lang").getString("ItemSelector.title")+" - "+frame.getTitle());
+		setTitle(Messages.getString("ItemSelector.title")+" - "+frame.getTitle());
 		
 		setIconImage(new ImageIcon(ItemSelector.class.getResource("/gui/pics/mobarena.png")).getImage());
 		setResizable(false);
@@ -69,12 +71,12 @@ public class ItemSelector extends JDialog {
 		setLocationRelativeTo(frame);
 		getContentPane().setLayout(null);
 
-		lib_selectable = new JLabel(ResourceBundle.getBundle("gui.lang").getString("ItemSelector.lib_selectable.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_selectable = new JLabel(Messages.getString("ItemSelector.lib_selectable.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_selectable.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lib_selectable.setBounds(6, 6, 154, 25);
 		getContentPane().add(lib_selectable);
 
-		lib_sort = new JLabel(ResourceBundle.getBundle("gui.lang").getString("ItemSelector.lib_sort.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_sort = new JLabel(Messages.getString("ItemSelector.lib_sort.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_sort.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lib_sort.setBounds(6, 43, 86, 25);
 		getContentPane().add(lib_sort);
@@ -103,7 +105,7 @@ public class ItemSelector extends JDialog {
 		combo_sort.setBounds(104, 43, 121, 25);
 		getContentPane().add(combo_sort);
 
-		lib_search = new JLabel(ResourceBundle.getBundle("gui.lang").getString("ItemSelector.lib_search.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_search = new JLabel(Messages.getString("ItemSelector.lib_search.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_search.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lib_search.setBounds(6, 80, 86, 25);
 		getContentPane().add(lib_search);
@@ -137,7 +139,7 @@ public class ItemSelector extends JDialog {
 		scrpan_selectable.setBounds(6, 117, 350, 200);
 		getContentPane().add(scrpan_selectable);
 
-		btn_add = new JButton(ResourceBundle.getBundle("gui.lang").getString("ItemSelector.btn_add.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		btn_add = new JButton(Messages.getString("ItemSelector.btn_add.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		btn_add.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -148,7 +150,7 @@ public class ItemSelector extends JDialog {
 		btn_add.setBounds(368, 170, 101, 28);
 		getContentPane().add(btn_add);
 
-		btn_remove = new JButton(ResourceBundle.getBundle("gui.lang").getString("ItemSelector.btn_remove.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		btn_remove = new JButton(Messages.getString("ItemSelector.btn_remove.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		btn_remove.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -159,7 +161,7 @@ public class ItemSelector extends JDialog {
 		btn_remove.setBounds(368, 210, 101, 28);
 		getContentPane().add(btn_remove);
 
-		lib_selected = new JLabel(ResourceBundle.getBundle("gui.lang").getString("ItemSelector.lib_selected.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_selected = new JLabel(Messages.getString("ItemSelector.lib_selected.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_selected.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lib_selected.setBounds(481, 6, 134, 25);
 		getContentPane().add(lib_selected);
@@ -190,7 +192,7 @@ public class ItemSelector extends JDialog {
 			}
 		});
 
-		btn_enchant = new JButton(ResourceBundle.getBundle("gui.lang").getString("ItemSelector.btn_enchant.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		btn_enchant = new JButton(Messages.getString("ItemSelector.btn_enchant.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		btn_enchant.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -241,14 +243,14 @@ public class ItemSelector extends JDialog {
 			if (nb_items == max) {
 				JOptionPane.showMessageDialog(
 						rootPane,
-						ResourceBundle.getBundle("gui.lang").getString("ItemSelector.message.noMore"), ResourceBundle.getBundle("gui.lang").getString("Message.title.warning"),
+						Messages.getString("ItemSelector.message.noMore"), Messages.getString("Message.title.warning"),
 						JOptionPane.WARNING_MESSAGE);
 			} else {
 
 				EItem eitem = list_selectable.getSelectedValue().getEItem();
 				if(!isArmor()) {
 
-					String input = JOptionPane.showInputDialog(rootPane, ResourceBundle.getBundle("gui.lang").getString("ItemSelector.message.howMany"),1);
+					String input = JOptionPane.showInputDialog(rootPane, Messages.getString("ItemSelector.message.howMany"),1);
 					if (input!=null) {
 						input = input.trim();
 						if (input.matches("^[1-9][0-9]{0,2}$")) {
@@ -259,7 +261,7 @@ public class ItemSelector extends JDialog {
 							loadSelectable(crossSearch());
 
 						}
-						else JOptionPane.showMessageDialog(rootPane,ResourceBundle.getBundle("gui.lang").getString("ItemSelector.message.incorectNumberFormat"),ResourceBundle.getBundle("gui.lang").getString("Message.title.error"),JOptionPane.ERROR_MESSAGE);
+						else JOptionPane.showMessageDialog(rootPane,Messages.getString("ItemSelector.message.incorectNumberFormat"),Messages.getString("Message.title.error"),JOptionPane.ERROR_MESSAGE);
 					}
 
 				}
@@ -275,7 +277,7 @@ public class ItemSelector extends JDialog {
 						}
 					}
 					if(present) {
-						JOptionPane.showMessageDialog(rootPane, ResourceBundle.getBundle("gui.lang").getString("ItemSelector.message.doubleArmor"), ResourceBundle.getBundle("gui.lang").getString("Message.title.warning"), JOptionPane.WARNING_MESSAGE);
+						JOptionPane.showMessageDialog(rootPane, Messages.getString("ItemSelector.message.doubleArmor"), Messages.getString("Message.title.warning"), JOptionPane.WARNING_MESSAGE);
 					}
 					else {
 						items.add(new Armor(eitem, null));
@@ -351,4 +353,5 @@ public class ItemSelector extends JDialog {
 
 		return values;
 	}
+	
 }

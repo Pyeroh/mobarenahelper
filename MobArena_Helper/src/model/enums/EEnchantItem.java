@@ -30,6 +30,7 @@ public enum EEnchantItem {
 	ei18 (EEnchantment.protection,EItem.iron_boots),
 	ei19 (EEnchantment.protection,EItem.gold_boots),
 	ei20 (EEnchantment.protection,EItem.diamond_boots),
+	ei262(EEnchantment.protection,EItem.enchanted_book),
 
 	ei21 (EEnchantment.fire_protection,EItem.leather_helmet),
 	ei22 (EEnchantment.fire_protection,EItem.chainmail_helmet),
@@ -51,12 +52,14 @@ public enum EEnchantItem {
 	ei38 (EEnchantment.fire_protection,EItem.iron_boots),
 	ei39 (EEnchantment.fire_protection,EItem.gold_boots),
 	ei40 (EEnchantment.fire_protection,EItem.diamond_boots),
+	ei263(EEnchantment.fire_protection,EItem.enchanted_book),
 
 	ei41 (EEnchantment.feather_falling,EItem.leather_boots),
 	ei42 (EEnchantment.feather_falling,EItem.chainmail_boots),
 	ei43 (EEnchantment.feather_falling,EItem.iron_boots),
 	ei44 (EEnchantment.feather_falling,EItem.gold_boots),
 	ei45 (EEnchantment.feather_falling,EItem.diamond_boots),
+	ei264(EEnchantment.feather_falling,EItem.enchanted_book),
 
 	ei46 (EEnchantment.blast_protection,EItem.leather_helmet),
 	ei47 (EEnchantment.blast_protection,EItem.chainmail_helmet),
@@ -78,7 +81,8 @@ public enum EEnchantItem {
 	ei63 (EEnchantment.blast_protection,EItem.iron_boots),
 	ei64 (EEnchantment.blast_protection,EItem.gold_boots),
 	ei65 (EEnchantment.blast_protection,EItem.diamond_boots),
-
+	ei265(EEnchantment.blast_protection,EItem.enchanted_book),
+	
 	ei66 (EEnchantment.projectile_protection,EItem.leather_helmet),
 	ei67 (EEnchantment.projectile_protection,EItem.chainmail_helmet),
 	ei68 (EEnchantment.projectile_protection,EItem.iron_helmet),
@@ -99,18 +103,21 @@ public enum EEnchantItem {
 	ei83 (EEnchantment.projectile_protection,EItem.iron_boots),
 	ei84 (EEnchantment.projectile_protection,EItem.gold_boots),
 	ei85 (EEnchantment.projectile_protection,EItem.diamond_boots),
+	ei266(EEnchantment.projectile_protection,EItem.enchanted_book),
 
 	ei86 (EEnchantment.respiration,EItem.leather_helmet),
 	ei87 (EEnchantment.respiration,EItem.chainmail_helmet),
 	ei88 (EEnchantment.respiration,EItem.iron_helmet),
 	ei89 (EEnchantment.respiration,EItem.gold_helmet),
 	ei90 (EEnchantment.respiration,EItem.diamond_helmet),
+	ei267(EEnchantment.respiration,EItem.enchanted_book),
 
 	ei91 (EEnchantment.aqua_affinity,EItem.leather_helmet),
 	ei92 (EEnchantment.aqua_affinity,EItem.chainmail_helmet),
 	ei93 (EEnchantment.aqua_affinity,EItem.iron_helmet),
 	ei94 (EEnchantment.aqua_affinity,EItem.gold_helmet),
 	ei95 (EEnchantment.aqua_affinity,EItem.diamond_helmet),
+	ei268(EEnchantment.aqua_affinity,EItem.enchanted_book),
 
 	ei96 (EEnchantment.thorns,EItem.leather_helmet),
 	ei97 (EEnchantment.thorns,EItem.chainmail_helmet),
@@ -132,6 +139,7 @@ public enum EEnchantItem {
 	ei113(EEnchantment.thorns,EItem.iron_boots),
 	ei114(EEnchantment.thorns,EItem.gold_boots),
 	ei115(EEnchantment.thorns,EItem.diamond_boots),
+	ei269(EEnchantment.thorns,EItem.enchanted_book),
 
 	//Armes
 	ei116(EEnchantment.sharpness,EItem.wood_sword),
@@ -144,6 +152,7 @@ public enum EEnchantItem {
 	ei123(EEnchantment.sharpness,EItem.iron_axe),
 	ei124(EEnchantment.sharpness,EItem.gold_axe),
 	ei125(EEnchantment.sharpness,EItem.diamond_axe),
+	ei270(EEnchantment.sharpness,EItem.enchanted_book),
 
 	ei126(EEnchantment.smite,EItem.wood_sword),
 	ei127(EEnchantment.smite,EItem.stone_sword),
@@ -155,6 +164,7 @@ public enum EEnchantItem {
 	ei133(EEnchantment.smite,EItem.iron_axe),
 	ei134(EEnchantment.smite,EItem.gold_axe),
 	ei135(EEnchantment.smite,EItem.diamond_axe),
+	ei271(EEnchantment.smite,EItem.enchanted_book),
 
 	ei136(EEnchantment.bane_of_arthropods,EItem.wood_sword),
 	ei137(EEnchantment.bane_of_arthropods,EItem.stone_sword),
@@ -166,29 +176,34 @@ public enum EEnchantItem {
 	ei143(EEnchantment.bane_of_arthropods,EItem.iron_axe),
 	ei144(EEnchantment.bane_of_arthropods,EItem.gold_axe),
 	ei145(EEnchantment.bane_of_arthropods,EItem.diamond_axe),
+	ei272(EEnchantment.bane_of_arthropods,EItem.enchanted_book),
 
 	ei146(EEnchantment.knockback,EItem.wood_sword),
 	ei147(EEnchantment.knockback,EItem.stone_sword),
 	ei148(EEnchantment.knockback,EItem.iron_sword),
 	ei149(EEnchantment.knockback,EItem.gold_sword),
 	ei150(EEnchantment.knockback,EItem.diamond_sword),
+	ei273(EEnchantment.knockback,EItem.enchanted_book),
 
 	ei151(EEnchantment.fire_aspect,EItem.wood_sword),
 	ei152(EEnchantment.fire_aspect,EItem.stone_sword),
 	ei153(EEnchantment.fire_aspect,EItem.iron_sword),
 	ei154(EEnchantment.fire_aspect,EItem.gold_sword),
 	ei155(EEnchantment.fire_aspect,EItem.diamond_sword),
+	ei274(EEnchantment.fire_aspect,EItem.enchanted_book),
 
 	ei156(EEnchantment.looting,EItem.wood_sword),
 	ei157(EEnchantment.looting,EItem.stone_sword),
 	ei158(EEnchantment.looting,EItem.iron_sword),
 	ei159(EEnchantment.looting,EItem.gold_sword),
 	ei160(EEnchantment.looting,EItem.diamond_sword),
+	ei275(EEnchantment.looting,EItem.enchanted_book),
 
 	ei161(EEnchantment.power,EItem.bow),
 	ei162(EEnchantment.punch,EItem.bow),
 	ei163(EEnchantment.flame,EItem.bow),
 	ei164(EEnchantment.infinity,EItem.bow),
+	ei276(EEnchantment.infinity,EItem.enchanted_book),
 
 	//Outils
 	ei165(EEnchantment.efficiency,EItem.wood_pickaxe),
@@ -207,6 +222,7 @@ public enum EEnchantItem {
 	ei178(EEnchantment.efficiency,EItem.gold_axe),
 	ei179(EEnchantment.efficiency,EItem.diamond_axe),
 	ei180(EEnchantment.efficiency,EItem.shears),
+	ei277(EEnchantment.efficiency,EItem.enchanted_book),
 
 	ei181(EEnchantment.silk_touch,EItem.wood_pickaxe),
 	ei182(EEnchantment.silk_touch,EItem.stone_pickaxe),
@@ -224,6 +240,7 @@ public enum EEnchantItem {
 	ei194(EEnchantment.silk_touch,EItem.gold_axe),
 	ei195(EEnchantment.silk_touch,EItem.diamond_axe),
 	ei196(EEnchantment.silk_touch,EItem.shears),
+	ei278(EEnchantment.silk_touch,EItem.enchanted_book),
 
 	ei197(EEnchantment.unbreaking,EItem.wood_pickaxe),
 	ei198(EEnchantment.unbreaking,EItem.stone_pickaxe),
@@ -274,6 +291,7 @@ public enum EEnchantItem {
 	ei243(EEnchantment.unbreaking,EItem.fishing_rod),
 	ei244(EEnchantment.unbreaking,EItem.flint_and_steel),
 	ei245(EEnchantment.unbreaking,EItem.carrot_on_a_stick),
+	ei279(EEnchantment.unbreaking,EItem.enchanted_book),
 
 	ei246(EEnchantment.fortune,EItem.wood_pickaxe),
 	ei247(EEnchantment.fortune,EItem.stone_pickaxe),
@@ -289,9 +307,13 @@ public enum EEnchantItem {
 	ei257(EEnchantment.fortune,EItem.stone_axe),
 	ei258(EEnchantment.fortune,EItem.iron_axe),
 	ei259(EEnchantment.fortune,EItem.gold_axe),
+	ei280(EEnchantment.fortune,EItem.enchanted_book),
 
-	//ei260(EEnchantment.luck_of_the_sea,EItem.fishing_rod),
-	//ei261(EEnchantment.lure,EItem.fishing_rod),
+	//TODO changer ça pour la nouvelle version de Minecraft
+	/*ei260(EEnchantment.luck_of_the_sea,EItem.fishing_rod),
+	ei281(EEnchantment.luck_of_the_sea,EItem.enchanted_book),
+	ei261(EEnchantment.lure,EItem.fishing_rod),
+	ei282(EEnchantment.lure,EItem.enchanted_book),*/
 	;
 
 	private EEnchantment enchantment;

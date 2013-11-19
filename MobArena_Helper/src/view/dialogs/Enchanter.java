@@ -5,14 +5,12 @@ import java.awt.Image;
 import java.awt.event.*;
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import model.Enchantment;
-import model.Item;
+import model.*;
 import model.enums.EEnchantItem;
 import model.enums.EEnchantment;
 import model.lists.EnchantList;
@@ -41,13 +39,13 @@ public class Enchanter extends JDialog {
 		setModalityType(ModalityType.APPLICATION_MODAL);
 		setIconImage(new ImageIcon(Enchanter.class.getResource("/gui/pics/mobarena.png")).getImage());
 		this.item = item;
-		setTitle(ResourceBundle.getBundle("gui.lang").getString("Enchanter.title") + " - " + ((ItemSelector)dial).getFrame().getTitle());
+		setTitle(Messages.getString("Enchanter.title") + " - " + ((ItemSelector)dial).getFrame().getTitle());
 
-		setSize(427,230);
+		setSize(436,230);
 		setLocationRelativeTo(dial);
 		getContentPane().setLayout(null);
 
-		lib_enchant = new JLabel(ResourceBundle.getBundle("gui.lang").getString("Enchanter.lib_enchant.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_enchant = new JLabel(Messages.getString("Enchanter.lib_enchant.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_enchant.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lib_enchant.setBounds(6, 6, 100, 20);
 		getContentPane().add(lib_enchant);
@@ -75,8 +73,8 @@ public class Enchanter extends JDialog {
 							Enchantment enchant = Enchanter.this.item.getEnchantements().get(hoverIndex);
 							int choice = JOptionPane.showConfirmDialog(
 									rootPane,
-									MessageFormat.format(ResourceBundle.getBundle("gui.lang").getString("Enchanter.message.delEnchant"),enchant.toString(),Enchanter.this.item.getItem().getGuiName()),
-									ResourceBundle.getBundle("gui.lang").getString("Message.title.confirmation"),
+									MessageFormat.format(Messages.getString("Enchanter.message.delEnchant"),enchant.toString(),Enchanter.this.item.getItem().getGuiName()),
+									Messages.getString("Message.title.confirmation"),
 									JOptionPane.YES_NO_OPTION);
 							if(choice==JOptionPane.YES_OPTION) {
 								Enchanter.this.item.getEnchantements().remove(enchant);
@@ -98,7 +96,7 @@ public class Enchanter extends JDialog {
 		separator.setBounds(256, 6, 2, 184);
 		getContentPane().add(separator);
 
-		lib_enchantment = new JLabel(ResourceBundle.getBundle("gui.lang").getString("Enchanter.lib_enchantment.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_enchantment = new JLabel(Messages.getString("Enchanter.lib_enchantment.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_enchantment.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lib_enchantment.setBounds(270, 8, 100, 20);
 		getContentPane().add(lib_enchantment);
@@ -115,7 +113,7 @@ public class Enchanter extends JDialog {
 		combo_enchantment.setBounds(270, 38, 144, 26);
 		getContentPane().add(combo_enchantment);
 
-		lib_level = new JLabel(ResourceBundle.getBundle("gui.lang").getString("Enchanter.lib_level.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_level = new JLabel(Messages.getString("Enchanter.lib_level.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_level.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lib_level.setBounds(270, 76, 43, 20);
 		getContentPane().add(lib_level);
@@ -124,7 +122,7 @@ public class Enchanter extends JDialog {
 		combo_level.setBounds(270, 108, 72, 26);
 		getContentPane().add(combo_level);
 
-		btn_add = new JButton(ResourceBundle.getBundle("gui.lang").getString("Enchanter.btn_add.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		btn_add = new JButton(Messages.getString("Enchanter.btn_add.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		btn_add.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -140,7 +138,7 @@ public class Enchanter extends JDialog {
 		getContentPane().add(btn_add);
 
 		lib_help = new JLabel("");
-		lib_help.setToolTipText(ResourceBundle.getBundle("gui.lang").getString("Enchanter.lib_help.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_help.setToolTipText(Messages.getString("Enchanter.lib_help.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_help.setBounds(220, 6, 24, 24);
 		Image img = CellListCaracs.scaleImage(new ImageIcon(Enchanter.class.getResource("/gui/pics/question.png")).getImage(), lib_help);
 		lib_help.setIcon(new ImageIcon(img));
@@ -211,4 +209,5 @@ public class Enchanter extends JDialog {
 		combo_level.setSelectedIndex(0);
 
 	}
+	
 }

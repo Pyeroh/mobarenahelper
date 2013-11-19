@@ -6,11 +6,11 @@ import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ResourceBundle;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 
+import model.Messages;
 import view.MenuPrincipal;
 import view.cells.CellListCaracs;
 
@@ -41,7 +41,7 @@ public class About extends JDialog {
 		getContentPane().add(img_header);
 
 		lib_about = new JTextPane();
-		lib_about.setText(ResourceBundle.getBundle("gui.lang").getString("About.lib_about.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_about.setText(Messages.getString("About.lib_about.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_about.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lib_about.setEditable(false);
 		lib_about.setBackground(this.getBackground());
@@ -63,13 +63,13 @@ public class About extends JDialog {
 						desktop.browse(uri);
 						dispose();
 					} catch (IOException e1) {
-						JOptionPane.showMessageDialog(null,ResourceBundle.getBundle("gui.lang").getString("About.message.failLaunchLink"),ResourceBundle.getBundle("gui.lang").getString("Message.title.cannotLaunch"),JOptionPane.WARNING_MESSAGE);
+						JOptionPane.showMessageDialog(null,Messages.getString("About.message.failLaunchLink"),Messages.getString("Message.title.cannotLaunch"),JOptionPane.WARNING_MESSAGE);
 						return;
 					}
 				} else {
 					JOptionPane.showMessageDialog(null,
-							ResourceBundle.getBundle("gui.lang").getString("About.message.javaFailLaunchLink"),
-							ResourceBundle.getBundle("gui.lang").getString("Message.title.cannotLaunch"),JOptionPane.WARNING_MESSAGE);
+							Messages.getString("About.message.javaFailLaunchLink"),
+							Messages.getString("Message.title.cannotLaunch"),JOptionPane.WARNING_MESSAGE);
 					return;
 				}
 			}
@@ -91,7 +91,7 @@ public class About extends JDialog {
 		btn_ok.setBounds(372, 314, 59, 23);
 		getContentPane().add(btn_ok);
 
-		lib_github = new JLabel(ResourceBundle.getBundle("gui.lang").getString("About.lib_github.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_github = new JLabel(Messages.getString("About.lib_github.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_github.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lib_github.setBounds(10, 319, 62, 14);
 		getContentPane().add(lib_github);
@@ -112,4 +112,5 @@ public class About extends JDialog {
 		setVisible(true);
 
 	}
+	
 }

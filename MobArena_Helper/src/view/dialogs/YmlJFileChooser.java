@@ -58,12 +58,12 @@ public class YmlJFileChooser extends JFileChooser {
 		super(".");
 		load();
 	}
-	
+
 	public YmlJFileChooser(String dir) {
 		super(dir);
 		load();
 	}
-	
+
 	private void load() {
 		FileFilter ymlfilter = new ExtensionFileFilter(null, new String[] { "YML" });
 

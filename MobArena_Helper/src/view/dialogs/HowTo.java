@@ -5,18 +5,13 @@ import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextPane;
+import javax.swing.*;
 import javax.swing.border.LineBorder;
 
+import model.Messages;
 import view.MenuPrincipal;
-import java.util.ResourceBundle;
 
 public class HowTo extends JDialog {
-	private static final ResourceBundle BUNDLE = ResourceBundle.getBundle("gui.lang"); //$NON-NLS-1$
 	
 	private static final long serialVersionUID = 1132162114547728162L;
 	private JLabel lib_HowToUse;
@@ -41,7 +36,7 @@ public class HowTo extends JDialog {
 		setSize(647,429);
 		getContentPane().setLayout(null);
 		
-		lib_HowToUse = new JLabel(BUNDLE.getString("HowTo.lib_HowToUse.text")); //$NON-NLS-1$
+		lib_HowToUse = new JLabel(Messages.getString("HowTo.lib_HowToUse.text")); //$NON-NLS-1$
 		lib_HowToUse.setBackground(new Color(255, 255, 255));
 		lib_HowToUse.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lib_HowToUse.setBounds(10, 11, 300, 19);
@@ -53,42 +48,42 @@ public class HowTo extends JDialog {
 		
 		lib_howto2 = new JTextPane();
 		lib_howto2.setEditable(false);
-		tab_howto.addTab(BUNDLE.getString("MenuPrincipal.tabpan_arena_wave.title"), null, lib_howto2, null); //$NON-NLS-1$
-		lib_howto2.setText(BUNDLE.getString("HowTo.lib_howto2.text")); //$NON-NLS-1$
+		tab_howto.addTab(Messages.getString("MenuPrincipal.tabpan_arena_wave.title"), null, lib_howto2, null); //$NON-NLS-1$
+		lib_howto2.setText(Messages.getString("HowTo.lib_howto2.text")); //$NON-NLS-1$
 		lib_howto2.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		
 		lib_howto3 = new JTextPane();
 		lib_howto3.setEditable(false);
 		lib_howto3.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lib_howto3.setText(BUNDLE.getString("HowTo.lib_howto3.text")); //$NON-NLS-1$
-		tab_howto.addTab(BUNDLE.getString("MenuPrincipal.tabpan_classes.title"), null, lib_howto3, null); //$NON-NLS-1$
+		lib_howto3.setText(Messages.getString("HowTo.lib_howto3.text")); //$NON-NLS-1$
+		tab_howto.addTab(Messages.getString("MenuPrincipal.tabpan_classes.title"), null, lib_howto3, null); //$NON-NLS-1$
 		
 		lib_howto4 = new JTextPane();
 		lib_howto4.setEditable(false);
-		lib_howto4.setText(BUNDLE.getString("HowTo.lib_howto4.text")); //$NON-NLS-1$
+		lib_howto4.setText(Messages.getString("HowTo.lib_howto4.text")); //$NON-NLS-1$
 		lib_howto4.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		tab_howto.addTab(BUNDLE.getString("MenuPrincipal.tabpan_arena_settings.title"), null, lib_howto4, null); //$NON-NLS-1$
+		tab_howto.addTab(Messages.getString("MenuPrincipal.tabpan_arena_settings.title"), null, lib_howto4, null); //$NON-NLS-1$
 		
 		tab_howto5 = new JTabbedPane(JTabbedPane.LEFT);
-		tab_howto.addTab(BUNDLE.getString("HowTo.tabpan_dialogs"), null, tab_howto5, null); //$NON-NLS-1$
+		tab_howto.addTab(Messages.getString("HowTo.tabpan_dialogs"), null, tab_howto5, null); //$NON-NLS-1$
 		
 		lib_howto6 = new JTextPane();
-		lib_howto6.setText(BUNDLE.getString("HowTo.lib_howto6.text")); //$NON-NLS-1$
+		lib_howto6.setText(Messages.getString("HowTo.lib_howto6.text")); //$NON-NLS-1$
 		lib_howto6.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lib_howto6.setEditable(false);
-		tab_howto5.addTab(BUNDLE.getString("ItemSelector.title"), null, lib_howto6, null); //$NON-NLS-1$
+		tab_howto5.addTab(Messages.getString("ItemSelector.title"), null, lib_howto6, null); //$NON-NLS-1$
 		
 		lib_howto7 = new JTextPane();
-		lib_howto7.setText(BUNDLE.getString("HowTo.lib_howto7.text")); //$NON-NLS-1$
+		lib_howto7.setText(Messages.getString("HowTo.lib_howto7.text")); //$NON-NLS-1$
 		lib_howto7.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lib_howto7.setEditable(false);
-		tab_howto5.addTab(BUNDLE.getString("HowTo.tabpan_upwavechanger"), null, lib_howto7, null); //$NON-NLS-1$
+		tab_howto5.addTab(Messages.getString("HowTo.tabpan_upwavechanger"), null, lib_howto7, null); //$NON-NLS-1$
 		
 		lib_howto8 = new JTextPane();
 		lib_howto8.setEditable(false);
-		lib_howto8.setText(BUNDLE.getString("HowTo.lib_howto8.text")); //$NON-NLS-1$
+		lib_howto8.setText(Messages.getString("HowTo.lib_howto8.text")); //$NON-NLS-1$
 		lib_howto8.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		tab_howto5.addTab(BUNDLE.getString("Enchanter.title"), null, lib_howto8, null); //$NON-NLS-1$
+		tab_howto5.addTab(Messages.getString("Enchanter.title"), null, lib_howto8, null); //$NON-NLS-1$
 		
 		btn_ok = new JButton("OK");
 		btn_ok.addMouseListener(new MouseAdapter() {
@@ -107,4 +102,5 @@ public class HowTo extends JDialog {
 		setLocationRelativeTo(menu);
 		setVisible(true);
 	}
+	
 }

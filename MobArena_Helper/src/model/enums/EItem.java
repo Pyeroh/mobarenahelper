@@ -30,8 +30,7 @@ public enum EItem {
 	jungle_sapling(6,3,"SAPLING",EItemCat.decoration),
 	sand(12,0,"SAND",EItemCat.block),
 	
-	//TODO
-	redsand(12,1,"SAND",EItemCat.block),
+	//TODO redsand(12,1,"SAND",EItemCat.block),
 	
 	gravel(13,0,"GRAVEL",EItemCat.block),
 	gold_ore(14,0,"GOLD_ORE",EItemCat.block),
@@ -314,11 +313,11 @@ public enum EItem {
 	raw_fish(349,0,"RAW_FISH",EItemCat.food),
 	cooked_fish(350,0,"COOKED_FISH",EItemCat.food),
 	
-	//TODO
-	raw_salmon(349,1,"RAW_FISH",EItemCat.food),
+	//TODO items
+	/*raw_salmon(349,1,"RAW_FISH",EItemCat.food),
 	cooked_salmon(350,1,"COOKED_FISH",EItemCat.food),
 	clownfish(349,2,"RAW_FISH",EItemCat.food),
-	pufferfish(349,3,"RAW_FISH",EItemCat.food),
+	pufferfish(349,3,"RAW_FISH",EItemCat.food),*/
 	
 	ink_sack(351,0,"INK_SACK",EItemCat.materials),
 	rose_red(351,1,"INK_SACK",EItemCat.materials),
@@ -452,9 +451,9 @@ public enum EItem {
 	p_invisibility(373,8206,"POTION",EItemCat.potion),
 	p_invisibility_ext(373,8270,"POTION",EItemCat.potion),
 	
-	//TODO
-	p_water_breathing(373,8237,"POTION",EItemCat.potion),
-	p_water_breathing_ext(373,8269,"POTION",EItemCat.potion),
+	//TODO potions
+	/*p_water_breathing(373,8237,"POTION",EItemCat.potion),
+	p_water_breathing_ext(373,8269,"POTION",EItemCat.potion),*/
 	
 	p_poison(373,8196,"POTION",EItemCat.potion),
 	p_poison_ext(373,8260,"POTION",EItemCat.potion),
@@ -485,9 +484,9 @@ public enum EItem {
 	s_p_invisibility(373,16398,"POTION",EItemCat.potion),
 	s_p_invisibility_ext(373,16462,"POTION",EItemCat.potion),
 	
-	//TODO
-	s_p_water_breathing(373,16429,"POTION",EItemCat.potion),
-	s_p_water_breathing_ext(373,16461,"POTION",EItemCat.potion),
+	//TODO splash potions
+	/*s_p_water_breathing(373,16429,"POTION",EItemCat.potion),
+	s_p_water_breathing_ext(373,16461,"POTION",EItemCat.potion),*/
 	
 	s_p_poison(373,16388,"POTION",EItemCat.potion),
 	s_p_poison_ext(373,16452,"POTION",EItemCat.potion),
@@ -563,7 +562,10 @@ public enum EItem {
 
 	/**
 	 * Renvoie le nom correctement formaté pour l'affichage
-	 * @return
+	 * @return le nom correctement formaté pour l'affichage
+	 * @deprecated ne faisait le formatage que pour un nom
+	 * anglais, inutile depuis la localisation du logiciel,
+	 * mais conservé pour la technique
 	 */
 	@Deprecated
 	public String getName() {
@@ -590,7 +592,7 @@ public enum EItem {
 	
 	/**
 	 * Renvoie le nom correctement formaté pour l'affichage
-	 * @return
+	 * @return le nom correctement formaté pour l'affichage
 	 */
 	public String getGuiName() {
 		return EnumName.getString("EItem."+id+"."+meta);
@@ -712,7 +714,7 @@ public enum EItem {
 
 	/**
 	 * Renvoie la liste de tous les items dont le nom "ressemble" à celui passé en paramètre
-	 * @param name la chaine de comparaison, peut être renvoyée par {@link EItem#getName()}
+	 * @param name la chaine de comparaison, peut être renvoyée par {@link EItem#getGuiName()}
 	 * @return la liste des EItem correspondant au nom Minecraft passé en paramètre
 	 */
 	public static ArrayList<EItem> searchBy(String name) {
@@ -721,8 +723,7 @@ public enum EItem {
 
 		if (name!=null) {
 			for (int i = 0; i < values.length; i++) {
-				if (values[i].getName().toLowerCase()
-						.contains(name.toLowerCase())) {
+				if (values[i].getGuiName().toLowerCase().contains(name.toLowerCase())) {
 					ret.add(values[i]);
 				}
 			}
