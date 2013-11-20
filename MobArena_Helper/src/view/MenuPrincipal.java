@@ -185,6 +185,13 @@ public class MenuPrincipal extends JFrame {
 	private JPanel pan_class_limit;
 	private JFormattedTextField sai_class_limit;
 	private JLabel lib_class_limit;
+	private JPanel pan_global_settings;
+	private JCheckBox chk_gs_enabled;
+	private JCheckBox chk_notifications;
+	private JLabel lib_commands;
+	private JButton btn_command;
+	private JScrollPane scrpan_commands;
+	private JList<CellListCaracs> list_commands;
 
 	public MenuPrincipal() throws ParseException{
 		super("MobArena Helper v2.1");
@@ -2009,12 +2016,6 @@ public class MenuPrincipal extends JFrame {
 		pan_class_limit.add(lib_class_limit);
 
 		sai_class_limit = new JFormattedTextField(NumberFormat.getIntegerInstance());
-		sai_class_limit.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusGained(FocusEvent e) {
-				sai_class_limit.select(0, sai_class_limit.getText().length()-1);
-			}
-		});
 		sai_class_limit.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -2034,6 +2035,38 @@ public class MenuPrincipal extends JFrame {
 
 		tabpan_config.setEnabledAt(1, false);
 		tabpan_config.setEnabledAt(2, false);
+		
+		pan_global_settings = new JPanel();
+		tabpan_config.addTab(Messages.getString("MenuPrincipal.pan_global_settings.title"), null, pan_global_settings, null); //$NON-NLS-1$
+		pan_global_settings.setLayout(null);
+		
+		chk_gs_enabled = new JCheckBox(Messages.getString("MenuPrincipal.chk_enabled.text")); //$NON-NLS-1$
+		chk_gs_enabled.setBounds(6, 6, 77, 25);
+		chk_gs_enabled.setHorizontalTextPosition(SwingConstants.LEFT);
+		chk_gs_enabled.setFont(new Font("Tahoma", Font.BOLD, 14));
+		pan_global_settings.add(chk_gs_enabled);
+		
+		chk_notifications = new JCheckBox(Messages.getString("MenuPrincipal.chk_notifications.text")); //$NON-NLS-1$
+		chk_notifications.setHorizontalTextPosition(SwingConstants.LEFT);
+		chk_notifications.setFont(new Font("Tahoma", Font.BOLD, 14));
+		chk_notifications.setBounds(6, 43, 209, 25);
+		pan_global_settings.add(chk_notifications);
+		
+		lib_commands = new JLabel(Messages.getString("MenuPrincipal.lib_commands.text")); //$NON-NLS-1$
+		lib_commands.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lib_commands.setBounds(6, 81, 146, 17);
+		pan_global_settings.add(lib_commands);
+		
+		btn_command = new JButton(Messages.getString("MenuPrincipal.btn_command.text")); //$NON-NLS-1$
+		btn_command.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btn_command.setBounds(164, 80, 146, 23);
+		pan_global_settings.add(btn_command);
+		
+		list_commands = new JList<CellListCaracs>();
+		
+		scrpan_commands = new JScrollPane(list_commands);
+		scrpan_commands.setBounds(6, 110, 304, 168);
+		pan_global_settings.add(scrpan_commands);
 
 		setLocationRelativeTo(null);
 		initializing = false;

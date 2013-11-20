@@ -117,7 +117,7 @@ public class Arena {
 
 	public void setClassLimit(Classe classe, int limit) {
 		if(classlimits.containsKey(classe.getName())) {
-			classlimits.put(classe.getName(), limit);
+			classlimits.put(classe.getName(), limit<0 ? -1 : limit);
 		}
 	}
 
