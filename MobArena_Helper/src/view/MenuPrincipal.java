@@ -183,7 +183,8 @@ public class MenuPrincipal extends JFrame {
 	private JRadioButtonMenuItem rdbtnmntmFrench;
 	private JRadioButtonMenuItem rdbtnmntmEnglish;
 	private JPanel pan_class_limit;
-	private JTextField sai_class_limit;
+	private JFormattedTextField sai_class_limit;
+	private JLabel lib_class_limit;
 
 	public MenuPrincipal() throws ParseException{
 		super("MobArena Helper v2.1");
@@ -360,24 +361,36 @@ public class MenuPrincipal extends JFrame {
 						if (!f.getPath().endsWith(".yml")) {
 							f = new File(f.getPath() + ".yml");
 						}
-						int choice = JOptionPane.showConfirmDialog(rootPane, Messages.getString("MenuPrincipal.message.overwrite"),Messages.getString("Message.title.confirmation"),JOptionPane.YES_NO_OPTION);
-						if (choice==JOptionPane.YES_OPTION) {
-							f.delete();
-							try {
-								f.createNewFile();
-								FileWriter fw = new FileWriter(f);
-								GestYaml dumper = new GestYaml(arenas.getMap());
-								dumper.dumpAsFile(fw);
-								JOptionPane.showMessageDialog(
-										rootPane,
-										Messages.getString("MenuPrincipal.message.finishSaving"),
-										"",
-										JOptionPane.INFORMATION_MESSAGE);
 
-							} catch (IOException e1) {
-								e1.printStackTrace();
-							}
+						if(f.exists()) {
+							int choice = JOptionPane
+									.showConfirmDialog(
+											rootPane,
+											Messages.getString("MenuPrincipal.message.overwrite"),
+											Messages.getString("Message.title.confirmation"),
+											JOptionPane.YES_NO_OPTION);
+							if(choice==JOptionPane.NO_OPTION) return;
 						}
+
+						f.delete();
+						try {
+							f.createNewFile();
+							FileWriter fw = new FileWriter(f);
+							GestYaml dumper = new GestYaml(
+									arenas.getMap());
+							dumper.dumpAsFile(fw);
+							JOptionPane
+							.showMessageDialog(
+									rootPane,
+									Messages.getString("MenuPrincipal.message.finishSaving"),
+									"",
+									JOptionPane.INFORMATION_MESSAGE);
+
+						} catch (IOException e1) {
+							e1.printStackTrace();
+						}
+
+
 					}
 
 				}
@@ -955,6 +968,25 @@ public class MenuPrincipal extends JFrame {
 		pan_conf.add(lib_boss_name);
 
 		sai_boss_name = new JTextField();
+		sai_boss_name.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				
+				ECatW category = wave.getCategory();
+				JList<CellListWave> list_sel = category==ECatW.recurrent ? list_recurrent : list_single;
+				int index_sel = list_sel.getSelectedIndex();
+				Arena lArene = arenas.getALarenas().get(combo_arena.getSelectedIndex());
+
+				ArrayList<Wave> waveList = lArene.getWavesType(category);
+
+				String bossname = sai_boss_name.getText();
+
+				((BossW) wave).setBossName(bossname);
+				loadListCaracs_Arena(waveList, list_sel);
+				list_sel.setSelectedIndex(index_sel);
+				
+			}
+		});
 		sai_boss_name.setBounds(104, 401, 105, 20);
 		sai_boss_name.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		pan_conf.add(sai_boss_name);
@@ -1110,6 +1142,7 @@ public class MenuPrincipal extends JFrame {
 							Classe classe = list_classes.getModel().getElementAt(hoverIndex).getClasse();
 							int choix = JOptionPane.showConfirmDialog(rootPane,String.format(Messages.getString("MenuPrincipal.message.delClass"), classe.getName()), Messages.getString("Message.title.confirmation"), JOptionPane.YES_NO_OPTION);
 							if(choix==JOptionPane.YES_OPTION) {
+								arenas.removeClass(classe);
 								Classe.classe_list.remove(classe);
 								loadData_ClassConfig(Classe.classe_list);
 								MenuPrincipal.this.classe = null;
@@ -1135,6 +1168,7 @@ public class MenuPrincipal extends JFrame {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				classe = new Classe("New_Class");
+				arenas.addClass(classe);
 				int index = Classe.classe_list.indexOf(classe)-1;
 				loadData_ClassConfig(Classe.classe_list, index);
 				loadClass_ClassConfig(classe);
@@ -1966,10 +2000,34 @@ public class MenuPrincipal extends JFrame {
 		pan_class_limit = new JPanel();
 		pan_class_limit.setLayout(null);
 		pan_class_limit.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
-		pan_class_limit.setBounds(448, 7, 300, 94);
+		pan_class_limit.setBounds(573, 6, 175, 40);
 		pan_classes.add(pan_class_limit);
 
+		lib_class_limit = new JLabel(Messages.getString("MenuPrincipal.lblNewLabel.text"));
+		lib_class_limit.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lib_class_limit.setBounds(6, 8, 95, 25);
+		pan_class_limit.add(lib_class_limit);
+
 		sai_class_limit = new JFormattedTextField(NumberFormat.getIntegerInstance());
+		sai_class_limit.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				sai_class_limit.select(0, sai_class_limit.getText().length()-1);
+			}
+		});
+		sai_class_limit.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				try{sai_class_limit.commitEdit();}
+				catch(ParseException e1){}
+				Object olimit = sai_class_limit.getValue();
+				int limit;
+				if(olimit instanceof Long) limit = (int)((long) olimit);
+				else limit = (int) olimit;
+				arenas.getALarenas().get(combo_arena.getSelectedIndex()).setClassLimit(classe, limit);
+			}
+		});
+		sai_class_limit.setBounds(113, 6, 57, 28);
 		pan_class_limit.add(sai_class_limit);
 		sai_class_limit.setColumns(10);
 		tabpan_config.addTab(Messages.getString("MenuPrincipal.tabpan_arena_settings.title"), pan_arena_settings); //$NON-NLS-2$ //$NON-NLS-1$
@@ -2007,7 +2065,7 @@ public class MenuPrincipal extends JFrame {
 		tabpan_config.setEnabledAt(1, false);
 		tabpan_config.setEnabledAt(2, false);
 		tabpan_config.setSelectedIndex(0);
-		pan_caracs_class.setVisible(false);
+		loadData_ClassConfig(Classe.classe_list, -1);
 		list_recurrent.setModel(new DefaultListModel<CellListWave>());
 		list_single.setModel(new DefaultListModel<CellListWave>());
 		combo_arena.setModel(new DefaultComboBoxModel<String>());
@@ -2520,7 +2578,10 @@ public class MenuPrincipal extends JFrame {
 		}
 		list_classes.setModel(mod_Class);
 
-		if(index==-1) pan_caracs_class.setVisible(false);
+		if(index==-1) {
+			pan_caracs_class.setVisible(false);
+			pan_class_limit.setVisible(false);
+		}
 		else {
 			list_classes.setSelectedIndex(index);
 			list_classes.ensureIndexIsVisible(index);
@@ -2529,6 +2590,7 @@ public class MenuPrincipal extends JFrame {
 
 	public void loadClass_ClassConfig(Classe classe) {
 		pan_caracs_class.setVisible(true);
+		pan_class_limit.setVisible(true);
 
 		String name = classe.getName();
 		if(!name.equals("New_class")) {
@@ -2567,6 +2629,8 @@ public class MenuPrincipal extends JFrame {
 		list_lobby_permissions.setCellRenderer(renderer);
 		list_lobby_permissions.addMouseListener(renderer.getHandler());
 		list_lobby_permissions.addMouseMotionListener(renderer.getHandler());
+
+		sai_class_limit.setValue(arenas.getALarenas().get(combo_arena.getSelectedIndex()).getClassLimit(classe));
 
 		sai_class.requestFocus();
 		sai_class.select(0, classe.getName().length());

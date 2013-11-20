@@ -61,6 +61,18 @@ public class Arenas {
 		return contains;
 	}
 	
+	public void addClass(Classe classe) {
+		for(int i=0;i<arraylistarenas.size();i++) {
+			arraylistarenas.get(i).addClass(classe);
+		}
+	}
+	
+	public void removeClass(Classe classe) {
+		for(int i=0;i<arraylistarenas.size();i++) {
+			arraylistarenas.get(i).removeClass(classe);
+		}
+	}
+	
 	private void load(){
 		GestYaml gclasse = new GestYaml(listclasses);
 		//Extraction des classes

@@ -21,7 +21,7 @@ public class Arena {
 	private ArrayList<Wave>[] waves = new ArrayList[2];
 
 	private LinkedHashMap<String, Object> rewards;
-	private LinkedHashMap<String, Object> classlimits;
+	private LinkedHashMap<String, Object> classlimits = new LinkedHashMap<String, Object>();
 	private LinkedHashMap<String, Object> coords;
 
 	/**
@@ -32,25 +32,25 @@ public class Arena {
 	 * @param arena
 	 */
 	public Arena(String nom, LinkedHashMap<String,Object> arena){
-		
+
 		this.nom = nom;
 		this.waves[0] = new ArrayList<Wave>();
 		this.waves[1] = new ArrayList<Wave>();
 		GestYaml garena = new GestYaml(arena);
 		GestYaml gwaves = new GestYaml(garena.getMap("waves"));
-		
+
 		loadWaves(gwaves);
 		config = new ArenaConfig(garena.getMap("settings"));
-		
+
 		this.rewards = garena.getMap("rewards");
 		this.classlimits = garena.getMap("class-limits");
 		this.coords = garena.getMap("coords");
-		
+
 		Collections.sort(waves[0]);
 		Collections.sort(waves[1]);
-		
+
 	}
-	
+
 	/**
 	 * Instance une arène seulement avec son nom, pour que l'utilisateur remplisse les
 	 * autres données dans l'application.
@@ -64,13 +64,17 @@ public class Arena {
 	}
 
 	private void loadWaves(GestYaml gwaves) {
-		for (Iterator<String> it = gwaves.getMap("recurrent").keySet().iterator(); it.hasNext();) {
-			String wave = (String) it.next();
-			this.waves[0].add(Wave.setWave(wave,ECatW.recurrent,gwaves.getMap("recurrent." + wave)));
+		if(gwaves.getMap("recurrent")!=null) {
+			for (Iterator<String> it = gwaves.getMap("recurrent").keySet().iterator(); it.hasNext();) {
+				String wave = (String) it.next();
+				this.waves[0].add(Wave.setWave(wave,ECatW.recurrent,gwaves.getMap("recurrent." + wave)));
+			}
 		}
-		for (Iterator<String> it = gwaves.getMap("single").keySet().iterator(); it.hasNext();) {
-			String wave = (String) it.next();
-			this.waves[1].add(Wave.setWave(wave,ECatW.single,gwaves.getMap("single." + wave)));
+		if (gwaves.getMap("single")!=null) {
+			for (Iterator<String> it = gwaves.getMap("single").keySet().iterator(); it.hasNext();) {
+				String wave = (String) it.next();
+				this.waves[1].add(Wave.setWave(wave, ECatW.single,gwaves.getMap("single." + wave)));
+			}
 		}
 	}
 
@@ -104,6 +108,27 @@ public class Arena {
 		this.config = config;
 	}
 
+	public int getClassLimit(Classe classe) {
+		int limit;
+		if(classlimits.get(classe.getName())==null) limit = -1;
+		else limit = (int) classlimits.get(classe.getName());
+		return limit;
+	}
+
+	public void setClassLimit(Classe classe, int limit) {
+		if(classlimits.containsKey(classe.getName())) {
+			classlimits.put(classe.getName(), limit);
+		}
+	}
+
+	public void addClass(Classe classe) {
+		classlimits.put(classe.getName(), -1);
+	}
+
+	public void removeClass(Classe classe) {
+		classlimits.remove(classe.getName());
+	}
+
 	/**
 	 * Renvoie la map des informations de l'arène.
 	 * @return
@@ -111,7 +136,7 @@ public class Arena {
 	public LinkedHashMap<String, Object> getMap() {
 		LinkedHashMap<String, Object> arena = new LinkedHashMap<>();
 		arena.put("settings", config.getMap());
-		
+
 		LinkedHashMap<String, Object> mapwaves = new LinkedHashMap<>();
 		String[] catvague = {"recurrent", "single"};
 		for(int i=0;i<2;i++){
@@ -131,9 +156,12 @@ public class Arena {
 
 		if(!mapwaves.isEmpty()) arena.put("waves", mapwaves);
 		if(rewards!=null) arena.put("rewards", rewards);
-		if (classlimits!=null) arena.put("class-limits", classlimits);
+		if (classlimits!=null) {
+			if(!classlimits.isEmpty()) arena.put("class-limits", classlimits);
+		}
 		if(coords!=null) arena.put("coords", coords);
-		
+
 		return arena;
 	}
+
 }
