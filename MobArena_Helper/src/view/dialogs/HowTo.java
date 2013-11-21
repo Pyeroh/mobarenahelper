@@ -86,6 +86,7 @@ public class HowTo extends JDialog {
 		tab_howto5.addTab(Messages.getString("Enchanter.title"), null, lib_howto8, null); //$NON-NLS-1$
 		
 		btn_ok = new JButton("OK");
+		btn_ok.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btn_ok.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				dispose();

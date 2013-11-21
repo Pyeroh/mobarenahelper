@@ -123,6 +123,7 @@ public class Enchanter extends JDialog {
 		getContentPane().add(combo_level);
 
 		btn_add = new JButton(Messages.getString("Enchanter.btn_add.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		btn_add.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btn_add.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {

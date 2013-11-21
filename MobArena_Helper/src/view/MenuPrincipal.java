@@ -192,6 +192,10 @@ public class MenuPrincipal extends JFrame {
 	private JButton btn_command;
 	private JScrollPane scrpan_commands;
 	private JList<CellListCaracs> list_commands;
+	private JPanel pan_commands;
+	private JLabel lib_command;
+	private JFormattedTextField sai_command;
+	private JLabel lib_command_help;
 
 	public MenuPrincipal() throws ParseException{
 		super("MobArena Helper v2.1");
@@ -334,7 +338,9 @@ public class MenuPrincipal extends JFrame {
 						loadArena(0);
 						tabpan_config.setEnabledAt(1, true);
 						tabpan_config.setEnabledAt(2, true);
+						tabpan_config.setEnabledAt(3, true);
 						loadData_ClassConfig(Classe.classe_list);
+						loadData_GlobalSettings();
 					} catch (Exception e1) {
 						e1.printStackTrace();
 
@@ -393,11 +399,25 @@ public class MenuPrincipal extends JFrame {
 									"",
 									JOptionPane.INFORMATION_MESSAGE);
 
-						} catch (IOException e1) {
+						} catch (Exception e1) {
 							e1.printStackTrace();
+							JOptionPane.showMessageDialog(rootPane, Messages.getString("MenuPrincipal.message.savingError"),Messages.getString("Message.title.savingError"),JOptionPane.ERROR_MESSAGE);
+							try {
+								File ferr = new File("C:\\mah_error.log");
+								ferr.delete();
+								ferr.createNewFile();
+								FileWriter err = new FileWriter(ferr);
+								err.write(e1.getMessage()+"\n");
+								StackTraceElement[] ste = e1.getStackTrace();
+								for(int i=0;i<ste.length;i++) {
+									err.write("\t"+ste[i].toString()+"\n");
+								}
+								err.close();
+
+							} catch (Exception e2) {
+								e2.printStackTrace();
+							}
 						}
-
-
 					}
 
 				}
@@ -456,8 +476,10 @@ public class MenuPrincipal extends JFrame {
 							combo_arena.addItem(name);
 							combo_arena.setSelectedItem(name);
 							loadArena(combo_arena.getSelectedIndex());
+							loadData_GlobalSettings();
 							tabpan_config.setEnabledAt(1, true);
 							tabpan_config.setEnabledAt(2, true);
+							tabpan_config.setEnabledAt(3, true);
 						} else
 							JOptionPane
 							.showMessageDialog(
@@ -978,7 +1000,7 @@ public class MenuPrincipal extends JFrame {
 		sai_boss_name.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				
+
 				ECatW category = wave.getCategory();
 				JList<CellListWave> list_sel = category==ECatW.recurrent ? list_recurrent : list_single;
 				int index_sel = list_sel.getSelectedIndex();
@@ -991,7 +1013,7 @@ public class MenuPrincipal extends JFrame {
 				((BossW) wave).setBossName(bossname);
 				loadListCaracs_Arena(waveList, list_sel);
 				list_sel.setSelectedIndex(index_sel);
-				
+
 			}
 		});
 		sai_boss_name.setBounds(104, 401, 105, 20);
@@ -1149,7 +1171,7 @@ public class MenuPrincipal extends JFrame {
 							Classe classe = list_classes.getModel().getElementAt(hoverIndex).getClasse();
 							int choix = JOptionPane.showConfirmDialog(rootPane,String.format(Messages.getString("MenuPrincipal.message.delClass"), classe.getName()), Messages.getString("Message.title.confirmation"), JOptionPane.YES_NO_OPTION);
 							if(choix==JOptionPane.YES_OPTION) {
-								arenas.removeClass(classe);
+								arenas.removeClassForLimit(classe);
 								Classe.classe_list.remove(classe);
 								loadData_ClassConfig(Classe.classe_list);
 								MenuPrincipal.this.classe = null;
@@ -1171,11 +1193,12 @@ public class MenuPrincipal extends JFrame {
 		list_classes.addMouseMotionListener(renderer.getHandler());
 
 		btn_new_class = new JButton(Messages.getString("MenuPrincipal.btn_new_class.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		btn_new_class.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btn_new_class.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				classe = new Classe("New_Class");
-				arenas.addClass(classe);
+				arenas.addClassForLimit(classe);
 				int index = Classe.classe_list.indexOf(classe)-1;
 				loadData_ClassConfig(Classe.classe_list, index);
 				loadClass_ClassConfig(classe);
@@ -1412,6 +1435,7 @@ public class MenuPrincipal extends JFrame {
 		};
 
 		btn_add_perm = new JButton(Messages.getString("MenuPrincipal.btn_add_perm.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		btn_add_perm.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btn_add_perm.addMouseListener(add_perm_adapter);
 		btn_add_perm.setBounds(395, 9, 90, 22);
 		pan_caracs_class.add(btn_add_perm);
@@ -1435,6 +1459,7 @@ public class MenuPrincipal extends JFrame {
 		pan_caracs_class.add(lib_lobby_permissions);
 
 		btn_add_lobby_permissions = new JButton(Messages.getString("MenuPrincipal.btn_add_lobby_permissions.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		btn_add_lobby_permissions.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btn_add_lobby_permissions.addMouseListener(add_perm_adapter);
 		btn_add_lobby_permissions.setBounds(633, 9, 90, 22);
 		pan_caracs_class.add(btn_add_lobby_permissions);
@@ -1446,6 +1471,34 @@ public class MenuPrincipal extends JFrame {
 		scrpan_lobby_permissions = new JScrollPane(list_lobby_permissions);
 		scrpan_lobby_permissions.setBounds(511, 34, 212, 200);
 		pan_caracs_class.add(scrpan_lobby_permissions);
+
+		pan_class_limit = new JPanel();
+		pan_class_limit.setLayout(null);
+		pan_class_limit.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
+		pan_class_limit.setBounds(573, 6, 175, 40);
+		pan_classes.add(pan_class_limit);
+
+		lib_class_limit = new JLabel(Messages.getString("MenuPrincipal.lblNewLabel.text"));
+		lib_class_limit.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lib_class_limit.setBounds(6, 8, 95, 25);
+		pan_class_limit.add(lib_class_limit);
+
+		sai_class_limit = new JFormattedTextField(NumberFormat.getIntegerInstance());
+		sai_class_limit.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				try{sai_class_limit.commitEdit();}
+				catch(ParseException e1){}
+				Object olimit = sai_class_limit.getValue();
+				int limit;
+				if(olimit instanceof Long) limit = (int)((long) olimit);
+				else limit = (int) olimit;
+				arenas.getALarenas().get(combo_arena.getSelectedIndex()).setClassLimit(classe, limit);
+			}
+		});
+		sai_class_limit.setBounds(113, 6, 57, 28);
+		pan_class_limit.add(sai_class_limit);
+		sai_class_limit.setColumns(10);
 
 		pan_arena_settings = new JPanel();
 		pan_arena_settings.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -1518,6 +1571,8 @@ public class MenuPrincipal extends JFrame {
 					else if(source==chk_isolated_chat)		config.setIsolated_chat(b);
 					else if(source==chk_global_join)		config.setGlobal_join_announce(b);
 					else if(source==chk_global_end)			config.setGlobal_end_announce(b);
+					else if(source==chk_gs_enabled)			arenas.getGlobalSettings().setEnabled(b);
+					else if(source==chk_notifications)		arenas.getGlobalSettings().setUpdate_notifications(b);
 
 					if(source==chk_keep_xp && b) {
 						chk_display_waves.setSelected(false);
@@ -1592,6 +1647,7 @@ public class MenuPrincipal extends JFrame {
 		sai_entry.setColumns(10);
 
 		btn_entry = new JButton(Messages.getString("MenuPrincipal.btn_entry.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		btn_entry.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btn_entry.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -1997,76 +2053,118 @@ public class MenuPrincipal extends JFrame {
 		separator_1.setBounds(500, 6, 2, 473);
 		pan_arena_settings.add(separator_1);
 
-		setInvisibleComponents_Arena();
-
-		setSize(760,618);
-
-		tabpan_config.addTab(Messages.getString("MenuPrincipal.tabpan_arena_wave.title"), pan_arena_wave); //$NON-NLS-2$ //$NON-NLS-1$
-		tabpan_config.addTab(Messages.getString("MenuPrincipal.tabpan_classes.title"), pan_classes); //$NON-NLS-2$ //$NON-NLS-1$
-
-		pan_class_limit = new JPanel();
-		pan_class_limit.setLayout(null);
-		pan_class_limit.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
-		pan_class_limit.setBounds(573, 6, 175, 40);
-		pan_classes.add(pan_class_limit);
-
-		lib_class_limit = new JLabel(Messages.getString("MenuPrincipal.lblNewLabel.text"));
-		lib_class_limit.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lib_class_limit.setBounds(6, 8, 95, 25);
-		pan_class_limit.add(lib_class_limit);
-
-		sai_class_limit = new JFormattedTextField(NumberFormat.getIntegerInstance());
-		sai_class_limit.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent e) {
-				try{sai_class_limit.commitEdit();}
-				catch(ParseException e1){}
-				Object olimit = sai_class_limit.getValue();
-				int limit;
-				if(olimit instanceof Long) limit = (int)((long) olimit);
-				else limit = (int) olimit;
-				arenas.getALarenas().get(combo_arena.getSelectedIndex()).setClassLimit(classe, limit);
-			}
-		});
-		sai_class_limit.setBounds(113, 6, 57, 28);
-		pan_class_limit.add(sai_class_limit);
-		sai_class_limit.setColumns(10);
-		tabpan_config.addTab(Messages.getString("MenuPrincipal.tabpan_arena_settings.title"), pan_arena_settings); //$NON-NLS-2$ //$NON-NLS-1$
-
-		tabpan_config.setEnabledAt(1, false);
-		tabpan_config.setEnabledAt(2, false);
-		
 		pan_global_settings = new JPanel();
-		tabpan_config.addTab(Messages.getString("MenuPrincipal.pan_global_settings.title"), null, pan_global_settings, null); //$NON-NLS-1$
 		pan_global_settings.setLayout(null);
-		
+
 		chk_gs_enabled = new JCheckBox(Messages.getString("MenuPrincipal.chk_enabled.text")); //$NON-NLS-1$
 		chk_gs_enabled.setBounds(6, 6, 77, 25);
 		chk_gs_enabled.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_gs_enabled.setFont(new Font("Tahoma", Font.BOLD, 14));
+		chk_gs_enabled.addItemListener(chkconfig_listener);
 		pan_global_settings.add(chk_gs_enabled);
-		
+
 		chk_notifications = new JCheckBox(Messages.getString("MenuPrincipal.chk_notifications.text")); //$NON-NLS-1$
 		chk_notifications.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_notifications.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_notifications.setBounds(6, 43, 209, 25);
+		chk_notifications.addItemListener(chkconfig_listener);
 		pan_global_settings.add(chk_notifications);
-		
+
 		lib_commands = new JLabel(Messages.getString("MenuPrincipal.lib_commands.text")); //$NON-NLS-1$
 		lib_commands.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lib_commands.setBounds(6, 81, 146, 17);
 		pan_global_settings.add(lib_commands);
-		
+
 		btn_command = new JButton(Messages.getString("MenuPrincipal.btn_command.text")); //$NON-NLS-1$
+		btn_command.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				pan_commands.setVisible(true);
+				String command = "/test";
+				ArrayList<String> ac = arenas.getGlobalSettings().getAllowed_commands();
+				ac.add(command);
+				loadCommands_GlobalSettings(ac);
+				list_commands.setSelectedIndex(ac.indexOf(command));
+				sai_command.setText(command);
+				sai_command.requestFocus();
+				sai_command.select(0, 5);
+			}
+		});
 		btn_command.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btn_command.setBounds(164, 80, 146, 23);
 		pan_global_settings.add(btn_command);
-		
+
 		list_commands = new JList<CellListCaracs>();
-		
+		renderer = new HoverListCellRenderer(list_commands);
+		list_commands.setCellRenderer(renderer);
+		list_commands.addMouseListener(renderer.getHandler());
+		list_commands.addMouseMotionListener(renderer.getHandler());
+		list_commands.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				int hoverindex = ((HoverListCellRenderer) list_commands.getCellRenderer()).getHoverIndex();
+				if(hoverindex!=-1) {
+					String command = arenas.getGlobalSettings().getAllowed_commands().get(hoverindex);
+					switch (e.getButton()) {
+					case MouseEvent.BUTTON1:
+						pan_commands.setVisible(true);
+						sai_command.setText(command);
+						break;
+					case MouseEvent.BUTTON2:
+						int choice = JOptionPane.showConfirmDialog(rootPane,MessageFormat.format(Messages.getString("MenuPrincipal.message.delMonsterAbility"),Messages.getString("MenuPrincipal.message.delCommand"),command),Messages.getString("Message.title.confirmation"),JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+						if(choice==JOptionPane.YES_OPTION) {
+							arenas.getGlobalSettings().getAllowed_commands().remove(hoverindex);
+							loadCommands_GlobalSettings(arenas.getGlobalSettings().getAllowed_commands());
+						}
+						break;
+					default:
+						break;
+					}
+				}
+			}
+		});
+
 		scrpan_commands = new JScrollPane(list_commands);
 		scrpan_commands.setBounds(6, 110, 304, 168);
 		pan_global_settings.add(scrpan_commands);
+
+		pan_commands = new JPanel();
+		pan_commands.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 1, true), Messages.getString("MenuPrincipal.pan_commands.title"), TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		pan_commands.setBounds(6, 290, 304, 94);
+		pan_global_settings.add(pan_commands);
+		pan_commands.setLayout(null);
+
+		lib_command = new JLabel(Messages.getString("MenuPrincipal.lib_command.text")); //$NON-NLS-1$
+		lib_command.setToolTipText("");
+		lib_command.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lib_command.setBounds(6, 22, 122, 25);
+		pan_commands.add(lib_command);
+
+		sai_command = new JFormattedTextField(new MaskFormatter("*?????????????????????????????"));
+		sai_command.setFocusLostBehavior(JFormattedTextField.COMMIT);
+		sai_command.setBounds(132, 21, 166, 28);
+		pan_commands.add(sai_command);
+		sai_command.setColumns(10);
+		
+		//TODO tooltip
+		lib_command_help = new JLabel("");
+		lib_command_help.setBounds(274, 61, 24, 24);
+		Image img = new ImageIcon(MenuPrincipal.class.getResource("/gui/pics/question.png")).getImage();
+		lib_command_help.setIcon(new ImageIcon(CellListCaracs.scaleImage(img,lib_command_help)));
+		pan_commands.add(lib_command_help);
+
+		tabpan_config.addTab(Messages.getString("MenuPrincipal.tabpan_arena_wave.title"), pan_arena_wave); //$NON-NLS-2$ //$NON-NLS-1$
+		tabpan_config.addTab(Messages.getString("MenuPrincipal.tabpan_classes.title"), pan_classes); //$NON-NLS-2$ //$NON-NLS-1$
+		tabpan_config.addTab(Messages.getString("MenuPrincipal.tabpan_arena_settings.title"), pan_arena_settings); //$NON-NLS-2$ //$NON-NLS-1$
+		tabpan_config.addTab(Messages.getString("MenuPrincipal.pan_global_settings.title"), pan_global_settings); //$NON-NLS-1$
+
+		tabpan_config.setEnabledAt(1, false);
+		tabpan_config.setEnabledAt(2, false);
+		tabpan_config.setEnabledAt(3, false);
+
+		setInvisibleComponents_Arena();
+
+		setSize(760,618);
 
 		setLocationRelativeTo(null);
 		initializing = false;
@@ -2097,6 +2195,7 @@ public class MenuPrincipal extends JFrame {
 		config = null;
 		tabpan_config.setEnabledAt(1, false);
 		tabpan_config.setEnabledAt(2, false);
+		tabpan_config.setEnabledAt(3, false);
 		tabpan_config.setSelectedIndex(0);
 		loadData_ClassConfig(Classe.classe_list, -1);
 		list_recurrent.setModel(new DefaultListModel<CellListWave>());
@@ -2170,7 +2269,7 @@ public class MenuPrincipal extends JFrame {
 
 						wave = jList.getModel().getElementAt(hoverIndex).getWave();
 						int reponse = JOptionPane.showConfirmDialog(
-								null,
+								rootPane,
 								MessageFormat.format(Messages.getString("MenuPrincipal.message.delWave"), wave.getCategory().getNom().toLowerCase(),wave.getNom()),
 								Messages.getString("Message.title.confirmation"),
 								JOptionPane.YES_NO_OPTION,
@@ -2713,5 +2812,21 @@ public class MenuPrincipal extends JFrame {
 		chk_isolated_chat.setSelected(config.getIsolated_chat());
 		chk_global_join.setSelected(config.getGlobal_join_announce());
 		chk_global_end.setSelected(config.getGlobal_end_announce());
+	}
+
+	public void loadData_GlobalSettings() {
+		GlobalSettings gs = arenas.getGlobalSettings();
+		chk_gs_enabled.setSelected(gs.isEnabled());
+		chk_notifications.setSelected(gs.isUpdate_notifications());
+		loadCommands_GlobalSettings(gs.getAllowed_commands());
+		pan_commands.setVisible(false);
+	}
+
+	public void loadCommands_GlobalSettings(ArrayList<String> commands) {
+		DefaultListModel<CellListCaracs> mod_commands = new DefaultListModel<>();
+		for(int i=0;i<commands.size();i++) {
+			mod_commands.addElement(new CellListCaracs(commands.get(i)));
+		}
+		list_commands.setModel(mod_commands);
 	}
 }

@@ -104,6 +104,7 @@ public class UpgradeWaveChanger extends JDialog {
 		getContentPane().add(lib_classes_upgrade);
 
 		btn_add_class = new JButton(Messages.getString("UpgradeWaveChanger.btn_add_class.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		btn_add_class.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btn_add_class.addMouseListener(new MouseAdapter() {
 			public void mouseReleased(MouseEvent e) {
 				@SuppressWarnings("unchecked")
@@ -137,7 +138,7 @@ public class UpgradeWaveChanger extends JDialog {
 				}
 			}
 		});
-		btn_add_class.setBounds(192, 5, 131, 28);
+		btn_add_class.setBounds(190, 5, 133, 28);
 		getContentPane().add(btn_add_class);
 
 		pan_upgrade_config = new JPanel();
@@ -189,6 +190,7 @@ public class UpgradeWaveChanger extends JDialog {
 		};
 
 		btn_set_items = new JButton(Messages.getString("UpgradeWaveChanger.btn_set_items.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		btn_set_items.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btn_set_items.addMouseListener(itemsetter);
 		btn_set_items.setBounds(108, 38, 114, 20);
 		pan_upgrade_config.add(btn_set_items);
@@ -199,6 +201,7 @@ public class UpgradeWaveChanger extends JDialog {
 		pan_upgrade_config.add(lib_armor);
 
 		btn_set_armor = new JButton(Messages.getString("UpgradeWaveChanger.btn_set_armor.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		btn_set_armor.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btn_set_armor.addMouseListener(itemsetter);
 		btn_set_armor.setBounds(108, 70, 114, 20);
 		pan_upgrade_config.add(btn_set_armor);
@@ -242,6 +245,7 @@ public class UpgradeWaveChanger extends JDialog {
 		pan_upgrade_config.add(lib_permissions);
 
 		btn_add_perm = new JButton(Messages.getString("UpgradeWaveChanger.btn_add_perm.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		btn_add_perm.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btn_add_perm.addMouseListener(new MouseAdapter() {
 			public void mouseReleased(MouseEvent e) {
 				String perm = JOptionPane.showInputDialog(

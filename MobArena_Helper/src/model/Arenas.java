@@ -13,6 +13,7 @@ public class Arenas {
 	private LinkedHashMap<String, Object> listclasses;
 	private LinkedHashMap<String, Object> listarenas;
 	private ArrayList<Arena> arraylistarenas = new ArrayList<Arena>();
+	private GlobalSettings settings = new GlobalSettings();
 	
 	/**
 	 * Instancie un groupe d'arènes et charge chacune d'elle dans une ArrayList d'Arena,
@@ -51,6 +52,10 @@ public class Arenas {
 		return arraylistarenas;
 	}
 	
+	public GlobalSettings getGlobalSettings() {
+		return settings;
+	}
+	
 	public boolean containsArena(String name) {
 		boolean contains = false;
 		for(int i=0;i<arraylistarenas.size();i++) {
@@ -61,19 +66,21 @@ public class Arenas {
 		return contains;
 	}
 	
-	public void addClass(Classe classe) {
+	public void addClassForLimit(Classe classe) {
 		for(int i=0;i<arraylistarenas.size();i++) {
 			arraylistarenas.get(i).addClass(classe);
 		}
 	}
 	
-	public void removeClass(Classe classe) {
+	public void removeClassForLimit(Classe classe) {
 		for(int i=0;i<arraylistarenas.size();i++) {
 			arraylistarenas.get(i).removeClass(classe);
 		}
 	}
 	
 	private void load(){
+		settings = new GlobalSettings(globalsettings);
+		
 		GestYaml gclasse = new GestYaml(listclasses);
 		//Extraction des classes
 		for (Iterator<String> it = listclasses.keySet().iterator(); it.hasNext();) {
@@ -92,8 +99,9 @@ public class Arenas {
 	/**
 	 * Renvoie la Map des informations du groupe d'arènes (la combinaison des informations de toutes les arènes).
 	 * @return
+	 * @throws ArenaException en cas d'erreur sur l'export des données (pas de classes à ajouter par exemple...)
 	 */
-	public LinkedHashMap<String, Object> getMap() {
+	public LinkedHashMap<String, Object> getMap() throws ArenaException {
 		listarenas = new LinkedHashMap<>();
 		for(int i=0;i<arraylistarenas.size();i++) {
 			Arena lArene = arraylistarenas.get(i);
@@ -107,9 +115,10 @@ public class Arenas {
 				listclasses.put(classe.getName(), classe.getMap());
 			}
 		}
+		if(getALclasses().size()==1) throw new ArenaException("There must be classes to add in the file !");
 		
 		LinkedHashMap<String, Object> file = new LinkedHashMap<>();
-		file.put("global-settings", globalsettings);
+		file.put("global-settings", settings.getMap());
 		
 		file.put("classes", listclasses);
 		file.put("arenas", listarenas);

@@ -1,0 +1,160 @@
+# MobArena v0.95.5 - Config-file
+# Read the Wiki for details on how to set up this file: http://goo.gl/F5TTc
+# Note: You -must- use spaces instead of tabs!
+global-settings: {}
+classes: {}
+arenas:
+    TheColosseum:
+        settings:
+            world: world
+            enabled: true
+            protect: false
+            entry-fee: ''
+            clear-wave-before-next: false
+            clear-boss-before-next: false
+            clear-wave-before-boss: false
+            lightning: false
+            auto-equip-armor: false
+            soft-restore: false
+            soft-restore-drops: false
+            require-empty-inv-join: false
+            require-empty-inv-spec: false
+            hellhounds: false
+            pvp-enabled: false
+            monster-infight: false
+            allow-teleporting: false
+            spectate-on-death: false
+            auto-respawn: false
+            share-items-in-arena: false
+            min-players: 0
+            max-players: 0
+            max-join-distance: 0
+            first-wave-delay: 0
+            wave-interval: 0
+            final-wave: 0
+            monster-limit: 0
+            monster-exp: false
+            keep-exp: false
+            food-regen: false
+            lock-food-level: false
+            spout-class-select: false
+            player-time-in-arena: world
+            auto-ignite-tnt: false
+            auto-start-timer: 0
+            display-waves-as-level: false
+            display-timer-as-level: false
+            auto-ready: false
+            use-scoreboards: false
+            use-class-chests: false
+            isolated-chat: false
+            global-end-announce: false
+            global-join-announce: false
+        waves:
+            single:
+                thunderchicken:
+                    type: boss
+                    wave: 1
+                    monster: chickens
+                    abilities: lightning-aura, chain-lightning, shuffle-positions
+                    ability-interval: 5
+                    reward: cooked_chicken
+                bigbadwolf:
+                    type: boss
+                    wave: 2
+                    monster: angry_wolves
+                    health: low
+                    abilities: root-target, fetch-target, disorient-target, throw-target
+                    ability-interval: 4
+                    reward: cake:2
+                thevillage:
+                    type: swarm
+                    wave: 3
+                    monster: zombie_villagers
+                    amount: very high
+                frosty:
+                    type: boss
+                    wave: 4
+                    monster: snow_golems
+                    abilities: root-target, shuffle-positions, arrows
+                    reward: arrow:32
+                sallythesquid:
+                    type: boss
+                    wave: 5
+                    monster: squids
+                    health: high
+                    abilities: flood
+                    ability-interval: 2
+                    reward: ink_sack:5
+                sheepswarm:
+                    type: swarm
+                    wave: 6
+                    monster: exploding_sheep
+                    amount: high
+                wickedwitch:
+                    type: boss
+                    wave: 7
+                    monster: witches
+                    abilities: living-bomb, warp-to-player, disorient-target, lightning-aura, fireballs
+                    ability-interval: 6
+                    reward: potion:8259:1
+                zeus:
+                    type: boss
+                    wave: 8
+                    monster: baby_zombies
+                    health: high
+                    abilities: arrows, lightning-aura, chain-lightning, warp-to-player, shuffle-positions
+                    ability-interval: 4
+                    reward: gold_sword
+                stonepirahna:
+                    type: swarm
+                    wave: 9
+                    monster: silverfish
+                    amount: psycho
+                riot:
+                    type: boss
+                    wave: 10
+                    monster: villagers
+                    health: high
+                    abilities: living-bomb, obsidian-bomb
+                    ability-interval: 4
+                    reward: diamond_ore:2
+                hulk:
+                    type: boss
+                    wave: 11
+                    monster: iron_golems
+                    health: high
+                    abilities: throw-target, pull-distant, lightning-aura, chain-lightning
+                    ability-interval: 5
+                    reward: iron_barding
+                clusterbomb:
+                    type: special
+                    wave: 12
+                    monsters:
+                        creepers: 5
+                        powered_creepers: 5
+                life:
+                    type: supply
+                    wave: 13
+                    drops: arrow:32, potion:8229:3, emerald
+                theenderking:
+                    type: boss
+                    wave: 14
+                    monster: endermen
+                    health: veryhigh
+                    abilities: fetch-distant, root-target, shuffle-positions, warp-to-player, fireballs, obsidian-bomb
+                    ability-interval: 5
+                    reward: monster_egg:58:1
+                herobrine:
+                    type: boss
+                    wave: 15
+                    monster: villagers
+                    health: psycho
+                    abilities: fireballs, fire-aura, living-bomb, chain-lightning, root-target, disorient-nearby, fetch-target, throw-nearby
+                    ability-announce: false
+                    reward: emerald_block
+                theend:
+                    type: special
+                    wave: 16
+                    monsters:
+                        wither_skeletons: 2
+                        withers: 3

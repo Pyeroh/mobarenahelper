@@ -83,6 +83,7 @@ public class About extends JDialog {
 		getContentPane().add(lib_link);
 
 		JButton btn_ok = new JButton("OK");
+		btn_ok.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btn_ok.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				dispose();

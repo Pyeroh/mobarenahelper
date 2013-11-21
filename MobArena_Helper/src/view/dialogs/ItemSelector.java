@@ -146,7 +146,7 @@ public class ItemSelector extends JDialog {
 				addItem();
 			}
 		});
-		btn_add.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		btn_add.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btn_add.setBounds(368, 170, 101, 28);
 		getContentPane().add(btn_add);
 
@@ -157,7 +157,7 @@ public class ItemSelector extends JDialog {
 				removeItem();
 			}
 		});
-		btn_remove.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		btn_remove.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btn_remove.setBounds(368, 210, 101, 28);
 		getContentPane().add(btn_remove);
 
@@ -193,6 +193,7 @@ public class ItemSelector extends JDialog {
 		});
 
 		btn_enchant = new JButton(Messages.getString("ItemSelector.btn_enchant.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		btn_enchant.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btn_enchant.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
