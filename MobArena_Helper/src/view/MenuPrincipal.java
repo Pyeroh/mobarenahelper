@@ -2141,14 +2141,26 @@ public class MenuPrincipal extends JFrame {
 		pan_commands.add(lib_command);
 
 		sai_command = new JFormattedTextField(new MaskFormatter("*?????????????????????????????"));
+		sai_command.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				
+				String command = sai_command.getText().trim();
+				int index = list_commands.getSelectedIndex();
+				ArrayList<String> ac = arenas.getGlobalSettings().getAllowed_commands();
+				ac.set(index, command);
+				loadCommands_GlobalSettings(ac);
+				list_commands.setSelectedIndex(index);
+			}
+		});
 		sai_command.setFocusLostBehavior(JFormattedTextField.COMMIT);
 		sai_command.setBounds(132, 21, 166, 28);
 		pan_commands.add(sai_command);
 		sai_command.setColumns(10);
 		
-		//TODO tooltip
 		lib_command_help = new JLabel("");
 		lib_command_help.setBounds(274, 61, 24, 24);
+		lib_command_help.setToolTipText(Messages.getString("MenuPrincipal.lib_command_help.tooltip")); //$NON-NLS-1$
 		Image img = new ImageIcon(MenuPrincipal.class.getResource("/gui/pics/question.png")).getImage();
 		lib_command_help.setIcon(new ImageIcon(CellListCaracs.scaleImage(img,lib_command_help)));
 		pan_commands.add(lib_command_help);

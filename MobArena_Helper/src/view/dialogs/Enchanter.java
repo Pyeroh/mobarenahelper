@@ -210,5 +210,4 @@ public class Enchanter extends JDialog {
 		combo_level.setSelectedIndex(0);
 
 	}
-	
 }
