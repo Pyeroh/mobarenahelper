@@ -1,14 +1,14 @@
 #Fat Jar Configuration File
-#Wed Nov 06 20:54:17 SBT 2013
+#Wed Nov 20 13:56:43 SBT 2013
 onejar.license.required=true
 manifest.classpath=
 manifest.removesigners=true
 onejar.checkbox=false
-jarname=MobArenaHelper_v2.0.jar
+jarname=MobArenaHelper_v2.1.jar
 manifest.mergeall=true
 manifest.mainclass=view.Launch
 manifest.file=<createnew>
 jarname.isextern=false
 onejar.expand=
-excludes=<po|MobArena_Helper>~snakeyaml-1.12.jar
+excludes=<po|MobArena_Helper>~gui/~config.yml;<po|MobArena_Helper>~gui/~config_2.yml;<po|MobArena_Helper>~gui/~DataValuesBeta.png;<po|MobArena_Helper>~gui/~pic1.png;<po|MobArena_Helper>~gui/~pic2.png;<po|MobArena_Helper>~gui/~pic3.png;<po|MobArena_Helper>~gui/~pic4.png;<po|MobArena_Helper>~gui/~pic5.png;<po|MobArena_Helper>~gui/~pic6.png;<po|MobArena_Helper>~gui/~pic7.png;<po|MobArena_Helper>~gui/~pic8.png;<po|MobArena_Helper>~gui/~Sans-titre3.png;<po|MobArena_Helper>~gui/~UML_model.png;<po|MobArena_Helper>~gui/~UML_view.png;<po|MobArena_Helper>~test/;<po|MobArena_Helper>~.classpath;<po|MobArena_Helper>~.fatjar;<po|MobArena_Helper>~.gitignore;<po|MobArena_Helper>~.project;<po|MobArena_Helper>~snakeyaml-1.12.jar;<po|MobArena_Helper>~t1.yml;<po|MobArena_Helper>~test.yml;<jar|junit.jar>;<jar|org.hamcrest.core_1.3.0.v201303031735.jar>
 includes=
