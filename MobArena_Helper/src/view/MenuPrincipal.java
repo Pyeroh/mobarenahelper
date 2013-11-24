@@ -2115,6 +2115,7 @@ public class MenuPrincipal extends JFrame {
 						if(choice==JOptionPane.YES_OPTION) {
 							arenas.getGlobalSettings().getAllowed_commands().remove(hoverindex);
 							loadCommands_GlobalSettings(arenas.getGlobalSettings().getAllowed_commands());
+							loadData_GlobalSettings();
 						}
 						break;
 					default:
@@ -2140,7 +2141,7 @@ public class MenuPrincipal extends JFrame {
 		lib_command.setBounds(6, 22, 122, 25);
 		pan_commands.add(lib_command);
 
-		sai_command = new JFormattedTextField(new MaskFormatter("*?????????????????????????????"));
+		sai_command = new JFormattedTextField(new MaskFormatter("******************************"));
 		sai_command.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
