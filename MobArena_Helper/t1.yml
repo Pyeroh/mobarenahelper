@@ -1,0 +1,59 @@
+# MobArena v0.95.5 - Config-file
+# Read the Wiki for details on how to set up this file: http://goo.gl/F5TTc
+# Note: You -must- use spaces instead of tabs!
+global-settings:
+    enabled: true
+    allowed-commands: ''
+    update-notifications: true
+classes:
+    Test:
+        items: ''
+        armor: ''
+arenas:
+    t:
+        settings:
+            world: world
+            enabled: true
+            protect: false
+            entry-fee: ''
+            clear-wave-before-next: false
+            clear-boss-before-next: false
+            clear-wave-before-boss: false
+            lightning: false
+            auto-equip-armor: false
+            soft-restore: false
+            soft-restore-drops: false
+            require-empty-inv-join: false
+            require-empty-inv-spec: false
+            hellhounds: false
+            pvp-enabled: false
+            monster-infight: false
+            allow-teleporting: false
+            spectate-on-death: false
+            auto-respawn: false
+            share-items-in-arena: false
+            min-players: 0
+            max-players: 0
+            max-join-distance: 0
+            first-wave-delay: 0
+            wave-interval: 0
+            final-wave: 0
+            monster-limit: 0
+            monster-exp: false
+            keep-exp: false
+            food-regen: false
+            lock-food-level: false
+            spout-class-select: false
+            player-time-in-arena: world
+            auto-ignite-tnt: false
+            auto-start-timer: 0
+            display-waves-as-level: false
+            display-timer-as-level: false
+            auto-ready: false
+            use-scoreboards: false
+            use-class-chests: false
+            isolated-chat: false
+            global-end-announce: false
+            global-join-announce: false
+        class-limits:
+            Test: -1

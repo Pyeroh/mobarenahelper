@@ -2,3 +2,5 @@
 MobArena_Helper.jar
 .classpath
 .fatjar
+/target
+/t1.yml
