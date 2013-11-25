@@ -43,8 +43,9 @@ public class Arena {
 		loadWaves(gwaves);
 		config = new ArenaConfig(garena.getMap("settings"));
 
-		loadLimits(new GestYaml(garena.getMap("class-limits")));
-
+		if (garena.containsKey("class-limits")) {
+			loadLimits(new GestYaml(garena.getMap("class-limits")));
+		}
 		this.rewards = garena.getMap("rewards");
 		this.coords = garena.getMap("coords");
 

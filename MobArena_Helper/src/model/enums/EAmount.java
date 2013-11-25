@@ -8,11 +8,11 @@ import model.EnumName;
  *
  */
 public enum EAmount {
-	verylow(EnumName.getString("EAmount.0")), //$NON-NLS-1$
+	very_low(EnumName.getString("EAmount.0")), //$NON-NLS-1$
 	low(EnumName.getString("EAmount.1")), //$NON-NLS-1$
 	medium(EnumName.getString("EAmount.2")), //$NON-NLS-1$
 	high(EnumName.getString("EAmount.3")), //$NON-NLS-1$
-	veryhigh(EnumName.getString("EAmount.4")), //$NON-NLS-1$
+	very_high(EnumName.getString("EAmount.4")), //$NON-NLS-1$
 	psycho(EnumName.getString("EAmount.5")); //$NON-NLS-1$
 
 	private String nom;
@@ -23,13 +23,6 @@ public enum EAmount {
 
 	public String getNom() {
 		return nom;
-	}
-	
-	public String getName() {
-		String name = nom;
-		name = name.replace(" ", "_"); //$NON-NLS-1$ //$NON-NLS-2$
-		name = name.toLowerCase();
-		return name;
 	}
 
 	/**

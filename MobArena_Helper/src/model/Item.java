@@ -59,24 +59,28 @@ public class Item {
 	 */
 	public String getString() {
 
-		StringBuffer item = new StringBuffer(this.item.getRealName().toLowerCase());
-		
-		if(this.item.getMeta()!=0) item.append(":"+this.item.getMeta()+":"+quantity);
-		else {
-			if(quantity>1) {
-				item.append(":"+quantity);
+		if (item!=null) {
+			StringBuffer item = new StringBuffer(this.item.getRealName()
+					.toLowerCase());
+			if (this.item.getMeta() != 0)
+				item.append(":" + this.item.getMeta() + ":" + quantity);
+			else {
+				if (quantity > 1) {
+					item.append(":" + quantity);
+				}
 			}
+			for (int i = 0; i < enchantements.size(); i++) {
+
+				if (i == 0)
+					item.append(" ");
+				else
+					item.append(";");
+
+				item.append(enchantements.get(i).getString());
+			}
+			return item.toString();
 		}
-		
-		for(int i=0;i<enchantements.size();i++) {
-			
-			if(i==0) item.append(" ");
-			else item.append(";");
-			
-			item.append(enchantements.get(i).getString());
-		}
-		
-		return item.toString();
+		else return "";
 	}
 
 }

@@ -200,9 +200,7 @@ public abstract class Wave implements Comparable<Wave> {
 
 		if(monstres.size()==1) {
 			Monstre monster = monstres.get(0);
-			int probability = monster.getProbability();
-			if(probability==0) vague.put("monster", EMonsterAliases.valueOf(monster.getMonstre().name()).getPlural().name());
-			else if(probability==1) vague.put("monster", monstres.get(0).getMonstre().name());
+			vague.put("monster", monster.getMonstre().name());
 		}
 		else if(monstres.size()>1){
 			LinkedHashMap<String, Object> mapmonstres = new LinkedHashMap<>();

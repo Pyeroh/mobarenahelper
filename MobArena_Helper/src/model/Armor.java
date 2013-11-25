@@ -44,24 +44,29 @@ public class Armor extends Item {
 		int thisquantity = getQuantity();
 		EnchantList thisenchantements = getEnchantements();
 		
-		StringBuffer item = new StringBuffer((numberformat ? thisitem.getId() : thisitem.getRealName())+"");
-		
-		if(thisitem.getMeta()!=0) item.append(":"+thisitem.getMeta()+":"+thisquantity);
-		else {
-			if(thisquantity>1) {
-				item.append(":"+thisquantity);
+		if (thisitem!=null) {
+			StringBuffer item = new StringBuffer(
+					(numberformat ? thisitem.getId() : thisitem.getRealName())
+							+ "");
+			if (thisitem.getMeta() != 0)
+				item.append(":" + thisitem.getMeta() + ":" + thisquantity);
+			else {
+				if (thisquantity > 1) {
+					item.append(":" + thisquantity);
+				}
 			}
+			for (int i = 0; i < thisenchantements.size(); i++) {
+
+				if (i == 0)
+					item.append(" ");
+				else
+					item.append(";");
+
+				item.append(thisenchantements.get(i).getString());
+			}
+			return item.toString();
 		}
-		
-		for(int i=0;i<thisenchantements.size();i++) {
-			
-			if(i==0) item.append(" ");
-			else item.append(";");
-			
-			item.append(thisenchantements.get(i).getString());
-		}
-		
-		return item.toString();
+		else return "";
 		
 	}
 	
