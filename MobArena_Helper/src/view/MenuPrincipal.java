@@ -339,8 +339,6 @@ public class MenuPrincipal extends JFrame {
 						tabpan_config.setEnabledAt(1, true);
 						tabpan_config.setEnabledAt(2, true);
 						tabpan_config.setEnabledAt(3, true);
-						loadData_ClassConfig(Classe.classe_list);
-						loadData_GlobalSettings();
 					} catch (Exception e1) {
 						e1.printStackTrace();
 
@@ -476,7 +474,6 @@ public class MenuPrincipal extends JFrame {
 							combo_arena.addItem(name);
 							combo_arena.setSelectedItem(name);
 							loadArena(combo_arena.getSelectedIndex());
-							loadData_GlobalSettings();
 							tabpan_config.setEnabledAt(1, true);
 							tabpan_config.setEnabledAt(2, true);
 							tabpan_config.setEnabledAt(3, true);
@@ -2381,6 +2378,8 @@ public class MenuPrincipal extends JFrame {
 		loadListCaracs_Arena(singW, list_single);
 
 		loadData_ArenaConfig(config);
+		loadData_ClassConfig(Classe.classe_list,-1);
+		loadData_GlobalSettings();
 
 	}
 

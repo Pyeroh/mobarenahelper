@@ -3,6 +3,7 @@ package model;
 import java.util.*;
 
 import model.enums.ECatW;
+import model.lists.ClassLimitList;
 
 /**
  * Une arène. Contient des vagues uniques, récurrentes, peut accorder des récompenses... Une arène quoi.
@@ -19,9 +20,9 @@ public class Arena {
 	 */
 	@SuppressWarnings("unchecked")
 	private ArrayList<Wave>[] waves = new ArrayList[2];
+	private ClassLimitList limits = new ClassLimitList() ;
 
 	private LinkedHashMap<String, Object> rewards;
-	private LinkedHashMap<String, Object> classlimits = new LinkedHashMap<String, Object>();
 	private LinkedHashMap<String, Object> coords;
 
 	/**
@@ -42,8 +43,9 @@ public class Arena {
 		loadWaves(gwaves);
 		config = new ArenaConfig(garena.getMap("settings"));
 
+		loadLimits(new GestYaml(garena.getMap("class-limits")));
+
 		this.rewards = garena.getMap("rewards");
-		this.classlimits = garena.getMap("class-limits");
 		this.coords = garena.getMap("coords");
 
 		Collections.sort(waves[0]);
@@ -78,6 +80,16 @@ public class Arena {
 		}
 	}
 
+	private void loadLimits(GestYaml glimits) {
+		ArrayList<Classe> classe_list = Classe.classe_list;
+		for(int i=1;i<classe_list.size();i++) {
+			String classname = classe_list.get(i).getName();
+			if(glimits.containsKey(classname))
+				limits.add(new ClassLimit(classe_list.get(i), glimits.getInt(classname)));
+			else limits.add(new ClassLimit(classe_list.get(i),-1));
+		}
+	}
+
 	/**
 	 * Renvoie la liste de vagues correspondant à la catégorie passée en paramètre
 	 * @param type le type de vagues attendu
@@ -109,24 +121,23 @@ public class Arena {
 	}
 
 	public int getClassLimit(Classe classe) {
-		int limit;
-		if(classlimits.get(classe.getName())==null) limit = -1;
-		else limit = (int) classlimits.get(classe.getName());
-		return limit;
+		ClassLimit cl = limits.get(classe);
+		if(cl!=null) return cl.getLimit();
+		else return -1;
 	}
 
 	public void setClassLimit(Classe classe, int limit) {
-		if(classlimits.containsKey(classe.getName())) {
-			classlimits.put(classe.getName(), limit<0 ? -1 : limit);
-		}
+		ClassLimit cl = limits.get(classe);
+		if(cl!=null) cl.setLimit(limit);
+		else limits.add(new ClassLimit(classe, limit));
 	}
 
-	public void addClass(Classe classe) {
-		classlimits.put(classe.getName(), -1);
+	protected void addClass(Classe classe) {
+		limits.add(new ClassLimit(classe, -1));
 	}
 
-	public void removeClass(Classe classe) {
-		classlimits.remove(classe.getName());
+	protected void removeClass(Classe classe) {
+		limits.remove(limits.get(classe));
 	}
 
 	/**
@@ -156,8 +167,8 @@ public class Arena {
 
 		if(!mapwaves.isEmpty()) arena.put("waves", mapwaves);
 		if(rewards!=null) arena.put("rewards", rewards);
-		if (classlimits!=null) {
-			if(!classlimits.isEmpty()) arena.put("class-limits", classlimits);
+		if (!limits.isEmpty()) {
+			arena.put("class-limits", limits.getMap());
 		}
 		if(coords!=null) arena.put("coords", coords);
 
