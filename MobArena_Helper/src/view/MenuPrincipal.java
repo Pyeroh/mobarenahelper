@@ -401,7 +401,7 @@ public class MenuPrincipal extends JFrame {
 							e1.printStackTrace();
 							JOptionPane.showMessageDialog(rootPane, Messages.getString("MenuPrincipal.message.savingError"),Messages.getString("Message.title.savingError"),JOptionPane.ERROR_MESSAGE);
 							try {
-								File ferr = new File("C:\\mah_error.log");
+								File ferr = new File("mah_error.log");
 								ferr.delete();
 								ferr.createNewFile();
 								FileWriter err = new FileWriter(ferr);
