@@ -1,0 +1,231 @@
+# MobArena v0.94.4.52 - Config-file
+# by Byrkoet
+#
+# Read the Wiki for details on how to set up this file: http://goo.gl/F5TTc
+# Note: You -must- use spaces instead of tabs!
+#
+# Config running on:
+# Amnesia |50+ Players | Player vs Player | Anti-hack | No Whitelist|
+# 37.59.83.96:25581
+global-settings:
+    enabled: true
+    allowed-commands: /list, /give, /gamemode, /money, /tell, /bp, /mctop, /mcstats, /pvp, /f, /mcc, /mcmmo, /time set
+    update-notification: true
+classes:
+    Knight:
+        items: diamond_sword, potion:8197:2
+        armor: 306 0:1,307,308,309
+        Permissions:
+        - ^mcmmo.skills.unarmed
+        - ^mcmmo.skills.swords
+        - ^mcmmo.skills.acrobatics
+    Tank:
+        items: iron_sword, potion:8229:3
+        armor: 310,311 0:1,312,313
+        Permissions:
+        - ^mcmmo.skills.unarmed
+        - ^mcmmo.skills.swords
+        - ^mcmmo.skills.acrobatics
+    Chemist:
+        items: iron_sword 20:1, potion:16428:64, potion:16428:64, potion:16388:4, potion:16389:5, potion:8197:3, potion:8226:2, 373:16392:4
+        armor: 314,315 3:1,316,317
+        Permissions:
+        - ^mcmmo.skills.unarmed
+        - ^mcmmo.skills.swords
+        - ^mcmmo.skills.acrobatics
+    Archer:
+        items: stone_sword 49:2, bow 49:2, arrow:64, arrow:64, potion:8197:1
+        armor: 298,303,304,301
+        Permissions:
+        - ^mcmmo.skills.unarmed
+        - ^mcmmo.skills.archery
+        - ^mcmmo.skills.acrobatics
+#  Below here are premium classes, these are granted to players that donate on Amnesia.
+#  You can add the class permissions for your donators' group by adding the nodes:
+#    - mobarena.classes.alchemist
+#    - mobarena.classes.assassin
+#    - mobarena.classes.paladin
+#    - mobarena.classes.paragon
+    Paladin:
+        items: diamond_sword 17:1, potion:8197:2
+        armor: 306,307,308,309
+        Permissions:
+        - ^mcmmo.skills.unarmed
+        - ^mcmmo.skills.swords
+        - ^mcmmo.skills.acrobatics
+    Paragon:
+        items: 279 16:1, potion:8229:3
+        armor: 310 1:1,311 1:1,312,313 1:1
+        Permissions:
+        - ^mcmmo.skills.unarmed
+        - ^mcmmo.skills.swords
+        - ^mcmmo.skills.acrobatics
+        - ^mcmmo.skills.axe
+    Alchemist:
+        items: iron_sword 20:1, potion:16428:64, potion:16428:64, 373:16394:4, potion:16389:5, potion:8197:3, potion:8226:2, 373:16425:4
+        armor: 314,315 3:1,316,317 2:1
+        Permissions:
+        - ^mcmmo.skills.unarmed
+        - ^mcmmo.skills.swords
+        - ^mcmmo.skills.acrobatics
+    Assassin:
+        items: stone_sword 49:2;16:1, bow 49:2;48:1, arrow:64, arrow:64, potion:16428:4
+        armor: 302,303,304,305
+        Permissions:
+        - ^mcmmo.skills.unarmed
+        - ^mcmmo.skills.archery
+        - ^mcmmo.skills.acrobatics
+# Do not forget to change the arena name to whatever you have it set.
+# the default name is:  default
+arenas:
+    West_Arena:
+        settings:
+            world: world
+            enabled: true
+            protect: true
+            logging: true
+            entry-fee: $0.75
+            clear-wave-before-next: true
+            clear-boss-before-next: true
+            lightning: true
+            auto-equip-armor: true
+            soft-restore: false
+            soft-restore-drops: false
+            require-empty-inv-join: false
+            require-empty-inv-spec: false
+            hellhounds: true
+            pvp-enabled: false
+            monster-infight: false
+            allow-teleporting: false
+            spectate-on-death: true
+            auto-respawn: true
+            share-items-in-arena: false
+            min-players: 0
+            max-players: 15
+            max-join-distance: 15
+            first-wave-delay: 5
+            wave-interval: 5
+            final-wave: 0
+            monster-limit: 500
+            monster-exp: true
+            keep-exp: false
+            food-regen: false
+            lock-food-level: true
+            spout-class-select: false
+            player-time-in-arena: night
+        waves:
+            recurrent:
+                type1:
+                    type: default
+                    priority: 1
+                    monsters:
+                        zombie: 40
+                        skeleton: 50
+                        exploding_sheep: 10
+                    growth: psycho
+                    amount-multiplier: 1.5
+                    frequency: 1
+                type2:
+                    type: default
+                    priority: 2
+                    monsters:
+                        zombie: 10
+                        skeleton: 80
+                        creeper: 10
+                    growth: psycho
+                    amount-multiplier: 1.5
+                    frequency: 2
+                type3:
+                    type: special
+                    priority: 3
+                    monsters:
+                        zombie_pigman: 70
+                        powered_creeper: 30
+                    amount-multiplier: 4
+                    frequency: 4
+            single:
+                silver:
+                    wave: 8
+                    priority: 4
+                    type: special
+                    monsters:
+                        silverfish: 100
+                    amount-multiplier: 10.5
+                bitsy:
+                    wave: 9
+                    type: boss
+                    monster: spider
+                    health: high
+                    ability-interval: 2
+                    ability-announce: false
+                    abilities: fire-aura,shuffle-positions,fireballs,warp-to-player
+                giants:
+                    wave: 10
+                    type: special
+                    monsters:
+                        giant: 100
+                    amount-multiplier: 0.2
+                pigman_prince:
+                    wave: 13
+                    type: boss
+                    monster: zombie_pigman
+                    health: psycho
+                    ability-interval: 2
+                    ability-announce: false
+                    abilities: root-target,fetch-distant,fire-aura
+                the_grey:
+                    wave: 19
+                    type: boss
+                    monster: angry_wolf
+                    health: psycho
+                    ability-interval: 2
+                    ability-announce: false
+                    abilities: fire-aura,throw-nearby,fetch-target,arrows
+                boomchicken:
+                    wave: 24
+                    type: boss
+                    monster: chicken
+                    health: medium
+                    ability-interval: 1
+                    ability-announce: false
+                    abilities: throw-nearby,chain-lightning
+                enderking:
+                    wave: 33
+                    type: boss
+                    monster: enderman
+                    health: high
+                    ability-interval: 3
+                    ability-announce: false
+                    abilities: fire-aura,fetch-nearby,chain-lightning
+                the_Kraken:
+                    wave: 37
+                    type: boss
+                    monster: squid
+                    health: high
+                    ability-interval: 4
+                    ability-announce: false
+                    abilities: living-bomb,root-target,fire-aura,fetch-distant,flood
+# every:
+#    '2': golden nugget(1)
+#    '5': bone(1), stone(10), cake(1), cookie(2), nether_wart(1), apple(5), fish(8), flint(4)
+# after:
+#    '9': iron_sword(1), iron_hoe(1), iron_spade(1), iron_pickaxe(1), iron_axe(1), diamond_sword(1), diamond_pickaxe(1), diamond_axe(1)
+#    '13': iron_armour(set)(1), diamond_armour(set)(1)
+#    '19': golden_apple(8), diamond(8), strength_potion_2(8), chainmail_armour(set)(1)
+#    '24': diamond_sword|smite1; boa2; fa1|, diamond_chestplate|fp3|, diamond_helmet|bp4|
+        rewards:
+            waves:
+                every:
+                    '2': 371:1
+                    '5': 352:4, 1:5, 354:1, 357:2, 115:1, 260:5, 350:8, 318:4
+                after:
+                    '9': 267:1, 292:1, 256:1, 257:1, 258:1, 276:1, 278:1, 279:1
+                    '13': 306:1, 307:1, 308:1, 309:1, 310:1, 311:1, 312:1, 313:1
+                    '19': 322:8, 264:8, 373:8233:8, 302:1, 303:1, 304:1, 305:1
+                    '24': 276:1 17:1;18:2;20:1, 311:1 1:3, 310:1 3:4
+                    '33': 384:40
+        coords:
+            spawnpoints:
+            containers:
+            spectator:
+            leaderboard:

@@ -2,8 +2,7 @@ package model.lists;
 
 import java.util.ArrayList;
 
-import model.Armor;
-import model.Item;
+import model.*;
 import model.enums.EItem;
 
 /**
@@ -19,7 +18,7 @@ public class ArmorList extends ItemList {
 		super();
 	}
 
-	public ArmorList(ArrayList<Item> list) {
+	public ArmorList(ArrayList<AbstractItem> list) {
 		super(list);
 	}
 

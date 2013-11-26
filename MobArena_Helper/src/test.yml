@@ -1,8 +1,14 @@
 # MobArena v0.95.5 - Config-file
 # Read the Wiki for details on how to set up this file: http://goo.gl/F5TTc
 # Note: You -must- use spaces instead of tabs!
-global-settings: {}
-classes: {}
+global-settings:
+    enabled: true
+    allowed-commands: ''
+    update-notifications: true
+classes:
+    Test:
+        items: ''
+        armor: ''
 arenas:
     TheColosseum:
         settings:
@@ -70,7 +76,7 @@ arenas:
                     type: swarm
                     wave: 3
                     monster: zombie_villagers
-                    amount: very high
+                    amount: very_high
                 frosty:
                     type: boss
                     wave: 4

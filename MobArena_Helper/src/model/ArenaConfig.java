@@ -14,7 +14,7 @@ public class ArenaConfig {
 	private String world = "world";
 	private boolean enabled = true;
 	private boolean protect = false;
-	private int entry_fee_money = 0;
+	private float entry_fee_money = 0f;
 	private Item entry_fee_item = null;
 	private boolean clear_wave_before_next = false;
 	private boolean clear_boss_before_next = false;
@@ -83,11 +83,11 @@ public class ArenaConfig {
 		if(g.containsKey("entry-fee")) {
 			String[] sItems = g.getString("entry-fee").split(",");
 			if(sItems[0].equals("")) {
-				entry_fee_money = 0;
+				entry_fee_money = 0f;
 				entry_fee_item = null;
 			}
-			else if(sItems[0].matches("\\$(\\d)+")){
-				entry_fee_money = Integer.parseInt(sItems[0].trim().substring(1));
+			else if(sItems[0].matches("\\-?\\$\\ ?(0|([1-9](?:\\d{0,2}(?:,\\d{3})+|\\d*))?)(?:\\.\\d{1,2}|)")){
+				entry_fee_money = Float.parseFloat(sItems[0].trim().substring(1));
 				if(sItems.length>1) {
 					if(sItems[1].trim().matches("[a-zA-Z]+:(\\d)+")){
 						String[] item = sItems[1].trim().split(":");
@@ -153,7 +153,7 @@ public class ArenaConfig {
 		map.put("protect", protect);
 		
 		String fee = "  ";
-		if(entry_fee_money!=0) fee += "$"+entry_fee_money+", ";
+		if(entry_fee_money!=0f) fee += "$"+entry_fee_money+", ";
 		if(entry_fee_item!=null) fee += entry_fee_item.getString()+", ";
 		
 		map.put("entry-fee", fee.substring(0, fee.length()-2));
@@ -216,9 +216,9 @@ public class ArenaConfig {
 
 	public void setLightning(boolean lightning) {this.lightning = lightning;}
 
-	public int getEntry_fee_money() {return entry_fee_money;}
+	public float getEntry_fee_money() {return entry_fee_money;}
 
-	public void setEntry_fee_money(int entry_fee_money) {this.entry_fee_money = entry_fee_money;}
+	public void setEntry_fee_money(float entry_fee_money) {this.entry_fee_money = entry_fee_money;}
 
 	public Item getEntry_fee_item() {return entry_fee_item;}
 

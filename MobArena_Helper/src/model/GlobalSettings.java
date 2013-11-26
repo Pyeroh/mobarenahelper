@@ -16,7 +16,7 @@ public class GlobalSettings {
 		GestYaml g = new GestYaml(settings);
 		
 		enabled = g.getBool("enabled");
-		update_notifications = g.getBool("update-notifications");
+		update_notifications = g.getBool("update-notification");
 		String[] commands = g.getString("allowed-commands").split(",");
 		for(int i=0;i<commands.length;i++) {
 			allowed_commands.add(commands[i].trim());
@@ -53,7 +53,7 @@ public class GlobalSettings {
 		}
 		if(allowed_commands.size()>0) commands = commands.substring(0, commands.length()-2);
 		map.put("allowed-commands", commands);
-		map.put("update-notifications", update_notifications);
+		map.put("update-notification", update_notifications);
 		return map;
 	}
 	

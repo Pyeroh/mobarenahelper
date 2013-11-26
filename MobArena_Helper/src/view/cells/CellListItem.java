@@ -1,13 +1,14 @@
 package view.cells;
 
+import model.AbstractItem;
 import model.Item;
 
 public class CellListItem extends CellListEItem {
 
 	private static final long serialVersionUID = 5471797674503281211L;
-	private Item item;
+	private AbstractItem item;
 	
-	public CellListItem(Item item) {
+	public CellListItem(AbstractItem item) {
 		super(item.getItem());
 		this.item = item;
 		

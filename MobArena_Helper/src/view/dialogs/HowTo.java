@@ -26,6 +26,7 @@ public class HowTo extends JDialog {
 	private JTextPane lib_howto6;
 	private JTextPane lib_howto7;
 	private JTextPane lib_howto8;
+	private JTextPane lib_howto9;
 	
 	public HowTo(MenuPrincipal menu) {
 		setResizable(false);
@@ -63,6 +64,10 @@ public class HowTo extends JDialog {
 		lib_howto4.setText(Messages.getString("HowTo.lib_howto4.text")); //$NON-NLS-1$
 		lib_howto4.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		tab_howto.addTab(Messages.getString("MenuPrincipal.tabpan_arena_settings.title"), null, lib_howto4, null); //$NON-NLS-1$
+		
+		lib_howto9 = new JTextPane();
+		lib_howto9.setText(Messages.getString("HowTo.lib_howto9.text")); //$NON-NLS-1$
+		tab_howto.addTab(Messages.getString("HowTo.lib_howto9.title"), null, lib_howto9, null); //$NON-NLS-1$
 		
 		tab_howto5 = new JTabbedPane(JTabbedPane.LEFT);
 		tab_howto.addTab(Messages.getString("HowTo.tabpan_dialogs"), null, tab_howto5, null); //$NON-NLS-1$
@@ -103,5 +108,4 @@ public class HowTo extends JDialog {
 		setLocationRelativeTo(menu);
 		setVisible(true);
 	}
-	
 }

@@ -2,6 +2,7 @@ package model.lists;
 
 import java.util.ArrayList;
 
+import model.AbstractItem;
 import model.Item;
 import model.enums.EItem;
 
@@ -10,7 +11,7 @@ import model.enums.EItem;
  * @author Pyeroh
  *
  */
-public class ItemList extends ArrayList<Item> {
+public class ItemList extends ArrayList<AbstractItem> {
 
 	private static final long serialVersionUID = -1822352239305240836L;
 
@@ -18,7 +19,7 @@ public class ItemList extends ArrayList<Item> {
 		super();
 	}
 
-	public ItemList(ArrayList<Item> list) {
+	public ItemList(ArrayList<AbstractItem> list) {
 		super(list);
 	}
 

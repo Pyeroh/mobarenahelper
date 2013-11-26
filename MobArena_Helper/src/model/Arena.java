@@ -20,7 +20,7 @@ public class Arena {
 	 */
 	@SuppressWarnings("unchecked")
 	private ArrayList<Wave>[] waves = new ArrayList[2];
-	private ClassLimitList limits = new ClassLimitList() ;
+	private ClassLimitList limits = new ClassLimitList();
 
 	private LinkedHashMap<String, Object> rewards;
 	private LinkedHashMap<String, Object> coords;

@@ -3,7 +3,7 @@
   realizations="true" associations="true" dependencies="false" nesting-relationships="true">  
   <class id="1" language="java" name="view.cells.HoverListCellRenderer.HoverMouseHandler" project="MobArena_Helper" 
     file="/MobArena_Helper/src/view/cells/HoverListCellRenderer.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="137" width="235" x="2020" y="340"/>    
+    <position height="137" width="235" x="2029" y="448"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -12,7 +12,7 @@
   </class>  
   <class id="2" language="java" name="view.cells.CellListEItem" project="MobArena_Helper" 
     file="/MobArena_Helper/src/view/cells/CellListEItem.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="137" width="132" x="2295" y="340"/>    
+    <position height="137" width="132" x="2304" y="448"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -21,7 +21,7 @@
   </class>  
   <class id="3" language="java" name="view.cells.CellListItem" project="MobArena_Helper" 
     file="/MobArena_Helper/src/view/cells/CellListItem.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="119" width="132" x="2295" y="535"/>    
+    <position height="119" width="132" x="2304" y="643"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -30,7 +30,7 @@
   </class>  
   <class id="4" language="java" name="view.cells.CellListAbility" project="MobArena_Helper" 
     file="/MobArena_Helper/src/view/cells/CellListAbility.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="119" width="140" x="2467" y="340"/>    
+    <position height="119" width="140" x="2476" y="448"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -39,7 +39,7 @@
   </class>  
   <class id="5" language="java" name="view.cells.CellListMonster" project="MobArena_Helper" 
     file="/MobArena_Helper/src/view/cells/CellListMonster.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="119" width="177" x="2819" y="340"/>    
+    <position height="119" width="177" x="2828" y="448"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -48,7 +48,7 @@
   </class>  
   <class id="6" language="java" name="view.cells.HoverListCellRenderer" project="MobArena_Helper" 
     file="/MobArena_Helper/src/view/cells/HoverListCellRenderer.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="2411" y="106"/>    
+    <position height="209" width="391" x="2225" y="37"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -57,7 +57,7 @@
   </class>  
   <class id="7" language="java" name="view.cells.CellListClass" project="MobArena_Helper" 
     file="/MobArena_Helper/src/view/cells/CellListClass.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="119" width="132" x="2647" y="340"/>    
+    <position height="119" width="132" x="2656" y="448"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -66,7 +66,7 @@
   </class>  
   <class id="8" language="java" name="view.cells.CellListWave" project="MobArena_Helper" 
     file="/MobArena_Helper/src/view/cells/CellListWave.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="155" width="132" x="3036" y="340"/>    
+    <position height="155" width="132" x="3045" y="448"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -75,7 +75,7 @@
   </class>  
   <class id="9" language="java" name="view.cells.CellListCaracs" project="MobArena_Helper" 
     file="/MobArena_Helper/src/view/cells/CellListCaracs.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="155" width="209" x="2647" y="37"/>    
+    <position height="155" width="209" x="2656" y="37"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -102,7 +102,7 @@
   </class>  
   <class id="12" language="java" name="view.dialogs.Todo" project="MobArena_Helper" 
     file="/MobArena_Helper/src/view/dialogs/Todo.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="65" width="124" x="441" y="37"/>    
+    <position height="83" width="124" x="441" y="37"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="false" static="true"/>      
@@ -120,7 +120,7 @@
   </class>  
   <class id="14" language="java" name="view.dialogs.ItemSelector" project="MobArena_Helper" 
     file="/MobArena_Helper/src/view/dialogs/ItemSelector.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="245" width="263" x="1095" y="37"/>    
+    <position height="245" width="263" x="1104" y="37"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="false" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="false" static="false"/>      
@@ -129,7 +129,7 @@
   </class>  
   <class id="15" language="java" name="view.dialogs.YmlJFileChooser" project="MobArena_Helper" 
     file="/MobArena_Helper/src/view/dialogs/YmlJFileChooser.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="101" width="142" x="1608" y="37"/>    
+    <position height="119" width="142" x="1617" y="37"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -138,7 +138,7 @@
   </class>  
   <class id="16" language="java" name="view.dialogs.UpgradeWaveChanger" project="MobArena_Helper" 
     file="/MobArena_Helper/src/view/dialogs/UpgradeWaveChanger.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="119" width="233" x="1943" y="37"/>    
+    <position height="119" width="233" x="1952" y="37"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="false" static="true"/>      
@@ -147,7 +147,7 @@
   </class>  
   <class id="17" language="java" name="view.dialogs.Enchanter" project="MobArena_Helper" 
     file="/MobArena_Helper/src/view/dialogs/Enchanter.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="101" width="170" x="1398" y="37"/>    
+    <position height="101" width="170" x="1407" y="37"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="false" static="true"/>      
@@ -156,7 +156,7 @@
   </class>  
   <class id="18" language="java" name="view.MenuPrincipal" project="MobArena_Helper" 
     file="/MobArena_Helper/src/view/MenuPrincipal.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="263" width="281" x="774" y="37"/>    
+    <position height="371" width="290" x="774" y="37"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="false" static="true"/>      
@@ -165,7 +165,7 @@
   </class>  
   <class id="19" language="java" name="view.JWideComboBox" project="MobArena_Helper" 
     file="/MobArena_Helper/src/view/JWideComboBox.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="137" width="132" x="1036" y="340"/>    
+    <position height="137" width="132" x="1040" y="448"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -174,7 +174,7 @@
   </class>  
   <class id="20" language="java" name="view.Launch" project="MobArena_Helper" 
     file="/MobArena_Helper/src/view/Launch.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="83" width="113" x="1790" y="37"/>    
+    <position height="83" width="113" x="1799" y="37"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -182,51 +182,51 @@
     </display>  
   </class>  
   <association id="21">    
-    <end type="SOURCE" refId="14" navigable="false">      
-      <attribute id="22" name="combo_sort"/>      
+    <end type="SOURCE" refId="18" navigable="false">      
+      <attribute id="22" name="combo_carac_wave"/>      
       <multiplicity id="23" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="19" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <generalization id="24">    
-    <end type="SOURCE" refId="5"/>    
+    <end type="SOURCE" refId="8"/>    
     <end type="TARGET" refId="9"/>  
   </generalization>  
-  <generalization id="25">    
-    <end type="SOURCE" refId="4"/>    
-    <end type="TARGET" refId="9"/>  
-  </generalization>  
-  <association id="26">    
+  <association id="25">    
     <end type="SOURCE" refId="18" navigable="false">      
-      <attribute id="27" name="combo_carac_wave"/>      
-      <multiplicity id="28" minimum="0" maximum="1"/>    
+      <attribute id="26" name="combo_arena"/>      
+      <multiplicity id="27" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="19" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
+  <generalization id="28">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="9"/>  
+  </generalization>  
   <association id="29">    
-    <end type="SOURCE" refId="17" navigable="false">      
-      <attribute id="30" name="combo_level"/>      
+    <end type="SOURCE" refId="14" navigable="false">      
+      <attribute id="30" name="combo_sort"/>      
       <multiplicity id="31" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="19" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="32">    
-    <end type="SOURCE" refId="2"/>    
-    <end type="TARGET" refId="9"/>  
-  </generalization>  
-  <association id="33">    
-    <end type="SOURCE" refId="17" navigable="false">      
-      <attribute id="34" name="combo_enchantment"/>      
-      <multiplicity id="35" minimum="0" maximum="1"/>    
+  <association id="32">    
+    <end type="SOURCE" refId="18" navigable="false">      
+      <attribute id="33" name="combo_monster"/>      
+      <multiplicity id="34" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="19" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
+  <generalization id="35">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="9"/>  
+  </generalization>  
   <generalization id="36">    
-    <end type="SOURCE" refId="8"/>    
+    <end type="SOURCE" refId="7"/>    
     <end type="TARGET" refId="9"/>  
   </generalization>  
   <generalization id="37">    
@@ -234,29 +234,29 @@
     <end type="TARGET" refId="2"/>  
   </generalization>  
   <association id="38">    
-    <end type="SOURCE" refId="18" navigable="false">      
-      <attribute id="39" name="combo_monster"/>      
+    <end type="SOURCE" refId="17" navigable="false">      
+      <attribute id="39" name="combo_enchantment"/>      
       <multiplicity id="40" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="19" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <nesting id="41">    
-    <end type="SOURCE" refId="6"/>    
-    <end type="TARGET" refId="1"/>  
-  </nesting>  
-  <generalization id="42">    
-    <end type="SOURCE" refId="7"/>    
-    <end type="TARGET" refId="9"/>  
-  </generalization>  
-  <association id="43">    
-    <end type="SOURCE" refId="18" navigable="false">      
-      <attribute id="44" name="combo_arena"/>      
-      <multiplicity id="45" minimum="0" maximum="1"/>    
+  <association id="41">    
+    <end type="SOURCE" refId="17" navigable="false">      
+      <attribute id="42" name="combo_level"/>      
+      <multiplicity id="43" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="19" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
+  <generalization id="44">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="9"/>  
+  </generalization>  
+  <nesting id="45">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="1"/>  
+  </nesting>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     accessors="true" visibility="true">    
     <attributes public="true" package="true" protected="true" private="true" static="true"/>    

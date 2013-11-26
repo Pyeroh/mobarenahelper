@@ -51,7 +51,6 @@ public enum EAbilities {
 	 * @return la liste des noms des constantes.
 	 */
 	public static String[] namevalues(){
-
 		EAbilities[] values = values();
 		String[] namevalues = new String[values.length];
 		for (int i=0;i<namevalues.length;i++) {

@@ -2,7 +2,9 @@ package view;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.io.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.math.RoundingMode;
 import java.text.*;
 import java.util.*;
 
@@ -10,6 +12,7 @@ import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.text.InternationalFormatter;
 import javax.swing.text.MaskFormatter;
 
 import model.*;
@@ -196,6 +199,8 @@ public class MenuPrincipal extends JFrame {
 	private JLabel lib_command;
 	private JFormattedTextField sai_command;
 	private JLabel lib_command_help;
+	private JButton btn_reward;
+	private JPanel pan_coordinates;
 
 	public MenuPrincipal() throws ParseException{
 		super("MobArena Helper v2.1");
@@ -339,6 +344,7 @@ public class MenuPrincipal extends JFrame {
 						tabpan_config.setEnabledAt(1, true);
 						tabpan_config.setEnabledAt(2, true);
 						tabpan_config.setEnabledAt(3, true);
+						tabpan_config.setEnabledAt(4, true);
 					} catch (Exception e1) {
 						e1.printStackTrace();
 
@@ -352,7 +358,7 @@ public class MenuPrincipal extends JFrame {
 		btn_load.setForeground(new Color(255, 255, 255));
 		btn_load.setBackground(new Color(100, 149, 237));
 		btn_load.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btn_load.setBounds(526, 533, 97, 23);
+		btn_load.setBounds(532, 554, 97, 23);
 		getContentPane().add(btn_load);
 
 		btn_save = new JButton(Messages.getString("MenuPrincipal.btn_save.text")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -427,11 +433,12 @@ public class MenuPrincipal extends JFrame {
 		btn_save.setForeground(Color.WHITE);
 		btn_save.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btn_save.setBackground(new Color(100, 149, 237));
-		btn_save.setBounds(633, 533, 115, 23);
+		btn_save.setBounds(639, 554, 115, 23);
 		getContentPane().add(btn_save);
 
 		tabpan_config = new JTabbedPane(JTabbedPane.TOP);
-		tabpan_config.setBounds(0, 6, 754, 515);
+		tabpan_config.setBorder(new MatteBorder(0, 0, 1, 0, (Color) UIManager.getColor("Tree.dropLineColor")));
+		tabpan_config.setBounds(0, 6, 754, 536);
 		getContentPane().add(tabpan_config);
 
 		pan_arena_wave = new JPanel();
@@ -477,6 +484,7 @@ public class MenuPrincipal extends JFrame {
 							tabpan_config.setEnabledAt(1, true);
 							tabpan_config.setEnabledAt(2, true);
 							tabpan_config.setEnabledAt(3, true);
+							tabpan_config.setEnabledAt(4, true);
 						} else
 							JOptionPane
 							.showMessageDialog(
@@ -558,6 +566,11 @@ public class MenuPrincipal extends JFrame {
 		scrpan_single = new JScrollPane(list_single);
 		scrpan_single.setBounds(9, 295, 252, 180);
 		pan_arena_wave.add(scrpan_single);
+		
+		btn_reward = new JButton(Messages.getString("MenuPrincipal.btnReward.text"));
+		btn_reward.setVisible(false);
+		btn_reward.setBounds(87, 26, 116, 23);
+		pan_arena_wave.add(btn_reward);
 
 		pan_conf = new JPanel();
 		pan_conf.setBounds(274, 8, 474, 467);
@@ -1611,12 +1624,14 @@ public class MenuPrincipal extends JFrame {
 				JFormattedTextField source = (JFormattedTextField) e.getSource();
 				try {
 					source.commitEdit();
-				} catch (ParseException e1) {
-					e1.printStackTrace();
-				}
-				int value = (int)((long)source.getValue());
+				} catch (ParseException e1) {}
+				int value = 0;
+				float fvalue = 0f;
+				if(source.getValue() instanceof Double) fvalue = (float)((double) source.getValue());
+				else value = (int)((long)source.getValue());
+				//int value = Integer.parseInt(source.getText());
 
-				if(source==sai_entry) config.setEntry_fee_money(value);
+				if(source==sai_entry) config.setEntry_fee_money(fvalue);
 				else if(source==sai_min_players) config.setMin_players(value);
 				else if(source==sai_max_players) config.setMax_players(value);
 				else if(source==sai_max_join_distance) config.setMax_join_distance(value);
@@ -1634,7 +1649,12 @@ public class MenuPrincipal extends JFrame {
 		lib_entry.setBounds(6, 80, 84, 25);
 		pan_arena_settings.add(lib_entry);
 
-		sai_entry = new JFormattedTextField(NumberFormat.getIntegerInstance());
+		NumberFormat format = DecimalFormat.getInstance();
+        format.setMinimumFractionDigits(2);
+        format.setMaximumFractionDigits(2);
+        format.setRoundingMode(RoundingMode.HALF_UP);
+        InternationalFormatter formatter = new InternationalFormatter(format);
+		sai_entry = new JFormattedTextField(formatter);
 		sai_entry.addKeyListener(int_config_adapter);
 		sai_entry.setToolTipText(Messages.getString("MenuPrincipal.lib_entry.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		sai_entry.setBackground(new Color(255, 255, 255));
@@ -2162,19 +2182,19 @@ public class MenuPrincipal extends JFrame {
 		Image img = new ImageIcon(MenuPrincipal.class.getResource("/gui/pics/question.png")).getImage();
 		lib_command_help.setIcon(new ImageIcon(CellListCaracs.scaleImage(img,lib_command_help)));
 		pan_commands.add(lib_command_help);
+		
+		pan_coordinates = new JPanel();
+		pan_coordinates.setLayout(null);
 
 		tabpan_config.addTab(Messages.getString("MenuPrincipal.tabpan_arena_wave.title"), pan_arena_wave); //$NON-NLS-2$ //$NON-NLS-1$
 		tabpan_config.addTab(Messages.getString("MenuPrincipal.tabpan_classes.title"), pan_classes); //$NON-NLS-2$ //$NON-NLS-1$
 		tabpan_config.addTab(Messages.getString("MenuPrincipal.tabpan_arena_settings.title"), pan_arena_settings); //$NON-NLS-2$ //$NON-NLS-1$
+		tabpan_config.addTab(Messages.getString("MenuPrincipal.pan_coordinates.title"), null, pan_coordinates, null); //$NON-NLS-1$
 		tabpan_config.addTab(Messages.getString("MenuPrincipal.pan_global_settings.title"), pan_global_settings); //$NON-NLS-1$
 
-		tabpan_config.setEnabledAt(1, false);
-		tabpan_config.setEnabledAt(2, false);
-		tabpan_config.setEnabledAt(3, false);
+		raz();
 
-		setInvisibleComponents_Arena();
-
-		setSize(760,618);
+		setSize(760,637);
 
 		setLocationRelativeTo(null);
 		initializing = false;
@@ -2206,6 +2226,7 @@ public class MenuPrincipal extends JFrame {
 		tabpan_config.setEnabledAt(1, false);
 		tabpan_config.setEnabledAt(2, false);
 		tabpan_config.setEnabledAt(3, false);
+		tabpan_config.setEnabledAt(4, false);
 		tabpan_config.setSelectedIndex(0);
 		loadData_ClassConfig(Classe.classe_list, -1);
 		list_recurrent.setModel(new DefaultListModel<CellListWave>());

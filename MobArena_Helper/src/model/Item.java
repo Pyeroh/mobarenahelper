@@ -10,10 +10,9 @@ import model.lists.ItemList;
  * @see EItem
  * @see ItemList
  */
-public class Item {
+public class Item extends AbstractItem {
 
 	private EItem item;
-	private int quantity = 1;
 	private EnchantList enchantements = new EnchantList();
 	
 	/**
@@ -23,9 +22,9 @@ public class Item {
 	 * @param enchantments
 	 */
 	public Item(EItem item, int quantity, String[] enchantments) {
+		super(quantity);
 		this.item = item;
-		this.quantity = quantity;
-		
+				
 		if (enchantments!=null) {
 			enchantements.fill(enchantments);
 		}
@@ -36,17 +35,9 @@ public class Item {
 		return item;
 	}
 	
-	public int getQuantity() {
-		return quantity;
-	}
-	
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
-	
 	@Override
 	public String toString() {
-		return quantity+" "+item.getGuiName();
+		return getQuantity()+" "+item.getGuiName();
 	}
 
 	public EnchantList getEnchantements() {
@@ -63,10 +54,10 @@ public class Item {
 			StringBuffer item = new StringBuffer(this.item.getRealName()
 					.toLowerCase());
 			if (this.item.getMeta() != 0)
-				item.append(":" + this.item.getMeta() + ":" + quantity);
+				item.append(":" + this.item.getMeta() + ":" + getQuantity());
 			else {
-				if (quantity > 1) {
-					item.append(":" + quantity);
+				if (getQuantity() > 1) {
+					item.append(":" + getQuantity());
 				}
 			}
 			for (int i = 0; i < enchantements.size(); i++) {
