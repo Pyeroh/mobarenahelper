@@ -2,7 +2,6 @@ package model;
 
 import model.enums.EItem;
 import model.lists.ArmorList;
-import model.lists.EnchantList;
 
 /**
  * Une pièce d'armure
@@ -42,7 +41,6 @@ public class Armor extends Item {
 		
 		EItem thisitem = getItem();
 		int thisquantity = getQuantity();
-		EnchantList thisenchantements = getEnchantements();
 		
 		if (thisitem!=null) {
 			StringBuffer item = new StringBuffer(
@@ -55,15 +53,7 @@ public class Armor extends Item {
 					item.append(":" + thisquantity);
 				}
 			}
-			for (int i = 0; i < thisenchantements.size(); i++) {
-
-				if (i == 0)
-					item.append(" ");
-				else
-					item.append(";");
-
-				item.append(thisenchantements.get(i).getString());
-			}
+			item.append(getEnchantements().getString());
 			return item.toString();
 		}
 		else return "";

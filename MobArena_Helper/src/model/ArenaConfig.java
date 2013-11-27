@@ -15,7 +15,7 @@ public class ArenaConfig {
 	private boolean enabled = true;
 	private boolean protect = false;
 	private float entry_fee_money = 0f;
-	private Item entry_fee_item = null;
+	private AbstractItem entry_fee_item = null;
 	private boolean clear_wave_before_next = false;
 	private boolean clear_boss_before_next = false;
 	private boolean clear_wave_before_boss = false;
@@ -220,9 +220,9 @@ public class ArenaConfig {
 
 	public void setEntry_fee_money(float entry_fee_money) {this.entry_fee_money = entry_fee_money;}
 
-	public Item getEntry_fee_item() {return entry_fee_item;}
+	public AbstractItem getEntry_fee_item() {return entry_fee_item;}
 
-	public void setEntry_fee_item(Item entry_fee_item) {this.entry_fee_item = entry_fee_item;}
+	public void setEntry_fee_item(AbstractItem entry_fee_item) {this.entry_fee_item = entry_fee_item;}
 
 	public boolean getClear_wave_next() {return clear_wave_before_next;}
 

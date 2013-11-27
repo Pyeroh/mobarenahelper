@@ -1,5 +1,7 @@
 package model;
 
+import model.enums.EItem;
+
 public class CustomItem extends AbstractItem {
 
 	private int id;
@@ -35,13 +37,20 @@ public class CustomItem extends AbstractItem {
 		this.meta = meta;
 	}
 	
+	@Override
 	public String getString() {
 		StringBuffer item = new StringBuffer(id+"");
 		if(meta!=0) item.append(":"+meta+":"+getQuantity());
 		else {
 			if(getQuantity()!=0) item.append(":"+getQuantity());
 		}
+		item.append(getEnchantements().getString());
 		return item.toString();
+	}
+
+	@Override
+	public EItem getItem() {
+		return EItem.custom;
 	}
 	
 }

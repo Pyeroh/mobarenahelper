@@ -18,7 +18,6 @@ import model.lists.ItemList;
 import view.JWideComboBox;
 import view.cells.*;
 
-//TODO Ajouter la gestion des items personnalisés (id et meta perso)
 public class ItemSelector extends JDialog {
 
 	private static final long serialVersionUID = 7238413511342140781L;
@@ -28,7 +27,7 @@ public class ItemSelector extends JDialog {
 	private int max;
 	private boolean isArmor;
 	private boolean classSelector;
-	private Item selectedItem;
+	private AbstractItem selectedItem;
 
 	private JLabel lib_selectable;
 	private JLabel lib_sort;
@@ -42,6 +41,7 @@ public class ItemSelector extends JDialog {
 	private JList<CellListItem> list_selected;
 	private JLabel lib_selected;
 	private JButton btn_enchant;
+	private JButton btn_addcustom;
 
 	/**
 	 * Constructeur d'un sélecteur d'items à partir de la liste {@code items} et
@@ -58,7 +58,7 @@ public class ItemSelector extends JDialog {
 		super();
 		setModalityType(ModalityType.APPLICATION_MODAL);
 		setTitle(Messages.getString("ItemSelector.title")+" - "+frame.getTitle());
-		
+
 		setIconImage(new ImageIcon(ItemSelector.class.getResource("/gui/pics/mobarena.png")).getImage());
 		setResizable(false);
 		this.items = items;
@@ -146,6 +146,24 @@ public class ItemSelector extends JDialog {
 				addItem();
 			}
 		});
+		
+		btn_addcustom = new JButton(Messages.getString("ItemSelector.btnAddCustom.text")); //$NON-NLS-1$
+		btn_addcustom.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				CustomItem ci = new CustomItemCreator(ItemSelector.this.frame).getItem();
+				if(ci!=null) {
+					ItemSelector.this.items.add(ci);
+
+					loadSelected(ItemSelector.this.items);
+					loadSelectable(crossSearch());
+				}
+				
+			}
+		});
+		btn_addcustom.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btn_addcustom.setBounds(360, 116, 118, 42);
+		getContentPane().add(btn_addcustom);
 		btn_add.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btn_add.setBounds(368, 170, 101, 28);
 		getContentPane().add(btn_add);
@@ -175,12 +193,15 @@ public class ItemSelector extends JDialog {
 		list_selected.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				
+
 				int hoverIndex = ((HoverListCellRenderer) list_selected.getCellRenderer()).getHoverIndex();
-				
+
 				if(hoverIndex!=-1) {
-					selectedItem = list_selected.getSelectedValue().getItem();
-					if(EEnchantItem.getByItem(selectedItem.getItem()).size()==0) btn_enchant.setVisible(false);
+					selectedItem = list_selected.getModel().getElementAt(hoverIndex).getItem();
+					if(selectedItem instanceof Item) {
+						if(EEnchantItem.getByItem(selectedItem.getItem()).size()==0) btn_enchant.setVisible(false);
+						else btn_enchant.setVisible(true);
+					}
 					else btn_enchant.setVisible(true);
 				}
 				else {
@@ -188,7 +209,7 @@ public class ItemSelector extends JDialog {
 					selectedItem = null;
 					btn_enchant.setVisible(false);
 				}
-				
+
 			}
 		});
 
@@ -211,7 +232,7 @@ public class ItemSelector extends JDialog {
 		setVisible(true);
 
 	}
-	
+
 	/**
 	 * Constructeur d'un sélecteur d'items à partir de la liste {@code items} et
 	 * permettant la sélection de {@code max} items.
@@ -228,7 +249,7 @@ public class ItemSelector extends JDialog {
 	public ItemList getItemList() {
 		return items;
 	}
-	
+
 	protected JFrame getFrame() {
 		return frame;
 	}
@@ -292,15 +313,15 @@ public class ItemSelector extends JDialog {
 	}
 
 	private void removeItem() {
-		
+
 		if(!list_selected.isSelectionEmpty()) {
-			
+
 			items.remove(selectedItem);
 			loadSelected(items);
 			loadSelectable(crossSearch());
-			
+
 		}
-		
+
 	}
 
 	private void loadSelectable(ArrayList<EItem> values) {
@@ -328,7 +349,10 @@ public class ItemSelector extends JDialog {
 	private ArrayList<EItem> switchValues() {
 		ArrayList<EItem> values;
 		String sort = (String) combo_sort.getSelectedItem();
-		if(sort.equals(EItemCat.all.getGui_name())) values = new ArrayList<EItem>(Arrays.asList(EItem.values()));
+		if(sort.equals(EItemCat.all.getGui_name())) {
+			values = new ArrayList<EItem>(Arrays.asList(EItem.values()));
+			values.remove(0);
+		}
 		else if (isArmor) {
 			values = new ArrayList<>();
 			for(int i=298;i<=317;i++){
@@ -336,7 +360,7 @@ public class ItemSelector extends JDialog {
 			}
 		}
 		else values = EItem.getByCategory(EItemCat.getByName(sort));
-		
+
 		if(classSelector) {
 			values.remove(EItem.bone);
 			values.remove(EItem.hay_block);
@@ -354,5 +378,4 @@ public class ItemSelector extends JDialog {
 
 		return values;
 	}
-	
 }

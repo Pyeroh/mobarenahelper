@@ -181,7 +181,8 @@ public class GestYaml {
 	 * @return
 	 */
 	public boolean containsKey(String key) {
-		return data.containsKey(key);
+		if (data!=null) return data.containsKey(key);
+		else return false;
 	}
 
 }

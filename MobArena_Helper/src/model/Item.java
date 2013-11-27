@@ -1,7 +1,6 @@
 package model;
 
 import model.enums.EItem;
-import model.lists.EnchantList;
 import model.lists.ItemList;
 
 /**
@@ -13,7 +12,6 @@ import model.lists.ItemList;
 public class Item extends AbstractItem {
 
 	private EItem item;
-	private EnchantList enchantements = new EnchantList();
 	
 	/**
 	 * Instancie un Item avec ce qu'il est, sa quantité, et ses enchantements.
@@ -26,7 +24,7 @@ public class Item extends AbstractItem {
 		this.item = item;
 				
 		if (enchantments!=null) {
-			enchantements.fill(enchantments);
+			getEnchantements().fill(enchantments);
 		}
 		
 	}
@@ -38,10 +36,6 @@ public class Item extends AbstractItem {
 	@Override
 	public String toString() {
 		return getQuantity()+" "+item.getGuiName();
-	}
-
-	public EnchantList getEnchantements() {
-		return enchantements;
 	}
 	
 	/**
@@ -60,15 +54,7 @@ public class Item extends AbstractItem {
 					item.append(":" + getQuantity());
 				}
 			}
-			for (int i = 0; i < enchantements.size(); i++) {
-
-				if (i == 0)
-					item.append(" ");
-				else
-					item.append(";");
-
-				item.append(enchantements.get(i).getString());
-			}
+			item.append(getEnchantements().getString());
 			return item.toString();
 		}
 		else return "";

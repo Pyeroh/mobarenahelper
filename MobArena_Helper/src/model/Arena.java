@@ -67,13 +67,13 @@ public class Arena {
 	}
 
 	private void loadWaves(GestYaml gwaves) {
-		if(gwaves.getMap("recurrent")!=null) {
+		if(gwaves.containsKey("recurrent")) {
 			for (Iterator<String> it = gwaves.getMap("recurrent").keySet().iterator(); it.hasNext();) {
 				String wave = (String) it.next();
 				this.waves[0].add(Wave.setWave(wave,ECatW.recurrent,gwaves.getMap("recurrent." + wave)));
 			}
 		}
-		if (gwaves.getMap("single")!=null) {
+		if (gwaves.containsKey("single")) {
 			for (Iterator<String> it = gwaves.getMap("single").keySet().iterator(); it.hasNext();) {
 				String wave = (String) it.next();
 				this.waves[1].add(Wave.setWave(wave, ECatW.single,gwaves.getMap("single." + wave)));

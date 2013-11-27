@@ -1,7 +1,6 @@
 package view.cells;
 
-import model.AbstractItem;
-import model.Item;
+import model.*;
 
 public class CellListItem extends CellListEItem {
 
@@ -12,10 +11,14 @@ public class CellListItem extends CellListEItem {
 		super(item.getItem());
 		this.item = item;
 		
-		lib_desc.setText(this.item.getItem().getGuiName() + (item.getQuantity()!=1 ? " x"+item.getQuantity() : ""));
+		if(this.item instanceof Item) lib_desc.setText(this.item.getItem().getGuiName() + (item.getQuantity()!=1 ? " x"+item.getQuantity() : ""));
+		else {
+			CustomItem ci = (CustomItem) this.item;
+			lib_desc.setText(ci.getId() + ":" + ci.getMeta() + (ci.getQuantity()!=1 ? " x"+ci.getQuantity() : ""));
+		}
 	}
 	
-	public Item getItem() {
+	public AbstractItem getItem() {
 		return item;
 	}
 

@@ -21,7 +21,7 @@ import view.cells.HoverListCellRenderer;
 public class Enchanter extends JDialog {
 
 	private static final long serialVersionUID = -6398387470645060005L;
-	private Item item;
+	private AbstractItem item;
 	private JLabel lib_enchant;
 	private JScrollPane scrpan_enchant;
 	private JList<CellListCaracs> list_enchant;
@@ -34,7 +34,7 @@ public class Enchanter extends JDialog {
 	private JLabel lib_help;
 
 	//TODO changer le mode ajout/suppr pour un ajout/suppr/modif
-	public Enchanter(JDialog dial, Item item) {
+	public Enchanter(JDialog dial, AbstractItem item) {
 		super();
 		setModalityType(ModalityType.APPLICATION_MODAL);
 		setIconImage(new ImageIcon(Enchanter.class.getResource("/gui/pics/mobarena.png")).getImage());
@@ -127,7 +127,7 @@ public class Enchanter extends JDialog {
 		btn_add.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				Item item = Enchanter.this.item;
+				AbstractItem item = Enchanter.this.item;
 				EEnchantment enchant = EEnchantment.getByName((String) combo_enchantment.getSelectedItem());
 				int lvl = combo_level.getSelectedIndex()+1;
 				item.getEnchantements().add(new Enchantment(enchant, lvl));
@@ -147,7 +147,9 @@ public class Enchanter extends JDialog {
 
 		load();
 
+		ToolTipManager.sharedInstance().setDismissDelay(10000);
 		setVisible(true);
+		ToolTipManager.sharedInstance().setDismissDelay(4000);
 
 	}
 

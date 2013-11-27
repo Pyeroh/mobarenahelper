@@ -2,8 +2,7 @@ package model.lists;
 
 import java.util.ArrayList;
 
-import model.AbstractItem;
-import model.Item;
+import model.*;
 import model.enums.EItem;
 
 /**
@@ -59,9 +58,15 @@ public class ItemList extends ArrayList<AbstractItem> {
 			}
 
 			if (tab_item[0].matches("(\\d)+")) {
-				this.add(new Item(EItem.searchBy(
-						Integer.parseInt(tab_item[0]), data), quantity,
-						enchantments));
+				EItem ei = EItem.searchBy(Integer.parseInt(tab_item[0]),data);
+				if (ei!=null) this.add(new Item(ei, quantity, enchantments));
+				else {
+					CustomItem ci = new CustomItem(Integer.parseInt(tab_item[0]), data, quantity);
+					if (enchantments!=null) {
+						ci.getEnchantements().fill(enchantments);
+					}
+					this.add(ci);
+				}
 			} else {
 				this.add(new Item(EItem.searchBy(tab_item[0], data),
 						quantity, enchantments));
@@ -85,7 +90,7 @@ public class ItemList extends ArrayList<AbstractItem> {
 				sItems.append(this.get(i).getString()+",");
 			}
 			int length = sItems.length();
-			sItems.delete(length-1, length);
+			sItems.delete(length-2, length);
 		}
 
 		return sItems.toString();
@@ -137,7 +142,7 @@ public class ItemList extends ArrayList<AbstractItem> {
 
 	private int partition(ItemList list,int deb,int fin) {
 		int compt=deb;
-		Item pivot=list.get(deb);
+		AbstractItem pivot=list.get(deb);
 
 		for(int i=deb+1;i<=fin;i++) {
 			EItem litem = list.get(i).getItem();
@@ -160,7 +165,7 @@ public class ItemList extends ArrayList<AbstractItem> {
 	}
 	
 	protected void echanger(ItemList list, int deb, int fin) {
-		Item temp = list.get(deb);
+		AbstractItem temp = list.get(deb);
 		list.set(deb,list.get(fin));
 		list.set(fin,temp);
 	}

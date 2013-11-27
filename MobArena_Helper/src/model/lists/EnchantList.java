@@ -63,5 +63,19 @@ public class EnchantList extends ArrayList<Enchantment> {
 		}
 		return eenchantment;
 	}
+	
+	public String getString() {
+		StringBuffer enchant = new StringBuffer(" ");
+		for (int i = 0; i < size(); i++) {
+
+			if (i == 0)
+				enchant.append(" ");
+			else
+				enchant.append(";");
+
+			enchant.append(get(i).getString());
+		}
+		return enchant.toString();
+	}
 
 }

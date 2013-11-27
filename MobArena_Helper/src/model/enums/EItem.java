@@ -15,6 +15,8 @@ import model.EnumName;
  */
 public enum EItem {
 
+	custom(-1,0,"",null),
+	
 	//Blocks
 	stone(1,0,"STONE",EItemCat.block),
 	grass(2,0,"GRASS",EItemCat.block),
@@ -503,7 +505,7 @@ public enum EItem {
 	private int meta;
 	private String realname;
 	private EItemCat category;
-	private Image image;
+	private Image image = null;
 
 	private EItem(int id, int meta, String realname, EItemCat category) {
 		this.id = id;
@@ -533,7 +535,7 @@ public enum EItem {
 			imagepath.append(meta);
 		}
 		imagepath.append(".png");
-		this.image = new ImageIcon(getClass().getClassLoader().getResource(imagepath.toString())).getImage();
+		if(this.id!=-1) this.image = new ImageIcon(getClass().getClassLoader().getResource(imagepath.toString())).getImage();
 	}
 
 	public int getId() {

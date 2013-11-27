@@ -52,8 +52,13 @@ public class ArmorList extends ItemList {
 			}
 
 			if (tab_item[0].matches("(\\d)+")) {
-				this.add(new Armor(EItem.searchBy(
-						Integer.parseInt(tab_item[0]), data), enchantments));
+				EItem ei = EItem.searchBy(Integer.parseInt(tab_item[0]),data);
+				if (ei!=null) this.add(new Armor(ei, enchantments));
+				else {
+					CustomItem ci = new CustomItem(Integer.parseInt(tab_item[0]), data);
+					ci.getEnchantements().fill(enchantments);
+					this.add(ci);
+				}
 			} else {
 				this.add(new Armor(EItem.searchBy(tab_item[0], data), enchantments));
 			}
@@ -76,7 +81,7 @@ public class ArmorList extends ItemList {
 				sArmor.append(this.get(i).getString()+",");
 			}
 			int length = sArmor.length();
-			sArmor.delete(length-1, length);
+			sArmor.delete(length-2, length);
 		}
 		
 		return sArmor.toString();
@@ -90,7 +95,7 @@ public class ArmorList extends ItemList {
 
 	private int partition(ArmorList list,int deb,int fin) {
 		int compt=deb;
-		Item pivot=list.get(deb);
+		AbstractItem pivot=list.get(deb);
 
 		for(int i=deb+1;i<=fin;i++) {
 			float lid = (list.get(i).getItem().getId()-298)/4f;

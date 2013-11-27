@@ -18,7 +18,9 @@ public class CellListEItem extends CellListCaracs{
 		lib_desc.setBounds(44, 0, 256, 30);
 
 		image.setBounds(3, 3, 24, 24);
-		image.setIcon(new ImageIcon(CellListWave.scaleImage(this.eitem.getImage(), image)));
+		if (this.eitem!=EItem.custom) {
+			image.setIcon(new ImageIcon(CellListWave.scaleImage(this.eitem.getImage(), image)));
+		}
 		add(image);
 		
 		setSize(300,30);

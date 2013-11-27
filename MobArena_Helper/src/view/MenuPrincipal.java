@@ -1669,7 +1669,7 @@ public class MenuPrincipal extends JFrame {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				ItemList il = new ItemList();
-				Item it_fee = config.getEntry_fee_item();
+				AbstractItem it_fee = config.getEntry_fee_item();
 				if (it_fee!=null) {
 					il.add(config.getEntry_fee_item());
 				}

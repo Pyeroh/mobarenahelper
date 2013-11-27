@@ -2,6 +2,8 @@ package model;
 
 import java.util.*;
 
+import org.yaml.snakeyaml.nodes.Tag;
+
 /**
  * Un groupe d'arènes. Est généralement chargé à partir d'un fichier, et est dans tous les cas intégré à un seul fichier à la sauvegarde des données.
  * @author Pyeroh
@@ -82,12 +84,14 @@ public class Arenas {
 		settings = new GlobalSettings(globalsettings);
 		
 		GestYaml gclasse = new GestYaml(listclasses);
-		//Extraction des classes
-		for (Iterator<String> it = listclasses.keySet().iterator(); it.hasNext();) {
-			String nomclasse = (String) it.next();
-			new Classe(nomclasse, gclasse.getMap(nomclasse));
+		if (gclasse.getTag()!=Tag.NULL) {
+			//Extraction des classes
+			for (Iterator<String> it = listclasses.keySet().iterator(); it
+					.hasNext();) {
+				String nomclasse = (String) it.next();
+				new Classe(nomclasse, gclasse.getMap(nomclasse));
+			}
 		}
-		
 		GestYaml garena = new GestYaml(listarenas);
 		//Extraction des arènes
 		for (Iterator<String> it = listarenas.keySet().iterator(); it.hasNext();) {
@@ -101,7 +105,7 @@ public class Arenas {
 	 * @return
 	 * @throws ArenaException en cas d'erreur sur l'export des données (pas de classes à ajouter par exemple...)
 	 */
-	public LinkedHashMap<String, Object> getMap() throws ArenaException {
+	public LinkedHashMap<String, Object> getMap() {
 		listarenas = new LinkedHashMap<>();
 		for(int i=0;i<arraylistarenas.size();i++) {
 			Arena lArene = arraylistarenas.get(i);
@@ -115,12 +119,11 @@ public class Arenas {
 				listclasses.put(classe.getName(), classe.getMap());
 			}
 		}
-		if(getALclasses().size()==1) throw new ArenaException("There must be classes to add in the file !");
 		
 		LinkedHashMap<String, Object> file = new LinkedHashMap<>();
 		file.put("global-settings", settings.getMap());
 		
-		file.put("classes", listclasses);
+		file.put("classes", listclasses.isEmpty() ? null : listclasses);
 		file.put("arenas", listarenas);
 		
 		return file;
