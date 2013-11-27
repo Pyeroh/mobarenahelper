@@ -13,6 +13,8 @@ import javax.swing.event.ListSelectionListener;
 import model.*;
 import model.enums.EEnchantItem;
 import model.enums.EEnchantment;
+import model.item.AbstractItem;
+import model.item.Enchantment;
 import model.lists.EnchantList;
 import view.JWideComboBox;
 import view.cells.CellListCaracs;

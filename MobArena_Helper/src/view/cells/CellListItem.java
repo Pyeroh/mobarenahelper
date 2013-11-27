@@ -1,6 +1,6 @@
 package view.cells;
 
-import model.*;
+import model.item.*;
 
 public class CellListItem extends CellListEItem {
 

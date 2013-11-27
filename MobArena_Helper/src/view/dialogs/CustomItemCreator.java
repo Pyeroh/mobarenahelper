@@ -8,8 +8,8 @@ import java.text.NumberFormat;
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 
-import model.CustomItem;
 import model.Messages;
+import model.item.CustomItem;
 import view.cells.CellListCaracs;
 
 public class CustomItemCreator extends JDialog{

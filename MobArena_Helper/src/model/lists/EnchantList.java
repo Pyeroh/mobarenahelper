@@ -2,9 +2,9 @@ package model.lists;
 
 import java.util.ArrayList;
 
-import model.Enchantment;
-import model.Item;
 import model.enums.EEnchantment;
+import model.item.Enchantment;
+import model.item.Item;
 
 /**
  * Liste d'enchantements pour un item donné

@@ -2,8 +2,8 @@ package model.lists;
 
 import java.util.ArrayList;
 
-import model.*;
 import model.enums.EItem;
+import model.item.*;
 
 /**
  * Liste des pièces d'armure ; permet de remplir une liste à partir d'une chaine, et de la trier

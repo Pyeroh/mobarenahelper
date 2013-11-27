@@ -3,6 +3,8 @@ package model;
 import java.util.LinkedHashMap;
 
 import model.enums.EItem;
+import model.item.AbstractItem;
+import model.item.Item;
 
 /**
  * Les paramètres de configuration d'une arène.

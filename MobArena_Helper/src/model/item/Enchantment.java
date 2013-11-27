@@ -1,4 +1,4 @@
-package model;
+package model.item;
 
 import model.enums.EEnchantItem;
 import model.enums.EEnchantment;
