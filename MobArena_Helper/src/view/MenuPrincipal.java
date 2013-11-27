@@ -203,7 +203,7 @@ public class MenuPrincipal extends JFrame {
 	private JPanel pan_coordinates;
 
 	public MenuPrincipal() throws ParseException{
-		super("MobArena Helper v2.1");
+		super("MobArena Helper v2.2");
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
