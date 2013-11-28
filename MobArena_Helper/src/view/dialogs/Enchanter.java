@@ -1,20 +1,15 @@
 package view.dialogs;
 
 import java.awt.Font;
-import java.awt.Image;
 import java.awt.event.*;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
-import model.*;
-import model.enums.EEnchantItem;
-import model.enums.EEnchantment;
-import model.item.AbstractItem;
-import model.item.Enchantment;
+import model.Messages;
+import model.enums.*;
+import model.item.*;
 import model.lists.EnchantList;
 import view.JWideComboBox;
 import view.cells.CellListCaracs;
@@ -33,9 +28,7 @@ public class Enchanter extends JDialog {
 	private JLabel lib_level;
 	private JWideComboBox combo_level;
 	private JButton btn_add;
-	private JLabel lib_help;
 
-	//TODO changer le mode ajout/suppr pour un ajout/suppr/modif
 	public Enchanter(JDialog dial, AbstractItem item) {
 		super();
 		setModalityType(ModalityType.APPLICATION_MODAL);
@@ -57,20 +50,20 @@ public class Enchanter extends JDialog {
 		list_enchant.setCellRenderer(render);
 		list_enchant.addMouseListener(render.getHandler());
 		list_enchant.addMouseMotionListener(render.getHandler());
-		list_enchant.addListSelectionListener(new ListSelectionListener() {
+/*		list_enchant.addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				list_enchant.clearSelection();
 			}
-		});
+		});*/
 		list_enchant.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 
 				if(list_enchant.getModel().getSize()!=0) {
 					list_enchant.ensureIndexIsVisible(list_enchant.getSelectedIndex());
+					int hoverIndex = ((HoverListCellRenderer) list_enchant.getCellRenderer()).getHoverIndex();
 					if(e.getButton()==MouseEvent.BUTTON2) {
-						int hoverIndex = ((HoverListCellRenderer) list_enchant.getCellRenderer()).getHoverIndex();
 						if(hoverIndex!=-1) {
 							Enchantment enchant = Enchanter.this.item.getEnchantements().get(hoverIndex);
 							int choice = JOptionPane.showConfirmDialog(
@@ -80,9 +73,24 @@ public class Enchanter extends JDialog {
 									JOptionPane.YES_NO_OPTION);
 							if(choice==JOptionPane.YES_OPTION) {
 								Enchanter.this.item.getEnchantements().remove(enchant);
+								//list_enchant.clearSelection();
 								load();
 							}
 						}
+					}
+					else if(e.getButton()==MouseEvent.BUTTON1) {
+						if(hoverIndex!=-1) {
+							AbstractItem item = Enchanter.this.item;
+							Enchantment enchant = item.getEnchantements().get(hoverIndex);
+							
+							setVisibleComponents(true);
+							
+							loadEnchantCombo(enchant);
+							
+							loadEnchantLevel(enchant.getEnchantement().getName());
+							combo_level.setSelectedIndex(enchant.getLvl()-1);
+						}
+						else list_enchant.clearSelection();
 					}
 				}
 
@@ -108,7 +116,22 @@ public class Enchanter extends JDialog {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				if(combo_enchantment.isFocusOwner()){
-					loadEnchantLevel((String) combo_enchantment.getSelectedItem());
+					if (list_enchant.isSelectionEmpty()) {
+						loadEnchantLevel((String) combo_enchantment.getSelectedItem());
+					}
+					else {
+						int index = list_enchant.getSelectedIndex();
+						Enchantment enchant = Enchanter.this.item.getEnchantements().get(index);
+						String enchant_name = (String) combo_enchantment.getSelectedItem();
+						enchant.setEnchantement(EEnchantment.getByName(enchant_name));
+						loadEnchantLevel(enchant_name);
+						int lvl = Math.min(enchant.getLvl(),combo_level.getModel().getSize());
+						enchant.setLvl(lvl);
+						combo_level.setSelectedIndex(lvl-1);
+						loadEnchantments();
+						list_enchant.setSelectedIndex(index);
+						
+					}
 				}
 			}
 		});
@@ -122,6 +145,20 @@ public class Enchanter extends JDialog {
 
 		combo_level = new JWideComboBox();
 		combo_level.setBounds(270, 108, 72, 26);
+		combo_level.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if(combo_level.isFocusOwner()) {
+					if(!list_enchant.isSelectionEmpty()) {
+						int index = list_enchant.getSelectedIndex();
+						Enchantment enchant = Enchanter.this.item.getEnchantements().get(index);
+						enchant.setLvl(combo_level.getSelectedIndex()+1);
+						loadEnchantments();
+						list_enchant.setSelectedIndex(index);
+					}
+				}
+			}
+		});
 		getContentPane().add(combo_level);
 
 		btn_add = new JButton(Messages.getString("Enchanter.btn_add.text")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -129,23 +166,32 @@ public class Enchanter extends JDialog {
 		btn_add.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
+				setVisibleComponents(true);
+				
 				AbstractItem item = Enchanter.this.item;
-				EEnchantment enchant = EEnchantment.getByName((String) combo_enchantment.getSelectedItem());
-				int lvl = combo_level.getSelectedIndex()+1;
-				item.getEnchantements().add(new Enchantment(enchant, lvl));
-
-				load();
+				ArrayList<EEnchantment> enchant_list;
+				if(item instanceof CustomItem) enchant_list = EEnchantItem.getByItem(EItem.enchanted_book);
+				else enchant_list = EEnchantItem.getByItem(item.getItem());
+				enchant_list.removeAll(item.getEnchantements().getEEnchantmentList());
+				
+				if(enchant_list.size()==1) {
+					btn_add.setVisible(false);
+				}
+				
+				Enchantment enchant = new Enchantment(enchant_list.get(0), 1);
+				item.getEnchantements().add(enchant);
+				loadEnchantCombo(enchant);
+				
+				loadEnchantLevel(enchant.getEnchantement().getName());
+				combo_level.setSelectedIndex(enchant.getLvl()-1);
+				loadEnchantments();
+				int index = item.getEnchantements().size()-1;
+				list_enchant.setSelectedIndex(index);
+				list_enchant.ensureIndexIsVisible(index);
 			}
 		});
-		btn_add.setBounds(270, 151, 144, 28);
+		btn_add.setBounds(158, 5, 86, 25);
 		getContentPane().add(btn_add);
-
-		lib_help = new JLabel("");
-		lib_help.setToolTipText(Messages.getString("Enchanter.lib_help.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
-		lib_help.setBounds(220, 6, 24, 24);
-		Image img = CellListCaracs.scaleImage(new ImageIcon(Enchanter.class.getResource("/gui/pics/question.png")).getImage(), lib_help);
-		lib_help.setIcon(new ImageIcon(img));
-		getContentPane().add(lib_help);
 
 		load();
 
@@ -157,32 +203,53 @@ public class Enchanter extends JDialog {
 
 	private void load() {
 
-		lib_level.setVisible(false);
-		combo_level.setVisible(false);
-		btn_add.setVisible(false);
+		setVisibleComponents(false);
 
-		EnchantList enchants = item.getEnchantements();
-		DefaultListModel<CellListCaracs> mod_enchants = new DefaultListModel<CellListCaracs>();
-		for(int i=0;i<enchants.size();i++) {
-			mod_enchants.addElement(new CellListCaracs(enchants.get(i).toString()));
-		}
-		list_enchant.setModel(mod_enchants);
+		loadEnchantments();
 
-		ArrayList<EEnchantment> enchant_list = EEnchantItem.getByItem(item.getItem());
-		enchant_list.removeAll(enchants.getEEnchantmentList());
+		ArrayList<EEnchantment> enchant_list;
+		if(item instanceof CustomItem) enchant_list = EEnchantItem.getByItem(EItem.enchanted_book);
+		else enchant_list = EEnchantItem.getByItem(item.getItem());
+		
+		enchant_list.removeAll(item.getEnchantements().getEEnchantmentList());
 		DefaultComboBoxModel<String> mod_enchant = new DefaultComboBoxModel<>();
 		for(int i=0;i<enchant_list.size();i++) {
 			mod_enchant.addElement(enchant_list.get(i).getName());
 		}
 		combo_enchantment.setModel(mod_enchant);
 		combo_enchantment.setSelectedIndex(-1);
+		
+		if(enchant_list.size()>0) btn_add.setVisible(true);
+		else btn_add.setVisible(false);
 
+	}
+	
+	private void loadEnchantments() {
+		EnchantList enchants = item.getEnchantements();
+		DefaultListModel<CellListCaracs> mod_enchants = new DefaultListModel<CellListCaracs>();
+		for(int i=0;i<enchants.size();i++) {
+			mod_enchants.addElement(new CellListCaracs(enchants.get(i).toString()));
+		}
+		list_enchant.setModel(mod_enchants);
+	}
+	
+	private void loadEnchantCombo(Enchantment enchant) {
+		ArrayList<EEnchantment> enchant_list;
+		if(item instanceof CustomItem) enchant_list = EEnchantItem.getByItem(EItem.enchanted_book);
+		else enchant_list = EEnchantItem.getByItem(item.getItem());
+		
+		enchant_list.removeAll(item.getEnchantements().getEEnchantmentList());
+		enchant_list.add(0, enchant.getEnchantement());
+		DefaultComboBoxModel<String> mod_enchant = new DefaultComboBoxModel<>();
+		for(int i=0;i<enchant_list.size();i++) {
+			mod_enchant.addElement(enchant_list.get(i).getName());
+		}
+		combo_enchantment.setModel(mod_enchant);
+		combo_enchantment.setSelectedIndex(0);
 	}
 
 	private void loadEnchantLevel(String sEnchant) {
-		lib_level.setVisible(true);
-		combo_level.setVisible(true);
-		btn_add.setVisible(true);
+		setVisibleComponents(true);
 
 		EEnchantment e = EEnchantment.getByName(sEnchant);
 
@@ -214,4 +281,12 @@ public class Enchanter extends JDialog {
 		combo_level.setSelectedIndex(0);
 
 	}
+	
+	private void setVisibleComponents(boolean visible) {
+		lib_enchantment.setVisible(visible);
+		combo_enchantment.setVisible(visible);
+		lib_level.setVisible(visible);
+		combo_level.setVisible(visible);
+	}
+	
 }
