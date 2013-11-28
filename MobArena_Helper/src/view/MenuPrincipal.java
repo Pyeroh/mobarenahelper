@@ -202,6 +202,7 @@ public class MenuPrincipal extends JFrame {
 	private JLabel lib_command_help;
 	private JButton btn_reward;
 	private JPanel pan_coordinates;
+	private JPanel pan_rewards;
 
 	public MenuPrincipal() throws ParseException{
 		super("MobArena Helper v2.2");
@@ -344,8 +345,9 @@ public class MenuPrincipal extends JFrame {
 						loadArena(0);
 						tabpan_config.setEnabledAt(1, true);
 						tabpan_config.setEnabledAt(2, true);
-						tabpan_config.setEnabledAt(3, true);
-						tabpan_config.setEnabledAt(4, true);
+						//tabpan_config.setEnabledAt(3, true);
+						//tabpan_config.setEnabledAt(4, true);
+						tabpan_config.setEnabledAt(5, true);
 					} catch (Exception e1) {
 						e1.printStackTrace();
 
@@ -484,8 +486,9 @@ public class MenuPrincipal extends JFrame {
 							loadArena(combo_arena.getSelectedIndex());
 							tabpan_config.setEnabledAt(1, true);
 							tabpan_config.setEnabledAt(2, true);
-							tabpan_config.setEnabledAt(3, true);
-							tabpan_config.setEnabledAt(4, true);
+							//tabpan_config.setEnabledAt(3, true);
+							//tabpan_config.setEnabledAt(4, true);
+							tabpan_config.setEnabledAt(5, true);
 						} else
 							JOptionPane
 							.showMessageDialog(
@@ -2186,11 +2189,15 @@ public class MenuPrincipal extends JFrame {
 		
 		pan_coordinates = new JPanel();
 		pan_coordinates.setLayout(null);
+		
+		pan_rewards = new JPanel();
+		pan_rewards.setLayout(null);
 
 		tabpan_config.addTab(Messages.getString("MenuPrincipal.tabpan_arena_wave.title"), pan_arena_wave); //$NON-NLS-2$ //$NON-NLS-1$
 		tabpan_config.addTab(Messages.getString("MenuPrincipal.tabpan_classes.title"), pan_classes); //$NON-NLS-2$ //$NON-NLS-1$
 		tabpan_config.addTab(Messages.getString("MenuPrincipal.tabpan_arena_settings.title"), pan_arena_settings); //$NON-NLS-2$ //$NON-NLS-1$
-		tabpan_config.addTab(Messages.getString("MenuPrincipal.pan_coordinates.title"), null, pan_coordinates, null); //$NON-NLS-1$
+		tabpan_config.addTab(Messages.getString("MenuPrincipal.pan_coordinates.title"), pan_coordinates); //$NON-NLS-1$
+		tabpan_config.addTab(Messages.getString("MenuPrincipal.pan_rewards.title"), pan_rewards); //$NON-NLS-1$
 		tabpan_config.addTab(Messages.getString("MenuPrincipal.pan_global_settings.title"), pan_global_settings); //$NON-NLS-1$
 
 		raz();
@@ -2228,6 +2235,7 @@ public class MenuPrincipal extends JFrame {
 		tabpan_config.setEnabledAt(2, false);
 		tabpan_config.setEnabledAt(3, false);
 		tabpan_config.setEnabledAt(4, false);
+		tabpan_config.setEnabledAt(5, false);
 		tabpan_config.setSelectedIndex(0);
 		loadData_ClassConfig(Classe.classe_list, -1);
 		list_recurrent.setModel(new DefaultListModel<CellListWave>());
