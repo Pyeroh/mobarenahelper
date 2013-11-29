@@ -200,9 +200,17 @@ public class MenuPrincipal extends JFrame {
 	private JLabel lib_command;
 	private JFormattedTextField sai_command;
 	private JLabel lib_command_help;
-	private JButton btn_reward;
 	private JPanel pan_coordinates;
 	private JPanel pan_rewards;
+	private JLabel lib_each;
+	private JScrollPane scrpan_each;
+	private JList<CellListCaracs> list_each;
+	private JLabel lib_after;
+	private JScrollPane scrpan_after;
+	private JList<CellListCaracs> list_after;
+	private JButton btn_add_each;
+	private JButton btn_add_after;
+	private JButton btn_set_rewards;
 
 	public MenuPrincipal() throws ParseException{
 		super("MobArena Helper v2.2");
@@ -350,7 +358,7 @@ public class MenuPrincipal extends JFrame {
 						tabpan_config.setEnabledAt(5, true);
 					} catch (Exception e1) {
 						e1.printStackTrace();
-
+						
 						JOptionPane.showMessageDialog(rootPane, Messages.getString("MenuPrincipal.message.incorrectFileFormat"),Messages.getString("Message.title.criticalError"),JOptionPane.ERROR_MESSAGE);
 
 					}
@@ -570,11 +578,6 @@ public class MenuPrincipal extends JFrame {
 		scrpan_single = new JScrollPane(list_single);
 		scrpan_single.setBounds(9, 295, 252, 180);
 		pan_arena_wave.add(scrpan_single);
-		
-		btn_reward = new JButton(Messages.getString("MenuPrincipal.btnReward.text"));
-		btn_reward.setVisible(false);
-		btn_reward.setBounds(87, 26, 116, 23);
-		pan_arena_wave.add(btn_reward);
 
 		pan_conf = new JPanel();
 		pan_conf.setBounds(274, 8, 474, 467);
@@ -1492,7 +1495,7 @@ public class MenuPrincipal extends JFrame {
 		pan_class_limit.setBounds(573, 6, 175, 40);
 		pan_classes.add(pan_class_limit);
 
-		lib_class_limit = new JLabel(Messages.getString("MenuPrincipal.lblNewLabel.text"));
+		lib_class_limit = new JLabel(Messages.getString("MenuPrincipal.lib_class_limit.text"));
 		lib_class_limit.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lib_class_limit.setBounds(6, 8, 95, 25);
 		pan_class_limit.add(lib_class_limit);
@@ -1525,7 +1528,7 @@ public class MenuPrincipal extends JFrame {
 		lib_world.setBounds(6, 6, 73, 25);
 		pan_arena_settings.add(lib_world);
 
-		sai_world = new JFormattedTextField(new MaskFormatter("????????????????????????????????????????"));
+		sai_world = new JFormattedTextField(new MaskFormatter("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"));
 		sai_world.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -2192,12 +2195,54 @@ public class MenuPrincipal extends JFrame {
 		
 		pan_rewards = new JPanel();
 		pan_rewards.setLayout(null);
-
+		
+		lib_each = new JLabel(Messages.getString("MenuPrincipal.lib_each.text")); //$NON-NLS-1$
+		lib_each.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lib_each.setBounds(6, 6, 110, 25);
+		pan_rewards.add(lib_each);
+		
+		btn_add_each = new JButton(Messages.getString("MenuPrincipal.btn_add_each.text")); //$NON-NLS-1$
+		btn_add_each.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btn_add_each.setBounds(178, 8, 90, 25);
+		pan_rewards.add(btn_add_each);
+		
+		list_each = new JList<CellListCaracs>();
+		
+		scrpan_each = new JScrollPane(list_each);
+		scrpan_each.setBounds(6, 43, 262, 146);
+		pan_rewards.add(scrpan_each);
+		
 		tabpan_config.addTab(Messages.getString("MenuPrincipal.tabpan_arena_wave.title"), pan_arena_wave); //$NON-NLS-2$ //$NON-NLS-1$
 		tabpan_config.addTab(Messages.getString("MenuPrincipal.tabpan_classes.title"), pan_classes); //$NON-NLS-2$ //$NON-NLS-1$
 		tabpan_config.addTab(Messages.getString("MenuPrincipal.tabpan_arena_settings.title"), pan_arena_settings); //$NON-NLS-2$ //$NON-NLS-1$
 		tabpan_config.addTab(Messages.getString("MenuPrincipal.pan_coordinates.title"), pan_coordinates); //$NON-NLS-1$
 		tabpan_config.addTab(Messages.getString("MenuPrincipal.pan_rewards.title"), pan_rewards); //$NON-NLS-1$
+		
+		lib_after = new JLabel(Messages.getString("MenuPrincipal.lib_after.text")); //$NON-NLS-1$
+		lib_after.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lib_after.setBounds(6, 218, 121, 25);
+		pan_rewards.add(lib_after);
+		
+		list_after = new JList<CellListCaracs>();
+		
+		scrpan_after = new JScrollPane(list_after);
+		scrpan_after.setBounds(6, 255, 262, 146);
+		pan_rewards.add(scrpan_after);
+		
+		btn_add_after = new JButton(Messages.getString("MenuPrincipal.btn_add_after.text")); //$NON-NLS-1$
+		btn_add_after.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btn_add_after.setBounds(178, 220, 90, 25);
+		pan_rewards.add(btn_add_after);
+		
+		JSeparator separator_4 = new JSeparator();
+		separator_4.setOrientation(SwingConstants.VERTICAL);
+		separator_4.setBounds(280, 6, 2, 395);
+		pan_rewards.add(separator_4);
+		
+		btn_set_rewards = new JButton(Messages.getString("MenuPrincipal.btn_set_rewards.text")); //$NON-NLS-1$
+		btn_set_rewards.setFont(new Font("Tahoma", Font.BOLD, 13));
+		btn_set_rewards.setBounds(294, 177, 121, 58);
+		pan_rewards.add(btn_set_rewards);
 		tabpan_config.addTab(Messages.getString("MenuPrincipal.pan_global_settings.title"), pan_global_settings); //$NON-NLS-1$
 
 		raz();

@@ -42,7 +42,7 @@ public class ItemSelector extends JDialog {
 	private JList<CellListItem> list_selected;
 	private JLabel lib_selected;
 	private JButton btn_enchant;
-	private JButton btn_addcustom;
+	private JButton btn_add_custom;
 
 	/**
 	 * Constructeur d'un sélecteur d'items à partir de la liste {@code items} et
@@ -148,8 +148,8 @@ public class ItemSelector extends JDialog {
 			}
 		});
 		
-		btn_addcustom = new JButton(Messages.getString("ItemSelector.btnAddCustom.text")); //$NON-NLS-1$
-		btn_addcustom.addMouseListener(new MouseAdapter() {
+		btn_add_custom = new JButton(Messages.getString("ItemSelector.btn_add_custom.text")); //$NON-NLS-1$
+		btn_add_custom.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				CustomItem ci = new CustomItemCreator(ItemSelector.this.frame).getItem();
@@ -162,9 +162,9 @@ public class ItemSelector extends JDialog {
 				
 			}
 		});
-		btn_addcustom.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btn_addcustom.setBounds(360, 116, 118, 42);
-		getContentPane().add(btn_addcustom);
+		btn_add_custom.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btn_add_custom.setBounds(360, 116, 118, 42);
+		getContentPane().add(btn_add_custom);
 		btn_add.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btn_add.setBounds(368, 170, 101, 28);
 		getContentPane().add(btn_add);
