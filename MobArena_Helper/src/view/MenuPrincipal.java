@@ -213,7 +213,7 @@ public class MenuPrincipal extends JFrame {
 	private JButton btn_set_rewards;
 
 	public MenuPrincipal() throws ParseException{
-		super("MobArena Helper v2.2");
+		super("MobArena Helper v2.3");
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
