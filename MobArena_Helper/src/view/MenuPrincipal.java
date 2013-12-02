@@ -255,7 +255,9 @@ public class MenuPrincipal extends JFrame {
 						((JFormattedTextField)component).commitEdit();
 					} catch (ParseException e1) {}
 				}
-				majData_Arena(component);
+				if (((JFormattedTextField) component).getValue()!=null) {
+					majData_Arena(component);
+				}
 			}
 		};
 
@@ -1632,11 +1634,9 @@ public class MenuPrincipal extends JFrame {
 				try {
 					source.commitEdit();
 				} catch (ParseException e1) {}
-				int value = 0;
-				float fvalue = 0f;
-				if(source.getValue() instanceof Double) fvalue = (float)((double) source.getValue());
-				else value = (int)((long)source.getValue());
-				//int value = Integer.parseInt(source.getText());
+				Number nvalue = (Number) source.getValue();
+				int value = nvalue.intValue();
+				float fvalue = nvalue.floatValue();
 
 				if(source==sai_entry) config.setEntry_fee_money(fvalue);
 				else if(source==sai_min_players) config.setMin_players(value);
@@ -1682,6 +1682,7 @@ public class MenuPrincipal extends JFrame {
 				}
 				il = new ItemSelector(MenuPrincipal.this, il, 1, false).getItemList();
 				if(il.size()!=0) config.setEntry_fee_item(il.get(0));
+				else config.setEntry_fee_item(null);
 			}
 		});
 		btn_entry.setToolTipText(Messages.getString("MenuPrincipal.lib_entry.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -2737,6 +2738,8 @@ public class MenuPrincipal extends JFrame {
 		Arena lArene = arenas.getALarenas().get(combo_arena.getSelectedIndex());
 		ArrayList<Wave> waveList = lArene.getWavesType(list_sel == list_recurrent ? ECatW.recurrent	: ECatW.single);
 		Integer val_src = ((Number) source.getValue()).intValue();
+		
+		
 
 		if(source==sai_wave){
 

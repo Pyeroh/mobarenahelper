@@ -177,10 +177,10 @@ public class Classe {
 			sItems.append(", "+EItem.hay_block.getRealName());
 			if(horse!=1) sItems.append(":"+horse);
 		}
-		map.put("items", sItems.toString());
+		map.put("items", sItems.toString().trim());
 
 		//Armor
-		map.put("armor", armor.getString());
+		map.put("armor", armor.getString().trim());
 
 		if(permissions!=null) {
 			if(permissions.size()!=0) map.put("permissions", permissions);

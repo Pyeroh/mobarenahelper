@@ -29,49 +29,53 @@ public class ItemList extends ArrayList<AbstractItem> {
 	 */
 	public void fill(String items) {
 
-		String[] sItem = items.replace('\'', ' ')
-				.split(",");
-		for (int i = 0; i < sItem.length; i++) {
-			//SE : sans espace --> test d'enchantement
-			String sItemSE[] = sItem[i].trim().split(" ");
+		if (!items.trim().isEmpty()) {
+			String[] sItem = items.replace('\'', ' ').split(",");
+			for (int i = 0; i < sItem.length; i++) {
+				//SE : sans espace --> test d'enchantement
+				String sItemSE[] = sItem[i].trim().split(" ");
 
-			String[] tab_item = sItemSE[0].split(":");
-			int data = 0;
-			int quantity = 1;
-			switch (tab_item.length) {
-			case 1:
-				break;
-			case 2:
-				quantity = Integer.parseInt(tab_item[1]);
-				break;
-			case 3:
-				data = Integer.parseInt(tab_item[1]);
-				quantity = Integer.parseInt(tab_item[2]);
-				break;
-			default:
-				break;
-			}
-
-			String[] enchantments = null;
-			if (sItemSE.length == 2) {
-				enchantments = sItemSE[1].split(";");
-			}
-
-			if (tab_item[0].matches("(\\d)+")) {
-				EItem ei = EItem.searchBy(Integer.parseInt(tab_item[0]),data);
-				if (ei!=null) this.add(new Item(ei, quantity, enchantments));
-				else {
-					CustomItem ci = new CustomItem(Integer.parseInt(tab_item[0]), data, quantity);
-					if (enchantments!=null) {
-						ci.getEnchantements().fill(enchantments);
-					}
-					this.add(ci);
+				String[] tab_item = sItemSE[0].split(":");
+				int data = 0;
+				int quantity = 1;
+				switch (tab_item.length) {
+				case 1:
+					break;
+				case 2:
+					quantity = Integer.parseInt(tab_item[1]);
+					break;
+				case 3:
+					data = Integer.parseInt(tab_item[1]);
+					quantity = Integer.parseInt(tab_item[2]);
+					break;
+				default:
+					break;
 				}
-			} else {
-				this.add(new Item(EItem.searchBy(tab_item[0], data),
-						quantity, enchantments));
-			}
 
+				String[] enchantments = null;
+				if (sItemSE.length == 2) {
+					enchantments = sItemSE[1].split(";");
+				}
+
+				if (tab_item[0].matches("(\\d)+")) {
+					EItem ei = EItem.searchBy(Integer.parseInt(tab_item[0]),
+							data);
+					if (ei != null)
+						this.add(new Item(ei, quantity, enchantments));
+					else {
+						CustomItem ci = new CustomItem(
+								Integer.parseInt(tab_item[0]), data, quantity);
+						if (enchantments != null) {
+							ci.getEnchantements().fill(enchantments);
+						}
+						this.add(ci);
+					}
+				} else {
+					this.add(new Item(EItem.searchBy(tab_item[0], data),
+							quantity, enchantments));
+				}
+
+			}
 		}
 	}
 
@@ -93,7 +97,7 @@ public class ItemList extends ArrayList<AbstractItem> {
 			sItems.delete(length-2, length);
 		}
 
-		return sItems.toString();
+		return sItems.toString().trim();
 	}
 
 	/**

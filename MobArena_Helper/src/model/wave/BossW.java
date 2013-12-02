@@ -119,7 +119,7 @@ public class BossW extends Wave{
 				wave.abilities.add(EAbilities.valueOf(abi[i].replace('-', '_').trim()));
 			}
 		}
-		wave.getMonstres().add(new Monstre(EMonsterAliases.valueOf(g.getString("monster")).getMonstre(),1));
+		wave.getMonstres().add(new Monstre(EMonsterAliases.getByName(g.getString("monster")).getMonstre(),1));
 		if(map.containsKey("reward")){
 			wave.getReward().fill(g.getString("reward"));
 		}
@@ -127,7 +127,7 @@ public class BossW extends Wave{
 		return wave;
 	}
 
-	public LinkedHashMap<String, Object> getMap() {
+	public LinkedHashMap<String, Object> getMap() throws ArenaException {
 		LinkedHashMap<String, Object> vague = super.getMap();
 
 		if(!this.getBossName().equals("")) vague.put("name", this.getBossName());

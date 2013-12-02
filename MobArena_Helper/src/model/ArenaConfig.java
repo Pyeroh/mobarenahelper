@@ -2,9 +2,8 @@ package model;
 
 import java.util.LinkedHashMap;
 
-import model.enums.EItem;
 import model.item.AbstractItem;
-import model.item.Item;
+import model.lists.ItemList;
 
 /**
  * Les paramètres de configuration d'une arène.
@@ -91,13 +90,16 @@ public class ArenaConfig {
 			else if(sItems[0].matches("\\-?\\$\\ ?(0|([1-9](?:\\d{0,2}(?:,\\d{3})+|\\d*))?)(?:\\.\\d{1,2}|)")){
 				entry_fee_money = Float.parseFloat(sItems[0].trim().substring(1));
 				if(sItems.length>1) {
-					if(sItems[1].trim().matches("[a-zA-Z]+:(\\d)+")){
-						String[] item = sItems[1].trim().split(":");
-						EItem eitem = EItem.valueOf(item[0]);
-						int quantity =  item.length>1 ? Integer.parseInt(item[1]) : 1;
-						entry_fee_item = new Item(eitem, quantity, null);
-					}
+					ItemList il = new ItemList();
+					il.fill(sItems[1]);
+					entry_fee_item = il.get(0);
 				}
+			}
+			else {
+				entry_fee_money = 0f;
+				ItemList il = new ItemList();
+				il.fill(sItems[0]);
+				entry_fee_item = il.get(0);
 			}
 		}
 		if(g.containsKey("clear-wave-before-next")) clear_wave_before_next = g.getBool("clear-wave-before-next");
@@ -155,10 +157,15 @@ public class ArenaConfig {
 		map.put("protect", protect);
 		
 		String fee = "  ";
-		if(entry_fee_money!=0f) fee += "$"+entry_fee_money+", ";
+		if(entry_fee_money!=0f) {
+			fee += "$";
+			if(entry_fee_money==(int)entry_fee_money) fee += (int)entry_fee_money;
+			else fee += entry_fee_money;
+			fee += ", ";
+		}
 		if(entry_fee_item!=null) fee += entry_fee_item.getString()+", ";
 		
-		map.put("entry-fee", fee.substring(0, fee.length()-2));
+		map.put("entry-fee", fee.substring(0, fee.length()-2).trim());
 		map.put("clear-wave-before-next", clear_wave_before_next);
 		map.put("clear-boss-before-next", clear_boss_before_next);
 		map.put("clear-wave-before-boss", clear_wave_before_boss);

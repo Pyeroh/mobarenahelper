@@ -49,7 +49,7 @@ public class DefaultW extends Wave{
 	}
 
 	@Override
-	public LinkedHashMap<String, Object> getMap() {
+	public LinkedHashMap<String, Object> getMap() throws ArenaException {
 		LinkedHashMap<String, Object> vague = super.getMap();
 		if(this.getGrowth()!=EGrowth.old) vague.put("growth", this.getGrowth().name());
 		if(this.isFixed())vague.put("fixed", this.isFixed());
@@ -85,7 +85,7 @@ public class DefaultW extends Wave{
 			Set<String> monsters = g.getMap("monsters").keySet();
 			for (Iterator<String> it = monsters.iterator(); it.hasNext();) {
 				String monstre = (String) it.next();
-				wave.getMonstres().add(new Monstre(EMonsterAliases.valueOf(monstre).getMonstre(), g.getInt("monsters."+monstre)));
+				wave.getMonstres().add(new Monstre(EMonsterAliases.getByName(monstre).getMonstre(), g.getInt("monsters."+monstre)));
 			}
 		}
 

@@ -105,7 +105,7 @@ public class Arenas {
 	 * @return
 	 * @throws ArenaException en cas d'erreur sur l'export des données (pas de classes à ajouter par exemple...)
 	 */
-	public LinkedHashMap<String, Object> getMap() {
+	public LinkedHashMap<String, Object> getMap() throws ArenaException {
 		listarenas = new LinkedHashMap<>();
 		for(int i=0;i<arraylistarenas.size();i++) {
 			Arena lArene = arraylistarenas.get(i);

@@ -131,5 +131,9 @@ public enum EMonsterAliases {
 		
 		return plural;
 	}
+	
+	public static EMonsterAliases getByName(String monster) {
+		return valueOf(monster.trim().replace('-', '_'));
+	}
 
 }

@@ -182,8 +182,9 @@ public abstract class Wave implements Comparable<Wave> {
 	/**
 	 * Renvoie la "map" des informations relatives à la vague
 	 * @return une Map contenant les clés pour les informations de la vague
+	 * @throws ArenaException 
 	 */
-	public LinkedHashMap<String, Object> getMap() {
+	public LinkedHashMap<String, Object> getMap() throws ArenaException {
 		LinkedHashMap<String, Object> vague = new LinkedHashMap<>();
 
 		vague.put("type", type.name().toLowerCase());
@@ -198,20 +199,27 @@ public abstract class Wave implements Comparable<Wave> {
 		}
 
 
-		if(monstres.size()==1) {
+		if(this instanceof BossW || this instanceof SwarmW) {
 			Monstre monster = monstres.get(0);
 			vague.put("monster", monster.getMonstre().name());
 		}
-		else if(monstres.size()>1){
+		else if(monstres.size()>0){
 			LinkedHashMap<String, Object> mapmonstres = new LinkedHashMap<>();
-			for (int i=0;i<monstres.size();i++) {
-				Monstre monster = monstres.get(i);
-				int probability = monster.getProbability();
-				if(probability==0 || probability>1) mapmonstres.put(EMonsterAliases.valueOf(monster.getMonstre().name()).getPlural().name(), probability);
-				else mapmonstres.put(monster.getMonstre().name(), monster.getProbability());
+			if(monstres.size()==1) {
+				Monstre mmonster = monstres.get(0);
+				mapmonstres.put(mmonster.getMonstre().name(), mmonster.getProbability());
+			}
+			else {
+				for (int i=0;i<monstres.size();i++) {
+					Monstre monster = monstres.get(i);
+					int probability = monster.getProbability();
+					if(probability==0 || probability>1) mapmonstres.put(EMonsterAliases.valueOf(monster.getMonstre().name()).getPlural().name(), probability);
+					else mapmonstres.put(monster.getMonstre().name(), monster.getProbability());
+				}
 			}
 			vague.put("monsters", mapmonstres);
 		}
+		else vague.put("monsters", null);
 
 		return vague;
 	}

@@ -38,16 +38,11 @@ public class SpecialW extends Wave {
 			Set<String> monsters = g.getMap("monsters").keySet();
 			for (Iterator<String> it = monsters.iterator(); it.hasNext();) {
 				String monstre = (String) it.next();
-				wave.getMonstres().add(new Monstre(EMonsterAliases.valueOf(monstre).getMonstre(), g.getInt("monsters."+monstre)));
+				wave.getMonstres().add(new Monstre(EMonsterAliases.getByName(monstre).getMonstre(), g.getInt("monsters."+monstre)));
 			}
 		}
 
 		return wave;
-	}
-	
-	@Override
-	public LinkedHashMap<String, Object> getMap() {
-		return super.getMap();
 	}
 
 }

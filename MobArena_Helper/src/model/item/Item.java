@@ -55,7 +55,7 @@ public class Item extends AbstractItem {
 				}
 			}
 			item.append(getEnchantements().getString());
-			return item.toString();
+			return item.toString().trim();
 		}
 		else return "";
 	}

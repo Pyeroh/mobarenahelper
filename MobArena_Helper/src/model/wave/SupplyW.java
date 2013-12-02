@@ -28,9 +28,17 @@ public class SupplyW extends Wave {
 	}
 
 	@Override
-	public LinkedHashMap<String, Object> getMap() {
+	public LinkedHashMap<String, Object> getMap() throws ArenaException {
 		LinkedHashMap<String, Object> vague = super.getMap();
 
+		if(vague.get("monsters")==null) {
+			if (!vague.containsKey("monster")) {
+				throw new ArenaException(
+						"A supply wave must have monsters to spawn !");
+			}
+			else vague.put("monsters", vague.remove("monster"));
+		}
+		
 		if(drops.size()==1){
 			vague.put("drops", "'"+drops.get(0).getString()+"'");
 		}
@@ -70,7 +78,7 @@ public class SupplyW extends Wave {
 			Set<String> monsters = g.getMap("monsters").keySet();
 			for (Iterator<String> it = monsters.iterator(); it.hasNext();) {
 				String monstre = (String) it.next();
-				wave.getMonstres().add(new Monstre(EMonsterAliases.valueOf(monstre).getMonstre(), g.getInt("monsters."+monstre)));
+				wave.getMonstres().add(new Monstre(EMonsterAliases.getByName(monstre).getMonstre(), g.getInt("monsters."+monstre)));
 			}
 		}
 		if(map.containsKey("drops")){

@@ -54,13 +54,13 @@ public class SwarmW extends Wave{
 		if(map.containsKey("amount")){
 			wave.setAmount(EAmount.valueOf(g.getString("amount")));
 		}
-		wave.getMonstres().add(new Monstre(EMonsterAliases.valueOf(g.getString("monster")).getMonstre(),0));
+		wave.getMonstres().add(new Monstre(EMonsterAliases.getByName(g.getString("monster")).getMonstre(),0));
 
 		return wave;
 	}
 	
 	@Override
-	public LinkedHashMap<String, Object> getMap() {
+	public LinkedHashMap<String, Object> getMap() throws ArenaException {
 		LinkedHashMap<String, Object> vague = super.getMap();		
 		if(this.getAmount()!=EAmount.low) vague.put("amount", this.getAmount().name());
 		

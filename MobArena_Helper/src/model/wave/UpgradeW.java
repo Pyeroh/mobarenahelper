@@ -33,7 +33,7 @@ public class UpgradeW extends Wave {
 	}
 
 	@Override
-	public LinkedHashMap<String, Object> getMap() {
+	public LinkedHashMap<String, Object> getMap() throws ArenaException {
 		LinkedHashMap<String, Object> map = super.getMap();
 		
 		LinkedHashMap<String, Object> upset_map = new LinkedHashMap<String, Object>();

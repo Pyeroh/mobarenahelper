@@ -54,7 +54,7 @@ public class Armor extends Item {
 				}
 			}
 			item.append(getEnchantements().getString());
-			return item.toString();
+			return item.toString().trim();
 		}
 		else return "";
 		

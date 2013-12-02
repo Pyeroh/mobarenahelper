@@ -28,41 +28,47 @@ public class ArmorList extends ItemList {
 	 */
 	public void fill(String armor) {
 
-		String[] sArmor = armor.replace('\'', ' ')
-				.split(",");
-		for (int i = 0; i < sArmor.length; i++) {
-			//SE : sans espace --> test d'enchantement
-			String sArmorSE[] = sArmor[i].trim().split(" ");
+		if (!armor.trim().isEmpty()) {
+			String[] sArmor = armor.replace('\'', ' ').split(",");
+			for (int i = 0; i < sArmor.length; i++) {
+				//SE : sans espace --> test d'enchantement
+				String sArmorSE[] = sArmor[i].trim().split(" ");
 
-			String[] tab_item = sArmorSE[0].split(":");
-			int data = 0;
-			switch (tab_item.length) {
-			case 1:case 2:
-				break;
-			case 3:
-				data = Integer.parseInt(tab_item[1]);
-				break;
-			default:
-				break;
-			}
-
-			String[] enchantments = null;
-			if (sArmorSE.length == 2) {
-				enchantments = sArmorSE[1].split(";");
-			}
-
-			if (tab_item[0].matches("(\\d)+")) {
-				EItem ei = EItem.searchBy(Integer.parseInt(tab_item[0]),data);
-				if (ei!=null) this.add(new Armor(ei, enchantments));
-				else {
-					CustomItem ci = new CustomItem(Integer.parseInt(tab_item[0]), data);
-					ci.getEnchantements().fill(enchantments);
-					this.add(ci);
+				String[] tab_item = sArmorSE[0].split(":");
+				int data = 0;
+				switch (tab_item.length) {
+				case 1:
+				case 2:
+					break;
+				case 3:
+					data = Integer.parseInt(tab_item[1]);
+					break;
+				default:
+					break;
 				}
-			} else {
-				this.add(new Armor(EItem.searchBy(tab_item[0], data), enchantments));
-			}
 
+				String[] enchantments = null;
+				if (sArmorSE.length == 2) {
+					enchantments = sArmorSE[1].split(";");
+				}
+
+				if (tab_item[0].matches("(\\d)+")) {
+					EItem ei = EItem.searchBy(Integer.parseInt(tab_item[0]),
+							data);
+					if (ei != null)
+						this.add(new Armor(ei, enchantments));
+					else {
+						CustomItem ci = new CustomItem(
+								Integer.parseInt(tab_item[0]), data);
+						ci.getEnchantements().fill(enchantments);
+						this.add(ci);
+					}
+				} else {
+					this.add(new Armor(EItem.searchBy(tab_item[0], data),
+							enchantments));
+				}
+
+			}
 		}
 	}
 
@@ -84,7 +90,7 @@ public class ArmorList extends ItemList {
 			sArmor.delete(length-2, length);
 		}
 		
-		return sArmor.toString();
+		return sArmor.toString().trim();
 	}
 	
 	@Override
