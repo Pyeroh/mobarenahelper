@@ -362,7 +362,7 @@ public class MenuPrincipal extends JFrame {
 						e1.printStackTrace();
 						
 						JOptionPane.showMessageDialog(rootPane, Messages.getString("MenuPrincipal.message.incorrectFileFormat"),Messages.getString("Message.title.criticalError"),JOptionPane.ERROR_MESSAGE);
-
+						error_log(e1);
 					}
 
 				}
@@ -419,21 +419,7 @@ public class MenuPrincipal extends JFrame {
 						} catch (Exception e1) {
 							e1.printStackTrace();
 							JOptionPane.showMessageDialog(rootPane, Messages.getString("MenuPrincipal.message.savingError"),Messages.getString("Message.title.savingError"),JOptionPane.ERROR_MESSAGE);
-							try {
-								File ferr = new File("mah_error.log");
-								ferr.delete();
-								ferr.createNewFile();
-								FileWriter err = new FileWriter(ferr);
-								err.write(e1.getMessage()+"\n");
-								StackTraceElement[] ste = e1.getStackTrace();
-								for(int i=0;i<ste.length;i++) {
-									err.write("\t"+ste[i].toString()+"\n");
-								}
-								err.close();
-
-							} catch (Exception e2) {
-								e2.printStackTrace();
-							}
+							error_log(e1);
 						}
 					}
 
@@ -2270,8 +2256,26 @@ public class MenuPrincipal extends JFrame {
 		Messages.load();
 		EnumName.load();
 	}
+	
+	private void error_log(Exception e) {
+		try {
+			File ferr = new File("mah_error.log");
+			ferr.delete();
+			ferr.createNewFile();
+			FileWriter err = new FileWriter(ferr);
+			err.write(e.getMessage()+"\n");
+			StackTraceElement[] ste = e.getStackTrace();
+			for(int i=0;i<ste.length;i++) {
+				err.write("\t"+ste[i].toString()+"\n");
+			}
+			err.close();
 
-	public void raz() {
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+	}
+
+	private void raz() {
 		Classe.classe_list.clear();
 		arenas = null;
 		file = null;
