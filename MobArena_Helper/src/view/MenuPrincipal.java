@@ -229,9 +229,15 @@ public class MenuPrincipal extends JFrame {
 	private JLabel lib_pitch;
 	private JTextField sai_pitch;
 	private JPanel pan_coords;
+	private JPanel pan_reward_control;
+	private JFormattedTextField sai_wave_number;
+	private JLabel lib_reward_wave;
+	private JLabel lib_moment;
+	private JWideComboBox combo_montant;
 
 	public MenuPrincipal() throws ParseException{
 		super("MobArena Helper v2.3");
+		setTitle(Messages.getString("MenuPrincipal.this.title")); //$NON-NLS-1$
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
@@ -2325,11 +2331,36 @@ public class MenuPrincipal extends JFrame {
 		separator_4.setOrientation(SwingConstants.VERTICAL);
 		separator_4.setBounds(280, 6, 2, 395);
 		pan_rewards.add(separator_4);
-
-		btn_set_rewards = new JButton(Messages.getString("MenuPrincipal.btn_set_rewards.text")); //$NON-NLS-1$
-		btn_set_rewards.setFont(new Font("Tahoma", Font.BOLD, 13));
-		btn_set_rewards.setBounds(294, 177, 121, 58);
-		pan_rewards.add(btn_set_rewards);
+		
+		pan_reward_control = new JPanel();
+		pan_reward_control.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
+		pan_reward_control.setBounds(294, 149, 168, 146);
+		pan_rewards.add(pan_reward_control);
+		pan_reward_control.setLayout(null);
+		
+		lib_reward_wave = new JLabel(Messages.getString("MenuPrincipal.lib_reward_wave.text")); //$NON-NLS-1$
+		lib_reward_wave.setBounds(6, 6, 55, 25);
+		pan_reward_control.add(lib_reward_wave);
+		lib_reward_wave.setFont(new Font("Tahoma", Font.BOLD, 14));
+		
+		sai_wave_number = new JFormattedTextField();
+		sai_wave_number.setBounds(89, 6, 73, 25);
+		pan_reward_control.add(sai_wave_number);
+		sai_wave_number.setText("");
+		
+				btn_set_rewards = new JButton(Messages.getString("MenuPrincipal.btn_set_rewards.text")); //$NON-NLS-1$
+				btn_set_rewards.setBounds(6, 80, 156, 58);
+				pan_reward_control.add(btn_set_rewards);
+				btn_set_rewards.setFont(new Font("Tahoma", Font.BOLD, 13));
+				
+				lib_moment = new JLabel(Messages.getString("MenuPrincipal.lib_moment.text")); //$NON-NLS-1$
+				lib_moment.setFont(new Font("Tahoma", Font.BOLD, 14));
+				lib_moment.setBounds(6, 43, 72, 25);
+				pan_reward_control.add(lib_moment);
+				
+				combo_montant = new JWideComboBox();
+				combo_montant.setBounds(89, 43, 73, 26);
+				pan_reward_control.add(combo_montant);
 		tabpan_config.addTab(Messages.getString("MenuPrincipal.pan_global_settings.title"), pan_global_settings); //$NON-NLS-1$
 
 		raz();
