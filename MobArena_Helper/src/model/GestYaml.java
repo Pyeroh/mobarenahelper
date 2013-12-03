@@ -145,6 +145,10 @@ public class GestYaml {
 		return yaml.represent(data).getTag();
 	}
 
+	public GestYaml getGest(String key) {
+		return new GestYaml(getMap(key));
+	}
+
 	/**
 	 * Effectue un dump de la Map du gestionnaire en cours
 	 * @return la chaîne de caractères complète représentant la Map du gestionnaire

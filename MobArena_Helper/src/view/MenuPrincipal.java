@@ -14,6 +14,8 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.text.InternationalFormatter;
 import javax.swing.text.MaskFormatter;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 
 import model.*;
 import model.enums.*;
@@ -211,6 +213,14 @@ public class MenuPrincipal extends JFrame {
 	private JButton btn_add_each;
 	private JButton btn_add_after;
 	private JButton btn_set_rewards;
+	private JScrollPane scrpan_points;
+	private JTree tree_points;
+	private JLabel lib_X;
+	private JLabel lib_Y;
+	private JLabel lib_Z;
+	private JTextField sai_X;
+	private JTextField sai_Y;
+	private JTextField sai_Z;
 
 	public MenuPrincipal() throws ParseException{
 		super("MobArena Helper v2.3");
@@ -355,8 +365,8 @@ public class MenuPrincipal extends JFrame {
 						loadArena(0);
 						tabpan_config.setEnabledAt(1, true);
 						tabpan_config.setEnabledAt(2, true);
-						//tabpan_config.setEnabledAt(3, true);
-						//tabpan_config.setEnabledAt(4, true);
+						tabpan_config.setEnabledAt(3, true);
+						tabpan_config.setEnabledAt(4, true);
 						tabpan_config.setEnabledAt(5, true);
 					} catch (Exception e1) {
 						e1.printStackTrace();
@@ -482,8 +492,8 @@ public class MenuPrincipal extends JFrame {
 							loadArena(combo_arena.getSelectedIndex());
 							tabpan_config.setEnabledAt(1, true);
 							tabpan_config.setEnabledAt(2, true);
-							//tabpan_config.setEnabledAt(3, true);
-							//tabpan_config.setEnabledAt(4, true);
+							tabpan_config.setEnabledAt(3, true);
+							tabpan_config.setEnabledAt(4, true);
 							tabpan_config.setEnabledAt(5, true);
 						} else
 							JOptionPane
@@ -2199,11 +2209,54 @@ public class MenuPrincipal extends JFrame {
 		scrpan_each.setBounds(6, 43, 262, 146);
 		pan_rewards.add(scrpan_each);
 		
+		//TODO
 		tabpan_config.addTab(Messages.getString("MenuPrincipal.tabpan_arena_wave.title"), pan_arena_wave); //$NON-NLS-2$ //$NON-NLS-1$
 		tabpan_config.addTab(Messages.getString("MenuPrincipal.tabpan_classes.title"), pan_classes); //$NON-NLS-2$ //$NON-NLS-1$
 		tabpan_config.addTab(Messages.getString("MenuPrincipal.tabpan_arena_settings.title"), pan_arena_settings); //$NON-NLS-2$ //$NON-NLS-1$
-		tabpan_config.addTab(Messages.getString("MenuPrincipal.pan_coordinates.title"), pan_coordinates); //$NON-NLS-1$
-		tabpan_config.addTab(Messages.getString("MenuPrincipal.pan_rewards.title"), pan_rewards); //$NON-NLS-1$
+		tabpan_config.addTab(Messages.getString("MenuPrincipal.pan_coordinates.title"), pan_coordinates); //$NON-NLS-2$ //$NON-NLS-1$
+		tabpan_config.addTab(Messages.getString("MenuPrincipal.pan_rewards.title"), pan_rewards); //$NON-NLS-2$ //$NON-NLS-1$
+		
+		tree_points = new JTree();
+		
+		scrpan_points = new JScrollPane(tree_points);
+		scrpan_points.setBounds(6, 6, 167, 168);
+		pan_coordinates.add(scrpan_points);
+		
+		lib_X = new JLabel(Messages.getString("MenuPrincipal.lblX.text")); //$NON-NLS-1$
+		lib_X.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lib_X.setBounds(185, 11, 10, 20);
+		pan_coordinates.add(lib_X);
+		
+		sai_X = new JTextField();
+		sai_X.setEditable(false);
+		sai_X.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		sai_X.setBounds(207, 12, 65, 20);
+		pan_coordinates.add(sai_X);
+		sai_X.setColumns(10);
+		
+		lib_Y = new JLabel(Messages.getString("MenuPrincipal.lib_Y.text")); //$NON-NLS-1$
+		lib_Y.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lib_Y.setBounds(185, 43, 10, 20);
+		pan_coordinates.add(lib_Y);
+		
+		lib_Z = new JLabel(Messages.getString("MenuPrincipal.lib_Z.text")); //$NON-NLS-1$
+		lib_Z.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lib_Z.setBounds(185, 75, 10, 20);
+		pan_coordinates.add(lib_Z);
+		
+		sai_Y = new JTextField();
+		sai_Y.setEditable(false);
+		sai_Y.setColumns(10);
+		sai_Y.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		sai_Y.setBounds(207, 43, 65, 20);
+		pan_coordinates.add(sai_Y);
+		
+		sai_Z = new JTextField();
+		sai_Z.setEditable(false);
+		sai_Z.setColumns(10);
+		sai_Z.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		sai_Z.setBounds(207, 75, 65, 20);
+		pan_coordinates.add(sai_Z);
 		
 		lib_after = new JLabel(Messages.getString("MenuPrincipal.lib_after.text")); //$NON-NLS-1$
 		lib_after.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -2460,6 +2513,8 @@ public class MenuPrincipal extends JFrame {
 		loadData_ArenaConfig(config);
 		loadData_ClassConfig(Classe.classe_list,-1);
 		loadData_GlobalSettings();
+		
+		loadData_Coordinates();
 
 	}
 
@@ -2922,5 +2977,37 @@ public class MenuPrincipal extends JFrame {
 			mod_commands.addElement(new CellListCaracs(commands.get(i)));
 		}
 		list_commands.setModel(mod_commands);
+	}
+
+	public void loadData_Coordinates() {
+		DefaultMutableTreeNode coords = new DefaultMutableTreeNode("Coordinates");
+		tree_points.setModel(new DefaultTreeModel(coords));
+		Coordinates ccoords = arenas.getALarenas().get(combo_arena.getSelectedIndex()).getCcoords();
+		if (ccoords!=null) {
+			if (ccoords.getP1() != null) {
+				DefaultMutableTreeNode p1 = new DefaultMutableTreeNode("p1");
+				DefaultMutableTreeNode p2 = new DefaultMutableTreeNode("p2");
+				coords.add(p1);
+				coords.add(p2);
+			}
+			if(ccoords.getL1() != null) {
+				DefaultMutableTreeNode p1 = new DefaultMutableTreeNode("l1");
+				DefaultMutableTreeNode p2 = new DefaultMutableTreeNode("l2");
+				coords.add(p1);
+				coords.add(p2);
+			}
+			if(ccoords.getArena() != null) {
+				DefaultMutableTreeNode p1 = new DefaultMutableTreeNode("arena");
+				coords.add(p1);
+			}
+			if(ccoords.getLobby() != null) {
+				DefaultMutableTreeNode p1 = new DefaultMutableTreeNode("lobby");
+				coords.add(p1);
+			}
+			if(ccoords.getSpectator() != null) {
+				DefaultMutableTreeNode p1 = new DefaultMutableTreeNode("spectator");
+				coords.add(p1);
+			}
+		}
 	}
 }

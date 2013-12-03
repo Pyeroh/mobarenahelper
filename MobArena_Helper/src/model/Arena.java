@@ -4,6 +4,7 @@ import java.util.*;
 
 import model.enums.ECatW;
 import model.lists.ClassLimitList;
+import model.lists.RewardList;
 
 /**
  * Une arène. Contient des vagues uniques, récurrentes, peut accorder des récompenses... Une arène quoi.
@@ -22,8 +23,14 @@ public class Arena {
 	private ArrayList<Wave>[] waves = new ArrayList[2];
 	private ClassLimitList limits = new ClassLimitList();
 
-	private LinkedHashMap<String, Object> rewards;
-	private LinkedHashMap<String, Object> coords;
+	/**
+	 * Les deux types de récompense de vague existant pour une arène :
+	 * 0 pour every
+	 * 1 pour after
+	 */
+	private RewardList[] rewards = new RewardList[2];
+	private LinkedHashMap<String, Object> coords = null;
+	private Coordinates ccoords = null;
 
 	/**
 	 * Instancie une arène contenant des vagues, avec les deux catégories de vagues
@@ -38,7 +45,7 @@ public class Arena {
 		this.waves[0] = new ArrayList<Wave>();
 		this.waves[1] = new ArrayList<Wave>();
 		GestYaml garena = new GestYaml(arena);
-		GestYaml gwaves = new GestYaml(garena.getMap("waves"));
+		GestYaml gwaves = garena.getGest("waves");
 
 		loadWaves(gwaves);
 		config = new ArenaConfig(garena.getMap("settings"));
@@ -46,9 +53,21 @@ public class Arena {
 		if (garena.containsKey("class-limits")) {
 			loadLimits(new GestYaml(garena.getMap("class-limits")));
 		}
-		this.rewards = garena.getMap("rewards");
-		this.coords = garena.getMap("coords");
-
+		if(garena.containsKey("rewards")) {
+			if(garena.containsKey("rewards.every")) {
+				this.rewards[0] = new RewardList();
+				this.rewards[0].fill(garena.getMap("rewards.every"));
+			}
+			if(garena.containsKey("rewards.after")) {
+				this.rewards[1] = new RewardList();
+				this.rewards[1].fill(garena.getMap("rewards.after"));
+			}
+		}
+		if (garena.containsKey("coords")) {
+			this.coords = garena.getMap("coords");
+			try {this.ccoords = new Coordinates(garena.getGest("coords"));} 
+			catch (Exception e) {this.ccoords = null;}
+		}
 		Collections.sort(waves[0]);
 		Collections.sort(waves[1]);
 
@@ -119,6 +138,10 @@ public class Arena {
 
 	public void setConfig(ArenaConfig config) {
 		this.config = config;
+	}
+
+	public Coordinates getCcoords() {
+		return ccoords;
 	}
 
 	public int getClassLimit(Classe classe) {
