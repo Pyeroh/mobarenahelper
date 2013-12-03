@@ -60,11 +60,11 @@ public class MenuPrincipal extends JFrame {
 	private JLabel lib_recurrent;
 	private JButton btn_newrecurrent;
 	private JScrollPane scrpan_recurrent;
-	private JList<CellListWave> list_recurrent;
+	private JHoverList<CellListWave> list_recurrent;
 	private JLabel lib_single;
 	private JButton btn_newsingle;
 	private JScrollPane scrpan_single;
-	private JList<CellListWave> list_single;
+	private JHoverList<CellListWave> list_single;
 	private JButton btn_load;
 	private JButton btn_save;
 	private JPanel pan_conf;
@@ -84,7 +84,7 @@ public class MenuPrincipal extends JFrame {
 	private JComboBox<String> combo_growth;
 	private JLabel lib_carac_wave;
 	private JScrollPane scrpan_carac_wave;
-	private JList<CellListCaracs> list_carac_wave;
+	private JHoverList<CellListCaracs> list_carac_wave;
 	private JLabel lib_monster;
 	private JWideComboBox combo_monster;
 	private JLabel lib_amount;
@@ -112,7 +112,7 @@ public class MenuPrincipal extends JFrame {
 	private JLabel lib_classes;
 	private JButton btn_new_class;
 	private JScrollPane scrpan_classes;
-	private JList<CellListClass> list_classes;
+	private JHoverList<CellListClass> list_classes;
 	private JLabel lib_class;
 	private JLabel lib_items;
 	private JButton btn_items;
@@ -126,10 +126,10 @@ public class MenuPrincipal extends JFrame {
 	private JLabel lib_permissions;
 	private JButton btn_add_perm;
 	private JScrollPane scrpan_permissions;
-	private JList<CellListCaracs> list_permissions;
+	private JHoverList<CellListCaracs> list_permissions;
 	private JLabel lib_lobby_permissions;
 	private JButton btn_add_lobby_permissions;
-	private JList<CellListCaracs> list_lobby_permissions;
+	private JHoverList<CellListCaracs> list_lobby_permissions;
 	private JScrollPane scrpan_lobby_permissions;
 	private JPanel pan_arena_settings;
 	private JLabel lib_world;
@@ -200,7 +200,7 @@ public class MenuPrincipal extends JFrame {
 	private JLabel lib_commands;
 	private JButton btn_command;
 	private JScrollPane scrpan_commands;
-	private JList<CellListCaracs> list_commands;
+	private JHoverList<CellListCaracs> list_commands;
 	private JPanel pan_commands;
 	private JLabel lib_command;
 	private JFormattedTextField sai_command;
@@ -209,10 +209,10 @@ public class MenuPrincipal extends JFrame {
 	private JPanel pan_rewards;
 	private JLabel lib_each;
 	private JScrollPane scrpan_each;
-	private JList<CellListCaracs> list_each;
+	private JHoverList<CellListCaracs> list_each;
 	private JLabel lib_after;
 	private JScrollPane scrpan_after;
-	private JList<CellListCaracs> list_after;
+	private JHoverList<CellListCaracs> list_after;
 	private JButton btn_add_each;
 	private JButton btn_add_after;
 	private JButton btn_set_rewards;
@@ -291,7 +291,7 @@ public class MenuPrincipal extends JFrame {
 
 				//la clause isFocusOwner() est spécifiée car la combo Amount change de valeur à l'initialisation
 				if (e.getStateChange() == ItemEvent.DESELECTED && ((JComponent) e.getSource()).isFocusOwner()) {
-					JList<CellListWave> list_sel = combo_category.getSelectedItem().equals("Recurrent") ? list_recurrent : list_single;
+					JHoverList<CellListWave> list_sel = combo_category.getSelectedItem().equals("Recurrent") ? list_recurrent : list_single;
 
 					@SuppressWarnings("unchecked")
 					JComboBox<String> combo_sel = (JComboBox<String>) e.getSource();
@@ -566,7 +566,7 @@ public class MenuPrincipal extends JFrame {
 		btn_newrecurrent.addMouseListener(newWave);
 		btn_newrecurrent.setFont(new Font("Tahoma", Font.BOLD, 11));
 
-		list_recurrent = new JList<CellListWave>();
+		list_recurrent = new JHoverList<CellListWave>();
 		list_recurrent.addMouseListener(cellmouseadapter);
 		list_recurrent.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrpan_recurrent = new JScrollPane(list_recurrent);
@@ -584,7 +584,7 @@ public class MenuPrincipal extends JFrame {
 		btn_newsingle.addMouseListener(newWave);
 		btn_newsingle.setFont(new Font("Tahoma", Font.BOLD, 11));
 
-		list_single = new JList<CellListWave>();
+		list_single = new JHoverList<CellListWave>();
 		list_single.addMouseListener(cellmouseadapter);
 		list_single.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrpan_single = new JScrollPane(list_single);
@@ -609,7 +609,7 @@ public class MenuPrincipal extends JFrame {
 			public void keyReleased(KeyEvent e) {
 
 				ECatW category = wave.getCategory();
-				JList<CellListWave> list_sel = category==ECatW.recurrent ? list_recurrent : list_single;
+				JHoverList<CellListWave> list_sel = category==ECatW.recurrent ? list_recurrent : list_single;
 				int index_sel = list_sel.getSelectedIndex();
 				Arena lArene = arenas.getALarenas().get(combo_arena.getSelectedIndex());
 
@@ -645,8 +645,8 @@ public class MenuPrincipal extends JFrame {
 					ECatW category = wave.getCategory();
 					ECatW othercat = category==ECatW.recurrent ? ECatW.single : ECatW.recurrent;
 
-					JList<CellListWave> list_sel = category==ECatW.recurrent ? list_recurrent : list_single;
-					JList<CellListWave> otherList_sel = list_sel==list_recurrent ? list_single : list_recurrent;
+					JHoverList<CellListWave> list_sel = category==ECatW.recurrent ? list_recurrent : list_single;
+					JHoverList<CellListWave> otherList_sel = list_sel==list_recurrent ? list_single : list_recurrent;
 					Arena lArene = arenas.getALarenas().get(combo_arena.getSelectedIndex());
 
 					ArrayList<Wave> waveList = lArene.getWavesType(category);
@@ -699,7 +699,7 @@ public class MenuPrincipal extends JFrame {
 					ETypeW type = ETypeW.getByName((String) combo_type.getSelectedItem());
 					Arena lArene = arenas.getALarenas().get(combo_arena.getSelectedIndex());
 					String category = wave.getCategory().name();
-					JList<CellListWave> list_sel = category.equals("recurrent") ? list_recurrent : list_single;
+					JHoverList<CellListWave> list_sel = category.equals("recurrent") ? list_recurrent : list_single;
 					ArrayList<Wave> waveList = lArene.getWavesType(wave.getCategory());
 
 					wave.setType(type);
@@ -818,7 +818,7 @@ public class MenuPrincipal extends JFrame {
 		lib_carac_wave.setBounds(219, 11, 69, 20);
 		pan_conf.add(lib_carac_wave);
 
-		list_carac_wave = new JList<CellListCaracs>();
+		list_carac_wave = new JHoverList<CellListCaracs>();
 		list_carac_wave.addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
@@ -1031,7 +1031,7 @@ public class MenuPrincipal extends JFrame {
 			public void keyReleased(KeyEvent e) {
 
 				ECatW category = wave.getCategory();
-				JList<CellListWave> list_sel = category==ECatW.recurrent ? list_recurrent : list_single;
+				JHoverList<CellListWave> list_sel = category==ECatW.recurrent ? list_recurrent : list_single;
 				int index_sel = list_sel.getSelectedIndex();
 				Arena lArene = arenas.getALarenas().get(combo_arena.getSelectedIndex());
 
@@ -1180,13 +1180,13 @@ public class MenuPrincipal extends JFrame {
 		lib_classes.setFont(new Font("Tahoma", Font.BOLD, 14));
 		pan_classes.add(lib_classes);
 
-		list_classes = new JList<CellListClass>();
+		list_classes = new JHoverList<CellListClass>();
 		list_classes.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 
 				@SuppressWarnings("unchecked")
-				JList<CellListCaracs> source = (JList<CellListCaracs>) e.getSource();
+				JHoverList<CellListCaracs> source = (JHoverList<CellListCaracs>) e.getSource();
 				if(source.getModel().getSize()!=0) {
 
 					switch (e.getButton()) {
@@ -1216,10 +1216,6 @@ public class MenuPrincipal extends JFrame {
 
 			}
 		});
-		HoverListCellRenderer renderer = new HoverListCellRenderer(list_classes);
-		list_classes.setCellRenderer(renderer);
-		list_classes.addMouseListener(renderer.getHandler());
-		list_classes.addMouseMotionListener(renderer.getHandler());
 
 		btn_new_class = new JButton(Messages.getString("MenuPrincipal.btn_new_class.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		btn_new_class.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -1422,7 +1418,7 @@ public class MenuPrincipal extends JFrame {
 			public void mouseReleased(MouseEvent e) {
 
 				@SuppressWarnings("unchecked")
-				JList<CellListCaracs> source = (JList<CellListCaracs>) e.getSource();
+				JHoverList<CellListCaracs> source = (JHoverList<CellListCaracs>) e.getSource();
 
 				switch (e.getButton()) {
 				case MouseEvent.BUTTON2:
@@ -1459,7 +1455,7 @@ public class MenuPrincipal extends JFrame {
 		ListSelectionListener clear_list_perm = new ListSelectionListener() {
 			@SuppressWarnings("unchecked")
 			public void valueChanged(ListSelectionEvent e) {
-				((JList<CellListCaracs>) e.getSource()).clearSelection();
+				((JHoverList<CellListCaracs>) e.getSource()).clearSelection();
 			}
 		};
 
@@ -1469,7 +1465,7 @@ public class MenuPrincipal extends JFrame {
 		btn_add_perm.setBounds(395, 9, 90, 22);
 		pan_caracs_class.add(btn_add_perm);
 
-		list_permissions = new JList<CellListCaracs>();
+		list_permissions = new JHoverList<CellListCaracs>();
 		list_permissions.addListSelectionListener(clear_list_perm);
 		list_permissions.addMouseListener(list_perm_adapter);
 
@@ -1493,7 +1489,7 @@ public class MenuPrincipal extends JFrame {
 		btn_add_lobby_permissions.setBounds(633, 9, 90, 22);
 		pan_caracs_class.add(btn_add_lobby_permissions);
 
-		list_lobby_permissions = new JList<CellListCaracs>();
+		list_lobby_permissions = new JHoverList<CellListCaracs>();
 		list_lobby_permissions.addListSelectionListener(clear_list_perm);
 		list_lobby_permissions.addMouseListener(list_perm_adapter);
 
@@ -2129,11 +2125,7 @@ public class MenuPrincipal extends JFrame {
 		btn_command.setBounds(164, 80, 146, 23);
 		pan_global_settings.add(btn_command);
 
-		list_commands = new JList<CellListCaracs>();
-		renderer = new HoverListCellRenderer(list_commands);
-		list_commands.setCellRenderer(renderer);
-		list_commands.addMouseListener(renderer.getHandler());
-		list_commands.addMouseMotionListener(renderer.getHandler());
+		list_commands = new JHoverList<CellListCaracs>();
 		list_commands.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -2305,7 +2297,7 @@ public class MenuPrincipal extends JFrame {
 		btn_add_each.setBounds(178, 8, 90, 25);
 		pan_rewards.add(btn_add_each);
 
-		list_each = new JList<CellListCaracs>();
+		list_each = new JHoverList<CellListCaracs>();
 
 		scrpan_each = new JScrollPane(list_each);
 		scrpan_each.setBounds(6, 43, 262, 146);
@@ -2316,7 +2308,7 @@ public class MenuPrincipal extends JFrame {
 		lib_after.setBounds(6, 218, 121, 25);
 		pan_rewards.add(lib_after);
 
-		list_after = new JList<CellListCaracs>();
+		list_after = new JHoverList<CellListCaracs>();
 
 		scrpan_after = new JScrollPane(list_after);
 		scrpan_after.setBounds(6, 255, 262, 146);
@@ -2429,7 +2421,7 @@ public class MenuPrincipal extends JFrame {
 		if (combo_arena.getSelectedIndex()!=-1) {
 
 			ECatW category = null;
-			JList<CellListWave> listToLoad = null;
+			JHoverList<CellListWave> listToLoad = null;
 			if(e.getSource()==btn_newrecurrent){
 				category = ECatW.recurrent;
 				listToLoad = list_recurrent;
@@ -2461,8 +2453,8 @@ public class MenuPrincipal extends JFrame {
 	public void cellMouseAdapter(MouseEvent e) {
 		//On récupère la liste source en tant que liste de caracs pour l'évaluation de situation
 		//et en tant que liste de vagues pour le travail sur les données
-		JList<CellListCaracs> source = (JList<CellListCaracs>) e.getSource();
-		JList<CellListWave> jList = (JList<CellListWave>) e.getSource();
+		JHoverList<CellListCaracs> source = (JHoverList<CellListCaracs>) e.getSource();
+		JHoverList<CellListWave> jList = (JHoverList<CellListWave>) e.getSource();
 		if (source.getModel().getSize()!=0) {
 
 			jList.ensureIndexIsVisible(jList.getSelectedIndex());
@@ -2520,7 +2512,7 @@ public class MenuPrincipal extends JFrame {
 								.getElementAt(hoverIndex);
 						CellListMonster cellmonster = null;
 						CellListAbility cellabi = null;
-						JList<CellListWave> list_wave = list_recurrent
+						JHoverList<CellListWave> list_wave = list_recurrent
 								.getSelectedIndex() != -1 ? list_recurrent
 										: list_single;
 						wave = list_wave.getSelectedValue()
@@ -2790,7 +2782,7 @@ public class MenuPrincipal extends JFrame {
 		btn_set.setText(Messages.getString("MenuPrincipal.btn_set.text")); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
-	public void deselectWaveLists_Arena(JList<CellListWave> jList){
+	public void deselectWaveLists_Arena(JHoverList<CellListWave> jList){
 		if(jList==list_recurrent){
 			list_single.clearSelection();
 		}
@@ -2858,7 +2850,7 @@ public class MenuPrincipal extends JFrame {
 	 * @param listview
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public void loadListCaracs_Arena(ArrayList listdata, JList listview) {
+	public void loadListCaracs_Arena(ArrayList listdata, JHoverList listview) {
 
 		DefaultListModel modW = new DefaultListModel<>();
 
@@ -2898,10 +2890,6 @@ public class MenuPrincipal extends JFrame {
 		}
 
 		listview.setModel(modW);
-		HoverListCellRenderer renderer = new HoverListCellRenderer(listview);
-		listview.setCellRenderer(renderer);
-		listview.addMouseListener(renderer.getHandler());
-		listview.addMouseMotionListener(renderer.getHandler());
 
 	}
 
@@ -2912,7 +2900,7 @@ public class MenuPrincipal extends JFrame {
 	public void majData_Arena(JComponent component) {
 
 		JFormattedTextField source = (JFormattedTextField) component;
-		JList<CellListWave> list_sel = list_recurrent.getSelectedIndex()!=-1 ? list_recurrent : list_single;
+		JHoverList<CellListWave> list_sel = list_recurrent.getSelectedIndex()!=-1 ? list_recurrent : list_single;
 		Wave wave = list_sel.getSelectedValue().getWave();
 		Arena lArene = arenas.getALarenas().get(combo_arena.getSelectedIndex());
 		ArrayList<Wave> waveList = lArene.getWavesType(list_sel == list_recurrent ? ECatW.recurrent	: ECatW.single);
@@ -3013,10 +3001,6 @@ public class MenuPrincipal extends JFrame {
 			}
 		}
 		list_permissions.setModel(mod_perm);
-		HoverListCellRenderer renderer = new HoverListCellRenderer(list_permissions);
-		list_permissions.setCellRenderer(renderer);
-		list_permissions.addMouseListener(renderer.getHandler());
-		list_permissions.addMouseMotionListener(renderer.getHandler());
 
 		perm_list = classe.getLobby_permissions();
 		mod_perm = new DefaultListModel<CellListCaracs>();
@@ -3026,10 +3010,6 @@ public class MenuPrincipal extends JFrame {
 			}
 		}
 		list_lobby_permissions.setModel(mod_perm);
-		renderer = new HoverListCellRenderer(list_lobby_permissions);
-		list_lobby_permissions.setCellRenderer(renderer);
-		list_lobby_permissions.addMouseListener(renderer.getHandler());
-		list_lobby_permissions.addMouseMotionListener(renderer.getHandler());
 
 		sai_class_limit.setValue(arenas.getALarenas().get(combo_arena.getSelectedIndex()).getClassLimit(classe));
 

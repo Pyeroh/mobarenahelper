@@ -17,6 +17,7 @@ import model.Messages;
 import model.lists.ArmorList;
 import model.wave.*;
 import model.wave.UpgradeSet.UpSetup;
+import view.JHoverList;
 import view.cells.*;
 
 public class UpgradeWaveChanger extends JDialog {
@@ -26,7 +27,7 @@ public class UpgradeWaveChanger extends JDialog {
 	private UpgradeSet upset;
 	private JFrame frame = new JFrame();
 	private JScrollPane scrpan_classes;
-	private JList<CellListClass> list_classes;
+	private JHoverList<CellListClass> list_classes;
 	private JLabel lib_classes_upgrade;
 	private JPanel pan_upgrade_config;
 	private JLabel lib_setup;
@@ -37,7 +38,7 @@ public class UpgradeWaveChanger extends JDialog {
 	private JButton btn_set_armor;
 	private JLabel lib_permissions;
 	private JScrollPane scrpan_permissions;
-	private JList<CellListCaracs> list_permissions;
+	private JHoverList<CellListCaracs> list_permissions;
 	private JComboBox<String> combo_setup;
 	private JButton btn_add_perm;
 
@@ -54,11 +55,7 @@ public class UpgradeWaveChanger extends JDialog {
 		setSize(658, 300);
 		setLocationRelativeTo(frame);
 
-		list_classes = new JList<CellListClass>();
-		HoverListCellRenderer render = new HoverListCellRenderer(list_classes);
-		list_classes.setCellRenderer(render);
-		list_classes.addMouseListener(render.getHandler());
-		list_classes.addMouseMotionListener(render.getHandler());
+		list_classes = new JHoverList<CellListClass>();
 		list_classes.addMouseListener(new MouseAdapter() {
 			public void mouseReleased(MouseEvent e) {
 
@@ -206,16 +203,12 @@ public class UpgradeWaveChanger extends JDialog {
 		btn_set_armor.setBounds(108, 70, 114, 20);
 		pan_upgrade_config.add(btn_set_armor);
 
-		list_permissions = new JList<CellListCaracs>();
+		list_permissions = new JHoverList<CellListCaracs>();
 		list_permissions.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				list_permissions.clearSelection();
 			}
 		});
-		render = new HoverListCellRenderer(list_permissions);
-		list_permissions.setCellRenderer(render);
-		list_permissions.addMouseListener(render.getHandler());
-		list_permissions.addMouseMotionListener(render.getHandler());
 		list_permissions.addMouseListener(new MouseAdapter() {
 			public void mouseReleased(MouseEvent e) {
 

@@ -11,6 +11,7 @@ import model.Messages;
 import model.enums.*;
 import model.item.*;
 import model.lists.EnchantList;
+import view.JHoverList;
 import view.JWideComboBox;
 import view.cells.CellListCaracs;
 import view.cells.HoverListCellRenderer;
@@ -21,7 +22,7 @@ public class Enchanter extends JDialog {
 	private AbstractItem item;
 	private JLabel lib_enchant;
 	private JScrollPane scrpan_enchant;
-	private JList<CellListCaracs> list_enchant;
+	private JHoverList<CellListCaracs> list_enchant;
 	private JSeparator separator;
 	private JLabel lib_enchantment;
 	private JWideComboBox combo_enchantment;
@@ -45,17 +46,7 @@ public class Enchanter extends JDialog {
 		lib_enchant.setBounds(6, 6, 100, 20);
 		getContentPane().add(lib_enchant);
 
-		list_enchant = new JList<CellListCaracs>();
-		HoverListCellRenderer render = new HoverListCellRenderer(list_enchant);
-		list_enchant.setCellRenderer(render);
-		list_enchant.addMouseListener(render.getHandler());
-		list_enchant.addMouseMotionListener(render.getHandler());
-/*		list_enchant.addListSelectionListener(new ListSelectionListener() {
-			@Override
-			public void valueChanged(ListSelectionEvent e) {
-				list_enchant.clearSelection();
-			}
-		});*/
+		list_enchant = new JHoverList<CellListCaracs>();
 		list_enchant.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {

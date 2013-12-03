@@ -11,11 +11,12 @@ import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.text.MaskFormatter;
 
-import model.*;
+import model.Messages;
 import model.enums.*;
 import model.item.*;
 import model.lists.ArmorList;
 import model.lists.ItemList;
+import view.JHoverList;
 import view.JWideComboBox;
 import view.cells.*;
 
@@ -35,11 +36,11 @@ public class ItemSelector extends JDialog {
 	private JWideComboBox combo_sort;
 	private JLabel lib_search;
 	private JFormattedTextField sai_search;
-	private JList<CellListEItem> list_selectable;
+	private JHoverList<CellListEItem> list_selectable;
 	private JButton btn_add;
 	private JButton btn_remove;
 	private JScrollPane scrpan_selected;
-	private JList<CellListItem> list_selected;
+	private JHoverList<CellListItem> list_selected;
 	private JLabel lib_selected;
 	private JButton btn_enchant;
 	private JButton btn_add_custom;
@@ -126,15 +127,11 @@ public class ItemSelector extends JDialog {
 		getContentPane().add(sai_search);
 		sai_search.setColumns(10);
 
-		list_selectable = new JList<CellListEItem>();
+		list_selectable = new JHoverList<CellListEItem>();
 
 		ArrayList<EItem> values = switchValues();
 		values.removeAll(items.getEItemList());
 		loadSelectable(values);
-		HoverListCellRenderer render1 = new HoverListCellRenderer(list_selectable);
-		list_selectable.setCellRenderer(render1);
-		list_selectable.addMouseListener(render1.getHandler());
-		list_selectable.addMouseMotionListener(render1.getHandler());
 
 		JScrollPane scrpan_selectable = new JScrollPane(list_selectable);
 		scrpan_selectable.setBounds(6, 117, 350, 200);
@@ -185,12 +182,8 @@ public class ItemSelector extends JDialog {
 		lib_selected.setBounds(481, 6, 134, 25);
 		getContentPane().add(lib_selected);
 
-		list_selected = new JList<CellListItem>();
+		list_selected = new JHoverList<CellListItem>();
 		loadSelected(items);
-		HoverListCellRenderer render2 = new HoverListCellRenderer(list_selected);
-		list_selected.setCellRenderer(render2);
-		list_selected.addMouseListener(render2.getHandler());
-		list_selected.addMouseMotionListener(render2.getHandler());
 		list_selected.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
