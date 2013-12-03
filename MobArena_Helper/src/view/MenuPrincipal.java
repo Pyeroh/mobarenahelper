@@ -25,6 +25,9 @@ import model.wave.*;
 import view.cells.*;
 import view.dialogs.*;
 
+import javax.swing.event.TreeSelectionListener;
+import javax.swing.event.TreeSelectionEvent;
+
 public class MenuPrincipal extends JFrame {
 
 	private static final long serialVersionUID = 7504976316824014595L;
@@ -221,6 +224,11 @@ public class MenuPrincipal extends JFrame {
 	private JTextField sai_X;
 	private JTextField sai_Y;
 	private JTextField sai_Z;
+	private JLabel lib_angle;
+	private JTextField sai_angle;
+	private JLabel lib_pitch;
+	private JTextField sai_pitch;
+	private JPanel pan_coords;
 
 	public MenuPrincipal() throws ParseException{
 		super("MobArena Helper v2.3");
@@ -370,7 +378,7 @@ public class MenuPrincipal extends JFrame {
 						tabpan_config.setEnabledAt(5, true);
 					} catch (Exception e1) {
 						e1.printStackTrace();
-						
+
 						JOptionPane.showMessageDialog(rootPane, Messages.getString("MenuPrincipal.message.incorrectFileFormat"),Messages.getString("Message.title.criticalError"),JOptionPane.ERROR_MESSAGE);
 						error_log(e1);
 					}
@@ -1653,10 +1661,10 @@ public class MenuPrincipal extends JFrame {
 		pan_arena_settings.add(lib_entry);
 
 		NumberFormat format = DecimalFormat.getInstance();
-        format.setMinimumFractionDigits(2);
-        format.setMaximumFractionDigits(2);
-        format.setRoundingMode(RoundingMode.HALF_UP);
-        InternationalFormatter formatter = new InternationalFormatter(format);
+		format.setMinimumFractionDigits(2);
+		format.setMaximumFractionDigits(2);
+		format.setRoundingMode(RoundingMode.HALF_UP);
+		InternationalFormatter formatter = new InternationalFormatter(format);
 		sai_entry = new JFormattedTextField(formatter);
 		sai_entry.addKeyListener(int_config_adapter);
 		sai_entry.setToolTipText(Messages.getString("MenuPrincipal.lib_entry.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -2166,7 +2174,7 @@ public class MenuPrincipal extends JFrame {
 		sai_command.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				
+
 				String command = sai_command.getText().trim();
 				int index = list_commands.getSelectedIndex();
 				ArrayList<String> ac = arenas.getGlobalSettings().getAllowed_commands();
@@ -2179,106 +2187,145 @@ public class MenuPrincipal extends JFrame {
 		sai_command.setBounds(132, 21, 166, 28);
 		pan_commands.add(sai_command);
 		sai_command.setColumns(10);
-		
+
 		lib_command_help = new JLabel("");
 		lib_command_help.setBounds(274, 61, 24, 24);
 		lib_command_help.setToolTipText(Messages.getString("MenuPrincipal.lib_command_help.tooltip")); //$NON-NLS-1$
 		Image img = new ImageIcon(MenuPrincipal.class.getResource("/gui/pics/question.png")).getImage();
 		lib_command_help.setIcon(new ImageIcon(CellListCaracs.scaleImage(img,lib_command_help)));
 		pan_commands.add(lib_command_help);
-		
+
 		pan_coordinates = new JPanel();
 		pan_coordinates.setLayout(null);
 		
+		tree_points = new JTree();
+		tree_points.addTreeSelectionListener(new TreeSelectionListener() {
+			public void valueChanged(TreeSelectionEvent e) {
+				if (e.getNewLeadSelectionPath()!=null) {
+					DefaultMutableTreeNode node = (DefaultMutableTreeNode) e.getNewLeadSelectionPath().getLastPathComponent();
+					loadCoords((String) node.getUserObject());
+				}
+			}
+		});
+
+		scrpan_points = new JScrollPane(tree_points);
+		scrpan_points.setBounds(6, 6, 167, 168);
+		pan_coordinates.add(scrpan_points);
+
+		pan_coords = new JPanel();
+		pan_coords.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
+		pan_coords.setBounds(185, 6, 239, 103);
+		pan_coordinates.add(pan_coords);
+		pan_coords.setLayout(null);
+		pan_coords.setVisible(false);
+
+		lib_X = new JLabel("X");
+		lib_X.setBounds(6, 8, 10, 20);
+		pan_coords.add(lib_X);
+		lib_X.setFont(new Font("Tahoma", Font.BOLD, 14));
+
+		sai_X = new JTextField();
+		sai_X.setBounds(28, 9, 65, 20);
+		pan_coords.add(sai_X);
+		sai_X.setEditable(false);
+		sai_X.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		sai_X.setColumns(10);
+
+		lib_Y = new JLabel("Y");
+		lib_Y.setBounds(6, 40, 10, 20);
+		pan_coords.add(lib_Y);
+		lib_Y.setFont(new Font("Tahoma", Font.BOLD, 14));
+
+		sai_Y = new JTextField();
+		sai_Y.setBounds(28, 40, 65, 20);
+		pan_coords.add(sai_Y);
+		sai_Y.setEditable(false);
+		sai_Y.setColumns(10);
+		sai_Y.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+
+		lib_Z = new JLabel("Z");
+		lib_Z.setBounds(6, 72, 10, 20);
+		pan_coords.add(lib_Z);
+		lib_Z.setFont(new Font("Tahoma", Font.BOLD, 14));
+
+		sai_Z = new JTextField();
+		sai_Z.setBounds(28, 72, 65, 20);
+		pan_coords.add(sai_Z);
+		sai_Z.setEditable(false);
+		sai_Z.setColumns(10);
+		sai_Z.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+
+		lib_angle = new JLabel(Messages.getString("MenuPrincipal.lib_angle.text")); //$NON-NLS-1$
+		lib_angle.setBounds(105, 8, 39, 20);
+		pan_coords.add(lib_angle);
+		lib_angle.setFont(new Font("Tahoma", Font.BOLD, 14));
+
+		sai_angle = new JTextField();
+		sai_angle.setBounds(166, 6, 65, 20);
+		pan_coords.add(sai_angle);
+		sai_angle.setEditable(false);
+		sai_angle.setColumns(10);
+		sai_angle.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+
+		lib_pitch = new JLabel(Messages.getString("MenuPrincipal.lib_pitch.text")); //$NON-NLS-1$
+		lib_pitch.setBounds(105, 40, 61, 20);
+		pan_coords.add(lib_pitch);
+		lib_pitch.setFont(new Font("Tahoma", Font.BOLD, 14));
+
+		sai_pitch = new JTextField();
+		sai_pitch.setBounds(166, 41, 65, 20);
+		pan_coords.add(sai_pitch);
+		sai_pitch.setEditable(false);
+		sai_pitch.setColumns(10);
+		sai_pitch.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+
 		pan_rewards = new JPanel();
 		pan_rewards.setLayout(null);
-		
-		lib_each = new JLabel(Messages.getString("MenuPrincipal.lib_each.text")); //$NON-NLS-1$
-		lib_each.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lib_each.setBounds(6, 6, 110, 25);
-		pan_rewards.add(lib_each);
-		
-		btn_add_each = new JButton(Messages.getString("MenuPrincipal.btn_add_each.text")); //$NON-NLS-1$
-		btn_add_each.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btn_add_each.setBounds(178, 8, 90, 25);
-		pan_rewards.add(btn_add_each);
-		
-		list_each = new JList<CellListCaracs>();
-		
-		scrpan_each = new JScrollPane(list_each);
-		scrpan_each.setBounds(6, 43, 262, 146);
-		pan_rewards.add(scrpan_each);
-		
+
 		//TODO
 		tabpan_config.addTab(Messages.getString("MenuPrincipal.tabpan_arena_wave.title"), pan_arena_wave); //$NON-NLS-2$ //$NON-NLS-1$
 		tabpan_config.addTab(Messages.getString("MenuPrincipal.tabpan_classes.title"), pan_classes); //$NON-NLS-2$ //$NON-NLS-1$
 		tabpan_config.addTab(Messages.getString("MenuPrincipal.tabpan_arena_settings.title"), pan_arena_settings); //$NON-NLS-2$ //$NON-NLS-1$
 		tabpan_config.addTab(Messages.getString("MenuPrincipal.pan_coordinates.title"), pan_coordinates); //$NON-NLS-2$ //$NON-NLS-1$
 		tabpan_config.addTab(Messages.getString("MenuPrincipal.pan_rewards.title"), pan_rewards); //$NON-NLS-2$ //$NON-NLS-1$
-		
-		tree_points = new JTree();
-		
-		scrpan_points = new JScrollPane(tree_points);
-		scrpan_points.setBounds(6, 6, 167, 168);
-		pan_coordinates.add(scrpan_points);
-		
-		lib_X = new JLabel(Messages.getString("MenuPrincipal.lblX.text")); //$NON-NLS-1$
-		lib_X.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lib_X.setBounds(185, 11, 10, 20);
-		pan_coordinates.add(lib_X);
-		
-		sai_X = new JTextField();
-		sai_X.setEditable(false);
-		sai_X.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		sai_X.setBounds(207, 12, 65, 20);
-		pan_coordinates.add(sai_X);
-		sai_X.setColumns(10);
-		
-		lib_Y = new JLabel(Messages.getString("MenuPrincipal.lib_Y.text")); //$NON-NLS-1$
-		lib_Y.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lib_Y.setBounds(185, 43, 10, 20);
-		pan_coordinates.add(lib_Y);
-		
-		lib_Z = new JLabel(Messages.getString("MenuPrincipal.lib_Z.text")); //$NON-NLS-1$
-		lib_Z.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lib_Z.setBounds(185, 75, 10, 20);
-		pan_coordinates.add(lib_Z);
-		
-		sai_Y = new JTextField();
-		sai_Y.setEditable(false);
-		sai_Y.setColumns(10);
-		sai_Y.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		sai_Y.setBounds(207, 43, 65, 20);
-		pan_coordinates.add(sai_Y);
-		
-		sai_Z = new JTextField();
-		sai_Z.setEditable(false);
-		sai_Z.setColumns(10);
-		sai_Z.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		sai_Z.setBounds(207, 75, 65, 20);
-		pan_coordinates.add(sai_Z);
-		
+
+		lib_each = new JLabel(Messages.getString("MenuPrincipal.lib_each.text")); //$NON-NLS-1$
+		lib_each.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lib_each.setBounds(6, 6, 110, 25);
+		pan_rewards.add(lib_each);
+
+		btn_add_each = new JButton(Messages.getString("MenuPrincipal.btn_add_each.text")); //$NON-NLS-1$
+		btn_add_each.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btn_add_each.setBounds(178, 8, 90, 25);
+		pan_rewards.add(btn_add_each);
+
+		list_each = new JList<CellListCaracs>();
+
+		scrpan_each = new JScrollPane(list_each);
+		scrpan_each.setBounds(6, 43, 262, 146);
+		pan_rewards.add(scrpan_each);
+
 		lib_after = new JLabel(Messages.getString("MenuPrincipal.lib_after.text")); //$NON-NLS-1$
 		lib_after.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lib_after.setBounds(6, 218, 121, 25);
 		pan_rewards.add(lib_after);
-		
+
 		list_after = new JList<CellListCaracs>();
-		
+
 		scrpan_after = new JScrollPane(list_after);
 		scrpan_after.setBounds(6, 255, 262, 146);
 		pan_rewards.add(scrpan_after);
-		
+
 		btn_add_after = new JButton(Messages.getString("MenuPrincipal.btn_add_after.text")); //$NON-NLS-1$
 		btn_add_after.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btn_add_after.setBounds(178, 220, 90, 25);
 		pan_rewards.add(btn_add_after);
-		
+
 		JSeparator separator_4 = new JSeparator();
 		separator_4.setOrientation(SwingConstants.VERTICAL);
 		separator_4.setBounds(280, 6, 2, 395);
 		pan_rewards.add(separator_4);
-		
+
 		btn_set_rewards = new JButton(Messages.getString("MenuPrincipal.btn_set_rewards.text")); //$NON-NLS-1$
 		btn_set_rewards.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btn_set_rewards.setBounds(294, 177, 121, 58);
@@ -2309,7 +2356,7 @@ public class MenuPrincipal extends JFrame {
 		Messages.load();
 		EnumName.load();
 	}
-	
+
 	private void error_log(Exception e) {
 		try {
 			File ferr = new File("mah_error.log");
@@ -2513,9 +2560,51 @@ public class MenuPrincipal extends JFrame {
 		loadData_ArenaConfig(config);
 		loadData_ClassConfig(Classe.classe_list,-1);
 		loadData_GlobalSettings();
-		
+
 		loadData_Coordinates();
 
+	}
+
+	public void loadCoords(String position) {
+		pan_coords.setVisible(true);
+		Coordinates coords = arenas.getALarenas().get(combo_arena.getSelectedIndex()).getCcoords();
+		Position pos = null;
+		switch (position) {
+		case "Coordinates":case "spawnpoints": 
+			break;
+		case "p1":
+			pos = coords.getP1();
+			break;
+		case "p2":
+			pos = coords.getP2();
+			break;
+		case "l1":
+			pos = coords.getL1();
+			break;
+		case "l2":
+			pos = coords.getL2();
+			break;
+		case "arena":
+			pos = coords.getArena();
+			break;
+		case "lobby":
+			pos = coords.getLobby();
+			break;
+		case "spectator":
+			pos = coords.getSpectator();
+			break;
+		default:
+			pos = (Position) coords.getSpawnpoints().get(position);
+			break;
+		}
+		if ((!position.equals("Coordinates") || !position.equals("spawnpoints")) && pos!=null) {
+			sai_X.setText(pos.getX()+"");
+			sai_Y.setText(pos.getY()+"");
+			sai_Z.setText(pos.getZ()+"");
+			sai_angle.setText(pos.getAngle()+"");
+			sai_pitch.setText(pos.getPitch()+"");
+		}
+		else pan_coords.setVisible(false);
 	}
 
 	public void setVisibleComponents_Arena(Wave wave) {
@@ -2797,8 +2886,8 @@ public class MenuPrincipal extends JFrame {
 		Arena lArene = arenas.getALarenas().get(combo_arena.getSelectedIndex());
 		ArrayList<Wave> waveList = lArene.getWavesType(list_sel == list_recurrent ? ECatW.recurrent	: ECatW.single);
 		Integer val_src = ((Number) source.getValue()).intValue();
-		
-		
+
+
 
 		if(source==sai_wave){
 
@@ -2980,6 +3069,8 @@ public class MenuPrincipal extends JFrame {
 	}
 
 	public void loadData_Coordinates() {
+		pan_coords.setVisible(true);
+
 		DefaultMutableTreeNode coords = new DefaultMutableTreeNode("Coordinates");
 		tree_points.setModel(new DefaultTreeModel(coords));
 		Coordinates ccoords = arenas.getALarenas().get(combo_arena.getSelectedIndex()).getCcoords();
@@ -3007,6 +3098,16 @@ public class MenuPrincipal extends JFrame {
 			if(ccoords.getSpectator() != null) {
 				DefaultMutableTreeNode p1 = new DefaultMutableTreeNode("spectator");
 				coords.add(p1);
+			}
+			if(ccoords.getSpawnpoints() != null) {
+				DefaultMutableTreeNode p1 = new DefaultMutableTreeNode("spawnpoints");
+				coords.add(p1);
+				LinkedHashMap<String, Object> spawnpoints = ccoords.getSpawnpoints();
+				for (Iterator<String> it = spawnpoints.keySet().iterator(); it.hasNext();) {
+					String spawn = (String) it.next();
+					DefaultMutableTreeNode s = new DefaultMutableTreeNode(spawn);
+					p1.add(s);
+				}
 			}
 		}
 	}
