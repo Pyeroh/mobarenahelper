@@ -10,8 +10,7 @@ import java.util.*;
 
 import javax.swing.*;
 import javax.swing.border.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
+import javax.swing.event.*;
 import javax.swing.text.InternationalFormatter;
 import javax.swing.text.MaskFormatter;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -25,9 +24,6 @@ import model.wave.*;
 import view.cells.*;
 import view.dialogs.*;
 
-import javax.swing.event.TreeSelectionListener;
-import javax.swing.event.TreeSelectionEvent;
-
 public class MenuPrincipal extends JFrame {
 
 	private static final long serialVersionUID = 7504976316824014595L;
@@ -35,6 +31,7 @@ public class MenuPrincipal extends JFrame {
 	private Arenas arenas = null;
 	private File file = null;
 	private Wave wave;
+	private Reward reward;
 	private Classe classe;
 	private ArenaConfig config;
 	private boolean initializing = true;
@@ -207,13 +204,13 @@ public class MenuPrincipal extends JFrame {
 	private JLabel lib_command_help;
 	private JPanel pan_coordinates;
 	private JPanel pan_rewards;
-	private JLabel lib_each;
-	private JScrollPane scrpan_each;
-	private JHoverList<CellListCaracs> list_each;
+	private JLabel lib_every;
+	private JScrollPane scrpan_every;
+	private JHoverList<CellListCaracs> list_every;
 	private JLabel lib_after;
 	private JScrollPane scrpan_after;
 	private JHoverList<CellListCaracs> list_after;
-	private JButton btn_add_each;
+	private JButton btn_add_every;
 	private JButton btn_add_after;
 	private JButton btn_set_rewards;
 	private JScrollPane scrpan_points;
@@ -230,7 +227,7 @@ public class MenuPrincipal extends JFrame {
 	private JTextField sai_pitch;
 	private JPanel pan_coords;
 	private JPanel pan_reward_control;
-	private JFormattedTextField sai_wave_number;
+	private JFormattedTextField sai_reward_wave_number;
 	private JLabel lib_reward_wave;
 	private JLabel lib_moment;
 	private JWideComboBox combo_montant;
@@ -266,7 +263,7 @@ public class MenuPrincipal extends JFrame {
 		MouseAdapter cellmouseadapter = new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				cellMouseAdapter(e);
+				waveArenaCellMouseAdapter(e);
 			}
 		};
 
@@ -384,7 +381,8 @@ public class MenuPrincipal extends JFrame {
 						tabpan_config.setEnabledAt(5, true);
 					} catch (Exception e1) {
 						e1.printStackTrace();
-
+						raz();
+						
 						JOptionPane.showMessageDialog(rootPane, Messages.getString("MenuPrincipal.message.incorrectFileFormat"),Messages.getString("Message.title.criticalError"),JOptionPane.ERROR_MESSAGE);
 						error_log(e1);
 					}
@@ -568,7 +566,6 @@ public class MenuPrincipal extends JFrame {
 
 		list_recurrent = new JHoverList<CellListWave>();
 		list_recurrent.addMouseListener(cellmouseadapter);
-		list_recurrent.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrpan_recurrent = new JScrollPane(list_recurrent);
 		scrpan_recurrent.setBounds(9, 84, 252, 180);
 		pan_arena_wave.add(scrpan_recurrent);
@@ -586,7 +583,6 @@ public class MenuPrincipal extends JFrame {
 
 		list_single = new JHoverList<CellListWave>();
 		list_single.addMouseListener(cellmouseadapter);
-		list_single.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrpan_single = new JScrollPane(list_single);
 		scrpan_single.setBounds(9, 295, 252, 180);
 		pan_arena_wave.add(scrpan_single);
@@ -826,7 +822,6 @@ public class MenuPrincipal extends JFrame {
 			}
 		});
 		list_carac_wave.addMouseListener(cellmouseadapter);
-		list_carac_wave.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		scrpan_carac_wave = new JScrollPane(list_carac_wave);
 		scrpan_carac_wave.setBounds(219, 42, 245, 389);
@@ -2286,22 +2281,35 @@ public class MenuPrincipal extends JFrame {
 		tabpan_config.addTab(Messages.getString("MenuPrincipal.tabpan_arena_settings.title"), pan_arena_settings); //$NON-NLS-2$ //$NON-NLS-1$
 		tabpan_config.addTab(Messages.getString("MenuPrincipal.pan_coordinates.title"), pan_coordinates); //$NON-NLS-2$ //$NON-NLS-1$
 		tabpan_config.addTab(Messages.getString("MenuPrincipal.pan_rewards.title"), pan_rewards); //$NON-NLS-2$ //$NON-NLS-1$
+		tabpan_config.addTab(Messages.getString("MenuPrincipal.pan_global_settings.title"), pan_global_settings); //$NON-NLS-1$
+		
+		lib_every = new JLabel(Messages.getString("MenuPrincipal.lib_every.text")); //$NON-NLS-1$
+		lib_every.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lib_every.setBounds(6, 6, 110, 25);
+		pan_rewards.add(lib_every);
 
-		lib_each = new JLabel(Messages.getString("MenuPrincipal.lib_each.text")); //$NON-NLS-1$
-		lib_each.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lib_each.setBounds(6, 6, 110, 25);
-		pan_rewards.add(lib_each);
+		btn_add_every = new JButton(Messages.getString("MenuPrincipal.btn_add_every.text")); //$NON-NLS-1$
+		btn_add_every.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				newReward(e);
+			}
+		});
+		btn_add_every.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btn_add_every.setBounds(178, 8, 90, 25);
+		pan_rewards.add(btn_add_every);
 
-		btn_add_each = new JButton(Messages.getString("MenuPrincipal.btn_add_each.text")); //$NON-NLS-1$
-		btn_add_each.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btn_add_each.setBounds(178, 8, 90, 25);
-		pan_rewards.add(btn_add_each);
+		list_every = new JHoverList<CellListCaracs>();
+		list_every.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				rewardCellMouseAdapter(e);
+			}
+		});
 
-		list_each = new JHoverList<CellListCaracs>();
-
-		scrpan_each = new JScrollPane(list_each);
-		scrpan_each.setBounds(6, 43, 262, 146);
-		pan_rewards.add(scrpan_each);
+		scrpan_every = new JScrollPane(list_every);
+		scrpan_every.setBounds(6, 43, 262, 146);
+		pan_rewards.add(scrpan_every);
 
 		lib_after = new JLabel(Messages.getString("MenuPrincipal.lib_after.text")); //$NON-NLS-1$
 		lib_after.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -2309,6 +2317,12 @@ public class MenuPrincipal extends JFrame {
 		pan_rewards.add(lib_after);
 
 		list_after = new JHoverList<CellListCaracs>();
+		list_after.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				rewardCellMouseAdapter(e);
+			}
+		});
 
 		scrpan_after = new JScrollPane(list_after);
 		scrpan_after.setBounds(6, 255, 262, 146);
@@ -2317,6 +2331,12 @@ public class MenuPrincipal extends JFrame {
 		btn_add_after = new JButton(Messages.getString("MenuPrincipal.btn_add_after.text")); //$NON-NLS-1$
 		btn_add_after.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btn_add_after.setBounds(178, 220, 90, 25);
+		btn_add_after.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				newReward(e);
+			}
+		});
 		pan_rewards.add(btn_add_after);
 
 		JSeparator separator_4 = new JSeparator();
@@ -2329,32 +2349,33 @@ public class MenuPrincipal extends JFrame {
 		pan_reward_control.setBounds(294, 149, 168, 146);
 		pan_rewards.add(pan_reward_control);
 		pan_reward_control.setLayout(null);
+		pan_reward_control.setVisible(false);
 		
 		lib_reward_wave = new JLabel(Messages.getString("MenuPrincipal.lib_reward_wave.text")); //$NON-NLS-1$
 		lib_reward_wave.setBounds(6, 6, 55, 25);
 		pan_reward_control.add(lib_reward_wave);
 		lib_reward_wave.setFont(new Font("Tahoma", Font.BOLD, 14));
 		
-		sai_wave_number = new JFormattedTextField();
-		sai_wave_number.setBounds(89, 6, 73, 25);
-		pan_reward_control.add(sai_wave_number);
-		sai_wave_number.setText("");
+		sai_reward_wave_number = new JFormattedTextField();
+		sai_reward_wave_number.setBounds(89, 6, 73, 25);
+		pan_reward_control.add(sai_reward_wave_number);
+		sai_reward_wave_number.setText("");
 		
-				btn_set_rewards = new JButton(Messages.getString("MenuPrincipal.btn_set_rewards.text")); //$NON-NLS-1$
-				btn_set_rewards.setBounds(6, 80, 156, 58);
-				pan_reward_control.add(btn_set_rewards);
-				btn_set_rewards.setFont(new Font("Tahoma", Font.BOLD, 13));
-				
-				lib_moment = new JLabel(Messages.getString("MenuPrincipal.lib_moment.text")); //$NON-NLS-1$
-				lib_moment.setFont(new Font("Tahoma", Font.BOLD, 14));
-				lib_moment.setBounds(6, 43, 72, 25);
-				pan_reward_control.add(lib_moment);
-				
-				combo_montant = new JWideComboBox();
-				combo_montant.setBounds(89, 43, 73, 26);
-				pan_reward_control.add(combo_montant);
-		tabpan_config.addTab(Messages.getString("MenuPrincipal.pan_global_settings.title"), pan_global_settings); //$NON-NLS-1$
+		btn_set_rewards = new JButton(Messages.getString("MenuPrincipal.btn_set_rewards.text")); //$NON-NLS-1$
+		btn_set_rewards.setBounds(6, 80, 156, 58);
+		pan_reward_control.add(btn_set_rewards);
+		btn_set_rewards.setFont(new Font("Tahoma", Font.BOLD, 13));
 
+		lib_moment = new JLabel(Messages.getString("MenuPrincipal.lib_moment.text")); //$NON-NLS-1$
+		lib_moment.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lib_moment.setBounds(6, 43, 72, 25);
+		pan_reward_control.add(lib_moment);
+
+		combo_montant = new JWideComboBox();
+		combo_montant.setModel(new DefaultComboBoxModel<String>(ERewardType.namevalues()));
+		combo_montant.setBounds(89, 43, 73, 26);
+		pan_reward_control.add(combo_montant);
+		
 		raz();
 
 		setSize(760,637);
@@ -2449,8 +2470,33 @@ public class MenuPrincipal extends JFrame {
 		}
 	}
 
+	public void newReward(MouseEvent e) {
+		ERewardType rewardtype = null;
+		JHoverList<CellListCaracs> listToLoad = null;
+		if(e.getSource()==btn_add_every){
+			rewardtype = ERewardType.every;
+			listToLoad = list_every;
+		}
+		else {
+			rewardtype = ERewardType.after;
+			listToLoad = list_after;
+		}
+
+		Arena lArene = arenas.getALarenas().get(combo_arena.getSelectedIndex());
+		RewardList rewards = lArene.getRewardsType(rewardtype);
+		reward = new Reward(rewards.getFirstAvailableNumber(), rewardtype);
+		rewards.add(reward);
+		loadData_Rewards();
+		listToLoad.setSelectedIndex(rewards.indexOf(reward));
+		deselectRewardLists_Rewards(listToLoad);
+		
+		pan_reward_control.setVisible(true);
+		sai_reward_wave_number.requestFocus();
+		sai_reward_wave_number.selectAll();		
+	}
+
 	@SuppressWarnings("unchecked")
-	public void cellMouseAdapter(MouseEvent e) {
+	public void waveArenaCellMouseAdapter(MouseEvent e) {
 		//On récupère la liste source en tant que liste de caracs pour l'évaluation de situation
 		//et en tant que liste de vagues pour le travail sur les données
 		JHoverList<CellListCaracs> source = (JHoverList<CellListCaracs>) e.getSource();
@@ -2567,6 +2613,25 @@ public class MenuPrincipal extends JFrame {
 			}
 		}
 	}
+	
+	//TODO
+	@SuppressWarnings("unchecked")
+	public void rewardCellMouseAdapter(MouseEvent e) {
+		JHoverList<CellListCaracs> source = (JHoverList<CellListCaracs>) e.getSource();
+		if(source.getModel().getSize()!=0) {
+			source.ensureIndexIsVisible(source.getSelectedIndex());
+			
+			switch (e.getButton()) {
+			case MouseEvent.BUTTON1:
+				
+				break;
+			case MouseEvent.BUTTON2:
+				
+			default:
+				break;
+			}
+		}
+	}
 
 	public void loadArena(int numarena) {
 
@@ -2585,6 +2650,8 @@ public class MenuPrincipal extends JFrame {
 		loadData_GlobalSettings();
 
 		loadData_Coordinates();
+		
+		loadData_Rewards();
 
 	}
 
@@ -2788,6 +2855,15 @@ public class MenuPrincipal extends JFrame {
 		}
 		else if(jList==list_single){
 			list_recurrent.clearSelection();
+		}
+	}
+
+	public void deselectRewardLists_Rewards(JHoverList<CellListCaracs> jList) {
+		if(jList==list_every){
+			list_after.clearSelection();
+		}
+		else if(jList==list_after){
+			list_every.clearSelection();
 		}
 	}
 
@@ -3121,5 +3197,30 @@ public class MenuPrincipal extends JFrame {
 				}
 			}
 		}
+	}
+	
+	public void loadData_Rewards() {
+		Arena arena = arenas.getALarenas().get(combo_arena.getSelectedIndex());
+		
+		DefaultListModel<CellListCaracs> mod_every = new DefaultListModel<>();
+		RewardList rlist = arena.getRewardsType(ERewardType.every);
+		for(int i=0;i<rlist.size();i++) {
+			mod_every.addElement(new CellListCaracs(rlist.get(i).getWave_number()+""));
+		}
+		list_every.setModel(mod_every);
+		
+		DefaultListModel<CellListCaracs> mod_after = new DefaultListModel<>();
+		rlist = arena.getRewardsType(ERewardType.after);
+		for(int i=0;i<rlist.size();i++) {
+			mod_after.addElement(new CellListCaracs(rlist.get(i).getWave_number()+""));
+		}
+		list_after.setModel(mod_after);
+		
+	}
+	
+	public void loadReward(Reward r) {
+		pan_reward_control.setVisible(true);
+		sai_reward_wave_number.setValue((long)r.getWave_number());
+		combo_montant.setSelectedItem(r.getType().getNom());;
 	}
 }

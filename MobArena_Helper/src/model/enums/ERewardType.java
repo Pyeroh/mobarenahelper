@@ -36,6 +36,25 @@ public enum ERewardType {
 		return namevalues;
 	}
 	
+	public static ERewardType getByName(String name) {
+		if (name!=null) {
+			ERewardType[] values = values();
+			int i = 0;
+			while (i < values.length && !values[i].getNom().equals(name)) {
+				i++;
+			}
+			if (i < values.length) {
+				return values[i];
+			} else {
+				throw new IllegalArgumentException(
+						"No enum constant ERewardType." + name); //$NON-NLS-1$
+			}
+		}
+		else {
+			throw new NullPointerException("Name is null"); //$NON-NLS-1$
+		}
+	}
+	
 	public static void load() {
 		ERewardType[] values = values();
 		for(int i=0;i<values.length;i++) {

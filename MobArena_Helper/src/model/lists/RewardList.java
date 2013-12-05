@@ -3,6 +3,7 @@ package model.lists;
 import java.util.*;
 
 import model.Reward;
+import model.enums.ERewardType;
 
 public class RewardList extends ArrayList<Reward> {
 
@@ -16,11 +17,12 @@ public class RewardList extends ArrayList<Reward> {
 		super(list);
 	}
 	
-	public void fill(LinkedHashMap<String, Object> map) {
+	public void fill(LinkedHashMap<String, Object> map, ERewardType type) {
 		for (Iterator<String> it = map.keySet().iterator(); it.hasNext();) {
 			String wave_number = (String) it.next();
-			add(new Reward(Integer.parseInt(wave_number), (String) map.get(wave_number)));
+			add(new Reward(Integer.parseInt(wave_number), type, (String) map.get(wave_number)));
 		}
+		sort();
 	}
 	
 	public LinkedHashMap<String, Object> getMap() {
@@ -33,18 +35,25 @@ public class RewardList extends ArrayList<Reward> {
 		return map;
 	}
 	
-	public boolean add(Reward r) {
+	public boolean add(Reward r, boolean sort) {
 		boolean b = super.add(r);
-		sort();
+		if(sort) sort();
 		return b;
 	}
 	
+	@Override
+	public boolean add(Reward r) {
+		return add(r,true);
+	}
+	
+	@Override
 	public Reward remove(int index) {
 		Reward r = super.remove(index);
 		sort();
 		return r;
 	}
 	
+	@Override
 	public boolean remove(Object r) {
 		boolean b = super.remove(r);
 		sort();
@@ -87,6 +96,16 @@ public class RewardList extends ArrayList<Reward> {
 		Reward temp = list.get(deb);
 		list.set(deb,list.get(fin));
 		list.set(fin,temp);
+	}
+
+	public int getFirstAvailableNumber() {
+		int i=0;
+		if(i<size()) {
+			while(i<size() && get(i).getWave_number()!=i+1) {
+				i++;
+			}
+		}
+		return i+1;
 	}
 
 }

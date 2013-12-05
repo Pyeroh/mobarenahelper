@@ -30,5 +30,6 @@ public class EnumName {
 		EItemCat.load();
 		EMonsters.load();
 		ETypeW.load();
+		ERewardType.load();
 	}
 }

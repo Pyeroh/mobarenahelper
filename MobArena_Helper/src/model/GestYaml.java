@@ -71,6 +71,7 @@ public class GestYaml {
 	}
 
 	@SuppressWarnings("unchecked") 
+	//TODO
 	protected Object get(String key) {
 		String[] arbokey = key.split("[.]");
 		Map<String, Object> mapvalue = data;
@@ -180,12 +181,12 @@ public class GestYaml {
 	}
 	
 	/**
-	 * Est-ce qu'au premier niveau, la Map du gestionnaire contient la clé passée en paramètre ?
+	 * Est-ce que la Map du gestionnaire contient la clé passée en paramètre ?
 	 * @param key
 	 * @return
 	 */
 	public boolean containsKey(String key) {
-		if (data!=null) return data.containsKey(key);
+		if (data!=null) return (data.containsKey(key) || get(key)!=null);
 		else return false;
 	}
 

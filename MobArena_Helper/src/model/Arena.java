@@ -3,6 +3,7 @@ package model;
 import java.util.*;
 
 import model.enums.ECatW;
+import model.enums.ERewardType;
 import model.lists.ClassLimitList;
 import model.lists.RewardList;
 
@@ -53,15 +54,11 @@ public class Arena {
 		if (garena.containsKey("class-limits")) {
 			loadLimits(new GestYaml(garena.getMap("class-limits")));
 		}
+		this.rewards[0] = new RewardList();
+		this.rewards[1] = new RewardList();
 		if(garena.containsKey("rewards")) {
-			if(garena.containsKey("rewards.every")) {
-				this.rewards[0] = new RewardList();
-				this.rewards[0].fill(garena.getMap("rewards.every"));
-			}
-			if(garena.containsKey("rewards.after")) {
-				this.rewards[1] = new RewardList();
-				this.rewards[1].fill(garena.getMap("rewards.after"));
-			}
+			if(garena.containsKey("rewards.waves.every")) this.rewards[0].fill(garena.getMap("rewards.waves.every"), ERewardType.every);
+			if(garena.containsKey("rewards.waves.after")) this.rewards[1].fill(garena.getMap("rewards.waves.after"), ERewardType.after);
 		}
 		if (garena.containsKey("coords")) {
 			this.coords = garena.getMap("coords");
@@ -82,6 +79,8 @@ public class Arena {
 		this.nom = nom;
 		this.waves[0] = new ArrayList<Wave>();
 		this.waves[1] = new ArrayList<Wave>();
+		this.rewards[0] = new RewardList();
+		this.rewards[1] = new RewardList();
 		this.config = new ArenaConfig();
 	}
 
@@ -116,12 +115,13 @@ public class Arena {
 	 * @return les vagues récurrentes si {@link ECatW#recurrent}, uniques si {@link ECatW#single}.
 	 */
 	public ArrayList<Wave> getWavesType(ECatW type){
-		if(type.equals(ECatW.recurrent)){
-			return waves[0];
-		}
-		else{
-			return waves[1];
-		}
+		if(type == ECatW.recurrent) return waves[0];
+		else return waves[1];
+	}
+	
+	public RewardList getRewardsType(ERewardType type) {
+		if(type == ERewardType.every) return rewards[0];
+		else return rewards[1];
 	}
 
 	public String getNom() {
