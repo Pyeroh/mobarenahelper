@@ -107,5 +107,17 @@ public class RewardList extends ArrayList<Reward> {
 		}
 		return i+1;
 	}
+	
+	public boolean isAvailable(int wave_number) {
+		boolean available = true;
+		int i=0;
+		if(i<size())  {
+			while(i<size() && get(i).getWave_number()!=wave_number) {
+				i++;
+			}
+			if(i<size()) available = false;
+		}
+		return available;
+	}
 
 }

@@ -2361,6 +2361,15 @@ public class MenuPrincipal extends JFrame {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				//TODO keyReleased
+				try {
+					sai_reward_wave_number.commitEdit();
+				} 
+				catch (ParseException e1) {}
+				
+				Number value = (Number) sai_reward_wave_number.getValue();
+				int wave_number = value.intValue();
+				//if()
+				
 			}
 		});
 		sai_reward_wave_number.setBounds(89, 6, 73, 25);
