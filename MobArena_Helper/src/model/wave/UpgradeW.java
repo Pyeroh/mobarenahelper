@@ -35,6 +35,7 @@ public class UpgradeW extends Wave {
 	@Override
 	public LinkedHashMap<String, Object> getMap() throws ArenaException {
 		LinkedHashMap<String, Object> map = super.getMap();
+		map.remove("monsters");
 		
 		LinkedHashMap<String, Object> upset_map = new LinkedHashMap<String, Object>();
 		for(int i=0;i<upgrades.size();i++) {

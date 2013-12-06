@@ -101,7 +101,7 @@ public class RewardList extends ArrayList<Reward> {
 	public int getFirstAvailableNumber() {
 		int i=0;
 		if(i<size()) {
-			while(i<size() && get(i).getWave_number()!=i+1) {
+			while(i<size() && get(i).getWave_number()==i+1) {
 				i++;
 			}
 		}

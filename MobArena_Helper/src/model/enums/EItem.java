@@ -676,10 +676,10 @@ public enum EItem {
 
 		EItem item = EItem.getByNameFirst(name);
 		if(item!=null){
-			while(item.getMeta()!=meta && item.getRealName().equalsIgnoreCase(name)) {
-
-				item = values.get(values.indexOf(item)+1);
-
+			int i = 0;
+			while(item.getMeta()!=meta && item.getRealName().equalsIgnoreCase(name) && i!=values.size()) {
+				i = values.indexOf(item)+1;
+				if (i!=values.size()) item = values.get(i);
 			}
 			if(item.getMeta()==meta) return item;
 			else return null;

@@ -65,7 +65,7 @@ public class EnchantList extends ArrayList<Enchantment> {
 	}
 	
 	public String getString() {
-		StringBuffer enchant = new StringBuffer(" ");
+		StringBuffer enchant = new StringBuffer("");
 		for (int i = 0; i < size(); i++) {
 
 			if (i == 0)

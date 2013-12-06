@@ -91,7 +91,7 @@ public class ItemList extends ArrayList<AbstractItem> {
 		}
 		else if(this.size()>1){
 			for(int i=0;i<this.size();i++) {
-				sItems.append(this.get(i).getString()+",");
+				sItems.append(this.get(i).getString()+", ");
 			}
 			int length = sItems.length();
 			sItems.delete(length-2, length);

@@ -189,9 +189,29 @@ public class Arena {
 			}
 
 		}
-
 		if(!mapwaves.isEmpty()) arena.put("waves", mapwaves);
-		if(rewards!=null) arena.put("rewards", rewards);
+		
+		LinkedHashMap<String, Object> maprewards = new LinkedHashMap<>();
+		String[] typreward = {"every", "after"};
+		for(int i=0;i<2;i++){
+
+			LinkedHashMap<String, Object> rewardsbytyp = new LinkedHashMap<>();
+			for(int j=0;j<rewards[i].size();j++){
+
+				Reward reward = rewards[i].get(j);
+				rewardsbytyp.put(reward.getWave_number()+"", reward.getRewards().getString());
+
+			}
+			if (rewards[i].size()!=0) {
+				maprewards.put(typreward[i], rewardsbytyp);
+			}
+
+		}
+		if(!maprewards.isEmpty()) {
+			LinkedHashMap<String, Object> r1 = new LinkedHashMap<>();
+			r1.put("waves", maprewards);
+			arena.put("rewards", r1);
+		}
 		if (!limits.isEmpty()) {
 			arena.put("class-limits", limits.getMap());
 		}

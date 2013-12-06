@@ -87,7 +87,7 @@ public class ArmorList extends ItemList {
 				sArmor.append(this.get(i).getString()+",");
 			}
 			int length = sArmor.length();
-			sArmor.delete(length-2, length);
+			sArmor.delete(length-1, length);
 		}
 		
 		return sArmor.toString().trim();
