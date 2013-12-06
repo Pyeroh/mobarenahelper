@@ -230,7 +230,7 @@ public class MenuPrincipal extends JFrame {
 	private JFormattedTextField sai_reward_wave_number;
 	private JLabel lib_reward_wave;
 	private JLabel lib_moment;
-	private JWideComboBox combo_montant;
+	private JWideComboBox combo_occurrence;
 
 	public MenuPrincipal() throws ParseException{
 		super("MobArena Helper v2.3");
@@ -2275,14 +2275,6 @@ public class MenuPrincipal extends JFrame {
 		pan_rewards = new JPanel();
 		pan_rewards.setLayout(null);
 
-		//TODO
-		tabpan_config.addTab(Messages.getString("MenuPrincipal.tabpan_arena_wave.title"), pan_arena_wave); //$NON-NLS-2$ //$NON-NLS-1$
-		tabpan_config.addTab(Messages.getString("MenuPrincipal.tabpan_classes.title"), pan_classes); //$NON-NLS-2$ //$NON-NLS-1$
-		tabpan_config.addTab(Messages.getString("MenuPrincipal.tabpan_arena_settings.title"), pan_arena_settings); //$NON-NLS-2$ //$NON-NLS-1$
-		tabpan_config.addTab(Messages.getString("MenuPrincipal.pan_coordinates.title"), pan_coordinates); //$NON-NLS-2$ //$NON-NLS-1$
-		tabpan_config.addTab(Messages.getString("MenuPrincipal.pan_rewards.title"), pan_rewards); //$NON-NLS-2$ //$NON-NLS-1$
-		tabpan_config.addTab(Messages.getString("MenuPrincipal.pan_global_settings.title"), pan_global_settings); //$NON-NLS-1$
-
 		lib_every = new JLabel(Messages.getString("MenuPrincipal.lib_every.text")); //$NON-NLS-1$
 		lib_every.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lib_every.setBounds(6, 6, 110, 25);
@@ -2360,16 +2352,32 @@ public class MenuPrincipal extends JFrame {
 		sai_reward_wave_number.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				//TODO keyReleased
 				try {
-					sai_reward_wave_number.commitEdit();
-				} 
-				catch (ParseException e1) {}
-				
-				Number value = (Number) sai_reward_wave_number.getValue();
-				int wave_number = value.intValue();
-				//if()
-				
+					int number = Integer.parseInt(sai_reward_wave_number.getText());
+					if (number>0) {
+						try {
+							sai_reward_wave_number.commitEdit();
+						} catch (ParseException e1) {
+						}
+						Number value = (Number) sai_reward_wave_number.getValue();
+						int wave_number = value.intValue();
+						ERewardType type = ERewardType
+								.getByName((String) combo_occurrence.getSelectedItem());
+						RewardList rewards = arenas.getALarenas()
+								.get(combo_arena.getSelectedIndex())
+								.getRewardsType(type);
+						if (rewards.isAvailable(wave_number)) {
+							reward.setWave_number(wave_number);
+							rewards.sort();
+							int index = rewards.indexOf(reward);
+							loadData_Rewards();
+							JHoverList<CellListReward> list = type == ERewardType.every ? list_every
+									: list_after;
+							list.setSelectedIndex(index);
+							list.ensureIndexIsVisible(index);
+						}
+					}
+				} catch (NumberFormatException e2) {}
 			}
 		});
 		sai_reward_wave_number.setBounds(89, 6, 73, 25);
@@ -2381,27 +2389,52 @@ public class MenuPrincipal extends JFrame {
 		lib_moment.setBounds(6, 43, 72, 25);
 		pan_reward_control.add(lib_moment);
 
-		combo_montant = new JWideComboBox();
-		combo_montant.addItemListener(new ItemListener() {
+		combo_occurrence = new JWideComboBox();
+		combo_occurrence.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				//TODO ItemListener
+				if(e.getStateChange()==ItemEvent.SELECTED && combo_occurrence.isFocusOwner()) {
+					Arena lArene = arenas.getALarenas().get(combo_arena.getSelectedIndex());
+					lArene.getRewardsType(reward.getType()).remove(reward);
+					
+					ERewardType othertyp = reward.getType()==ERewardType.every ? ERewardType.after : ERewardType.every;
+					RewardList otherrewards = lArene.getRewardsType(othertyp);
+					if(!otherrewards.isAvailable(reward.getWave_number())) {
+						reward.setWave_number(otherrewards.getFirstAvailableNumber());
+					}
+					otherrewards.add(reward);
+					
+					reward.setType(othertyp);
+					int index = otherrewards.indexOf(reward);
+					loadData_Rewards();
+					JHoverList<CellListReward> list = othertyp==ERewardType.every ? list_every : list_after;
+					list.setSelectedIndex(index);
+					list.ensureIndexIsVisible(index);
+					loadReward(reward);
+				}
 			}
 		});
-		combo_montant.setModel(new DefaultComboBoxModel<String>(ERewardType.namevalues()));
-		combo_montant.setBounds(89, 43, 73, 26);
-		pan_reward_control.add(combo_montant);
+		combo_occurrence.setModel(new DefaultComboBoxModel<String>(ERewardType.namevalues()));
+		combo_occurrence.setBounds(89, 43, 73, 26);
+		pan_reward_control.add(combo_occurrence);
 
 		btn_set_rewards = new JButton(Messages.getString("MenuPrincipal.btn_set_rewards.text")); //$NON-NLS-1$
 		btn_set_rewards.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				//TODO mouseReleased
+				reward.setRewards(new ItemSelector(MenuPrincipal.this, reward.getRewards(), -1, false).getItemList());
 			}
 		});
 		btn_set_rewards.setBounds(6, 80, 156, 58);
 		pan_reward_control.add(btn_set_rewards);
 		btn_set_rewards.setFont(new Font("Tahoma", Font.BOLD, 13));
+		
+		tabpan_config.addTab(Messages.getString("MenuPrincipal.tabpan_arena_wave.title"), pan_arena_wave); //$NON-NLS-2$ //$NON-NLS-1$
+		tabpan_config.addTab(Messages.getString("MenuPrincipal.tabpan_classes.title"), pan_classes); //$NON-NLS-2$ //$NON-NLS-1$
+		tabpan_config.addTab(Messages.getString("MenuPrincipal.tabpan_arena_settings.title"), pan_arena_settings); //$NON-NLS-2$ //$NON-NLS-1$
+		tabpan_config.addTab(Messages.getString("MenuPrincipal.pan_coordinates.title"), pan_coordinates); //$NON-NLS-2$ //$NON-NLS-1$
+		tabpan_config.addTab(Messages.getString("MenuPrincipal.pan_rewards.title"), pan_rewards); //$NON-NLS-2$ //$NON-NLS-1$
+		tabpan_config.addTab(Messages.getString("MenuPrincipal.pan_global_settings.title"), pan_global_settings); //$NON-NLS-1$
 
 		raz();
 
@@ -3277,7 +3310,7 @@ public class MenuPrincipal extends JFrame {
 	public void loadReward(Reward r) {
 		pan_reward_control.setVisible(true);
 		sai_reward_wave_number.setValue((long)r.getWave_number());
-		combo_montant.setSelectedItem(r.getType().getNom());
+		combo_occurrence.setSelectedItem(r.getType().getNom());
 		sai_reward_wave_number.requestFocus();
 	}
 }

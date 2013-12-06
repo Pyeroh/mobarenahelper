@@ -34,7 +34,7 @@ public class HowTo extends JDialog {
 		setModal(true);
 		setUndecorated(true);
 		setModalityType(ModalityType.APPLICATION_MODAL);
-		setSize(647,429);
+		setSize(647,460);
 		getContentPane().setLayout(null);
 		
 		lib_HowToUse = new JLabel(Messages.getString("HowTo.lib_HowToUse.text")); //$NON-NLS-1$
@@ -44,7 +44,7 @@ public class HowTo extends JDialog {
 		getContentPane().add(lib_HowToUse);
 		
 		tab_howto = new JTabbedPane(JTabbedPane.TOP);
-		tab_howto.setBounds(1, 42, 644, 342);
+		tab_howto.setBounds(1, 42, 644, 377);
 		getContentPane().add(tab_howto);
 		
 		lib_howto2 = new JTextPane();
@@ -66,6 +66,7 @@ public class HowTo extends JDialog {
 		tab_howto.addTab(Messages.getString("MenuPrincipal.tabpan_arena_settings.title"), null, lib_howto4, null); //$NON-NLS-1$
 		
 		lib_howto9 = new JTextPane();
+		lib_howto9.setEditable(false);
 		lib_howto9.setText(Messages.getString("HowTo.lib_howto9.text")); //$NON-NLS-1$
 		tab_howto.addTab(Messages.getString("HowTo.lib_howto9.title"), null, lib_howto9, null); //$NON-NLS-1$
 		
@@ -97,7 +98,7 @@ public class HowTo extends JDialog {
 				dispose();
 			}
 		});
-		btn_ok.setBounds(594, 396, 47, 23);
+		btn_ok.setBounds(594, 431, 47, 23);
 		getContentPane().add(btn_ok);
 		
 		border = new JLabel("");

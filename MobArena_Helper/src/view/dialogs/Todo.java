@@ -27,13 +27,13 @@ public class Todo extends JDialog {
 		setAlwaysOnTop(true);
 		getContentPane().setBackground(new Color(255, 255, 255));
 		getContentPane().setLayout(null);
-		setSize(487,372);
+		setSize(487,435);
 		
 		lib_todo = new JEditorPane();
 		lib_todo.setEditable(false);
 		lib_todo.setContentType("text/html");
 		lib_todo.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lib_todo.setBounds(10, 11, 464, 317);
+		lib_todo.setBounds(10, 11, 464, 383);
 		try {
 			lib_todo.setPage(Todo.class.getResource("/gui/pics/todo_"+getLang()+".html"));
 		} catch (IOException e) {
@@ -49,7 +49,7 @@ public class Todo extends JDialog {
 				dispose();
 			}
 		});
-		btn_ok.setBounds(427, 340, 47, 23);
+		btn_ok.setBounds(434, 406, 47, 23);
 		getContentPane().add(btn_ok);
 		
 		border = new JLabel("");
