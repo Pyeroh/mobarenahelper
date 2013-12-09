@@ -20,7 +20,7 @@ public class RewardList extends ArrayList<Reward> {
 	public void fill(LinkedHashMap<String, Object> map, ERewardType type) {
 		for (Iterator<String> it = map.keySet().iterator(); it.hasNext();) {
 			String wave_number = (String) it.next();
-			add(new Reward(Integer.parseInt(wave_number), type, (String) map.get(wave_number)));
+			add(new Reward(Integer.parseInt(wave_number), type, map.get(wave_number)+""));
 		}
 		sort();
 	}
