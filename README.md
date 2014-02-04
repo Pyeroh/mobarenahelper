@@ -8,10 +8,11 @@ C'est un programme d'édition des fichiers de configuration pour le plugin MobAr
 - modification des caractéristiques d'arène
 - gestion des objets, armures, permissions, enchantements...
 - sauvegarde au format YAML
+- plein d'autres choses...
 
-De plus, le programme est intégralement en anglais, c'est un simple portage du WaveEditor développé à l'origine par Agnate, et depuis lors englouti par une erreur 404.
+Le programme est multilangue !
 
-Lien de téléchargement : http://tinyurl.com/qjpqzc6
+Lien de téléchargement : http://goo.gl/QMa4tz
 
 J'espère qu'il rendra la vie plus facile aux utilisateurs de ce plugin, et je vous invite d'ailleurs à aller visiter la page sur BukkitDev pour le plugin.
 
@@ -33,10 +34,11 @@ It's an edition program for configuration files of the plugin MobArena, on Minec
 - edition of arenas characteristics
 - management of items, armors, permissions, enchantments...
 - saving to YAML file format
+- a lot more ...
  
-Moreover, the program is fully in english, it's a simple portage of Agnate's WaveEditor, which sinked into 404 error pit.
+The program is multi-language !
 
-Download link : http://tinyurl.com/qjpqzc6
+Download link : http://goo.gl/QMa4tz
 
 For interested ones, here's the link to application data model javadoc :
 http://pyeroh.github.io/MAH_javadoc/ (in french...)
