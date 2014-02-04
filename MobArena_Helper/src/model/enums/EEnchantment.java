@@ -30,9 +30,8 @@ public enum EEnchantment {
 	silk_touch(33,1),
 	unbreaking(34,3),
 	fortune(35,3),
-	//TODO à corriger pour le passage à la nouvelle version Minecraft
-	/*luck_of_the_sea(61,3),
-	lure(62,3),*/
+	luck_of_the_sea(61,3),
+	lure(62,3),
 
 	//Bow
 	power(48,5),

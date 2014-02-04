@@ -149,6 +149,9 @@ public class ItemSelector extends JDialog {
 		btn_add_custom.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
+				int nb_items = list_selected.getModel().getSize();
+				if(ItemSelector.this.max-nb_items==1) btn_add_custom.setVisible(false);
+				
 				CustomItem ci = new CustomItemCreator(ItemSelector.this.frame).getItem();
 				if(ci!=null) {
 					ItemSelector.this.items.add(ci);
@@ -256,6 +259,7 @@ public class ItemSelector extends JDialog {
 
 		if (!list_selectable.isSelectionEmpty()) {
 			int nb_items = list_selected.getModel().getSize();
+			if(max-nb_items==1) btn_add_custom.setVisible(false);
 			if (nb_items == max) {
 				JOptionPane.showMessageDialog(
 						rootPane,
@@ -309,7 +313,9 @@ public class ItemSelector extends JDialog {
 	private void removeItem() {
 
 		if(!list_selected.isSelectionEmpty()) {
-
+			int nb_items = list_selected.getModel().getSize();
+			if(nb_items<ItemSelector.this.max) btn_add_custom.setVisible(true);
+			
 			items.remove(selectedItem);
 			loadSelected(items);
 			loadSelectable(crossSearch());

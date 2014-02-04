@@ -166,7 +166,7 @@ public class Arena {
 
 	/**
 	 * Renvoie la map des informations de l'arène.
-	 * @return
+	 * @return 
 	 * @throws ArenaException 
 	 */
 	public LinkedHashMap<String, Object> getMap() throws ArenaException {

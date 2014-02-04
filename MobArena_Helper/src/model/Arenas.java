@@ -103,7 +103,7 @@ public class Arenas {
 	/**
 	 * Renvoie la Map des informations du groupe d'arènes (la combinaison des informations de toutes les arènes).
 	 * @return
-	 * @throws ArenaException en cas d'erreur sur l'export des données (pas de classes à ajouter par exemple...)
+	 * @throws ArenaException 
 	 */
 	public LinkedHashMap<String, Object> getMap() throws ArenaException {
 		listarenas = new LinkedHashMap<>();

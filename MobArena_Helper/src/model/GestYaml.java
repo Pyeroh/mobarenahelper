@@ -71,7 +71,6 @@ public class GestYaml {
 	}
 
 	@SuppressWarnings("unchecked") 
-	//TODO
 	protected Object get(String key) {
 		String[] arbokey = key.split("[.]");
 		Map<String, Object> mapvalue = data;

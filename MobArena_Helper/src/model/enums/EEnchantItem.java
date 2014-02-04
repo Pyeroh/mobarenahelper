@@ -309,11 +309,10 @@ public enum EEnchantItem {
 	ei259(EEnchantment.fortune,EItem.gold_axe),
 	ei280(EEnchantment.fortune,EItem.enchanted_book),
 
-	//TODO changer ça pour la nouvelle version de Minecraft
-	/*ei260(EEnchantment.luck_of_the_sea,EItem.fishing_rod),
+	ei260(EEnchantment.luck_of_the_sea,EItem.fishing_rod),
 	ei281(EEnchantment.luck_of_the_sea,EItem.enchanted_book),
 	ei261(EEnchantment.lure,EItem.fishing_rod),
-	ei282(EEnchantment.lure,EItem.enchanted_book),*/
+	ei282(EEnchantment.lure,EItem.enchanted_book),
 	;
 
 	private EEnchantment enchantment;

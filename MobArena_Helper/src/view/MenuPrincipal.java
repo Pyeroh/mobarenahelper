@@ -3291,6 +3291,7 @@ public class MenuPrincipal extends JFrame {
 	public void loadData_Rewards() {
 		Arena arena = arenas.getALarenas().get(combo_arena.getSelectedIndex());
 
+		pan_reward_control.setVisible(false);
 		DefaultListModel<CellListReward> mod_every = new DefaultListModel<>();
 		RewardList rlist = arena.getRewardsType(ERewardType.every);
 		for(int i=0;i<rlist.size();i++) {
