@@ -10,12 +10,13 @@ import model.enums.*;
  * @author denanq
  * @see Wave
  */
-public class SwarmW extends Wave{
+public class SwarmW extends Wave {
 
 	private EAmount amount = EAmount.low;
 
 	public SwarmW(String nom) {
 		super(nom, ETypeW.Swarm);
+		this.getMonstres().add(new Monstre(EMonsters.zombie, 0));
 	}
 
 	public EAmount getAmount() {
@@ -54,7 +55,7 @@ public class SwarmW extends Wave{
 		if(map.containsKey("amount")){
 			wave.setAmount(EAmount.valueOf(g.getString("amount")));
 		}
-		wave.getMonstres().add(new Monstre(EMonsterAliases.getByName(g.getString("monster")).getMonstre(),0));
+		wave.getMonstres().set(0, new Monstre(EMonsterAliases.getByName(g.getString("monster")).getMonstre(),0));
 
 		return wave;
 	}
