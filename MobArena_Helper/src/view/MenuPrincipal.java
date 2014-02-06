@@ -233,7 +233,7 @@ public class MenuPrincipal extends JFrame {
 	private JWideComboBox combo_occurrence;
 
 	public MenuPrincipal() throws ParseException{
-		super("MobArena Helper v2.3");
+		super();
 		setTitle(Messages.getString("MenuPrincipal.this.title")); //$NON-NLS-1$
 		addWindowListener(new WindowAdapter() {
 			@Override

@@ -219,7 +219,7 @@ public abstract class Wave implements Comparable<Wave> {
 			}
 			vague.put("monsters", mapmonstres);
 		}
-		else vague.put("monsters", null);
+		//else vague.put("monsters", null);
 
 		return vague;
 	}

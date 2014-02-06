@@ -123,7 +123,10 @@ public class Arenas {
 		LinkedHashMap<String, Object> file = new LinkedHashMap<>();
 		file.put("global-settings", settings.getMap());
 		
-		file.put("classes", listclasses.isEmpty() ? null : listclasses);
+		if(!listclasses.isEmpty()) {
+			file.put("classes", listclasses);
+		}
+		else throw new ArenaException("Classes must be provided !");
 		file.put("arenas", listarenas);
 		
 		return file;
