@@ -17,12 +17,17 @@ import view.cells.CellListCaracs;
 public class About extends JDialog {
 
 	private static final long serialVersionUID = -7754918383926484094L;
+
 	private JTextPane lib_about;
+
 	private JLabel img_header;
+
 	private JLabel lib_link;
 
 	private JLabel border;
+
 	private JLabel lib_github;
+
 	private JLabel lib_link_git;
 
 	public About(MenuPrincipal menu) {
@@ -49,11 +54,14 @@ public class About extends JDialog {
 		getContentPane().add(lib_about);
 
 		MouseAdapter linker = new MouseAdapter() {
+
 			public void mouseClicked(MouseEvent e) {
-				URI uri = null;;
+				URI uri = null;
+				;
 				try {
 					uri = new URI(((JLabel) e.getSource()).getText());
-				} catch (URISyntaxException e2) {
+				}
+				catch (URISyntaxException e2) {
 					e2.printStackTrace();
 					return;
 				}
@@ -62,14 +70,16 @@ public class About extends JDialog {
 					try {
 						desktop.browse(uri);
 						dispose();
-					} catch (IOException e1) {
-						JOptionPane.showMessageDialog(null,Messages.getString("About.message.failLaunchLink"),Messages.getString("Message.title.cannotLaunch"),JOptionPane.WARNING_MESSAGE);
+					}
+					catch (IOException e1) {
+						JOptionPane.showMessageDialog(null, Messages.getString("About.message.failLaunchLink"),
+								Messages.getString("Message.title.cannotLaunch"), JOptionPane.WARNING_MESSAGE);
 						return;
 					}
-				} else {
-					JOptionPane.showMessageDialog(null,
-							Messages.getString("About.message.javaFailLaunchLink"),
-							Messages.getString("Message.title.cannotLaunch"),JOptionPane.WARNING_MESSAGE);
+				}
+				else {
+					JOptionPane.showMessageDialog(null, Messages.getString("About.message.javaFailLaunchLink"),
+							Messages.getString("Message.title.cannotLaunch"), JOptionPane.WARNING_MESSAGE);
 					return;
 				}
 			}
@@ -85,6 +95,7 @@ public class About extends JDialog {
 		JButton btn_ok = new JButton("OK");
 		btn_ok.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btn_ok.addMouseListener(new MouseAdapter() {
+
 			public void mouseClicked(MouseEvent e) {
 				dispose();
 			}
@@ -105,7 +116,7 @@ public class About extends JDialog {
 		getContentPane().add(lib_link_git);
 
 		border = new JLabel("");
-		border.setBounds(0, 140, 437, this.getHeight()-img_header.getHeight()-1);
+		border.setBounds(0, 140, 437, this.getHeight() - img_header.getHeight() - 1);
 		border.setBorder(new LineBorder(new Color(0, 0, 0)));
 		getContentPane().add(border);
 
@@ -113,5 +124,5 @@ public class About extends JDialog {
 		setVisible(true);
 
 	}
-	
+
 }

@@ -23,29 +23,47 @@ import view.cells.*;
 public class UpgradeWaveChanger extends JDialog {
 
 	private static final long serialVersionUID = -8859125188519188824L;
+
 	private UpgradeW upgradew;
+
 	private UpgradeSet upset;
+
 	private JFrame frame = new JFrame();
+
 	private JScrollPane scrpan_classes;
+
 	private JHoverList<CellListClass> list_classes;
+
 	private JLabel lib_classes_upgrade;
+
 	private JPanel pan_upgrade_config;
+
 	private JLabel lib_setup;
+
 	private JButton btn_add_class;
+
 	private JLabel lib_items;
+
 	private JButton btn_set_items;
+
 	private JLabel lib_armor;
+
 	private JButton btn_set_armor;
+
 	private JLabel lib_permissions;
+
 	private JScrollPane scrpan_permissions;
+
 	private JHoverList<CellListCaracs> list_permissions;
+
 	private JComboBox<String> combo_setup;
+
 	private JButton btn_add_perm;
 
 	public UpgradeWaveChanger(JFrame frame, UpgradeW upw) {
 		super();
 		setModalityType(ModalityType.APPLICATION_MODAL);
-		setTitle(Messages.getString("UpgradeWaveChanger.title") + " - "+frame.getTitle());
+		setTitle(Messages.getString("UpgradeWaveChanger.title") + " - " + frame.getTitle());
 
 		setIconImage(new ImageIcon(UpgradeWaveChanger.class.getResource("/gui/pics/mobarena.png")).getImage());
 		setResizable(false);
@@ -57,13 +75,14 @@ public class UpgradeWaveChanger extends JDialog {
 
 		list_classes = new JHoverList<CellListClass>();
 		list_classes.addMouseListener(new MouseAdapter() {
+
 			public void mouseReleased(MouseEvent e) {
 
 				int index = list_classes.getSelectedIndex();
 
 				ArrayList<UpgradeSet> upsetlist = upgradew.getUpgrades();
 
-				if (index!=-1) {
+				if (index != -1) {
 					if (e.getButton() == MouseEvent.BUTTON1) {
 
 						setInvisibleComponents();
@@ -74,9 +93,9 @@ public class UpgradeWaveChanger extends JDialog {
 
 					else if (e.getButton() == MouseEvent.BUTTON2) {
 
-						int choice = JOptionPane.showConfirmDialog(rootPane,
-								String.format(Messages.getString("UpgradeWaveChanger.message.delUpgrade"),upsetlist.get(index).getClasse().getName()),
-								Messages.getString("Message.title.confirmation"), JOptionPane.YES_NO_OPTION);
+						int choice = JOptionPane.showConfirmDialog(rootPane, String.format(
+								Messages.getString("UpgradeWaveChanger.message.delUpgrade"), upsetlist.get(index).getClasse().getName()), Messages
+								.getString("Message.title.confirmation"), JOptionPane.YES_NO_OPTION);
 						if (choice == JOptionPane.YES_OPTION) {
 							upsetlist.remove(index);
 							load();
@@ -85,7 +104,8 @@ public class UpgradeWaveChanger extends JDialog {
 
 					}
 				}
-				else list_classes.clearSelection();
+				else
+					list_classes.clearSelection();
 
 			}
 		});
@@ -103,27 +123,24 @@ public class UpgradeWaveChanger extends JDialog {
 		btn_add_class = new JButton(Messages.getString("UpgradeWaveChanger.btn_add_class.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		btn_add_class.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btn_add_class.addMouseListener(new MouseAdapter() {
+
 			public void mouseReleased(MouseEvent e) {
 				@SuppressWarnings("unchecked")
 				ArrayList<Classe> classe_list = (ArrayList<Classe>) Classe.classe_list.clone();
 				ArrayList<Classe> up_classe_list = new ArrayList<Classe>();
 				ArrayList<UpgradeSet> upset_list = upgradew.getUpgrades();
-				for(int i=0;i<upset_list.size();i++) {
+				for (int i = 0; i < upset_list.size(); i++) {
 					up_classe_list.add(upset_list.get(i).getClasse());
 				}
 				classe_list.removeAll(up_classe_list);
 				String[] tab_classe = new String[classe_list.size()];
-				for(int i=0;i<classe_list.size();i++) {
+				for (int i = 0; i < classe_list.size(); i++) {
 					tab_classe[i] = classe_list.get(i).getName();
 				}
 
-				if (tab_classe.length!=0) {
-					String selection = (String) JOptionPane.showInputDialog(
-							rootPane,
-							Messages.getString("UpgradeWaveChanger.message.addUpgrade"),
-							Messages.getString("Message.title.classSelection"),
-							JOptionPane.QUESTION_MESSAGE, null,
-							tab_classe, null);
+				if (tab_classe.length != 0) {
+					String selection = (String) JOptionPane.showInputDialog(rootPane, Messages.getString("UpgradeWaveChanger.message.addUpgrade"),
+							Messages.getString("Message.title.classSelection"), JOptionPane.QUESTION_MESSAGE, null, tab_classe, null);
 					if (selection != null) {
 						Classe classe = Classe.getByName(selection);
 						UpgradeSet upset = new UpgradeSet(classe);
@@ -151,9 +168,10 @@ public class UpgradeWaveChanger extends JDialog {
 
 		combo_setup = new JComboBox<String>();
 		combo_setup.addItemListener(new ItemListener() {
+
 			public void itemStateChanged(ItemEvent e) {
 
-				if(e.getStateChange() == ItemEvent.DESELECTED && combo_setup.isFocusOwner()) {
+				if (e.getStateChange() == ItemEvent.DESELECTED && combo_setup.isFocusOwner()) {
 
 					upset.setSetup(UpSetup.valueOf(((String) combo_setup.getSelectedItem()).toLowerCase()));
 					setInvisibleComponents();
@@ -173,14 +191,15 @@ public class UpgradeWaveChanger extends JDialog {
 		pan_upgrade_config.add(lib_items);
 
 		MouseAdapter itemsetter = new MouseAdapter() {
+
 			public void mouseReleased(MouseEvent e) {
 
 				JFrame frame = UpgradeWaveChanger.this.frame;
-				if(e.getSource() == btn_set_items) {
-					upset.setItems(new ItemSelector(frame,upset.getItems(),-1,false).getItemList());
+				if (e.getSource() == btn_set_items) {
+					upset.setItems(new ItemSelector(frame, upset.getItems(), -1, false).getItemList());
 				}
-				else if(e.getSource()== btn_set_armor) {
-					upset.setArmor((ArmorList) new ItemSelector(frame,upset.getArmor(),4,true).getItemList());
+				else if (e.getSource() == btn_set_armor) {
+					upset.setArmor((ArmorList) new ItemSelector(frame, upset.getArmor(), 4, true).getItemList());
 				}
 
 			}
@@ -205,23 +224,24 @@ public class UpgradeWaveChanger extends JDialog {
 
 		list_permissions = new JHoverList<CellListCaracs>();
 		list_permissions.addListSelectionListener(new ListSelectionListener() {
+
 			public void valueChanged(ListSelectionEvent e) {
 				list_permissions.clearSelection();
 			}
 		});
 		list_permissions.addMouseListener(new MouseAdapter() {
+
 			public void mouseReleased(MouseEvent e) {
 
 				int index = list_permissions.getSelectedIndex();
 
 				ArrayList<String> perm_list = upset.getPermissions();
 
-				if (index!=-1) {
+				if (index != -1) {
 					if (e.getButton() == MouseEvent.BUTTON2) {
 						int choice = JOptionPane.showConfirmDialog(rootPane,
-								MessageFormat.format(Messages.getString("MenuPrincipal.message.delPerm"), perm_list.get(index),""), 
-								Messages.getString("Message.title.confirmation"),
-								JOptionPane.YES_NO_OPTION);
+								MessageFormat.format(Messages.getString("MenuPrincipal.message.delPerm"), perm_list.get(index), ""),
+								Messages.getString("Message.title.confirmation"), JOptionPane.YES_NO_OPTION);
 						if (choice == JOptionPane.YES_OPTION) {
 							perm_list.remove(index);
 							loadUpgradeSet(upset);
@@ -240,13 +260,11 @@ public class UpgradeWaveChanger extends JDialog {
 		btn_add_perm = new JButton(Messages.getString("UpgradeWaveChanger.btn_add_perm.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		btn_add_perm.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btn_add_perm.addMouseListener(new MouseAdapter() {
+
 			public void mouseReleased(MouseEvent e) {
-				String perm = JOptionPane.showInputDialog(
-						rootPane,
-						Messages.getString("MenuPrincipal.message.addPerm"),
-						Messages.getString("Message.title.permissions"), 
-						JOptionPane.QUESTION_MESSAGE);
-				if(perm!=null) {
+				String perm = JOptionPane.showInputDialog(rootPane, Messages.getString("MenuPrincipal.message.addPerm"),
+						Messages.getString("Message.title.permissions"), JOptionPane.QUESTION_MESSAGE);
+				if (perm != null) {
 					upset.getPermissions().add(perm);
 					loadUpgradeSet(upset);
 				}
@@ -271,7 +289,7 @@ public class UpgradeWaveChanger extends JDialog {
 	private void load() {
 		DefaultListModel<CellListClass> mod_class = new DefaultListModel<CellListClass>();
 		ArrayList<UpgradeSet> upset = upgradew.getUpgrades();
-		for(int i=0;i<upset.size();i++) {
+		for (int i = 0; i < upset.size(); i++) {
 			mod_class.addElement(new CellListClass(upset.get(i).getClasse()));
 		}
 		list_classes.setModel(mod_class);
@@ -293,7 +311,7 @@ public class UpgradeWaveChanger extends JDialog {
 
 		this.upset = upset;
 
-		if (this.upset.getSetup()==UpSetup.advanced) {
+		if (this.upset.getSetup() == UpSetup.advanced) {
 			lib_armor.setVisible(true);
 			btn_set_armor.setVisible(true);
 			lib_permissions.setVisible(true);
@@ -309,5 +327,5 @@ public class UpgradeWaveChanger extends JDialog {
 		}
 
 	}
-	
+
 }

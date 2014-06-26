@@ -4,6 +4,7 @@ import model.EnumName;
 
 /**
  * Les différentes valeurs de santé existant
+ *
  * @author Pyeroh
  *
  */
@@ -17,7 +18,7 @@ public enum EHealth {
 
 	private String nom;
 
-	EHealth(String nom){
+	EHealth(String nom) {
 		this.nom = nom;
 	}
 
@@ -27,13 +28,14 @@ public enum EHealth {
 
 	/**
 	 * Renvoie la liste des noms des constantes.
+	 *
 	 * @return la liste des noms des constantes.
 	 */
-	public static String[] namevalues(){
+	public static String[] namevalues() {
 
 		EHealth[] values = values();
 		String[] namevalues = new String[values.length];
-		for (int i=0;i<namevalues.length;i++) {
+		for (int i = 0; i < namevalues.length; i++) {
 			namevalues[i] = values[i].getNom();
 		}
 		return namevalues;
@@ -41,14 +43,18 @@ public enum EHealth {
 
 	/**
 	 * Renvoie la constante associée au nom passé en paramètre.
-	 * @param name ce qui peut être renvoyé par {@link EHealth#getNom()}
+	 *
+	 * @param name
+	 *            ce qui peut être renvoyé par {@link EHealth#getNom()}
 	 * @return la constante
-	 * @throws IllegalArgumentException si la constante n'existe pas
-	 * @throws NullPointerException si le paramètre vaut {@code null}
+	 * @throws IllegalArgumentException
+	 *             si la constante n'existe pas
+	 * @throws NullPointerException
+	 *             si le paramètre vaut {@code null}
 	 */
 	public static EHealth getByName(String name) {
 
-		if (name!=null) {
+		if (name != null) {
 			EHealth[] values = values();
 			int i = 0;
 			while (i < values.length && !values[i].getNom().equals(name)) {
@@ -56,9 +62,9 @@ public enum EHealth {
 			}
 			if (i < values.length) {
 				return values[i];
-			} else {
-				throw new IllegalArgumentException(
-						"No enum constant EHealth." + name); //$NON-NLS-1$
+			}
+			else {
+				throw new IllegalArgumentException("No enum constant EHealth." + name); //$NON-NLS-1$
 			}
 		}
 		else {
@@ -66,13 +72,12 @@ public enum EHealth {
 		}
 
 	}
-	
+
 	public static void load() {
 		EHealth[] values = values();
-		for(int i=0;i<values.length;i++) {
-			values[i].nom = EnumName.getString("EHealth."+i);
+		for (int i = 0; i < values.length; i++) {
+			values[i].nom = EnumName.getString("EHealth." + i);
 		}
 	}
-	
 
 }

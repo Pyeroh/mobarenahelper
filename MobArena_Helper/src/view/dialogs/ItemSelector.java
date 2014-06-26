@@ -25,41 +25,65 @@ public class ItemSelector extends JDialog {
 	private static final long serialVersionUID = 7238413511342140781L;
 
 	private ItemList items;
+
 	private JFrame frame;
+
 	private int max;
+
 	private boolean isArmor;
+
 	private boolean classSelector;
+
+	private boolean isMoneySelectable;
+
 	private AbstractItem selectedItem;
 
 	private JLabel lib_selectable;
+
 	private JLabel lib_sort;
+
 	private JWideComboBox combo_sort;
+
 	private JLabel lib_search;
+
 	private JFormattedTextField sai_search;
+
 	private JHoverList<CellListEItem> list_selectable;
+
 	private JButton btn_add;
+
 	private JButton btn_remove;
+
 	private JScrollPane scrpan_selected;
+
 	private JHoverList<CellListItem> list_selected;
+
 	private JLabel lib_selected;
+
 	private JButton btn_enchant;
+
 	private JButton btn_add_custom;
 
 	/**
-	 * Constructeur d'un sélecteur d'items à partir de la liste {@code items} et
-	 * permettant la sélection de {@code max} items.
-	 * @param frame 
-	 * @param items la liste d'entrée
-	 * @param max le nombre d'items sélectionnable max
-	 * @param isArmor si la fenêtre est un sélecteur d'armure
-	 * @param classSelector si la fenêtre est un sélecteur d'items de classe, si vrai pas d'os ou de balle de foin (loup et cheval)
-	 * @throws ParseException 
+	 * Constructeur d'un sélecteur d'items à partir de la liste {@code items} et permettant la sélection de {@code max}
+	 * items.
+	 *
+	 * @param frame
+	 * @param items
+	 *            la liste d'entrée
+	 * @param max
+	 *            le nombre d'items sélectionnable max
+	 * @param isArmor
+	 *            si la fenêtre est un sélecteur d'armure
+	 * @param classSelector
+	 *            si la fenêtre est un sélecteur d'items de classe, si vrai pas d'os ou de balle de foin (loup et
+	 *            cheval)
 	 * @wbp.parser.constructor Constructeur graphique
 	 */
-	public ItemSelector(JFrame frame, ItemList items, int max, boolean isArmor, boolean classSelector) {
+	public ItemSelector(JFrame frame, ItemList items, int max, boolean isArmor, boolean classSelector, boolean isMoneySelectable) {
 		super();
 		setModalityType(ModalityType.APPLICATION_MODAL);
-		setTitle(Messages.getString("ItemSelector.title")+" - "+frame.getTitle());
+		setTitle(Messages.getString("ItemSelector.title") + " - " + frame.getTitle());
 
 		setIconImage(new ImageIcon(ItemSelector.class.getResource("/gui/pics/mobarena.png")).getImage());
 		setResizable(false);
@@ -68,8 +92,9 @@ public class ItemSelector extends JDialog {
 		this.max = max;
 		this.isArmor = isArmor;
 		this.classSelector = classSelector;
+		this.isMoneySelectable = isArmor ? false : isMoneySelectable;
 
-		setSize(850,356);
+		setSize(850, 356);
 		setLocationRelativeTo(frame);
 		getContentPane().setLayout(null);
 
@@ -85,10 +110,11 @@ public class ItemSelector extends JDialog {
 
 		combo_sort = new JWideComboBox();
 		combo_sort.addItemListener(new ItemListener() {
+
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 
-				if(e.getStateChange() == ItemEvent.DESELECTED && combo_sort.isFocusOwner()){
+				if (e.getStateChange() == ItemEvent.DESELECTED && combo_sort.isFocusOwner()) {
 
 					ArrayList<EItem> values = switchValues();
 
@@ -101,8 +127,9 @@ public class ItemSelector extends JDialog {
 		});
 		combo_sort.setFont(new Font("SansSerif", Font.PLAIN, 12));
 
-		String[] tab = {EItemCat.weapon.getGui_name()};
-		if(!this.isArmor) tab = EItemCat.namevalues();
+		String[] tab = { EItemCat.weapon.getGui_name() };
+		if (!this.isArmor)
+			tab = EItemCat.namevalues();
 		combo_sort.setModel(new DefaultComboBoxModel<String>(tab));
 		combo_sort.setBounds(104, 43, 121, 25);
 		getContentPane().add(combo_sort);
@@ -116,11 +143,14 @@ public class ItemSelector extends JDialog {
 			sai_search = new JFormattedTextField(new MaskFormatter("LLLLLLLLLLLLLLL"));
 			sai_search.setFocusLostBehavior(JFormattedTextField.COMMIT);
 			sai_search.addKeyListener(new KeyAdapter() {
+
 				public void keyReleased(KeyEvent e) {
 					loadSelectable(crossSearch());
 				}
 			});
-		} catch (ParseException e) {}
+		}
+		catch (ParseException e) {
+		}
 		sai_search.setBackground(new Color(255, 255, 255));
 		sai_search.setBounds(104, 80, 122, 25);
 		sai_search.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -139,27 +169,30 @@ public class ItemSelector extends JDialog {
 
 		btn_add = new JButton(Messages.getString("ItemSelector.btn_add.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		btn_add.addMouseListener(new MouseAdapter() {
+
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				addItem();
 			}
 		});
-		
+
 		btn_add_custom = new JButton(Messages.getString("ItemSelector.btn_add_custom.text")); //$NON-NLS-1$
 		btn_add_custom.addMouseListener(new MouseAdapter() {
+
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				int nb_items = list_selected.getModel().getSize();
-				if(ItemSelector.this.max-nb_items==1) btn_add_custom.setVisible(false);
-				
+				if (ItemSelector.this.max - nb_items == 1)
+					btn_add_custom.setVisible(false);
+
 				CustomItem ci = new CustomItemCreator(ItemSelector.this.frame).getItem();
-				if(ci!=null) {
+				if (ci != null) {
 					ItemSelector.this.items.add(ci);
 
 					loadSelected(ItemSelector.this.items);
 					loadSelectable(crossSearch());
 				}
-				
+
 			}
 		});
 		btn_add_custom.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -171,6 +204,7 @@ public class ItemSelector extends JDialog {
 
 		btn_remove = new JButton(Messages.getString("ItemSelector.btn_remove.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		btn_remove.addMouseListener(new MouseAdapter() {
+
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				removeItem();
@@ -188,18 +222,23 @@ public class ItemSelector extends JDialog {
 		list_selected = new JHoverList<CellListItem>();
 		loadSelected(items);
 		list_selected.addMouseListener(new MouseAdapter() {
+
 			@Override
 			public void mouseReleased(MouseEvent e) {
 
 				int hoverIndex = ((HoverListCellRenderer) list_selected.getCellRenderer()).getHoverIndex();
 
-				if(hoverIndex!=-1) {
+				if (hoverIndex != -1) {
 					selectedItem = list_selected.getModel().getElementAt(hoverIndex).getItem();
-					if(selectedItem instanceof Item) {
-						if(EEnchantItem.getByItem(selectedItem.getItem()).size()==0) btn_enchant.setVisible(false);
-						else btn_enchant.setVisible(true);
+					if (selectedItem instanceof Item) {
+						if (EEnchantItem.getByItem(selectedItem.getItem()).size() == 0)
+							btn_enchant.setVisible(false);
+						else
+							btn_enchant.setVisible(true);
 					}
-					else btn_enchant.setVisible(true);
+					else if (!(selectedItem instanceof Money)) {
+						btn_enchant.setVisible(true);
+					}
 				}
 				else {
 					list_selected.clearSelection();
@@ -213,6 +252,7 @@ public class ItemSelector extends JDialog {
 		btn_enchant = new JButton(Messages.getString("ItemSelector.btn_enchant.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		btn_enchant.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btn_enchant.addMouseListener(new MouseAdapter() {
+
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				new Enchanter(ItemSelector.this, selectedItem);
@@ -231,17 +271,39 @@ public class ItemSelector extends JDialog {
 	}
 
 	/**
-	 * Constructeur d'un sélecteur d'items à partir de la liste {@code items} et
-	 * permettant la sélection de {@code max} items.
-	 * @param frame 
-	 * @param items la liste d'entrée
-	 * @param max le nombre d'items sélectionnable max
-	 * @param isArmor si la fenêtre est un sélecteur d'armure
+	 * Constructeur d'un sélecteur d'items à partir de la liste {@code items} et permettant la sélection de {@code max}
+	 * items.
+	 *
+	 * @param frame
+	 * @param items
+	 *            la liste d'entrée
+	 * @param max
+	 *            le nombre d'items sélectionnable max
+	 * @param isArmor
+	 *            si la fenêtre est un sélecteur d'armure
+	 * @param classSelector
+	 *            si la fenêtre est un sélecteur d'items de classe, si vrai pas d'os ou de balle de foin (loup et
+	 *            cheval)
 	 */
-	public ItemSelector(JFrame frame, ItemList items, int max, boolean isArmor) {
-		this(frame,items,max,isArmor,false);
+	public ItemSelector(JFrame frame, ItemList items, int max, boolean isArmor, boolean classSelector) {
+		this(frame, items, max, isArmor, classSelector, false);
 	}
 
+	/**
+	 * Constructeur d'un sélecteur d'items à partir de la liste {@code items} et permettant la sélection de {@code max}
+	 * items.
+	 *
+	 * @param frame
+	 * @param items
+	 *            la liste d'entrée
+	 * @param max
+	 *            le nombre d'items sélectionnable max
+	 * @param isArmor
+	 *            si la fenêtre est un sélecteur d'armure
+	 */
+	public ItemSelector(JFrame frame, ItemList items, int max, boolean isArmor) {
+		this(frame, items, max, isArmor, false);
+	}
 
 	public ItemList getItemList() {
 		return items;
@@ -259,19 +321,37 @@ public class ItemSelector extends JDialog {
 
 		if (!list_selectable.isSelectionEmpty()) {
 			int nb_items = list_selected.getModel().getSize();
-			if(max-nb_items==1) btn_add_custom.setVisible(false);
+			if (max - nb_items == 1)
+				btn_add_custom.setVisible(false);
 			if (nb_items == max) {
-				JOptionPane.showMessageDialog(
-						rootPane,
-						Messages.getString("ItemSelector.message.noMore"), Messages.getString("Message.title.warning"),
-						JOptionPane.WARNING_MESSAGE);
-			} else {
+				JOptionPane.showMessageDialog(rootPane, Messages.getString("ItemSelector.message.noMore"),
+						Messages.getString("Message.title.warning"), JOptionPane.WARNING_MESSAGE);
+			}
+			else {
 
 				EItem eitem = list_selectable.getSelectedValue().getEItem();
-				if(!isArmor()) {
 
-					String input = JOptionPane.showInputDialog(rootPane, Messages.getString("ItemSelector.message.howMany"),1);
-					if (input!=null) {
+				if (isMoneySelectable && eitem == EItem.money) {
+
+					// TODO rajouter la ligne locale
+					String input = JOptionPane.showInputDialog(rootPane, Messages.getString("ItemSelector.message.howMuchMoney"), 0f);
+					if (input != null) {
+						input = input.replaceAll(" ", "");
+						if (input.matches("\\d+([,\\.]\\d+)?")) {
+
+							items.add(new Money(Float.parseFloat(input)));
+
+							loadSelected(items);
+							loadSelectable(crossSearch());
+
+						}
+					}
+
+				}
+				else if (!isArmor()) {
+
+					String input = JOptionPane.showInputDialog(rootPane, Messages.getString("ItemSelector.message.howMany"), 1);
+					if (input != null) {
 						input = input.trim();
 						if (input.matches("^[1-9][0-9]{0,2}$")) {
 
@@ -281,7 +361,9 @@ public class ItemSelector extends JDialog {
 							loadSelectable(crossSearch());
 
 						}
-						else JOptionPane.showMessageDialog(rootPane,Messages.getString("ItemSelector.message.incorectNumberFormat"),Messages.getString("Message.title.error"),JOptionPane.ERROR_MESSAGE);
+						else
+							JOptionPane.showMessageDialog(rootPane, Messages.getString("ItemSelector.message.incorectNumberFormat"),
+									Messages.getString("Message.title.error"), JOptionPane.ERROR_MESSAGE);
 					}
 
 				}
@@ -289,15 +371,16 @@ public class ItemSelector extends JDialog {
 
 					boolean present = false;
 					DefaultListModel<CellListItem> mod = (DefaultListModel<CellListItem>) list_selected.getModel();
-					for(int i=0;i<mod.size();i++) {
+					for (int i = 0; i < mod.size(); i++) {
 						int id = mod.get(i).getEItem().getId();
-						float diff = Math.abs(id-eitem.getId())/4f;
-						if(diff==(int)diff){
+						float diff = Math.abs(id - eitem.getId()) / 4f;
+						if (diff == (int) diff) {
 							present = true;
 						}
 					}
-					if(present) {
-						JOptionPane.showMessageDialog(rootPane, Messages.getString("ItemSelector.message.doubleArmor"), Messages.getString("Message.title.warning"), JOptionPane.WARNING_MESSAGE);
+					if (present) {
+						JOptionPane.showMessageDialog(rootPane, Messages.getString("ItemSelector.message.doubleArmor"),
+								Messages.getString("Message.title.warning"), JOptionPane.WARNING_MESSAGE);
 					}
 					else {
 						items.add(new Armor(eitem, null));
@@ -312,10 +395,11 @@ public class ItemSelector extends JDialog {
 
 	private void removeItem() {
 
-		if(!list_selected.isSelectionEmpty()) {
+		if (!list_selected.isSelectionEmpty()) {
 			int nb_items = list_selected.getModel().getSize();
-			if(nb_items<ItemSelector.this.max) btn_add_custom.setVisible(true);
-			
+			if (nb_items < ItemSelector.this.max)
+				btn_add_custom.setVisible(true);
+
 			items.remove(selectedItem);
 			loadSelected(items);
 			loadSelectable(crossSearch());
@@ -326,7 +410,7 @@ public class ItemSelector extends JDialog {
 
 	private void loadSelectable(ArrayList<EItem> values) {
 		DefaultListModel<CellListEItem> mod_ItemsSelectable = new DefaultListModel<>();
-		for(int i=0;i<values.size();i++) {
+		for (int i = 0; i < values.size(); i++) {
 			mod_ItemsSelectable.addElement(new CellListEItem(values.get(i)));
 		}
 		list_selectable.setModel(mod_ItemsSelectable);
@@ -337,10 +421,10 @@ public class ItemSelector extends JDialog {
 			values.sort();
 		}
 		else {
-			((ArmorList)values).sort();
+			((ArmorList) values).sort();
 		}
 		DefaultListModel<CellListItem> mod_ItemsSelectable = new DefaultListModel<>();
-		for(int i=0;i<values.size();i++) {
+		for (int i = 0; i < values.size(); i++) {
 			mod_ItemsSelectable.addElement(new CellListItem(values.get(i)));
 		}
 		list_selected.setModel(mod_ItemsSelectable);
@@ -349,21 +433,25 @@ public class ItemSelector extends JDialog {
 	private ArrayList<EItem> switchValues() {
 		ArrayList<EItem> values;
 		String sort = (String) combo_sort.getSelectedItem();
-		if(sort.equals(EItemCat.all.getGui_name())) {
+		if (sort.equals(EItemCat.all.getGui_name())) {
 			values = new ArrayList<EItem>(Arrays.asList(EItem.values()));
 			values.remove(0);
 		}
 		else if (isArmor) {
 			values = new ArrayList<>();
-			for(int i=298;i<=317;i++){
+			for (int i = 298; i <= 317; i++) {
 				values.add(EItem.searchBy(i, 0));
 			}
 		}
-		else values = EItem.getByCategory(EItemCat.getByName(sort));
+		else
+			values = EItem.getByCategory(EItemCat.getByName(sort));
 
-		if(classSelector) {
+		if (classSelector) {
 			values.remove(EItem.bone);
 			values.remove(EItem.hay_block);
+		}
+		if (!isMoneySelectable) {
+			values.remove(EItem.money);
 		}
 
 		return values;

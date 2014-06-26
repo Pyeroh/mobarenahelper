@@ -6,6 +6,7 @@ import model.lists.EnchantList;
 
 /**
  * Un enchantement réel
+ *
  * @author Pyeroh
  * @see EEnchantment
  * @see EEnchantItem
@@ -14,10 +15,12 @@ import model.lists.EnchantList;
 public class Enchantment {
 
 	private EEnchantment enchantement;
+
 	private int lvl;
-	
+
 	/**
 	 * Instancie un enchantement avec la constante d'enchantement associée et le niveau voulu
+	 *
 	 * @param enchantement
 	 * @param lvl
 	 */
@@ -41,15 +44,17 @@ public class Enchantment {
 	public void setLvl(int lvl) {
 		this.lvl = lvl;
 	}
-	
+
 	/**
-	 * Renvoie le code pour l'enchantement avec son niveau, afin de l'intégrer à la Map qui sera écrite dans le fichier de config.
+	 * Renvoie le code pour l'enchantement avec son niveau, afin de l'intégrer à la Map qui sera écrite dans le fichier
+	 * de config.
+	 *
 	 * @return
 	 */
 	public String getString() {
-		return enchantement.getEid()+":"+lvl;
+		return enchantement.getEid() + ":" + lvl;
 	}
-	
+
 	@Override
 	public String toString() {
 		String sLvl;
@@ -73,7 +78,7 @@ public class Enchantment {
 			sLvl = "";
 			break;
 		}
-		return enchantement.getName()+" "+sLvl;
+		return enchantement.getName() + " " + sLvl;
 	}
-	
+
 }

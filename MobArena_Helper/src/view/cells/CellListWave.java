@@ -8,8 +8,9 @@ import model.Wave;
 public class CellListWave extends CellListCaracs {
 
 	private static final long serialVersionUID = 8335183130273094701L;
-	
+
 	private JLabel image;
+
 	private Wave wave;
 
 	public CellListWave(Wave wave) {
@@ -19,7 +20,7 @@ public class CellListWave extends CellListCaracs {
 		image = new JLabel();
 		image.setBounds(3, 3, 48, 24);
 		image.setIcon(new ImageIcon(scaleImage(wave.getType().getImage(), image)));
-		
+
 		lib_desc.setBounds(61, 3, 181, 24);
 
 		add(image);

@@ -2,11 +2,12 @@ package model.enums;
 
 /**
  * Les alias de monstre correspondant à un type de monstre
+ *
  * @author Pyeroh
  *
  */
 public enum EMonsterAliases {
-	zombie(EMonsters.zombie), 
+	zombie(EMonsters.zombie),
 	zombies(EMonsters.zombie, true),
 	skeleton(EMonsters.skeleton),
 	skeletons(EMonsters.skeleton, true),
@@ -89,15 +90,16 @@ public enum EMonsterAliases {
 	magmacubes_big(EMonsters.magmacube_big, true),
 	magmacube_huge(EMonsters.magmacube_huge),
 	magmacubes_huge(EMonsters.magmacube_huge, true);
-	
+
 	private EMonsters monstre;
+
 	private boolean pluriel;
 
-	EMonsterAliases(EMonsters monstre){
+	EMonsterAliases(EMonsters monstre) {
 		this.monstre = monstre;
 		this.pluriel = false;
 	}
-	
+
 	EMonsterAliases(EMonsters monstre, boolean pluriel) {
 		this.monstre = monstre;
 		this.pluriel = pluriel;
@@ -110,28 +112,28 @@ public enum EMonsterAliases {
 	public boolean isPluriel() {
 		return pluriel;
 	}
-	
+
 	/**
-	 * Renvoie l'alias de monstre "pluriel" (un creeper, des creepers) de la constante en cours.
-	 * Attention, certaines constantes n'ont pas de pluriel, dans ce cas, la valeur retournée est
-	 * la constante elle-même.
+	 * Renvoie l'alias de monstre "pluriel" (un creeper, des creepers) de la constante en cours. Attention, certaines
+	 * constantes n'ont pas de pluriel, dans ce cas, la valeur retournée est la constante elle-même.
+	 *
 	 * @return
 	 */
 	public EMonsterAliases getPlural() {
 		EMonsterAliases plural = this;
-		
-		if(!plural.isPluriel()) {
+
+		if (!plural.isPluriel()) {
 			EMonsterAliases[] values = values();
-			for(int i=0;i<values.length;i++) {
-				if(values[i].getMonstre()==plural.getMonstre() && values[i].isPluriel()) {
+			for (int i = 0; i < values.length; i++) {
+				if (values[i].getMonstre() == plural.getMonstre() && values[i].isPluriel()) {
 					plural = values[i];
 				}
 			}
 		}
-		
+
 		return plural;
 	}
-	
+
 	public static EMonsterAliases getByName(String monster) {
 		return valueOf(monster.trim().replace('-', '_'));
 	}

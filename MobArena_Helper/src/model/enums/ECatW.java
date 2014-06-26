@@ -4,6 +4,7 @@ import model.EnumName;
 
 /**
  * Les deux catégories de vague
+ *
  * @author Pyeroh
  *
  */
@@ -13,7 +14,7 @@ public enum ECatW {
 
 	private String nom;
 
-	ECatW(String nom){
+	ECatW(String nom) {
 		this.nom = nom;
 	}
 
@@ -23,22 +24,23 @@ public enum ECatW {
 
 	/**
 	 * Renvoie la liste des noms des constantes.
+	 *
 	 * @return la liste des noms des constantes.
 	 */
-	public static String[] namevalues(){
+	public static String[] namevalues() {
 
 		ECatW[] values = values();
 		String[] namevalues = new String[values.length];
-		for (int i=0;i<namevalues.length;i++) {
+		for (int i = 0; i < namevalues.length; i++) {
 			namevalues[i] = values[i].getNom();
 		}
 		return namevalues;
 	}
-	
+
 	public static void load() {
 		ECatW[] values = values();
-		for(int i=0;i<values.length;i++) {
-			values[i].nom = EnumName.getString("ECatW."+i);
+		for (int i = 0; i < values.length; i++) {
+			values[i].nom = EnumName.getString("ECatW." + i);
 		}
 	}
 

@@ -4,6 +4,7 @@ import model.EnumName;
 
 /**
  * Les différents monstres ajoutables dans une vague
+ *
  * @author Pyeroh
  *
  */
@@ -54,7 +55,7 @@ public enum EMonsters {
 
 	private String nom;
 
-	EMonsters(String nom){
+	EMonsters(String nom) {
 		this.nom = nom;
 	}
 
@@ -64,28 +65,33 @@ public enum EMonsters {
 
 	/**
 	 * Renvoie la liste des noms des constantes.
+	 *
 	 * @return la liste des noms des constantes.
 	 */
-	public static String[] namevalues(){
+	public static String[] namevalues() {
 
 		EMonsters[] values = values();
 		String[] namevalues = new String[values.length];
-		for (int i=0;i<namevalues.length;i++) {
+		for (int i = 0; i < namevalues.length; i++) {
 			namevalues[i] = values[i].getNom();
 		}
 		return namevalues;
 	}
-	
+
 	/**
 	 * Renvoie la constante associée au nom passé en paramètre.
-	 * @param name ce qui peut être renvoyé par {@link EMonsters#getNom()}
+	 *
+	 * @param name
+	 *            ce qui peut être renvoyé par {@link EMonsters#getNom()}
 	 * @return la constante
-	 * @throws IllegalArgumentException si la constante n'existe pas
-	 * @throws NullPointerException si le paramètre vaut {@code null}
+	 * @throws IllegalArgumentException
+	 *             si la constante n'existe pas
+	 * @throws NullPointerException
+	 *             si le paramètre vaut {@code null}
 	 */
 	public static EMonsters getByName(String name) {
-		
-		if (name!=null) {
+
+		if (name != null) {
 			EMonsters[] values = values();
 			int i = 0;
 			while (i < values.length && !values[i].getNom().equals(name)) {
@@ -93,23 +99,22 @@ public enum EMonsters {
 			}
 			if (i < values.length) {
 				return values[i];
-			} else {
-				throw new IllegalArgumentException(
-						"No enum constant EMonsters." + name); //$NON-NLS-1$
+			}
+			else {
+				throw new IllegalArgumentException("No enum constant EMonsters." + name); //$NON-NLS-1$
 			}
 		}
 		else {
 			throw new NullPointerException("Name is null"); //$NON-NLS-1$
 		}
-		
+
 	}
-	
+
 	public static void load() {
 		EMonsters[] values = values();
-		for(int i=0;i<values.length;i++) {
-			values[i].nom = EnumName.getString("EMonsters."+i);
+		for (int i = 0; i < values.length; i++) {
+			values[i].nom = EnumName.getString("EMonsters." + i);
 		}
 	}
-	
-	
+
 }

@@ -9,16 +9,18 @@ import model.lists.ArmorList;
 import model.lists.ItemList;
 
 /**
- * Un set d'upgrade est la combinaison d'une vague Upgrade et d'une classe. Pour une certaine classe, il est possible d'améliorer de l'équipement, des objets, de donner des permissions.
- * On peut retrouver plusieurs UpgradeSet dans une vague Upgrade.
+ * Un set d'upgrade est la combinaison d'une vague Upgrade et d'une classe. Pour une certaine classe, il est possible
+ * d'améliorer de l'équipement, des objets, de donner des permissions. On peut retrouver plusieurs UpgradeSet dans une
+ * vague Upgrade.
+ *
  * @author Pyeroh
  * @see UpgradeW
  */
 public class UpgradeSet {
 
 	/**
-	 * Le setup d'un set d'upgrade permet de savoir si c'est simple ({@link #legacy})
-	 * ou avancé ({@link #advanced})
+	 * Le setup d'un set d'upgrade permet de savoir si c'est simple ({@link #legacy}) ou avancé ({@link #advanced})
+	 *
 	 * @author Pyeroh
 	 */
 	public enum UpSetup {
@@ -27,15 +29,16 @@ public class UpgradeSet {
 
 		/**
 		 * Renvoie la liste des noms des constantes.
+		 *
 		 * @return la liste des noms des constantes.
 		 */
-		public static String[] namevalues(){
+		public static String[] namevalues() {
 
 			UpSetup[] values = values();
 			String[] namevalues = new String[values.length];
-			for (int i=0;i<namevalues.length;i++) {
+			for (int i = 0; i < namevalues.length; i++) {
 				String name = values[i].name();
-				String first = name.charAt(0)+"";
+				String first = name.charAt(0) + "";
 				namevalues[i] = name.replaceFirst("^[a-z]", first.toUpperCase());
 			}
 			return namevalues;
@@ -43,16 +46,20 @@ public class UpgradeSet {
 
 		public String toString() {
 			String name = this.name();
-			String first = name.charAt(0)+"";
+			String first = name.charAt(0) + "";
 			name = name.replaceFirst("^[a-z]", first.toUpperCase());
 			return name;
 		}
 	}
 
 	private UpSetup setup = UpSetup.legacy;
+
 	private Classe classe;
+
 	private ItemList items = new ItemList();
+
 	private ArmorList armor = new ArmorList();
+
 	private ArrayList<String> permissions = new ArrayList<String>();
 
 	public UpgradeSet(UpSetup setup, Classe classe) {
@@ -106,9 +113,10 @@ public class UpgradeSet {
 
 	/**
 	 * Renvoie la "map" des informations relatives à l'upgradeSet.
-	 * @return si la config de l'upgradeSet est simple, renvoie une chaîne. Sinon, renvoie une LinkedHashMap, seulement si la liste des
-	 * objets n'est pas la seule à être renseignée. Si on est dans ce cas là, à la réouverture du fichier dans le MobArena_Helper, cet 
-	 * upgradeSet sera considéré legacy.
+	 *
+	 * @return si la config de l'upgradeSet est simple, renvoie une chaîne. Sinon, renvoie une LinkedHashMap, seulement
+	 *         si la liste des objets n'est pas la seule à être renseignée. Si on est dans ce cas là, à la réouverture
+	 *         du fichier dans le MobArena_Helper, cet upgradeSet sera considéré legacy.
 	 */
 	public Object getMap() {
 		LinkedHashMap<String, Object> lhMap = new LinkedHashMap<String, Object>();
@@ -116,44 +124,54 @@ public class UpgradeSet {
 		switch (setup) {
 		case legacy:
 			lhMap = null;
-			if(items.size()!=0) {
+			if (items.size() != 0) {
 				sMap = items.getString();
 			}
-			else sMap = null;
+			else
+				sMap = null;
 			break;
 		case advanced:
 			int isize = items.size();
 			int asize = armor.size();
 			int psize = permissions.size();
-			if(isize!=0 && asize==0 && psize==0) {
+			if (isize != 0 && asize == 0 && psize == 0) {
 				lhMap = null;
 				sMap = items.getString();
 				break;
 			}
-			if(isize!=0 || asize!=0 || psize!=0) {
-				if(asize!=0) lhMap.put("armor", armor.getString());
-				if(isize!=0) lhMap.put("items", items.getString());
-				if(psize!=0) lhMap.put("permissions", permissions);
+			if (isize != 0 || asize != 0 || psize != 0) {
+				if (asize != 0)
+					lhMap.put("armor", armor.getString());
+				if (isize != 0)
+					lhMap.put("items", items.getString());
+				if (psize != 0)
+					lhMap.put("permissions", permissions);
 			}
-			else lhMap = null;
+			else
+				lhMap = null;
 			break;
 		default:
 			break;
 		}
 
-		if(lhMap == null) {
-			if(sMap == null) {
+		if (lhMap == null) {
+			if (sMap == null) {
 				return null;
 			}
-			else return sMap;
+			else
+				return sMap;
 		}
-		else return lhMap;
+		else
+			return lhMap;
 	}
 
 	/**
 	 * Instancie un upgradeSet et remplis complètement ses informations grâce à la Map.
-	 * @param nom le nom de la classe associée
-	 * @param map la map d'informations de la vague
+	 *
+	 * @param nom
+	 *            le nom de la classe associée
+	 * @param map
+	 *            la map d'informations de la vague
 	 * @return l'upgradeSet, avec ses informations complétées
 	 */
 	public static UpgradeSet setUpgradeSet(String nom_classe, LinkedHashMap<String, Object> map) {
@@ -163,9 +181,10 @@ public class UpgradeSet {
 		String tag = g.getTag(nom_classe).getClassName();
 		ArrayList<Classe> classe_list = Classe.classe_list;
 		int i = 0;
-		while (!classe_list.get(i).getName().equals(nom_classe) && i<classe_list.size()-1) i++;
+		while (!classe_list.get(i).getName().equals(nom_classe) && i < classe_list.size() - 1)
+			i++;
 
-		if (i<classe_list.size()) {
+		if (i < classe_list.size()) {
 			switch (tag) {
 			case "map":
 				set = new UpgradeSet(UpSetup.advanced, classe_list.get(i));
@@ -189,7 +208,8 @@ public class UpgradeSet {
 			}
 			return set;
 		}
-		else return null;
+		else
+			return null;
 	}
 
 }

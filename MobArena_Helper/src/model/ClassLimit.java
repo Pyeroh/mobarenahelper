@@ -3,8 +3,9 @@ package model;
 public class ClassLimit {
 
 	private Classe classe;
+
 	private int limit;
-	
+
 	public ClassLimit(Classe classe, int limit) {
 		this.classe = classe;
 		this.limit = limit;
@@ -25,5 +26,5 @@ public class ClassLimit {
 	public void setLimit(int limit) {
 		this.limit = limit;
 	}
-	
+
 }

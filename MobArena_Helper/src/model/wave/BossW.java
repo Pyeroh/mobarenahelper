@@ -9,29 +9,37 @@ import model.lists.ItemList;
 
 /**
  * Une vague de boss
+ *
  * @author Pyeroh
  * @see Wave
  */
-public class BossW extends Wave{
+public class BossW extends Wave {
 
 	private String bossname = "";
+
 	private EHealth health = EHealth.medium;
+
 	private boolean ability_announce = true;
+
 	private int ability_interval = 3;
-	private ArrayList<EAbilities> abilities = new ArrayList<EAbilities>(){
+
+	private ArrayList<EAbilities> abilities = new ArrayList<EAbilities>() {
+
 		private static final long serialVersionUID = -4152334175348950909L;
+
 		public String toString() {
 			StringBuffer buffer = new StringBuffer();
-			for(int i=0;i<this.size();i++){
-				buffer.append(this.get(i).toString()+", ");
+			for (int i = 0; i < this.size(); i++) {
+				buffer.append(this.get(i).toString() + ", ");
 			}
 			String ret = "";
-			if (this.size()>0) {
+			if (this.size() > 0) {
 				ret = buffer.substring(0, buffer.length() - 2);
 			}
 			return ret;
 		}
 	};
+
 	private ItemList reward = new ItemList();
 
 	public BossW(String nom) {
@@ -79,48 +87,44 @@ public class BossW extends Wave{
 	}
 
 	public String toString() {
-		String ret = super.toString()
-				+"\nbossname : "+bossname
-				+"\nhealth : "+health.getNom()
-				+"\nability_announce : "+ability_announce
-				+"\nability_interval : "+ability_interval
-				+"\nabilities : "+abilities.toString();
+		String ret = super.toString() + "\nbossname : " + bossname + "\nhealth : " + health.getNom() + "\nability_announce : " + ability_announce
+				+ "\nability_interval : " + ability_interval + "\nabilities : " + abilities.toString();
 
 		return ret;
 	}
 
-	public static BossW setWave(String nom, LinkedHashMap<String, Object> map){
+	public static BossW setWave(String nom, LinkedHashMap<String, Object> map) {
 		BossW wave = new BossW(nom);
 		GestYaml g = new GestYaml(map);
-		if(map.containsKey("frequency")){
+		if (map.containsKey("frequency")) {
 			wave.setFrequency(g.getInt("frequency"));
 		}
-		if(map.containsKey("priority")){
+		if (map.containsKey("priority")) {
 			wave.setPriority(g.getInt("priority"));
 		}
-		if(map.containsKey("wave")){
+		if (map.containsKey("wave")) {
 			wave.setNumwave(g.getInt("wave"));
 		}
-		if(map.containsKey("name")){
+		if (map.containsKey("name")) {
 			wave.setBossName(g.getString("name"));
 		}
-		if(map.containsKey("health")){
+		if (map.containsKey("health")) {
 			wave.setHealth(EHealth.valueOf(g.getString("health")));
 		}
-		if(map.containsKey("ability-interval")){
+		if (map.containsKey("ability-interval")) {
 			wave.setAbility_interval(g.getInt("ability-interval"));
 		}
-		if(map.containsKey("ability-announce")){
+		if (map.containsKey("ability-announce")) {
 			wave.setAbility_announce(g.getBool("ability-announce"));
 		}
-		if(map.containsKey("abilities")){
+		if (map.containsKey("abilities")) {
 			String[] abi = g.getString("abilities").split("[,]");
-			for (int i=0;i<abi.length;i++) {
+			for (int i = 0; i < abi.length; i++) {
 				wave.abilities.add(EAbilities.valueOf(abi[i].replace('-', '_').trim()));
 			}
 		}
-		wave.getMonstres().add(new Monstre(EMonsterAliases.getByName(g.getString("monster")).getMonstre(),1));
-		if(map.containsKey("reward")){
+		wave.getMonstres().add(new Monstre(EMonsterAliases.getByName(g.getString("monster")).getMonstre(), 1));
+		if (map.containsKey("reward")) {
 			wave.getReward().fill(g.getString("reward"));
 		}
 
@@ -130,12 +134,17 @@ public class BossW extends Wave{
 	public LinkedHashMap<String, Object> getMap() throws ArenaException {
 		LinkedHashMap<String, Object> vague = super.getMap();
 
-		if(!this.getBossName().equals("")) vague.put("name", this.getBossName());
-		if(this.getHealth()!=EHealth.medium)vague.put("health", this.getHealth().name());
+		if (!this.getBossName().equals(""))
+			vague.put("name", this.getBossName());
+		if (this.getHealth() != EHealth.medium)
+			vague.put("health", this.getHealth().name());
 		vague.put("abilities", this.getAbilities().toString());
-		if(!this.isAbility_announce())vague.put("ability-announce", this.isAbility_announce());
-		if(this.getAbility_interval()!=3)vague.put("ability-interval", this.getAbility_interval());
-		if(reward.size()!=0)vague.put("reward", reward.getString());
+		if (!this.isAbility_announce())
+			vague.put("ability-announce", this.isAbility_announce());
+		if (this.getAbility_interval() != 3)
+			vague.put("ability-interval", this.getAbility_interval());
+		if (reward.size() != 0)
+			vague.put("reward", reward.getString());
 
 		return vague;
 	}

@@ -6,6 +6,7 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 
 class ExtensionFileFilter extends FileFilter {
+
 	private String description;
 
 	private String extensions[];
@@ -17,7 +18,8 @@ class ExtensionFileFilter extends FileFilter {
 	public ExtensionFileFilter(String description, String extensions[]) {
 		if (description == null) {
 			this.description = extensions[0] + "{ " + extensions.length + "} ";
-		} else {
+		}
+		else {
 			this.description = description;
 		}
 		this.extensions = (String[]) extensions.clone();
@@ -37,7 +39,8 @@ class ExtensionFileFilter extends FileFilter {
 	public boolean accept(File file) {
 		if (file.isDirectory()) {
 			return true;
-		} else {
+		}
+		else {
 			String path = file.getAbsolutePath().toLowerCase();
 			for (int i = 0, n = extensions.length; i < n; i++) {
 				String extension = extensions[i];

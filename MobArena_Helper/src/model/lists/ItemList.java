@@ -7,6 +7,7 @@ import model.item.*;
 
 /**
  * Liste d'items ; permet de remplir une liste à partir d'une chaine et de la trier
+ *
  * @author Pyeroh
  *
  */
@@ -23,8 +24,9 @@ public class ItemList extends ArrayList<AbstractItem> {
 	}
 
 	/**
-	 * Remplis la liste à partir de la chaine de caractères contenant les différents items.
-	 * Gère également l'enchantement.
+	 * Remplis la liste à partir de la chaine de caractères contenant les différents items. Gère également
+	 * l'enchantement.
+	 *
 	 * @param items
 	 */
 	public void fill(String items) {
@@ -32,7 +34,7 @@ public class ItemList extends ArrayList<AbstractItem> {
 		if (!items.trim().isEmpty()) {
 			String[] sItem = items.replace('\'', ' ').split(",");
 			for (int i = 0; i < sItem.length; i++) {
-				//SE : sans espace --> test d'enchantement
+				// SE : sans espace --> test d'enchantement
 				String sItemSE[] = sItem[i].trim().split(" ");
 
 				String[] tab_item = sItemSE[0].split(":");
@@ -57,22 +59,23 @@ public class ItemList extends ArrayList<AbstractItem> {
 					enchantments = sItemSE[1].split(";");
 				}
 
-				if (tab_item[0].matches("(\\d)+")) {
-					EItem ei = EItem.searchBy(Integer.parseInt(tab_item[0]),
-							data);
+				if (tab_item[0].matches("\\d+")) {
+					EItem ei = EItem.searchBy(Integer.parseInt(tab_item[0]), data);
 					if (ei != null)
 						this.add(new Item(ei, quantity, enchantments));
 					else {
-						CustomItem ci = new CustomItem(
-								Integer.parseInt(tab_item[0]), data, quantity);
+						CustomItem ci = new CustomItem(Integer.parseInt(tab_item[0]), data, quantity);
 						if (enchantments != null) {
 							ci.getEnchantements().fill(enchantments);
 						}
 						this.add(ci);
 					}
-				} else {
-					this.add(new Item(EItem.searchBy(tab_item[0], data),
-							quantity, enchantments));
+				}
+				else if (tab_item[0].matches("\\$ ?\\d+([,\\.]\\d+)?")) {
+					this.add(new Money(Float.parseFloat(tab_item[0].substring(1))));
+				}
+				else {
+					this.add(new Item(EItem.searchBy(tab_item[0], data), quantity, enchantments));
 				}
 
 			}
@@ -81,20 +84,21 @@ public class ItemList extends ArrayList<AbstractItem> {
 
 	/**
 	 * Renvoie la liste des items sous forme de chaîne, séparés par des virgules
+	 *
 	 * @return
 	 */
 	public String getString() {
 		StringBuffer sItems = new StringBuffer();
-		if(this.size()==1){
+		if (this.size() == 1) {
 			String item = this.get(0).getString();
 			sItems.append(item);
 		}
-		else if(this.size()>1){
-			for(int i=0;i<this.size();i++) {
-				sItems.append(this.get(i).getString()+", ");
+		else if (this.size() > 1) {
+			for (int i = 0; i < this.size(); i++) {
+				sItems.append(this.get(i).getString() + ", ");
 			}
 			int length = sItems.length();
-			sItems.delete(length-2, length);
+			sItems.delete(length - 2, length);
 		}
 
 		return sItems.toString().trim();
@@ -102,37 +106,41 @@ public class ItemList extends ArrayList<AbstractItem> {
 
 	/**
 	 * Vérifie si l'EItem passé en paramètre a déjà un Item associé dans la liste
+	 *
 	 * @param e
 	 * @return {@code true} si l'EItem existe, {@code false} sinon
 	 */
 	public boolean containsEItem(EItem e) {
-		return indexofEItem(e)!=-1;
+		return indexofEItem(e) != -1;
 	}
 
 	/**
 	 * Renvoie la liste des constantes qui composent les items de la liste
+	 *
 	 * @return la liste des constantes
 	 * @see EItem
 	 */
 	public ArrayList<EItem> getEItemList() {
 		ArrayList<EItem> eitems = new ArrayList<>();
-		for(int i=0;i<size();i++){
+		for (int i = 0; i < size(); i++) {
 			eitems.add(get(i).getItem());
 		}
 		return eitems;
 	}
-	
+
 	/**
 	 * Renvoie la position d'un EItem dans la liste
+	 *
 	 * @param e
 	 * @return l'index de l'objet, -1 sinon
 	 */
 	public int indexofEItem(EItem e) {
-		int index=-1, i=0;
-		while(i<size() && get(i).getItem()!=e) {
+		int index = -1, i = 0;
+		while (i < size() && get(i).getItem() != e) {
 			i++;
 		}
-		if(i<this.size()) index = i;
+		if (i < this.size())
+			index = i;
 		return index;
 	}
 
@@ -140,37 +148,37 @@ public class ItemList extends ArrayList<AbstractItem> {
 	 * Permet de trier la liste
 	 */
 	public void sort() {
-		int size=this.size();
-		triRapide(this,0,size-1);
+		int size = this.size();
+		triRapide(this, 0, size - 1);
 	}
 
-	private int partition(ItemList list,int deb,int fin) {
-		int compt=deb;
-		AbstractItem pivot=list.get(deb);
+	private int partition(ItemList list, int deb, int fin) {
+		int compt = deb;
+		AbstractItem pivot = list.get(deb);
 
-		for(int i=deb+1;i<=fin;i++) {
+		for (int i = deb + 1; i <= fin; i++) {
 			EItem litem = list.get(i).getItem();
 			EItem pivitem = pivot.getItem();
-			if ((litem.getId()<pivitem.getId()) || (litem.getId()==pivitem.getId() && litem.getMeta()<pivitem.getMeta())) {
+			if ((litem.getId() < pivitem.getId()) || (litem.getId() == pivitem.getId() && litem.getMeta() < pivitem.getMeta())) {
 				compt++;
-				echanger(list,compt,i);
+				echanger(list, compt, i);
 			}
 		}
-		echanger(list,deb,compt);
+		echanger(list, deb, compt);
 		return compt;
 	}
 
-	protected void triRapide(ItemList list,int deb,int fin) {
-		if(deb<fin) {
-			int positionPivot=partition(list,deb,fin);
-			triRapide(list,deb,positionPivot-1);
-			triRapide(list,positionPivot+1,fin);
+	protected void triRapide(ItemList list, int deb, int fin) {
+		if (deb < fin) {
+			int positionPivot = partition(list, deb, fin);
+			triRapide(list, deb, positionPivot - 1);
+			triRapide(list, positionPivot + 1, fin);
 		}
 	}
-	
+
 	protected void echanger(ItemList list, int deb, int fin) {
 		AbstractItem temp = list.get(deb);
-		list.set(deb,list.get(fin));
-		list.set(fin,temp);
+		list.set(deb, list.get(fin));
+		list.set(fin, temp);
 	}
 }

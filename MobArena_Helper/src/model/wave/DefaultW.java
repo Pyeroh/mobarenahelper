@@ -6,19 +6,22 @@ import model.*;
 import model.enums.*;
 
 /**
- * Une vague par défaut, spawn de monstres choisis parmi une liste aléatoirement, et croissance du nombre de monstres à chaque vague.
+ * Une vague par défaut, spawn de monstres choisis parmi une liste aléatoirement, et croissance du nombre de monstres à
+ * chaque vague.
+ *
  * @author Pyeroh
  * @see Wave
  */
-public class DefaultW extends Wave{
+public class DefaultW extends Wave {
 
 	private EGrowth growth = EGrowth.old;
+
 	private boolean fixed = false;
 
 	public DefaultW(String nom) {
 		super(nom, ETypeW.Default);
 	}
-	
+
 	public DefaultW(ECatW category) {
 		super("New_Wave", ETypeW.Default);
 		setCategory(category);
@@ -39,53 +42,56 @@ public class DefaultW extends Wave{
 	public void setFixed(boolean fixed) {
 		this.fixed = fixed;
 	}
-	
+
 	@Override
 	public String toString() {
-		String ret = super.toString()
-				+"\ngrowth : "+growth.getNom()
-				+"\nfixed : "+fixed;
+		String ret = super.toString() + "\ngrowth : " + growth.getNom() + "\nfixed : " + fixed;
 		return ret;
 	}
 
 	@Override
 	public LinkedHashMap<String, Object> getMap() throws ArenaException {
 		LinkedHashMap<String, Object> vague = super.getMap();
-		if(this.getGrowth()!=EGrowth.old) vague.put("growth", this.getGrowth().name());
-		if(this.isFixed())vague.put("fixed", this.isFixed());
-		
+		if (this.getGrowth() != EGrowth.old)
+			vague.put("growth", this.getGrowth().name());
+		if (this.isFixed())
+			vague.put("fixed", this.isFixed());
+
 		return vague;
 	}
 
 	/**
 	 * {@link Wave#setWave(String, ECatW, LinkedHashMap)}
-	 * @param nom le nom de la vague
-	 * @param map la map d'informations de la vague
+	 *
+	 * @param nom
+	 *            le nom de la vague
+	 * @param map
+	 *            la map d'informations de la vague
 	 * @return la map d'informations de la vague
 	 */
-	public static DefaultW setWave(String nom, LinkedHashMap<String, Object> map){
+	public static DefaultW setWave(String nom, LinkedHashMap<String, Object> map) {
 		DefaultW wave = new DefaultW(nom);
 		GestYaml g = new GestYaml(map);
-		if(map.containsKey("frequency")){
+		if (map.containsKey("frequency")) {
 			wave.setFrequency(g.getInt("frequency"));
 		}
-		if(map.containsKey("priority")){
+		if (map.containsKey("priority")) {
 			wave.setPriority(g.getInt("priority"));
 		}
-		if(map.containsKey("wave")){
+		if (map.containsKey("wave")) {
 			wave.setNumwave(g.getInt("wave"));
 		}
-		if(map.containsKey("growth")){
+		if (map.containsKey("growth")) {
 			wave.setGrowth(EGrowth.valueOf(g.getString("growth")));
 		}
-		if(map.containsKey("fixed")){
+		if (map.containsKey("fixed")) {
 			wave.setFixed(g.getBool("fixed"));
 		}
-		if(map.containsKey("monsters")){
+		if (map.containsKey("monsters")) {
 			Set<String> monsters = g.getMap("monsters").keySet();
 			for (Iterator<String> it = monsters.iterator(); it.hasNext();) {
 				String monstre = (String) it.next();
-				wave.getMonstres().add(new Monstre(EMonsterAliases.getByName(monstre).getMonstre(), g.getInt("monsters."+monstre)));
+				wave.getMonstres().add(new Monstre(EMonsterAliases.getByName(monstre).getMonstre(), g.getInt("monsters." + monstre)));
 			}
 		}
 

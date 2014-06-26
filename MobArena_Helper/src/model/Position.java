@@ -1,11 +1,13 @@
 package model;
 
 public class Position {
-	
-	private int x,y,z;
+
+	private int x, y, z;
+
 	private double angle;
+
 	private double pitch;
-	
+
 	public Position(String pos) {
 		String[] coords = pos.split(",");
 		x = Integer.parseInt(coords[0]);
@@ -34,9 +36,9 @@ public class Position {
 	public double getPitch() {
 		return pitch;
 	}
-	
+
 	public String toString() {
-		return x+","+y+","+z+","+angle+","+pitch;
+		return x + "," + y + "," + z + "," + angle + "," + pitch;
 	}
 
 }

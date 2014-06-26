@@ -7,7 +7,9 @@ import model.enums.*;
 import model.lists.ItemList;
 
 /**
- * Une vague de réapprovisionnement. Fais apparaitre un monstre par joueur, choisi parmi une liste, et chaque monstre drop un objet choisi dans la liste des drops à sa mort.
+ * Une vague de réapprovisionnement. Fais apparaitre un monstre par joueur, choisi parmi une liste, et chaque monstre
+ * drop un objet choisi dans la liste des drops à sa mort.
+ *
  * @author Pyeroh
  * @see Wave
  */
@@ -24,64 +26,66 @@ public class SupplyW extends Wave {
 	}
 
 	public void setDrops(ItemList drops) {
-		this.drops = drops;		
+		this.drops = drops;
 	}
 
 	@Override
 	public LinkedHashMap<String, Object> getMap() throws ArenaException {
 		LinkedHashMap<String, Object> vague = super.getMap();
 
-		if(vague.get("monsters")==null) {
+		if (vague.get("monsters") == null) {
 			if (!vague.containsKey("monster")) {
-				throw new ArenaException(
-						"A supply wave must have monsters to spawn !");
+				throw new ArenaException("A supply wave must have monsters to spawn !");
 			}
-			else vague.put("monsters", vague.remove("monster"));
+			else
+				vague.put("monsters", vague.remove("monster"));
 		}
-		
-		if(drops.size()==1){
-			vague.put("drops", "'"+drops.get(0).getString()+"'");
+
+		if (drops.size() == 1) {
+			vague.put("drops", "'" + drops.get(0).getString() + "'");
 		}
 		else {
 			StringBuffer sItems = new StringBuffer();
-			for(int i=0;i<drops.size();i++) {
-				sItems.append(drops.get(i).getString()+", ");
+			for (int i = 0; i < drops.size(); i++) {
+				sItems.append(drops.get(i).getString() + ", ");
 			}
 			int length = sItems.length();
-			sItems.delete(length-2, length);
+			sItems.delete(length - 2, length);
 			vague.put("drops", sItems.toString());
 		}
-
 
 		return vague;
 	}
 
 	/**
 	 * {@link Wave#setWave(String, ECatW, LinkedHashMap)}
-	 * @param nom le nom de la vague
-	 * @param map la map d'informations de la vague
+	 *
+	 * @param nom
+	 *            le nom de la vague
+	 * @param map
+	 *            la map d'informations de la vague
 	 * @return la map d'informations de la vague
 	 */
 	public static SupplyW setWave(String nom, LinkedHashMap<String, Object> map) {
 		SupplyW wave = new SupplyW(nom);
 		GestYaml g = new GestYaml(map);
-		if(map.containsKey("frequency")){
+		if (map.containsKey("frequency")) {
 			wave.setFrequency(g.getInt("frequency"));
 		}
-		if(map.containsKey("priority")){
+		if (map.containsKey("priority")) {
 			wave.setPriority(g.getInt("priority"));
 		}
-		if(map.containsKey("wave")){
+		if (map.containsKey("wave")) {
 			wave.setNumwave(g.getInt("wave"));
 		}
-		if(map.containsKey("monsters")){
+		if (map.containsKey("monsters")) {
 			Set<String> monsters = g.getMap("monsters").keySet();
 			for (Iterator<String> it = monsters.iterator(); it.hasNext();) {
 				String monstre = (String) it.next();
-				wave.getMonstres().add(new Monstre(EMonsterAliases.getByName(monstre).getMonstre(), g.getInt("monsters."+monstre)));
+				wave.getMonstres().add(new Monstre(EMonsterAliases.getByName(monstre).getMonstre(), g.getInt("monsters." + monstre)));
 			}
 		}
-		if(map.containsKey("drops")){
+		if (map.containsKey("drops")) {
 			wave.getDrops().fill(g.getString("drops"));
 		}
 		return wave;

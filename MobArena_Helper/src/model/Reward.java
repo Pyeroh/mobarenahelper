@@ -8,7 +8,7 @@ public class Reward {
 	private int wave_number;
 	private ERewardType type;
 	private ItemList rewards = new ItemList();
-	
+
 	public Reward(int wave_number, ERewardType type, String rewards) {
 		this.wave_number = wave_number;
 		this.type = type;
@@ -42,5 +42,5 @@ public class Reward {
 	public void setRewards(ItemList rewards) {
 		this.rewards = rewards;
 	}
-	
+
 }

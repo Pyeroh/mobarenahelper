@@ -6,8 +6,7 @@ import model.enums.*;
 
 public class EnumName {
 
-	private static ResourceBundle RESOURCE_BUNDLE = ResourceBundle
-			.getBundle("gui.enums");
+	private static ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle("gui.enums");
 
 	private EnumName() {
 	}
@@ -15,7 +14,8 @@ public class EnumName {
 	public static String getString(String key) {
 		try {
 			return RESOURCE_BUNDLE.getString(key);
-		} catch (MissingResourceException e) {
+		}
+		catch (MissingResourceException e) {
 			return '!' + key + '!';
 		}
 	}

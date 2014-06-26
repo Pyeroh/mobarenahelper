@@ -9,8 +9,9 @@ import view.cells.HoverListCellRenderer;
 public class JHoverList<E extends CellListCaracs> extends JList<E> {
 
 	private static final long serialVersionUID = 885727775916469549L;
+
 	private HoverListCellRenderer renderer;
-	
+
 	public JHoverList() {
 		super();
 		this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);

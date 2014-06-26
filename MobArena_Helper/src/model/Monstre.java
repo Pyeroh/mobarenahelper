@@ -5,21 +5,25 @@ import model.lists.MonsterList;
 
 /**
  * L'existence réelle d'un monstre, c'est à dire un monstre et la probabilité qu'il a d'apparaitre.
+ *
  * @author Pyeroh
  * @see EMonsters
  * @see MonsterList
  */
 public class Monstre {
+
 	private EMonsters monstre;
+
 	private int probability;
-	
+
 	/**
-	 * Instancie un monstre, avec une probabilité dans la liste  des monstres d'une vague.
-	 * Si le monstre est unique dans la vague, sa proba est de 0.
+	 * Instancie un monstre, avec une probabilité dans la liste des monstres d'une vague. Si le monstre est unique dans
+	 * la vague, sa proba est de 0.
+	 *
 	 * @param monstre
 	 * @param proba
 	 */
-	public Monstre(EMonsters monstre, int proba){
+	public Monstre(EMonsters monstre, int proba) {
 		this.monstre = monstre;
 		this.probability = proba;
 	}
@@ -39,7 +43,7 @@ public class Monstre {
 	public void setProbability(int probability) {
 		this.probability = probability;
 	}
-	
+
 	@Override
 	public String toString() {
 		String ret = monstre + " : " + probability;
