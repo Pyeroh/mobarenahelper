@@ -425,9 +425,21 @@ public class MenuPrincipal extends JFrame {
 
 			@Override
 			public void windowClosing(WindowEvent e) {
-				int choice = JOptionPane.showConfirmDialog(rootPane, Messages.getString("MenuPrincipal.message.unsavedChangesQuit"),
-						Messages.getString("Message.title.confirmation"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-				if (choice == JOptionPane.YES_OPTION) {
+				boolean changes = true;
+
+				try {
+					changes = !arenas.getMap().equals(GestYaml.S_gestionnaire.getData());
+				}
+				catch (ArenaException e1) {
+				}
+				if (changes) {
+					int choice = JOptionPane.showConfirmDialog(rootPane, Messages.getString("MenuPrincipal.message.unsavedChangesQuit"),
+							Messages.getString("Message.title.confirmation"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+					if (choice == JOptionPane.YES_OPTION) {
+						System.exit(0);
+					}
+				}
+				else {
 					System.exit(0);
 				}
 			}

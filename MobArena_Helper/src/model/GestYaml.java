@@ -81,6 +81,12 @@ public class GestYaml {
 		data = (LinkedHashMap<String, Object>) map;
 	}
 
+	/**
+	 * Récupère une valeur pour une clé, en descendant dans l'arborescence avec des points (ex : node1.node2)
+	 *
+	 * @param key
+	 * @return
+	 */
 	@SuppressWarnings("unchecked")
 	protected Object get(String key) {
 		String[] arbokey = key.split("[.]");
@@ -90,6 +96,10 @@ public class GestYaml {
 		}
 		Object value = mapvalue.get(arbokey[arbokey.length - 1]);
 		return value;
+	}
+
+	public LinkedHashMap<String, Object> getData() {
+		return data;
 	}
 
 	/**
@@ -169,6 +179,12 @@ public class GestYaml {
 		return yaml.represent(data).getTag();
 	}
 
+	/**
+	 * Renvoie le gestionnaire associé à la clé passée en paramètre
+	 *
+	 * @param key
+	 * @return
+	 */
 	public GestYaml getGest(String key) {
 		return new GestYaml(getMap(key));
 	}

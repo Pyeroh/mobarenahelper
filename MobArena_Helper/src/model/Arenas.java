@@ -116,13 +116,13 @@ public class Arenas {
 	 * @throws ArenaException
 	 */
 	public LinkedHashMap<String, Object> getMap() throws ArenaException {
-		listarenas = new LinkedHashMap<>();
+		LinkedHashMap<String, Object> listarenas = new LinkedHashMap<>();
 		for (int i = 0; i < arraylistarenas.size(); i++) {
 			Arena lArene = arraylistarenas.get(i);
 			listarenas.put(lArene.getNom(), lArene.getMap());
 		}
 
-		listclasses = new LinkedHashMap<>();
+		LinkedHashMap<String, Object> listclasses = new LinkedHashMap<>();
 		for (int i = 0; i < getALclasses().size(); i++) {
 			Classe classe = getALclasses().get(i);
 			if (!classe.getName().equals("all")) {

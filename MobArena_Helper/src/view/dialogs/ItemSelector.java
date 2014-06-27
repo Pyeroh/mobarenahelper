@@ -333,7 +333,6 @@ public class ItemSelector extends JDialog {
 
 				if (isMoneySelectable && eitem == EItem.money) {
 
-					// TODO rajouter la ligne locale
 					String input = JOptionPane.showInputDialog(rootPane, Messages.getString("ItemSelector.message.howMuchMoney"), 0f);
 					if (input != null) {
 						input = input.replaceAll(" ", "");
@@ -345,6 +344,9 @@ public class ItemSelector extends JDialog {
 							loadSelectable(crossSearch());
 
 						}
+						else
+							JOptionPane.showMessageDialog(rootPane, Messages.getString("ItemSelector.message.incorrectMoneyFormat"),
+									Messages.getString("Message.title.error"), JOptionPane.ERROR_MESSAGE);
 					}
 
 				}
@@ -353,7 +355,7 @@ public class ItemSelector extends JDialog {
 					String input = JOptionPane.showInputDialog(rootPane, Messages.getString("ItemSelector.message.howMany"), 1);
 					if (input != null) {
 						input = input.trim();
-						if (input.matches("^[1-9][0-9]{0,2}$")) {
+						if (input.matches("^[1-9]\\d{0,2}$")) {
 
 							items.add(new Item(eitem, Integer.parseInt(input), null));
 
@@ -362,7 +364,7 @@ public class ItemSelector extends JDialog {
 
 						}
 						else
-							JOptionPane.showMessageDialog(rootPane, Messages.getString("ItemSelector.message.incorectNumberFormat"),
+							JOptionPane.showMessageDialog(rootPane, Messages.getString("ItemSelector.message.incorrectNumberFormat"),
 									Messages.getString("Message.title.error"), JOptionPane.ERROR_MESSAGE);
 					}
 
