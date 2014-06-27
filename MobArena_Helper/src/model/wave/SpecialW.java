@@ -13,6 +13,8 @@ import model.enums.*;
  */
 public class SpecialW extends Wave {
 
+	private static final long serialVersionUID = 7910557779310023838L;
+
 	public SpecialW(String nom) {
 		super(nom, ETypeW.Special);
 	}

@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.LinkedHashMap;
 
 import model.item.AbstractItem;
@@ -12,7 +13,9 @@ import model.lists.ItemList;
  * @author Pyeroh
  * @see Arena
  */
-public class ArenaConfig {
+public class ArenaConfig implements Serializable {
+
+	private static final long serialVersionUID = -4277081366685243694L;
 
 	private String world = "world";
 

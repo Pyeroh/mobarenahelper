@@ -1,5 +1,7 @@
 package model.item;
 
+import java.io.Serializable;
+
 import model.enums.EEnchantItem;
 import model.enums.EEnchantment;
 import model.lists.EnchantList;
@@ -12,7 +14,9 @@ import model.lists.EnchantList;
  * @see EEnchantItem
  * @see EnchantList
  */
-public class Enchantment {
+public class Enchantment implements Serializable {
+
+	private static final long serialVersionUID = 5505311578194141502L;
 
 	private EEnchantment enchantement;
 

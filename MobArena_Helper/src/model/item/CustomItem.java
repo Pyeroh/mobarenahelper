@@ -4,6 +4,8 @@ import model.enums.EItem;
 
 public class CustomItem extends AbstractItem {
 
+	private static final long serialVersionUID = 9214004733748488077L;
+
 	private int id;
 
 	private int meta = 0;

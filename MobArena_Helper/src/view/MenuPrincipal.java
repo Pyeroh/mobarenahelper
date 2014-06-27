@@ -1,28 +1,117 @@
 package view;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.io.File;
-import java.io.FileWriter;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Image;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.*;
 import java.math.RoundingMode;
-import java.text.*;
-import java.util.*;
+import java.text.DecimalFormat;
+import java.text.MessageFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Locale;
 
-import javax.swing.*;
-import javax.swing.border.*;
-import javax.swing.event.*;
+import javax.swing.ButtonGroup;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JFormattedTextField;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButtonMenuItem;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.JTree;
+import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.border.MatteBorder;
+import javax.swing.border.TitledBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.text.InternationalFormatter;
 import javax.swing.text.MaskFormatter;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
-import model.*;
-import model.enums.*;
+import model.Arena;
+import model.ArenaConfig;
+import model.ArenaException;
+import model.Arenas;
+import model.Classe;
+import model.Coordinates;
+import model.EnumName;
+import model.GestYaml;
+import model.GlobalSettings;
+import model.Messages;
+import model.Monstre;
+import model.Position;
+import model.Reward;
+import model.Wave;
+import model.enums.EAbilities;
+import model.enums.EAmount;
+import model.enums.ECatW;
+import model.enums.EGrowth;
+import model.enums.EHealth;
+import model.enums.EMonsters;
+import model.enums.ERewardType;
+import model.enums.ETypeW;
 import model.item.AbstractItem;
-import model.lists.*;
-import model.wave.*;
-import view.cells.*;
-import view.dialogs.*;
+import model.lists.ArmorList;
+import model.lists.ItemList;
+import model.lists.MonsterList;
+import model.lists.RewardList;
+import model.wave.BossW;
+import model.wave.DefaultW;
+import model.wave.SpecialW;
+import model.wave.SupplyW;
+import model.wave.SwarmW;
+import model.wave.UpgradeW;
+import view.cells.CellListAbility;
+import view.cells.CellListCaracs;
+import view.cells.CellListClass;
+import view.cells.CellListMonster;
+import view.cells.CellListReward;
+import view.cells.CellListWave;
+import view.cells.HoverListCellRenderer;
+import view.dialogs.About;
+import view.dialogs.HowTo;
+import view.dialogs.ItemSelector;
+import view.dialogs.Todo;
+import view.dialogs.UpgradeWaveChanger;
+import view.dialogs.YmlJFileChooser;
 
 public class MenuPrincipal extends JFrame {
 
@@ -2763,6 +2852,22 @@ public class MenuPrincipal extends JFrame {
 
 		setLocationRelativeTo(null);
 		initializing = false;
+
+		// TODO rendre transient les champs de stockage du fichier source, et ajouter une option de récupération du
+		// fichier sérializé
+		try {
+			arenas = (Arenas) new ObjectInputStream(new FileInputStream(new File("serialized.mah"))).readObject();
+		}
+		catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		catch (IOException e1) {
+			e1.printStackTrace();
+		}
+
 		setVisible(true);
 	}
 
@@ -2783,6 +2888,7 @@ public class MenuPrincipal extends JFrame {
 	}
 
 	private void error_log(Exception e) {
+
 		try {
 			File ferr = new File("mah_error.log");
 			ferr.delete();
@@ -2794,9 +2900,24 @@ public class MenuPrincipal extends JFrame {
 				err.write("\t" + ste[i].toString() + "\n");
 			}
 			err.close();
-
 		}
-		catch (Exception e1) {
+		catch (IOException e1) {
+			e1.printStackTrace();
+		}
+
+		try {
+			File fser = new File("serialized.mah");
+			fser.delete();
+			fser.createNewFile();
+			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fser));
+			oos.writeObject(arenas);
+			oos.flush();
+			oos.close();
+		}
+		catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		catch (IOException e1) {
 			e1.printStackTrace();
 		}
 	}

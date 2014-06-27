@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.LinkedHashMap;
 
 import model.enums.*;
@@ -11,7 +12,9 @@ import model.wave.*;
  *
  * @author Pyeroh
  */
-public abstract class Wave implements Comparable<Wave> {
+public abstract class Wave implements Comparable<Wave>, Serializable {
+
+	private static final long serialVersionUID = 4101521237477701343L;
 
 	private String nom;
 

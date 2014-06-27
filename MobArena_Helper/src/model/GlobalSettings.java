@@ -1,9 +1,12 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
-public class GlobalSettings {
+public class GlobalSettings implements Serializable {
+
+	private static final long serialVersionUID = 6749259890578977742L;
 
 	private boolean enabled = true;
 

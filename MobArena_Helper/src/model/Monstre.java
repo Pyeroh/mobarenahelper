@@ -1,5 +1,7 @@
 package model;
 
+import java.io.Serializable;
+
 import model.enums.EMonsters;
 import model.lists.MonsterList;
 
@@ -10,7 +12,9 @@ import model.lists.MonsterList;
  * @see EMonsters
  * @see MonsterList
  */
-public class Monstre {
+public class Monstre implements Serializable {
+
+	private static final long serialVersionUID = 1080295976675702353L;
 
 	private EMonsters monstre;
 

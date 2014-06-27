@@ -15,6 +15,8 @@ import model.lists.ItemList;
  */
 public class BossW extends Wave {
 
+	private static final long serialVersionUID = 5128463064091852941L;
+
 	private String bossname = "";
 
 	private EHealth health = EHealth.medium;

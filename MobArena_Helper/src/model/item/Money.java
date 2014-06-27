@@ -4,6 +4,8 @@ import model.enums.EItem;
 
 public class Money extends AbstractItem {
 
+	private static final long serialVersionUID = -182472971336809608L;
+
 	private float money = 0f;
 
 	public Money(float money) {

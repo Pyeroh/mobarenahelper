@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.*;
 
 import model.enums.ECatW;
@@ -13,7 +14,9 @@ import model.lists.RewardList;
  * @author Pyeroh
  * @see ArenaConfig
  */
-public class Arena {
+public class Arena implements Serializable {
+
+	private static final long serialVersionUID = 2943266301926154528L;
 
 	private String nom;
 

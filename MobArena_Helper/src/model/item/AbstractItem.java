@@ -1,9 +1,13 @@
 package model.item;
 
+import java.io.Serializable;
+
 import model.enums.EItem;
 import model.lists.EnchantList;
 
-public abstract class AbstractItem {
+public abstract class AbstractItem implements Serializable {
+
+	private static final long serialVersionUID = 3711368328915325045L;
 
 	private int quantity = 1;
 

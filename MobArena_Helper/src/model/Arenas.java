@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.*;
 
 import org.yaml.snakeyaml.nodes.Tag;
@@ -11,7 +12,9 @@ import org.yaml.snakeyaml.nodes.Tag;
  * @author Pyeroh
  * @see Arena
  */
-public class Arenas {
+public class Arenas implements Serializable {
+
+	private static final long serialVersionUID = -929527876390581159L;
 
 	private LinkedHashMap<String, Object> globalsettings = new LinkedHashMap<>();
 

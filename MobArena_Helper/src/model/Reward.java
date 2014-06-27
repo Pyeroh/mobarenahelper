@@ -1,12 +1,18 @@
 package model;
 
+import java.io.Serializable;
+
 import model.enums.ERewardType;
 import model.lists.ItemList;
 
-public class Reward {
+public class Reward implements Serializable {
+
+	private static final long serialVersionUID = -5257929091456842234L;
 
 	private int wave_number;
+
 	private ERewardType type;
+
 	private ItemList rewards = new ItemList();
 
 	public Reward(int wave_number, ERewardType type, String rewards) {

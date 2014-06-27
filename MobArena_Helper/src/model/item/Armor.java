@@ -12,6 +12,8 @@ import model.lists.ArmorList;
  */
 public class Armor extends Item {
 
+	private static final long serialVersionUID = -1979227958577116262L;
+
 	/**
 	 * Instancie une pièce d'armure avec l'objet qu'elle représente, et ses enchantements. Sa quantité est toujours de 1
 	 * en tant qu'Armor, car il est difficile de porter plus d'une pièce d'armure à la fois...

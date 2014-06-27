@@ -15,6 +15,8 @@ import model.lists.ItemList;
  */
 public class SupplyW extends Wave {
 
+	private static final long serialVersionUID = -7585145359331387943L;
+
 	private ItemList drops = new ItemList();
 
 	public SupplyW(String nom) {

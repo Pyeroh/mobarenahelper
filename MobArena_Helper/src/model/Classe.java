@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
@@ -12,7 +13,9 @@ import model.lists.ItemList;
  *
  * @author Pyeroh
  */
-public class Classe {
+public class Classe implements Serializable {
+
+	private static final long serialVersionUID = 8302046355832205620L;
 
 	private LinkedHashMap<String, Object> classe;
 

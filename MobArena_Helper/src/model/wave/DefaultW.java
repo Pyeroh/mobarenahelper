@@ -14,6 +14,8 @@ import model.enums.*;
  */
 public class DefaultW extends Wave {
 
+	private static final long serialVersionUID = -2610262930009396418L;
+
 	private EGrowth growth = EGrowth.old;
 
 	private boolean fixed = false;

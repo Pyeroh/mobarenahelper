@@ -1,6 +1,10 @@
 package model;
 
-public class ClassLimit {
+import java.io.Serializable;
+
+public class ClassLimit implements Serializable {
+
+	private static final long serialVersionUID = -8323029982213296029L;
 
 	private Classe classe;
 

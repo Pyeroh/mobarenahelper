@@ -1,9 +1,12 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 
-public class Coordinates {
+public class Coordinates implements Serializable {
+
+	private static final long serialVersionUID = 1493476666483082732L;
 
 	private Position p1 = null, p2 = null, l1 = null, l2 = null, arena = null, lobby = null, spectator = null;
 

@@ -1,12 +1,10 @@
 package model.wave;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
+import java.io.Serializable;
+import java.util.*;
 
-import model.Classe;
-import model.GestYaml;
-import model.lists.ArmorList;
-import model.lists.ItemList;
+import model.*;
+import model.lists.*;
 
 /**
  * Un set d'upgrade est la combinaison d'une vague Upgrade et d'une classe. Pour une certaine classe, il est possible
@@ -16,7 +14,9 @@ import model.lists.ItemList;
  * @author Pyeroh
  * @see UpgradeW
  */
-public class UpgradeSet {
+public class UpgradeSet implements Serializable {
+
+	private static final long serialVersionUID = 3588098791670748965L;
 
 	/**
 	 * Le setup d'un set d'upgrade permet de savoir si c'est simple ({@link #legacy}) ou avancé ({@link #advanced})

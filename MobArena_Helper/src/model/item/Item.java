@@ -13,6 +13,8 @@ import model.lists.ItemList;
  */
 public class Item extends AbstractItem {
 
+	private static final long serialVersionUID = 741515306323293973L;
+
 	private EItem item;
 
 	/**

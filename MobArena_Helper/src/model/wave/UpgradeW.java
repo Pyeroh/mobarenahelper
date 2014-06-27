@@ -15,6 +15,8 @@ import model.enums.ETypeW;
  */
 public class UpgradeW extends Wave {
 
+	private static final long serialVersionUID = -5917256403814292092L;
+
 	private ArrayList<UpgradeSet> upgrades = new ArrayList<>();
 
 	private boolean give_all_items = true;

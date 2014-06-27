@@ -14,6 +14,8 @@ import model.enums.*;
  */
 public class SwarmW extends Wave {
 
+	private static final long serialVersionUID = 5641390195215691711L;
+
 	private EAmount amount = EAmount.low;
 
 	public SwarmW(String nom) {
