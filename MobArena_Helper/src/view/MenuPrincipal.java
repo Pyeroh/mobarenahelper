@@ -111,7 +111,7 @@ import view.dialogs.HowTo;
 import view.dialogs.ItemSelector;
 import view.dialogs.Todo;
 import view.dialogs.UpgradeWaveChanger;
-import view.dialogs.YmlJFileChooser;
+import view.dialogs.SpecificJFileChooser;
 
 public class MenuPrincipal extends JFrame {
 
@@ -506,6 +506,7 @@ public class MenuPrincipal extends JFrame {
 	private JLabel lib_moment;
 
 	private JWideComboBox combo_occurrence;
+	private JMenuItem mntmRestoreConfiguration;
 
 	public MenuPrincipal() throws ParseException {
 		super();
@@ -514,14 +515,8 @@ public class MenuPrincipal extends JFrame {
 
 			@Override
 			public void windowClosing(WindowEvent e) {
-				boolean changes = true;
 
-				try {
-					changes = !arenas.getMap().equals(GestYaml.S_gestionnaire.getData());
-				}
-				catch (ArenaException e1) {
-				}
-				if (changes) {
+				if (hasConfigChanged()) {
 					int choice = JOptionPane.showConfirmDialog(rootPane, Messages.getString("MenuPrincipal.message.unsavedChangesQuit"),
 							Messages.getString("Message.title.confirmation"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 					if (choice == JOptionPane.YES_OPTION) {
@@ -656,7 +651,7 @@ public class MenuPrincipal extends JFrame {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				Classe.classe_list.clear();
-				YmlJFileChooser fchoose = new YmlJFileChooser();
+				SpecificJFileChooser fchoose = new SpecificJFileChooser("YML");
 				fchoose.showOpenDialog(null);
 				file = fchoose.getSelectedFile();
 				if (file != null) {
@@ -666,16 +661,7 @@ public class MenuPrincipal extends JFrame {
 						GestYaml.S_gestionnaire = new GestYaml(file);
 						GestYaml g = GestYaml.S_gestionnaire;
 						arenas = new Arenas(g.getMap("arenas"), g.getMap("global-settings"), g.getMap("classes"));
-						ArrayList<Arena> alArenas = arenas.getALarenas();
-						for (int i = 0; i < alArenas.size(); i++) {
-							combo_arena.addItem(alArenas.get(i).getNom());
-						}
-						loadArena(0);
-						tabpan_config.setEnabledAt(1, true);
-						tabpan_config.setEnabledAt(2, true);
-						tabpan_config.setEnabledAt(3, true);
-						tabpan_config.setEnabledAt(4, true);
-						tabpan_config.setEnabledAt(5, true);
+						loadConfig();
 					}
 					catch (Exception e1) {
 						e1.printStackTrace();
@@ -702,12 +688,12 @@ public class MenuPrincipal extends JFrame {
 			public void mouseReleased(MouseEvent e) {
 				if (arenas != null) {
 
-					YmlJFileChooser fchoose;
+					SpecificJFileChooser fchoose;
 					if (file != null) {
-						fchoose = new YmlJFileChooser(file.getPath());
+						fchoose = new SpecificJFileChooser(file.getPath(), true, "YML");
 					}
 					else
-						fchoose = new YmlJFileChooser();
+						fchoose = new SpecificJFileChooser("YML");
 					fchoose.showOpenDialog(null);
 					File f = fchoose.getSelectedFile();
 					if (f != null) {
@@ -730,6 +716,7 @@ public class MenuPrincipal extends JFrame {
 							dumper.dumpAsFile(fw);
 							JOptionPane.showMessageDialog(rootPane, Messages.getString("MenuPrincipal.message.finishSaving"), "",
 									JOptionPane.INFORMATION_MESSAGE);
+							GestYaml.S_gestionnaire = dumper;
 
 						}
 						catch (Exception e1) {
@@ -1400,14 +1387,43 @@ public class MenuPrincipal extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int choice = JOptionPane.showConfirmDialog(rootPane, Messages.getString("MenuPrincipal.message.unsavedChangesNew"),
-						Messages.getString("Message.title.confirmation"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-				if (choice == JOptionPane.YES_OPTION) {
+				if (hasConfigChanged()) {
+					int choice = JOptionPane.showConfirmDialog(rootPane,
+							Messages.getString("MenuPrincipal.message.unsavedChangesNew"),
+							Messages.getString("Message.title.confirmation"), JOptionPane.YES_NO_OPTION,
+							JOptionPane.QUESTION_MESSAGE);
+					if (choice == JOptionPane.YES_OPTION) {
+						raz();
+					}
+				}
+				else {
 					raz();
 				}
 			}
 		});
 		mnApplication.add(mntmNewConfiguration);
+
+		mntmRestoreConfiguration = new JMenuItem(Messages.getString("MenuPrincipal.mntmRestoreConfiguration.text")); //$NON-NLS-1$
+		mntmRestoreConfiguration.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (hasConfigChanged()) {
+					int choice = JOptionPane.showConfirmDialog(rootPane,
+							Messages.getString("MenuPrincipalipal.message.unsavedChangesNew"),
+							Messages.getString("Message.title.confirmation"), JOptionPane.YES_NO_OPTION,
+							JOptionPane.QUESTION_MESSAGE);
+					if (choice == JOptionPane.YES_OPTION) {
+						restore();
+					}
+				}
+				else {
+					restore();
+				}
+			}
+
+		});
+		mnApplication.add(mntmRestoreConfiguration);
 
 		mnLanguage = new JMenu(Messages.getString("MenuPrincipal.mnLanguage.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		mnApplication.add(mnLanguage);
@@ -1439,9 +1455,16 @@ public class MenuPrincipal extends JFrame {
 		mntmQuit.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				int choice = JOptionPane.showConfirmDialog(rootPane, Messages.getString("MenuPrincipal.message.unsavedChangesQuit"),
-						Messages.getString("Message.title.confirmation"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-				if (choice == JOptionPane.YES_OPTION) {
+				if (hasConfigChanged()) {
+					int choice = JOptionPane.showConfirmDialog(rootPane,
+							Messages.getString("MenuPrincipal.message.unsavedChangesQuit"),
+							Messages.getString("Message.title.confirmation"), JOptionPane.YES_NO_OPTION,
+							JOptionPane.QUESTION_MESSAGE);
+					if (choice == JOptionPane.YES_OPTION) {
+						dispose();
+					}
+				}
+				else {
 					dispose();
 				}
 			}
@@ -2610,11 +2633,11 @@ public class MenuPrincipal extends JFrame {
 		pan_coordinates.add(scrpan_points);
 
 		pan_coords = new JPanel();
+		pan_coords.setVisible(false);
 		pan_coords.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		pan_coords.setBounds(185, 6, 239, 103);
 		pan_coordinates.add(pan_coords);
 		pan_coords.setLayout(null);
-		pan_coords.setVisible(false);
 
 		lib_X = new JLabel("X");
 		lib_X.setBounds(6, 8, 10, 20);
@@ -2853,22 +2876,20 @@ public class MenuPrincipal extends JFrame {
 		setLocationRelativeTo(null);
 		initializing = false;
 
-		// TODO rendre transient les champs de stockage du fichier source, et ajouter une option de récupération du
-		// fichier sérializé
-		try {
-			arenas = (Arenas) new ObjectInputStream(new FileInputStream(new File("serialized.mah"))).readObject();
-		}
-		catch (ClassNotFoundException e1) {
-			e1.printStackTrace();
-		}
-		catch (FileNotFoundException e1) {
-			e1.printStackTrace();
-		}
-		catch (IOException e1) {
-			e1.printStackTrace();
-		}
-
 		setVisible(true);
+	}
+
+	private void loadConfig() {
+		ArrayList<Arena> alArenas = arenas.getALarenas();
+		for (int i = 0; i < alArenas.size(); i++) {
+			combo_arena.addItem(alArenas.get(i).getNom());
+		}
+		loadArena(0);
+		tabpan_config.setEnabledAt(1, true);
+		tabpan_config.setEnabledAt(2, true);
+		tabpan_config.setEnabledAt(3, true);
+		tabpan_config.setEnabledAt(4, true);
+		tabpan_config.setEnabledAt(5, true);
 	}
 
 	private void loadLocale() {
@@ -2882,7 +2903,7 @@ public class MenuPrincipal extends JFrame {
 			newdef = Locale.FRENCH;
 		}
 		Locale.setDefault(newdef);
-		YmlJFileChooser.setDefaultLocale(newdef);
+		SpecificJFileChooser.setDefaultLocale(newdef);
 		Messages.load();
 		EnumName.load();
 	}
@@ -2941,7 +2962,43 @@ public class MenuPrincipal extends JFrame {
 		setInvisibleComponents_Arena();
 	}
 
-	public void newWave(MouseEvent e) {
+	private boolean hasConfigChanged() {
+		boolean changes = false;
+
+		if (arenas != null && GestYaml.S_gestionnaire != null) {
+			try {
+				changes = !arenas.getMap().equals(GestYaml.S_gestionnaire.getData());
+			} catch (ArenaException e1) {
+			}
+		}
+
+		return changes;
+	}
+
+	private void restore() {
+
+		SpecificJFileChooser fchoose = new SpecificJFileChooser("MAH");
+		fchoose.showOpenDialog(null);
+		file = fchoose.getSelectedFile();
+		if (file != null) {
+			try {
+				Classe.classe_list.clear();
+				arenas = (Arenas) new ObjectInputStream(new FileInputStream(new File("serialized.mah"))).readObject();
+				if (!arenas.getALarenas().isEmpty()) {
+					loadConfig();
+				}
+			} catch (ClassNotFoundException e1) {
+				e1.printStackTrace();
+			} catch (FileNotFoundException e1) {
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		}
+
+	}
+
+	private void newWave(MouseEvent e) {
 		if (combo_arena.getSelectedIndex() != -1) {
 
 			ECatW category = null;
@@ -2971,7 +3028,7 @@ public class MenuPrincipal extends JFrame {
 		}
 	}
 
-	public void newReward(MouseEvent e) {
+	private void newReward(MouseEvent e) {
 		ERewardType rewardtype = null;
 		JHoverList<CellListReward> listToLoad = null;
 		if (e.getSource() == btn_add_every) {
@@ -2999,7 +3056,7 @@ public class MenuPrincipal extends JFrame {
 	}
 
 	@SuppressWarnings("unchecked")
-	public void waveArenaCellMouseAdapter(MouseEvent e) {
+	private void waveArenaCellMouseAdapter(MouseEvent e) {
 		// On récupère la liste source en tant que liste de caracs pour l'évaluation de situation
 		// et en tant que liste de vagues pour le travail sur les données
 		JHoverList<CellListCaracs> source = (JHoverList<CellListCaracs>) e.getSource();
@@ -3105,7 +3162,7 @@ public class MenuPrincipal extends JFrame {
 	}
 
 	@SuppressWarnings("unchecked")
-	public void rewardCellMouseAdapter(MouseEvent e) {
+	private void rewardCellMouseAdapter(MouseEvent e) {
 		JHoverList<CellListReward> source = (JHoverList<CellListReward>) e.getSource();
 		if (source.getModel().getSize() != 0) {
 			source.ensureIndexIsVisible(source.getSelectedIndex());
@@ -3144,7 +3201,7 @@ public class MenuPrincipal extends JFrame {
 		}
 	}
 
-	public void loadArena(int numarena) {
+	private void loadArena(int numarena) {
 
 		setInvisibleComponents_Arena();
 		Arena arena = arenas.getALarenas().get(numarena);
@@ -3166,13 +3223,14 @@ public class MenuPrincipal extends JFrame {
 
 	}
 
-	public void loadCoords(String position) {
+	private void loadCoords(String position) {
 		pan_coords.setVisible(true);
 		Coordinates coords = arenas.getALarenas().get(combo_arena.getSelectedIndex()).getCcoords();
 		Position pos = null;
 		switch (position) {
 		case "Coordinates":
 		case "spawnpoints":
+		case "containers":
 			break;
 		case "p1":
 			pos = coords.getP1();
@@ -3195,11 +3253,23 @@ public class MenuPrincipal extends JFrame {
 		case "spectator":
 			pos = coords.getSpectator();
 			break;
+		case "leaderboard":
+			pos = coords.getLeaderboard();
+			break;
+		case "exit":
+			pos = coords.getExit();
+			break;
 		default:
-			pos = (Position) coords.getSpawnpoints().get(position);
+			pos = coords.getSpawnpoints().get(position);
+			if (coords.getSpawnpoints().containsKey(position)) {
+				pos = coords.getSpawnpoints().get(position);
+			}
+			else {
+				pos = coords.getContainers().get(position);
+			}
 			break;
 		}
-		if ((!position.equals("Coordinates") || !position.equals("spawnpoints")) && pos != null) {
+		if ((!position.equals("Coordinates") || !position.equals("spawnpoints") || !position.equals("containers")) && pos != null) {
 			sai_X.setText(pos.getX() + "");
 			sai_Y.setText(pos.getY() + "");
 			sai_Z.setText(pos.getZ() + "");
@@ -3210,7 +3280,7 @@ public class MenuPrincipal extends JFrame {
 			pan_coords.setVisible(false);
 	}
 
-	public void setVisibleComponents_Arena(Wave wave) {
+	private void setVisibleComponents_Arena(Wave wave) {
 		ETypeW typevague = wave.getType();
 		ECatW catvague = wave.getCategory();
 
@@ -3320,7 +3390,7 @@ public class MenuPrincipal extends JFrame {
 
 	}
 
-	public void setInvisibleComponents_Arena() {
+	private void setInvisibleComponents_Arena() {
 		lib_name.setVisible(false);
 		sai_name.setVisible(false);
 		lib_category.setVisible(false);
@@ -3362,7 +3432,7 @@ public class MenuPrincipal extends JFrame {
 		btn_set.setText(Messages.getString("MenuPrincipal.btn_set.text")); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
-	public void deselectWaveLists_Arena(JHoverList<CellListWave> jList) {
+	private void deselectWaveLists_Arena(JHoverList<CellListWave> jList) {
 		if (jList == list_recurrent) {
 			list_single.clearSelection();
 		}
@@ -3371,7 +3441,7 @@ public class MenuPrincipal extends JFrame {
 		}
 	}
 
-	public void deselectRewardLists_Rewards(JHoverList<CellListReward> jList) {
+	private void deselectRewardLists_Rewards(JHoverList<CellListReward> jList) {
 		if (jList == list_every) {
 			list_after.clearSelection();
 		}
@@ -3380,7 +3450,7 @@ public class MenuPrincipal extends JFrame {
 		}
 	}
 
-	public void loadData_Arena(Wave wave) {
+	private void loadData_Arena(Wave wave) {
 		sai_name.setText(wave.getNom());
 		combo_category.setSelectedItem(wave.getCategory().getNom());
 		combo_type.setSelectedItem(wave.getType().getNom());
@@ -3439,7 +3509,7 @@ public class MenuPrincipal extends JFrame {
 	 * @param listview
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public void loadListCaracs_Arena(ArrayList listdata, JHoverList listview) {
+	private void loadListCaracs_Arena(ArrayList listdata, JHoverList listview) {
 
 		DefaultListModel modW = new DefaultListModel<>();
 
@@ -3488,7 +3558,7 @@ public class MenuPrincipal extends JFrame {
 	 * @param component
 	 *            le composant source
 	 */
-	public void majData_Arena(JComponent component) {
+	private void majData_Arena(JComponent component) {
 
 		JFormattedTextField source = (JFormattedTextField) component;
 		JHoverList<CellListWave> list_sel = list_recurrent.getSelectedIndex() != -1 ? list_recurrent : list_single;
@@ -3542,11 +3612,11 @@ public class MenuPrincipal extends JFrame {
 
 	}
 
-	public void loadData_ClassConfig(ArrayList<Classe> aLclasses) {
+	private void loadData_ClassConfig(ArrayList<Classe> aLclasses) {
 		loadData_ClassConfig(aLclasses, list_classes.getSelectedIndex());
 	}
 
-	public void loadData_ClassConfig(ArrayList<Classe> aLclasses, int index) {
+	private void loadData_ClassConfig(ArrayList<Classe> aLclasses, int index) {
 		DefaultListModel<CellListClass> mod_Class = new DefaultListModel<>();
 		for (int i = 0; i < aLclasses.size(); i++) {
 			Classe iclasse = aLclasses.get(i);
@@ -3566,7 +3636,7 @@ public class MenuPrincipal extends JFrame {
 		}
 	}
 
-	public void loadClass_ClassConfig(Classe classe) {
+	private void loadClass_ClassConfig(Classe classe) {
 		pan_caracs_class.setVisible(true);
 		pan_class_limit.setVisible(true);
 
@@ -3607,7 +3677,7 @@ public class MenuPrincipal extends JFrame {
 		sai_class.select(0, classe.getName().length());
 	}
 
-	public void loadData_ArenaConfig(ArenaConfig config) {
+	private void loadData_ArenaConfig(ArenaConfig config) {
 		sai_world.setValue(config.getWorld());
 		chk_enabled.setSelected(config.getEnabled());
 		chk_protect.setSelected(config.getProtect());
@@ -3653,7 +3723,7 @@ public class MenuPrincipal extends JFrame {
 		chk_global_end.setSelected(config.getGlobal_end_announce());
 	}
 
-	public void loadData_GlobalSettings() {
+	private void loadData_GlobalSettings() {
 		GlobalSettings gs = arenas.getGlobalSettings();
 		chk_gs_enabled.setSelected(gs.isEnabled());
 		chk_notifications.setSelected(gs.isUpdate_notifications());
@@ -3661,7 +3731,7 @@ public class MenuPrincipal extends JFrame {
 		pan_commands.setVisible(false);
 	}
 
-	public void loadCommands_GlobalSettings(ArrayList<String> commands) {
+	private void loadCommands_GlobalSettings(ArrayList<String> commands) {
 		DefaultListModel<CellListCaracs> mod_commands = new DefaultListModel<>();
 		for (int i = 0; i < commands.size(); i++) {
 			mod_commands.addElement(new CellListCaracs(commands.get(i)));
@@ -3669,8 +3739,8 @@ public class MenuPrincipal extends JFrame {
 		list_commands.setModel(mod_commands);
 	}
 
-	public void loadData_Coordinates() {
-		pan_coords.setVisible(true);
+	private void loadData_Coordinates() {
+//		pan_coords.setVisible(true);
 
 		DefaultMutableTreeNode coords = new DefaultMutableTreeNode("Coordinates");
 		tree_points.setModel(new DefaultTreeModel(coords));
@@ -3700,20 +3770,38 @@ public class MenuPrincipal extends JFrame {
 				DefaultMutableTreeNode p1 = new DefaultMutableTreeNode("spectator");
 				coords.add(p1);
 			}
+			if (ccoords.getLeaderboard() != null) {
+				DefaultMutableTreeNode p1 = new DefaultMutableTreeNode("leaderboard");
+				coords.add(p1);
+			}
+			if (ccoords.getExit() != null) {
+				DefaultMutableTreeNode p1 = new DefaultMutableTreeNode("exit");
+				coords.add(p1);
+			}
 			if (ccoords.getSpawnpoints() != null) {
 				DefaultMutableTreeNode p1 = new DefaultMutableTreeNode("spawnpoints");
 				coords.add(p1);
-				LinkedHashMap<String, Object> spawnpoints = ccoords.getSpawnpoints();
+				LinkedHashMap<String,Position> spawnpoints = ccoords.getSpawnpoints();
 				for (Iterator<String> it = spawnpoints.keySet().iterator(); it.hasNext();) {
 					String spawn = (String) it.next();
 					DefaultMutableTreeNode s = new DefaultMutableTreeNode(spawn);
 					p1.add(s);
 				}
 			}
+			if (ccoords.getContainers() != null) {
+				DefaultMutableTreeNode p1 = new DefaultMutableTreeNode("containers");
+				coords.add(p1);
+				LinkedHashMap<String,Position> containers = ccoords.getContainers();
+				for (Iterator<String> it = containers.keySet().iterator(); it.hasNext();) {
+					String container = (String) it.next();
+					DefaultMutableTreeNode s = new DefaultMutableTreeNode(container);
+					p1.add(s);
+				}
+			}
 		}
 	}
 
-	public void loadData_Rewards() {
+	private void loadData_Rewards() {
 		Arena arena = arenas.getALarenas().get(combo_arena.getSelectedIndex());
 
 		pan_reward_control.setVisible(false);
@@ -3733,7 +3821,7 @@ public class MenuPrincipal extends JFrame {
 
 	}
 
-	public void loadReward(Reward r) {
+	private void loadReward(Reward r) {
 		pan_reward_control.setVisible(true);
 		sai_reward_wave_number.setValue((long) r.getWave_number());
 		combo_occurrence.setSelectedItem(r.getType().getNom());

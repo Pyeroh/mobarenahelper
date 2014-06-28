@@ -53,22 +53,22 @@ class ExtensionFileFilter extends FileFilter {
 	}
 }
 
-public class YmlJFileChooser extends JFileChooser {
+public class SpecificJFileChooser extends JFileChooser {
 
 	private static final long serialVersionUID = -6764091355692633545L;
 
-	public YmlJFileChooser() {
+	public SpecificJFileChooser(String... extension) {
 		super(".");
-		load();
+		load(extension);
 	}
 
-	public YmlJFileChooser(String dir) {
+	public SpecificJFileChooser(String dir, boolean withDir, String... extension) {
 		super(dir);
-		load();
+		load(extension);
 	}
 
-	private void load() {
-		FileFilter ymlfilter = new ExtensionFileFilter(null, new String[] { "YML" });
+	private void load(String[] extension) {
+		FileFilter ymlfilter = new ExtensionFileFilter(null, extension);
 
 		removeChoosableFileFilter(getFileFilter());
 		addChoosableFileFilter(ymlfilter);

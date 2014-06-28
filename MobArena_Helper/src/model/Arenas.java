@@ -16,11 +16,11 @@ public class Arenas implements Serializable {
 
 	private static final long serialVersionUID = -929527876390581159L;
 
-	private LinkedHashMap<String, Object> globalsettings = new LinkedHashMap<>();
+	private transient LinkedHashMap<String, Object> globalsettings = new LinkedHashMap<>();
 
-	private LinkedHashMap<String, Object> listclasses;
+	private transient LinkedHashMap<String, Object> listclasses;
 
-	private LinkedHashMap<String, Object> listarenas;
+	private transient LinkedHashMap<String, Object> listarenas;
 
 	private ArrayList<Arena> arraylistarenas = new ArrayList<Arena>();
 

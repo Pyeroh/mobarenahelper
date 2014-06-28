@@ -23,8 +23,10 @@ public class GlobalSettings implements Serializable {
 		enabled = g.getBool("enabled");
 		update_notifications = g.getBool("update-notification");
 		String[] commands = g.getString("allowed-commands").split(",");
-		for (int i = 0; i < commands.length; i++) {
-			allowed_commands.add(commands[i].trim());
+		for (String command : commands) {
+			if (command.trim().length() != 0) {
+				allowed_commands.add(command.trim());
+			}
 		}
 
 	}

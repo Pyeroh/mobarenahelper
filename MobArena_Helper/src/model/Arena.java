@@ -35,9 +35,7 @@ public class Arena implements Serializable {
 	 */
 	private RewardList[] rewards = new RewardList[2];
 
-	private LinkedHashMap<String, Object> coords = null;
-
-	private Coordinates ccoords = null;
+	private Coordinates coords = null;
 
 	/**
 	 * Instancie une arène contenant des vagues, avec les deux catégories de vagues (soit recurrent soit single, voir
@@ -70,12 +68,11 @@ public class Arena implements Serializable {
 				this.rewards[1].fill(garena.getMap("rewards.waves.after"), ERewardType.after);
 		}
 		if (garena.containsKey("coords")) {
-			this.coords = garena.getMap("coords");
 			try {
-				this.ccoords = new Coordinates(garena.getGest("coords"));
+				this.coords = new Coordinates(garena.getGest("coords"));
 			}
 			catch (Exception e) {
-				this.ccoords = null;
+				this.coords = null;
 			}
 		}
 		Collections.sort(waves[0]);
@@ -162,7 +159,7 @@ public class Arena implements Serializable {
 	}
 
 	public Coordinates getCcoords() {
-		return ccoords;
+		return coords;
 	}
 
 	public int getClassLimit(Classe classe) {
@@ -239,11 +236,12 @@ public class Arena implements Serializable {
 			r1.put("waves", maprewards);
 			arena.put("rewards", r1);
 		}
+		if (coords != null) {
+			arena.put("coords", coords.getMap());
+		}
 		if (!limits.isEmpty()) {
 			arena.put("class-limits", limits.getMap());
 		}
-		if (coords != null)
-			arena.put("coords", coords);
 
 		return arena;
 	}
