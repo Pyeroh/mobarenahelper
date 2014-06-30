@@ -44,8 +44,9 @@ public class Arena implements Serializable {
 	 *
 	 * @param nom
 	 * @param arena
+	 * @throws ArenaException
 	 */
-	public Arena(String nom, LinkedHashMap<String, Object> arena) {
+	public Arena(String nom, LinkedHashMap<String, Object> arena) throws ArenaException {
 
 		this.nom = nom;
 		this.waves[0] = new ArrayList<Wave>();
@@ -95,7 +96,7 @@ public class Arena implements Serializable {
 		this.config = new ArenaConfig();
 	}
 
-	private void loadWaves(GestYaml gwaves) {
+	private void loadWaves(GestYaml gwaves) throws ArenaException {
 		if (gwaves.containsKey("recurrent")) {
 			for (Iterator<String> it = gwaves.getMap("recurrent").keySet().iterator(); it.hasNext();) {
 				String wave = (String) it.next();

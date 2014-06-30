@@ -173,8 +173,9 @@ public class UpgradeSet implements Serializable {
 	 * @param map
 	 *            la map d'informations de la vague
 	 * @return l'upgradeSet, avec ses informations complétées
+	 * @throws ArenaException
 	 */
-	public static UpgradeSet setUpgradeSet(String nom_classe, LinkedHashMap<String, Object> map) {
+	public static UpgradeSet setUpgradeSet(String nom_classe, LinkedHashMap<String, Object> map) throws ArenaException {
 		GestYaml g = new GestYaml(map);
 		UpgradeSet set = null;
 

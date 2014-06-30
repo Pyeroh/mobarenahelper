@@ -57,8 +57,9 @@ public class Classe implements Serializable {
 	 *            le nom de la classe
 	 * @param classe
 	 *            la Map en question
+	 * @throws ArenaException
 	 */
-	public Classe(String name, LinkedHashMap<String, Object> classe) {
+	public Classe(String name, LinkedHashMap<String, Object> classe) throws ArenaException {
 		classe_list.add(this);
 
 		this.name = name;
@@ -78,7 +79,7 @@ public class Classe implements Serializable {
 		this.name = name;
 	}
 
-	private void load() {
+	private void load() throws ArenaException {
 		GestYaml g = new GestYaml(classe);
 
 		items.fill(g.getString("items"));

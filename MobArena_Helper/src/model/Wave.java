@@ -249,8 +249,9 @@ public abstract class Wave implements Comparable<Wave>, Serializable {
 	 * @param map
 	 *            la map d'informations de la vague
 	 * @return la vague, avec ses informations remplies
+	 * @throws ArenaException
 	 */
-	public static Wave setWave(String nom, ECatW category, LinkedHashMap<String, Object> map) {
+	public static Wave setWave(String nom, ECatW category, LinkedHashMap<String, Object> map) throws ArenaException {
 		Wave wave = null;
 		StringBuffer type = new StringBuffer(map.get("type").toString());
 		type.replace(0, 1, type.substring(0, 1).toUpperCase());

@@ -95,7 +95,7 @@ public class BossW extends Wave {
 		return ret;
 	}
 
-	public static BossW setWave(String nom, LinkedHashMap<String, Object> map) {
+	public static BossW setWave(String nom, LinkedHashMap<String, Object> map) throws ArenaException {
 		BossW wave = new BossW(nom);
 		GestYaml g = new GestYaml(map);
 		if (map.containsKey("frequency")) {
@@ -122,7 +122,13 @@ public class BossW extends Wave {
 		if (map.containsKey("abilities")) {
 			String[] abi = g.getString("abilities").split("[,]");
 			for (int i = 0; i < abi.length; i++) {
-				wave.abilities.add(EAbilities.valueOf(abi[i].replace('-', '_').trim()));
+				String formatedAbility = abi[i].replace('-', '_').trim();
+				try {
+					wave.abilities.add(EAbilities.valueOf(formatedAbility));
+				}
+				catch (IllegalArgumentException e) {
+					throw new ArenaException("No ability named : " + abi[i].trim());
+				}
 			}
 		}
 		wave.getMonstres().add(new Monstre(EMonsterAliases.getByName(g.getString("monster")).getMonstre(), 1));

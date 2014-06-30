@@ -111,8 +111,9 @@ public class ArenaConfig implements Serializable {
 	 * Constructeur avec une Map. Instancie les paramètres à la valeur qu'ils ont dans le fichier.
 	 *
 	 * @param config
+	 * @throws ArenaException
 	 */
-	public ArenaConfig(LinkedHashMap<String, Object> config) {
+	public ArenaConfig(LinkedHashMap<String, Object> config) throws ArenaException {
 		this.config = config;
 		load();
 	}
@@ -123,7 +124,7 @@ public class ArenaConfig implements Serializable {
 	public ArenaConfig() {
 	}
 
-	private void load() {
+	private void load() throws ArenaException {
 
 		GestYaml g = new GestYaml(config);
 

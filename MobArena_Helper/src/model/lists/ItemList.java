@@ -2,6 +2,7 @@ package model.lists;
 
 import java.util.ArrayList;
 
+import model.ArenaException;
 import model.enums.EItem;
 import model.item.*;
 
@@ -28,8 +29,9 @@ public class ItemList extends ArrayList<AbstractItem> {
 	 * l'enchantement.
 	 *
 	 * @param items
+	 * @throws ArenaException
 	 */
-	public void fill(String items) {
+	public void fill(String items) throws ArenaException {
 
 		if (!items.trim().isEmpty()) {
 			String[] sItem = items.replace('\'', ' ').split(",");
@@ -74,8 +76,17 @@ public class ItemList extends ArrayList<AbstractItem> {
 				else if (tab_item[0].matches("\\$ ?\\d+([,\\.]\\d+)?")) {
 					this.add(new Money(Float.parseFloat(tab_item[0].substring(1))));
 				}
+				else if (!tab_item[0].isEmpty()) {
+					try {
+						this.add(new Item(EItem.searchBy(tab_item[0], data), quantity, enchantments));
+					}
+					catch (ArenaException e) {
+						throw new ArenaException("Unknown item : " + tab_item[0] + (data != 0 ? ":" + data : ""));
+					}
+				}
 				else {
-					this.add(new Item(EItem.searchBy(tab_item[0], data), quantity, enchantments));
+
+					throw new ArenaException("Item list mistyped : " + items);
 				}
 
 			}

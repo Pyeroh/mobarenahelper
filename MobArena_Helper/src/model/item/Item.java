@@ -1,5 +1,6 @@
 package model.item;
 
+import model.ArenaException;
 import model.enums.EItem;
 import model.lists.ItemList;
 
@@ -23,9 +24,14 @@ public class Item extends AbstractItem {
 	 * @param item
 	 * @param quantity
 	 * @param enchantments
+	 * @throws ArenaException
 	 */
-	public Item(EItem item, int quantity, String[] enchantments) {
+	public Item(EItem item, int quantity, String[] enchantments) throws ArenaException {
 		super(quantity);
+		if (item == null) {
+			throw new ArenaException("Item is null");
+		}
+
 		this.item = item;
 
 		if (enchantments != null) {

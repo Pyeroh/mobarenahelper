@@ -121,8 +121,9 @@ public class UpgradeW extends Wave {
 	 * @param map
 	 *            la map d'informations de la vague
 	 * @return la vague, avec ses informations remplies
+	 * @throws ArenaException
 	 */
-	public static UpgradeW setWave(String nom, LinkedHashMap<String, Object> map) {
+	public static UpgradeW setWave(String nom, LinkedHashMap<String, Object> map) throws ArenaException {
 		UpgradeW wave = new UpgradeW(nom);
 		GestYaml g = new GestYaml(map);
 

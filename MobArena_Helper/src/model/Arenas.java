@@ -36,8 +36,9 @@ public class Arenas implements Serializable {
 	 *            les settings généraux du fichier
 	 * @param listclasses
 	 *            les classes dans les settings du fichier
+	 * @throws ArenaException
 	 */
-	public Arenas(LinkedHashMap<String, Object> listarenas, LinkedHashMap<String, Object> globalsettings, LinkedHashMap<String, Object> listclasses) {
+	public Arenas(LinkedHashMap<String, Object> listarenas, LinkedHashMap<String, Object> globalsettings, LinkedHashMap<String, Object> listclasses) throws ArenaException {
 		this.listarenas = listarenas;
 		this.globalsettings = globalsettings;
 		this.listclasses = listclasses;
@@ -93,7 +94,7 @@ public class Arenas implements Serializable {
 		}
 	}
 
-	private void load() {
+	private void load() throws ArenaException {
 		settings = new GlobalSettings(globalsettings);
 
 		GestYaml gclasse = new GestYaml(listclasses);

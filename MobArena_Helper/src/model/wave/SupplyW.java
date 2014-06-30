@@ -67,8 +67,9 @@ public class SupplyW extends Wave {
 	 * @param map
 	 *            la map d'informations de la vague
 	 * @return la map d'informations de la vague
+	 * @throws ArenaException
 	 */
-	public static SupplyW setWave(String nom, LinkedHashMap<String, Object> map) {
+	public static SupplyW setWave(String nom, LinkedHashMap<String, Object> map) throws ArenaException {
 		SupplyW wave = new SupplyW(nom);
 		GestYaml g = new GestYaml(map);
 		if (map.containsKey("frequency")) {

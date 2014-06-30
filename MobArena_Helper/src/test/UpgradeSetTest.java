@@ -2,10 +2,10 @@ package test;
 
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
+
 import java.util.ArrayList;
 
-import model.Arenas;
-import model.GestYaml;
+import model.*;
 import model.enums.ECatW;
 import model.wave.UpgradeSet;
 import model.wave.UpgradeW;
@@ -17,7 +17,7 @@ public class UpgradeSetTest {
 	private static GestYaml g;
 	private static Arenas a;
 	private ArrayList<UpgradeSet> upset1, upset2;
-	
+
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		g = new GestYaml(UpgradeSetTest.class.getResourceAsStream("/gui/config.yml"));
@@ -44,7 +44,7 @@ public class UpgradeSetTest {
 	}
 
 	@Test
-	public void testSetUpgradeSet() {
+	public void testSetUpgradeSet() throws ArenaException {
 		assertEquals(g.getMap("arenas.default.waves.single.upgrade2.upgrades.Knight"), UpgradeSet.setUpgradeSet("Knight", g.getMap("arenas.default.waves.single.upgrade2.upgrades")).getMap());
 	}
 

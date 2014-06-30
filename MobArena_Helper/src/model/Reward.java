@@ -15,14 +15,20 @@ public class Reward implements Serializable {
 
 	private ItemList rewards = new ItemList();
 
-	public Reward(int wave_number, ERewardType type, String rewards) {
+	public Reward(int wave_number, ERewardType type, String rewards) throws ArenaException {
 		this.wave_number = wave_number;
 		this.type = type;
 		this.rewards.fill(rewards);
 	}
 
 	public Reward(int wave_number, ERewardType type) {
-		this(wave_number, type, "");
+		this.wave_number = wave_number;
+		this.type = type;
+		try {
+			this.rewards.fill("");
+		}
+		catch (ArenaException e) {
+		}
 	}
 
 	public int getWave_number() {

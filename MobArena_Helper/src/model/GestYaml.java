@@ -198,6 +198,12 @@ public class GestYaml {
 		return yaml.dumpAsMap(data);
 	}
 
+	/**
+	 * Effectue un dump du noeud dont la clé est passée en paramètre
+	 *
+	 * @param key
+	 * @return
+	 */
 	public String dump(String key) {
 		if (get(key) instanceof String)
 			return getString(key);

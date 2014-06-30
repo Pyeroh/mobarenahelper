@@ -1,5 +1,6 @@
 package model.item;
 
+import model.ArenaException;
 import model.enums.EItem;
 import model.lists.ArmorList;
 
@@ -20,8 +21,9 @@ public class Armor extends Item {
 	 *
 	 * @param item
 	 * @param enchantements
+	 * @throws ArenaException
 	 */
-	public Armor(EItem item, String[] enchantements) {
+	public Armor(EItem item, String[] enchantements) throws ArenaException {
 		super(item, 1, enchantements);
 	}
 

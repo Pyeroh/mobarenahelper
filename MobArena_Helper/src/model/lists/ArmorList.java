@@ -2,6 +2,7 @@ package model.lists;
 
 import java.util.ArrayList;
 
+import model.ArenaException;
 import model.enums.EItem;
 import model.item.*;
 
@@ -26,8 +27,10 @@ public class ArmorList extends ItemList {
 	/**
 	 * Remplis la liste avec la chaine de caractères passée en paramètre, en la découpant. Gère également
 	 * l'enchantement.
+	 *
+	 * @throws ArenaException
 	 */
-	public void fill(String armor) {
+	public void fill(String armor) throws ArenaException {
 
 		if (!armor.trim().isEmpty()) {
 			String[] sArmor = armor.replace('\'', ' ').split(",");
@@ -53,10 +56,15 @@ public class ArmorList extends ItemList {
 					enchantments = sArmorSE[1].split(";");
 				}
 
-				if (tab_item[0].matches("(\\d)+")) {
+				if (tab_item[0].matches("\\d+")) {
 					EItem ei = EItem.searchBy(Integer.parseInt(tab_item[0]), data);
 					if (ei != null)
-						this.add(new Armor(ei, enchantments));
+						try {
+							this.add(new Armor(ei, enchantments));
+						}
+						catch (ArenaException e) {
+							throw new ArenaException("Unknown armor : " + tab_item[0] + (data != 0 ? ":" + data : ""));
+						}
 					else {
 						CustomItem ci = new CustomItem(Integer.parseInt(tab_item[0]), data);
 						ci.getEnchantements().fill(enchantments);
@@ -64,7 +72,12 @@ public class ArmorList extends ItemList {
 					}
 				}
 				else {
-					this.add(new Armor(EItem.searchBy(tab_item[0], data), enchantments));
+					try {
+						this.add(new Armor(EItem.searchBy(tab_item[0], data), enchantments));
+					}
+					catch (ArenaException e) {
+						throw new ArenaException("Unknown armor : " + tab_item[0] + (data != 0 ? ":" + data : ""));
+					}
 				}
 
 			}

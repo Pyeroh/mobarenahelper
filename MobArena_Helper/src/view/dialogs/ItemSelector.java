@@ -11,7 +11,7 @@ import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.text.MaskFormatter;
 
-import model.Messages;
+import model.*;
 import model.enums.*;
 import model.item.*;
 import model.lists.ArmorList;
@@ -172,7 +172,11 @@ public class ItemSelector extends JDialog {
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				addItem();
+				try {
+					addItem();
+				}
+				catch (ArenaException e1) {
+				}
 			}
 		});
 
@@ -317,7 +321,7 @@ public class ItemSelector extends JDialog {
 		return isArmor;
 	}
 
-	private void addItem() {
+	private void addItem() throws ArenaException {
 
 		if (!list_selectable.isSelectionEmpty()) {
 			int nb_items = list_selected.getModel().getSize();

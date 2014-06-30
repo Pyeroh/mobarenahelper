@@ -1,117 +1,27 @@
 package view;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Image;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.*;
+import java.awt.event.*;
 import java.io.*;
 import java.math.RoundingMode;
-import java.text.DecimalFormat;
-import java.text.MessageFormat;
-import java.text.NumberFormat;
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.Locale;
+import java.nio.file.Files;
+import java.text.*;
+import java.util.*;
 
-import javax.swing.ButtonGroup;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JFormattedTextField;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButtonMenuItem;
-import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.JTree;
-import javax.swing.SwingConstants;
-import javax.swing.UIManager;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.EtchedBorder;
-import javax.swing.border.LineBorder;
-import javax.swing.border.MatteBorder;
-import javax.swing.border.TitledBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
-import javax.swing.text.InternationalFormatter;
-import javax.swing.text.MaskFormatter;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
+import javax.swing.*;
+import javax.swing.border.*;
+import javax.swing.event.*;
+import javax.swing.text.*;
+import javax.swing.tree.*;
 
-import model.Arena;
-import model.ArenaConfig;
-import model.ArenaException;
-import model.Arenas;
-import model.Classe;
-import model.Coordinates;
-import model.EnumName;
-import model.GestYaml;
-import model.GlobalSettings;
-import model.Messages;
-import model.Monstre;
+import model.*;
 import model.Position;
-import model.Reward;
-import model.Wave;
-import model.enums.EAbilities;
-import model.enums.EAmount;
-import model.enums.ECatW;
-import model.enums.EGrowth;
-import model.enums.EHealth;
-import model.enums.EMonsters;
-import model.enums.ERewardType;
-import model.enums.ETypeW;
+import model.enums.*;
 import model.item.AbstractItem;
-import model.lists.ArmorList;
-import model.lists.ItemList;
-import model.lists.MonsterList;
-import model.lists.RewardList;
-import model.wave.BossW;
-import model.wave.DefaultW;
-import model.wave.SpecialW;
-import model.wave.SupplyW;
-import model.wave.SwarmW;
-import model.wave.UpgradeW;
-import view.cells.CellListAbility;
-import view.cells.CellListCaracs;
-import view.cells.CellListClass;
-import view.cells.CellListMonster;
-import view.cells.CellListReward;
-import view.cells.CellListWave;
-import view.cells.HoverListCellRenderer;
-import view.dialogs.About;
-import view.dialogs.HowTo;
-import view.dialogs.ItemSelector;
-import view.dialogs.Todo;
-import view.dialogs.UpgradeWaveChanger;
-import view.dialogs.SpecificJFileChooser;
+import model.lists.*;
+import model.wave.*;
+import view.cells.*;
+import view.dialogs.*;
 
 public class MenuPrincipal extends JFrame {
 
@@ -119,7 +29,7 @@ public class MenuPrincipal extends JFrame {
 
 	private Arenas arenas = null;
 
-	private File file = null;
+	private ConfigFile file = null;
 
 	private Wave wave;
 
@@ -506,6 +416,7 @@ public class MenuPrincipal extends JFrame {
 	private JLabel lib_moment;
 
 	private JWideComboBox combo_occurrence;
+
 	private JMenuItem mntmRestoreConfiguration;
 
 	public MenuPrincipal() throws ParseException {
@@ -653,23 +564,35 @@ public class MenuPrincipal extends JFrame {
 				Classe.classe_list.clear();
 				SpecificJFileChooser fchoose = new SpecificJFileChooser("YML");
 				fchoose.showOpenDialog(null);
-				file = fchoose.getSelectedFile();
-				if (file != null) {
+				if (fchoose.getSelectedFile() != null) {
 					raz();
 					try {
-						file = fchoose.getSelectedFile();
+						file = new ConfigFile(fchoose.getSelectedFile().toURI());
 						GestYaml.S_gestionnaire = new GestYaml(file);
 						GestYaml g = GestYaml.S_gestionnaire;
 						arenas = new Arenas(g.getMap("arenas"), g.getMap("global-settings"), g.getMap("classes"));
 						loadConfig();
 					}
-					catch (Exception e1) {
+					catch (ArenaException e1) {
 						e1.printStackTrace();
-						raz();
 
-						JOptionPane.showMessageDialog(rootPane, Messages.getString("MenuPrincipal.message.incorrectFileFormat"),
+						JOptionPane.showMessageDialog(
+								rootPane,
+								Messages.getString("MenuPrincipal.message.incorrectFileFormat") + "\n\n" + e1.getMessage() + " near line "
+										+ file.findLine(e1.getMessage().split(" : ")[1].trim()) + "\n" + e1.getStackTrace()[0],
 								Messages.getString("Message.title.criticalError"), JOptionPane.ERROR_MESSAGE);
 						error_log(e1);
+
+						raz();
+					}
+					catch (IOException e1) {
+						e1.printStackTrace();
+
+						JOptionPane.showMessageDialog(rootPane,
+								Messages.getString("MenuPrincipal.message.incorrectFileFormat") + "\n\n" + e1.getMessage() + "\n"
+										+ e1.getStackTrace()[0], Messages.getString("Message.title.criticalError"), JOptionPane.ERROR_MESSAGE);
+						error_log(e1);
+						raz();
 					}
 
 				}
@@ -709,20 +632,22 @@ public class MenuPrincipal extends JFrame {
 						}
 
 						f.delete();
+						FileWriter fw = null;
 						try {
 							f.createNewFile();
-							FileWriter fw = new FileWriter(f);
+							fw = new FileWriter(f);
 							GestYaml dumper = new GestYaml(arenas.getMap());
 							dumper.dumpAsFile(fw);
 							JOptionPane.showMessageDialog(rootPane, Messages.getString("MenuPrincipal.message.finishSaving"), "",
 									JOptionPane.INFORMATION_MESSAGE);
 							GestYaml.S_gestionnaire = dumper;
+							fw.close();
 
 						}
 						catch (Exception e1) {
 							e1.printStackTrace();
-							JOptionPane.showMessageDialog(rootPane, Messages.getString("MenuPrincipal.message.savingError"),
-									Messages.getString("Message.title.savingError"), JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(rootPane, Messages.getString("MenuPrincipal.message.savingError") + "\n\n" + e1.getMessage()
+									+ "\n" + e1.getStackTrace()[0], Messages.getString("Message.title.savingError"), JOptionPane.ERROR_MESSAGE);
 							error_log(e1);
 						}
 					}
@@ -1388,10 +1313,8 @@ public class MenuPrincipal extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (hasConfigChanged()) {
-					int choice = JOptionPane.showConfirmDialog(rootPane,
-							Messages.getString("MenuPrincipal.message.unsavedChangesNew"),
-							Messages.getString("Message.title.confirmation"), JOptionPane.YES_NO_OPTION,
-							JOptionPane.QUESTION_MESSAGE);
+					int choice = JOptionPane.showConfirmDialog(rootPane, Messages.getString("MenuPrincipal.message.unsavedChangesNew"),
+							Messages.getString("Message.title.confirmation"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 					if (choice == JOptionPane.YES_OPTION) {
 						raz();
 					}
@@ -1409,10 +1332,8 @@ public class MenuPrincipal extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (hasConfigChanged()) {
-					int choice = JOptionPane.showConfirmDialog(rootPane,
-							Messages.getString("MenuPrincipalipal.message.unsavedChangesNew"),
-							Messages.getString("Message.title.confirmation"), JOptionPane.YES_NO_OPTION,
-							JOptionPane.QUESTION_MESSAGE);
+					int choice = JOptionPane.showConfirmDialog(rootPane, Messages.getString("MenuPrincipalipal.message.unsavedChangesNew"),
+							Messages.getString("Message.title.confirmation"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 					if (choice == JOptionPane.YES_OPTION) {
 						restore();
 					}
@@ -1456,10 +1377,8 @@ public class MenuPrincipal extends JFrame {
 
 			public void actionPerformed(ActionEvent e) {
 				if (hasConfigChanged()) {
-					int choice = JOptionPane.showConfirmDialog(rootPane,
-							Messages.getString("MenuPrincipal.message.unsavedChangesQuit"),
-							Messages.getString("Message.title.confirmation"), JOptionPane.YES_NO_OPTION,
-							JOptionPane.QUESTION_MESSAGE);
+					int choice = JOptionPane.showConfirmDialog(rootPane, Messages.getString("MenuPrincipal.message.unsavedChangesQuit"),
+							Messages.getString("Message.title.confirmation"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 					if (choice == JOptionPane.YES_OPTION) {
 						dispose();
 					}
@@ -2926,20 +2845,22 @@ public class MenuPrincipal extends JFrame {
 			e1.printStackTrace();
 		}
 
-		try {
-			File fser = new File("serialized.mah");
-			fser.delete();
-			fser.createNewFile();
-			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fser));
-			oos.writeObject(arenas);
-			oos.flush();
-			oos.close();
-		}
-		catch (FileNotFoundException e1) {
-			e1.printStackTrace();
-		}
-		catch (IOException e1) {
-			e1.printStackTrace();
+		if (arenas != null) {
+			try {
+				File fser = new File("serialized.mah");
+				fser.delete();
+				fser.createNewFile();
+				ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fser));
+				oos.writeObject(arenas);
+				oos.flush();
+				oos.close();
+			}
+			catch (FileNotFoundException e1) {
+				e1.printStackTrace();
+			}
+			catch (IOException e1) {
+				e1.printStackTrace();
+			}
 		}
 	}
 
@@ -2968,7 +2889,8 @@ public class MenuPrincipal extends JFrame {
 		if (arenas != null && GestYaml.S_gestionnaire != null) {
 			try {
 				changes = !arenas.getMap().equals(GestYaml.S_gestionnaire.getData());
-			} catch (ArenaException e1) {
+			}
+			catch (ArenaException e1) {
 			}
 		}
 
@@ -2979,19 +2901,22 @@ public class MenuPrincipal extends JFrame {
 
 		SpecificJFileChooser fchoose = new SpecificJFileChooser("MAH");
 		fchoose.showOpenDialog(null);
-		file = fchoose.getSelectedFile();
-		if (file != null) {
+		if (fchoose.getSelectedFile() != null) {
 			try {
 				Classe.classe_list.clear();
-				arenas = (Arenas) new ObjectInputStream(new FileInputStream(new File("serialized.mah"))).readObject();
+				arenas = (Arenas) new ObjectInputStream(new FileInputStream(fchoose.getSelectedFile())).readObject();
+				file = (ConfigFile) Files.createTempFile("config", ".yml").toFile();
 				if (!arenas.getALarenas().isEmpty()) {
 					loadConfig();
 				}
-			} catch (ClassNotFoundException e1) {
+			}
+			catch (ClassNotFoundException e1) {
 				e1.printStackTrace();
-			} catch (FileNotFoundException e1) {
+			}
+			catch (FileNotFoundException e1) {
 				e1.printStackTrace();
-			} catch (IOException e1) {
+			}
+			catch (IOException e1) {
 				e1.printStackTrace();
 			}
 		}
@@ -3740,7 +3665,7 @@ public class MenuPrincipal extends JFrame {
 	}
 
 	private void loadData_Coordinates() {
-//		pan_coords.setVisible(true);
+		// pan_coords.setVisible(true);
 
 		DefaultMutableTreeNode coords = new DefaultMutableTreeNode("Coordinates");
 		tree_points.setModel(new DefaultTreeModel(coords));
@@ -3781,7 +3706,7 @@ public class MenuPrincipal extends JFrame {
 			if (ccoords.getSpawnpoints() != null) {
 				DefaultMutableTreeNode p1 = new DefaultMutableTreeNode("spawnpoints");
 				coords.add(p1);
-				LinkedHashMap<String,Position> spawnpoints = ccoords.getSpawnpoints();
+				LinkedHashMap<String, Position> spawnpoints = ccoords.getSpawnpoints();
 				for (Iterator<String> it = spawnpoints.keySet().iterator(); it.hasNext();) {
 					String spawn = (String) it.next();
 					DefaultMutableTreeNode s = new DefaultMutableTreeNode(spawn);
@@ -3791,7 +3716,7 @@ public class MenuPrincipal extends JFrame {
 			if (ccoords.getContainers() != null) {
 				DefaultMutableTreeNode p1 = new DefaultMutableTreeNode("containers");
 				coords.add(p1);
-				LinkedHashMap<String,Position> containers = ccoords.getContainers();
+				LinkedHashMap<String, Position> containers = ccoords.getContainers();
 				for (Iterator<String> it = containers.keySet().iterator(); it.hasNext();) {
 					String container = (String) it.next();
 					DefaultMutableTreeNode s = new DefaultMutableTreeNode(container);
