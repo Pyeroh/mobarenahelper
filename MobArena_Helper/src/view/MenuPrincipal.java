@@ -587,7 +587,7 @@ public class MenuPrincipal extends JFrame {
 
 						raz();
 					}
-					catch (IOException e1) {
+					catch (Exception e1) {
 						e1.printStackTrace();
 
 						JOptionPane.showMessageDialog(rootPane,
