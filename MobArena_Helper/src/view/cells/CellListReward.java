@@ -1,6 +1,6 @@
 package view.cells;
 
-import model.Reward;
+import model.data.Reward;
 
 public class CellListReward extends CellListCaracs {
 

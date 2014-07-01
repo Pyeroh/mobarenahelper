@@ -1,10 +1,12 @@
-package model;
+package model.data;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
+import model.GestYaml;
 import model.enums.EItem;
+import model.exceptions.ArenaException;
 import model.lists.ArmorList;
 import model.lists.ItemList;
 

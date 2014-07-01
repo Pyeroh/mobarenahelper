@@ -15,8 +15,10 @@ import javax.swing.text.*;
 import javax.swing.tree.*;
 
 import model.*;
-import model.Position;
+import model.data.*;
+import model.data.Position;
 import model.enums.*;
+import model.exceptions.ArenaException;
 import model.item.AbstractItem;
 import model.lists.*;
 import model.wave.*;
@@ -578,8 +580,8 @@ public class MenuPrincipal extends JFrame {
 
 						JOptionPane.showMessageDialog(
 								rootPane,
-								Messages.getString("MenuPrincipal.message.incorrectFileFormat") + "\n\n" + e1.getMessage() + " near line "
-										+ file.findLine(e1.getMessage().split(" : ")[1].trim()) + "\n" + e1.getStackTrace()[0],
+								Messages.getString("MenuPrincipal.message.incorrectFileFormat") + "\n\n" + e1.getMessage() + " (near line "
+										+ file.findLine(e1.getMessage().split(" : ")[1].trim()) + ")\n" + e1.getStackTrace()[0],
 								Messages.getString("Message.title.criticalError"), JOptionPane.ERROR_MESSAGE);
 						error_log(e1);
 

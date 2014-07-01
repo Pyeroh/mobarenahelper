@@ -3,7 +3,9 @@ package model.wave;
 import java.util.*;
 
 import model.*;
+import model.data.*;
 import model.enums.*;
+import model.exceptions.*;
 
 /**
  * Une vague par défaut, spawn de monstres choisis parmi une liste aléatoirement, et croissance du nombre de monstres à
@@ -70,8 +72,9 @@ public class DefaultW extends Wave {
 	 * @param map
 	 *            la map d'informations de la vague
 	 * @return la map d'informations de la vague
+	 * @throws ArenaException
 	 */
-	public static DefaultW setWave(String nom, LinkedHashMap<String, Object> map) {
+	public static DefaultW setWave(String nom, LinkedHashMap<String, Object> map) throws ArenaException {
 		DefaultW wave = new DefaultW(nom);
 		GestYaml g = new GestYaml(map);
 		if (map.containsKey("frequency")) {
@@ -84,7 +87,12 @@ public class DefaultW extends Wave {
 			wave.setNumwave(g.getInt("wave"));
 		}
 		if (map.containsKey("growth")) {
-			wave.setGrowth(EGrowth.valueOf(g.getString("growth")));
+			try {
+				wave.setGrowth(EGrowth.valueOf(g.getString("growth")));
+			}
+			catch (IllegalArgumentException e) {
+				throw new ArenaException("No growth value : " + g.getString("growth"));
+			}
 		}
 		if (map.containsKey("fixed")) {
 			wave.setFixed(g.getBool("fixed"));
@@ -93,7 +101,12 @@ public class DefaultW extends Wave {
 			Set<String> monsters = g.getMap("monsters").keySet();
 			for (Iterator<String> it = monsters.iterator(); it.hasNext();) {
 				String monstre = (String) it.next();
-				wave.getMonstres().add(new Monstre(EMonsterAliases.getByName(monstre).getMonstre(), g.getInt("monsters." + monstre)));
+				try {
+					wave.getMonstres().add(new Monstre(EMonsterAliases.getByName(monstre).getMonstre(), g.getInt("monsters." + monstre)));
+				}
+				catch (IllegalArgumentException e) {
+					throw new MonsterException(monstre);
+				}
 			}
 		}
 

@@ -1,6 +1,6 @@
 package view.cells;
 
-import model.Classe;
+import model.data.Classe;
 
 public class CellListClass extends CellListCaracs {
 

@@ -6,7 +6,9 @@ import static org.hamcrest.CoreMatchers.*;
 import java.util.ArrayList;
 
 import model.*;
+import model.data.Arenas;
 import model.enums.ECatW;
+import model.exceptions.ArenaException;
 import model.wave.UpgradeSet;
 import model.wave.UpgradeW;
 

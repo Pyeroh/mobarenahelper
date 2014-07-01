@@ -1,10 +1,11 @@
 package model.wave;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
+import java.util.*;
 
 import model.*;
+import model.data.*;
 import model.enums.*;
+import model.exceptions.*;
 import model.lists.ItemList;
 
 /**
@@ -111,7 +112,12 @@ public class BossW extends Wave {
 			wave.setBossName(g.getString("name"));
 		}
 		if (map.containsKey("health")) {
-			wave.setHealth(EHealth.valueOf(g.getString("health")));
+			try {
+				wave.setHealth(EHealth.valueOf(g.getString("health")));
+			}
+			catch (IllegalArgumentException e) {
+				throw new ArenaException("No health value : " + g.getString("health"));
+			}
 		}
 		if (map.containsKey("ability-interval")) {
 			wave.setAbility_interval(g.getInt("ability-interval"));
@@ -131,7 +137,12 @@ public class BossW extends Wave {
 				}
 			}
 		}
-		wave.getMonstres().add(new Monstre(EMonsterAliases.getByName(g.getString("monster")).getMonstre(), 1));
+		try {
+			wave.getMonstres().add(new Monstre(EMonsterAliases.getByName(g.getString("monster")).getMonstre(), 1));
+		}
+		catch (IllegalArgumentException e) {
+			throw new MonsterException(g.getString("monster"));
+		}
 		if (map.containsKey("reward")) {
 			wave.getReward().fill(g.getString("reward"));
 		}

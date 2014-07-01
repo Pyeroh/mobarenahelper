@@ -1,8 +1,10 @@
-package model;
+package model.data;
 
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 
+import model.GestYaml;
+import model.exceptions.ArenaException;
 import model.item.AbstractItem;
 import model.item.Money;
 import model.lists.ItemList;

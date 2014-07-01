@@ -3,6 +3,8 @@ package model;
 import java.io.*;
 import java.util.*;
 
+import model.exceptions.ArenaException;
+
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.nodes.Tag;
@@ -120,8 +122,27 @@ public class GestYaml {
 	 *            peut être composée de '.', chacun indiquant un niveau dans l'arborescence YAML
 	 * @return la valeur pour la clé passée en paramètre
 	 */
-	public int getInt(String key) {
-		return (int) get(key);
+	public int getInt(String key) throws ArenaException{
+
+		int ret = 0;
+		Object got = get(key);
+		Tag tag = getTag(key);
+
+		if (tag == Tag.INT) {
+			ret = (int) got;
+		}
+		else if (tag == Tag.STR) {
+			try {
+				ret = Integer.parseInt((String) got);
+			}
+			catch (NumberFormatException e) {
+				throw new ArenaException("Not a valid number : " + got);
+			}
+		}
+		else if (tag == Tag.FLOAT) {
+			ret = Double.valueOf((double)got).intValue();
+		}
+		return ret;
 	}
 
 	/**

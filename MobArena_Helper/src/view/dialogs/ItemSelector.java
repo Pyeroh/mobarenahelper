@@ -13,6 +13,7 @@ import javax.swing.text.MaskFormatter;
 
 import model.*;
 import model.enums.*;
+import model.exceptions.ArenaException;
 import model.item.*;
 import model.lists.ArmorList;
 import model.lists.ItemList;

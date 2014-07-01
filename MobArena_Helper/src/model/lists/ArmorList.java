@@ -2,8 +2,8 @@ package model.lists;
 
 import java.util.ArrayList;
 
-import model.ArenaException;
 import model.enums.EItem;
+import model.exceptions.ArenaException;
 import model.item.*;
 
 /**

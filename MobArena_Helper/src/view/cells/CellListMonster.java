@@ -1,6 +1,6 @@
 package view.cells;
 
-import model.Monstre;
+import model.data.Monstre;
 import model.lists.MonsterList;
 
 public class CellListMonster extends CellListCaracs {

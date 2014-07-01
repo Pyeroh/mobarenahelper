@@ -1,7 +1,7 @@
 package model.item;
 
-import model.ArenaException;
 import model.enums.EItem;
+import model.exceptions.ArenaException;
 import model.lists.ItemList;
 
 /**

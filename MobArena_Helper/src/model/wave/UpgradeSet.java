@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.*;
 
 import model.*;
+import model.data.Classe;
+import model.exceptions.ArenaException;
 import model.lists.*;
 
 /**

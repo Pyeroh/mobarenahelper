@@ -12,8 +12,8 @@ import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import model.Classe;
 import model.Messages;
+import model.data.Classe;
 import model.lists.ArmorList;
 import model.wave.*;
 import model.wave.UpgradeSet.UpSetup;

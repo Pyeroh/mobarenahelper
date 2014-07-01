@@ -54,7 +54,9 @@ public class ConfigFile extends File {
 			return 0;
 		}
 
-		while (!fileLines.get(i).contains(line) && i < fileLines.size() - 1) {
+		String regex = String.format( ".*%s(?!\\w).*", line);
+
+		while (!fileLines.get(i).matches(regex) && i < fileLines.size() - 1) {
 			i++;
 		}
 

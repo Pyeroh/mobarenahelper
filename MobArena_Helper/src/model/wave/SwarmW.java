@@ -3,7 +3,9 @@ package model.wave;
 import java.util.LinkedHashMap;
 
 import model.*;
+import model.data.*;
 import model.enums.*;
+import model.exceptions.*;
 
 /**
  * Une vague d'entrainement ! Ne fais apparaitre qu'un type de monste, avec un seul point de vie, et en très grande
@@ -45,8 +47,9 @@ public class SwarmW extends Wave {
 	 * @param map
 	 *            la map d'informations de la vague
 	 * @return la map d'informations de la vague
+	 * @throws ArenaException
 	 */
-	public static SwarmW setWave(String nom, LinkedHashMap<String, Object> map) {
+	public static SwarmW setWave(String nom, LinkedHashMap<String, Object> map) throws ArenaException {
 		SwarmW wave = new SwarmW(nom);
 		GestYaml g = new GestYaml(map);
 		if (map.containsKey("frequency")) {
@@ -59,9 +62,19 @@ public class SwarmW extends Wave {
 			wave.setNumwave(g.getInt("wave"));
 		}
 		if (map.containsKey("amount")) {
-			wave.setAmount(EAmount.valueOf(g.getString("amount")));
+			try {
+				wave.setAmount(EAmount.valueOf(g.getString("amount")));
+			}
+			catch (IllegalArgumentException e) {
+				throw new ArenaException("No amount value : " + g.getString("amount"));
+			}
 		}
-		wave.getMonstres().set(0, new Monstre(EMonsterAliases.getByName(g.getString("monster")).getMonstre(), 0));
+		try {
+			wave.getMonstres().set(0, new Monstre(EMonsterAliases.getByName(g.getString("monster")).getMonstre(), 0));
+		}
+		catch (IllegalArgumentException e) {
+			throw new MonsterException(g.getString("monster"));
+		}
 
 		return wave;
 	}

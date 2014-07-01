@@ -2,8 +2,8 @@ package model.lists;
 
 import java.util.ArrayList;
 
-import model.ArenaException;
 import model.enums.EItem;
+import model.exceptions.ArenaException;
 import model.item.*;
 
 /**
@@ -73,7 +73,7 @@ public class ItemList extends ArrayList<AbstractItem> {
 						this.add(ci);
 					}
 				}
-				else if (tab_item[0].matches("\\$ ?\\d+([,\\.]\\d+)?")) {
+				else if (tab_item[0].matches("\\$ ?\\d+(\\.\\d+)?")) {
 					this.add(new Money(Float.parseFloat(tab_item[0].substring(1))));
 				}
 				else if (!tab_item[0].isEmpty()) {

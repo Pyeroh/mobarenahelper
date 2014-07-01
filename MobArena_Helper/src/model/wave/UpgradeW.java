@@ -3,7 +3,9 @@ package model.wave;
 import java.util.*;
 
 import model.*;
+import model.data.*;
 import model.enums.ETypeW;
+import model.exceptions.ArenaException;
 
 /**
  * Une vague d'amélioration des objets et des équipements. Donne de nouveaux objets, équipements, améliore ceux qui

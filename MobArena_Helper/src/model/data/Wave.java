@@ -1,9 +1,10 @@
-package model;
+package model.data;
 
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 
 import model.enums.*;
+import model.exceptions.ArenaException;
 import model.lists.MonsterList;
 import model.wave.*;
 
@@ -255,7 +256,14 @@ public abstract class Wave implements Comparable<Wave>, Serializable {
 		Wave wave = null;
 		StringBuffer type = new StringBuffer(map.get("type").toString());
 		type.replace(0, 1, type.substring(0, 1).toUpperCase());
-		switch (ETypeW.valueOf(type.toString())) {
+		ETypeW enumType;
+		try {
+			enumType = ETypeW.valueOf(type.toString());
+		}
+		catch (IllegalArgumentException e) {
+			throw new ArenaException("No type named : " + type.toString().toLowerCase());
+		}
+		switch (enumType) {
 		case Default:
 			wave = DefaultW.setWave(nom, map);
 			break;

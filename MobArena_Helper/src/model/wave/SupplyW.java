@@ -3,7 +3,9 @@ package model.wave;
 import java.util.*;
 
 import model.*;
+import model.data.*;
 import model.enums.*;
+import model.exceptions.*;
 import model.lists.ItemList;
 
 /**
@@ -85,7 +87,12 @@ public class SupplyW extends Wave {
 			Set<String> monsters = g.getMap("monsters").keySet();
 			for (Iterator<String> it = monsters.iterator(); it.hasNext();) {
 				String monstre = (String) it.next();
-				wave.getMonstres().add(new Monstre(EMonsterAliases.getByName(monstre).getMonstre(), g.getInt("monsters." + monstre)));
+				try {
+					wave.getMonstres().add(new Monstre(EMonsterAliases.getByName(monstre).getMonstre(), g.getInt("monsters." + monstre)));
+				}
+				catch (IllegalArgumentException e) {
+					throw new MonsterException(monstre);
+				}
 			}
 		}
 		if (map.containsKey("drops")) {

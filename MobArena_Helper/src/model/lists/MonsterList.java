@@ -2,8 +2,7 @@ package model.lists;
 
 import java.util.ArrayList;
 
-import model.Monstre;
-import model.Wave;
+import model.data.*;
 import model.enums.EMonsters;
 
 /**

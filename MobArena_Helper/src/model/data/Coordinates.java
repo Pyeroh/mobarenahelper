@@ -1,8 +1,10 @@
-package model;
+package model.data;
 
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+
+import model.GestYaml;
 
 public class Coordinates implements Serializable {
 

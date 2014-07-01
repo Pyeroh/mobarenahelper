@@ -1,10 +1,12 @@
-package model;
+package model.data;
 
 import java.io.Serializable;
 import java.util.*;
 
+import model.GestYaml;
 import model.enums.ECatW;
 import model.enums.ERewardType;
+import model.exceptions.ArenaException;
 import model.lists.ClassLimitList;
 import model.lists.RewardList;
 
@@ -111,7 +113,7 @@ public class Arena implements Serializable {
 		}
 	}
 
-	private void loadLimits(GestYaml glimits) {
+	private void loadLimits(GestYaml glimits) throws ArenaException {
 		ArrayList<Classe> classe_list = Classe.classe_list;
 		for (int i = 1; i < classe_list.size(); i++) {
 			String classname = classe_list.get(i).getName();

@@ -1,8 +1,9 @@
-package model;
+package model.data;
 
 import java.io.Serializable;
 
 import model.enums.ERewardType;
+import model.exceptions.ArenaException;
 import model.lists.ItemList;
 
 public class Reward implements Serializable {

@@ -1,8 +1,8 @@
 package test;
 
 import static org.junit.Assert.*;
-import model.ArenaConfig;
 import model.GestYaml;
+import model.data.ArenaConfig;
 
 import org.junit.*;
 

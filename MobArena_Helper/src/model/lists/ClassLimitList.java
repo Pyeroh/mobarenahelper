@@ -3,8 +3,7 @@ package model.lists;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
-import model.ClassLimit;
-import model.Classe;
+import model.data.*;
 
 /**
  * Liste des limites de classe pour une arène

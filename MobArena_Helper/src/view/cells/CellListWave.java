@@ -3,7 +3,7 @@ package view.cells;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-import model.Wave;
+import model.data.Wave;
 
 public class CellListWave extends CellListCaracs {
 

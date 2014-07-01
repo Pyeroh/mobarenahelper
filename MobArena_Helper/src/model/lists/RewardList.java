@@ -2,8 +2,9 @@ package model.lists;
 
 import java.util.*;
 
-import model.*;
+import model.data.Reward;
 import model.enums.ERewardType;
+import model.exceptions.ArenaException;
 
 public class RewardList extends ArrayList<Reward> {
 
@@ -19,7 +20,7 @@ public class RewardList extends ArrayList<Reward> {
 
 	public void fill(LinkedHashMap<String, Object> map, ERewardType type) throws ArenaException {
 		for (Iterator<String> it = map.keySet().iterator(); it.hasNext();) {
-			String wave_number = (String) it.next();
+			String wave_number = it.next();
 			add(new Reward(Integer.parseInt(wave_number), type, map.get(wave_number) + ""));
 		}
 		sort();

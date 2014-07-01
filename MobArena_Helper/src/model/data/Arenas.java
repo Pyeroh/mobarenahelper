@@ -1,7 +1,10 @@
-package model;
+package model.data;
 
 import java.io.Serializable;
 import java.util.*;
+
+import model.GestYaml;
+import model.exceptions.ArenaException;
 
 import org.yaml.snakeyaml.nodes.Tag;
 

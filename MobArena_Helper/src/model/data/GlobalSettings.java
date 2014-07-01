@@ -1,8 +1,10 @@
-package model;
+package model.data;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+
+import model.GestYaml;
 
 public class GlobalSettings implements Serializable {
 
