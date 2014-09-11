@@ -111,9 +111,9 @@ public class CustomItemCreator extends JDialog {
 	}
 
 	public CustomItem getItem() {
-		int id = (int) ((long) sai_id.getValue());
-		int meta = (int) ((long) sai_meta.getValue());
-		int quantity = (int) ((long) sai_quantity.getValue());
+		int id = ((Long) sai_id.getValue()).intValue();
+		int meta = ((Long) sai_meta.getValue()).intValue();
+		int quantity = ((Long) sai_quantity.getValue()).intValue();
 		if (id > 0) {
 			CustomItem ci = new CustomItem(id, meta, quantity);
 			return ci;

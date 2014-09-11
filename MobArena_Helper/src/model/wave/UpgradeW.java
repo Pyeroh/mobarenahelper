@@ -19,7 +19,7 @@ public class UpgradeW extends Wave {
 
 	private static final long serialVersionUID = -5917256403814292092L;
 
-	private ArrayList<UpgradeSet> upgrades = new ArrayList<>();
+	private ArrayList<UpgradeSet> upgrades = new ArrayList<UpgradeSet>();
 
 	private boolean give_all_items = true;
 
@@ -143,15 +143,12 @@ public class UpgradeW extends Wave {
 		for (Iterator<String> it = upgrades_map.keySet().iterator(); it.hasNext();) {
 			String classe = (String) it.next();
 			LinkedHashMap<String, Object> upgrade = new LinkedHashMap<String, Object>();
-			switch (g.getTag("upgrades." + classe).getClassName()) {
-			case "str":
+			String typeUpgr = g.getTag("upgrades." + classe).getClassName();
+			if (typeUpgr.equals("str")) {
 				upgrade.put(classe, g.getString("upgrades." + classe));
-				break;
-			case "map":
+			}
+			else if (typeUpgr.equals("map")) {
 				upgrade.put(classe, g.getMap("upgrades." + classe));
-				break;
-			default:
-				break;
 			}
 			wave.getUpgrades().add(UpgradeSet.setUpgradeSet(classe, upgrade));
 		}

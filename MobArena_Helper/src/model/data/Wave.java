@@ -199,7 +199,7 @@ public abstract class Wave implements Comparable<Wave>, Serializable {
 	 * @throws ArenaException
 	 */
 	public LinkedHashMap<String, Object> getMap() throws ArenaException {
-		LinkedHashMap<String, Object> vague = new LinkedHashMap<>();
+		LinkedHashMap<String, Object> vague = new LinkedHashMap<String, Object>();
 
 		vague.put("type", type.name().toLowerCase());
 
@@ -218,7 +218,7 @@ public abstract class Wave implements Comparable<Wave>, Serializable {
 			vague.put("monster", monster.getMonstre().name());
 		}
 		else if (monstres.size() > 0) {
-			LinkedHashMap<String, Object> mapmonstres = new LinkedHashMap<>();
+			LinkedHashMap<String, Object> mapmonstres = new LinkedHashMap<String, Object>();
 			if (monstres.size() == 1) {
 				Monstre mmonster = monstres.get(0);
 				mapmonstres.put(mmonster.getMonstre().name(), mmonster.getProbability());

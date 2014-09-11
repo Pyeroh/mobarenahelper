@@ -132,7 +132,7 @@ public class ItemList extends ArrayList<AbstractItem> {
 	 * @see EItem
 	 */
 	public ArrayList<EItem> getEItemList() {
-		ArrayList<EItem> eitems = new ArrayList<>();
+		ArrayList<EItem> eitems = new ArrayList<EItem>();
 		for (int i = 0; i < size(); i++) {
 			eitems.add(get(i).getItem());
 		}

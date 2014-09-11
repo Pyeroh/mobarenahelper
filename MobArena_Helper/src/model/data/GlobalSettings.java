@@ -14,7 +14,7 @@ public class GlobalSettings implements Serializable {
 
 	private boolean update_notifications = true;
 
-	private ArrayList<String> allowed_commands = new ArrayList<>();
+	private ArrayList<String> allowed_commands = new ArrayList<String>();
 
 	public GlobalSettings() {
 	}

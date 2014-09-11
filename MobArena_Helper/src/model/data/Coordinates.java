@@ -35,7 +35,7 @@ public class Coordinates implements Serializable {
 		if (gcoords.containsKey("exit"))
 			exit = new Position(gcoords.getString("exit"));
 		if (gcoords.containsKey("spawnpoints")) {
-			spawnpoints = new LinkedHashMap<>();
+			spawnpoints = new LinkedHashMap<String, Position>();
 			LinkedHashMap<String, Object> sp = gcoords.getMap("spawnpoints");
 			for (Iterator<String> it = sp.keySet().iterator(); it.hasNext();) {
 				String pos = (String) it.next();
@@ -43,7 +43,7 @@ public class Coordinates implements Serializable {
 			}
 		}
 		if (gcoords.containsKey("containers")) {
-			containers = new LinkedHashMap<>();
+			containers = new LinkedHashMap<String, Position>();
 			LinkedHashMap<String, Object> sp = gcoords.getMap("containers");
 			for (Iterator<String> it = sp.keySet().iterator(); it.hasNext();) {
 				String pos = (String) it.next();
@@ -98,7 +98,7 @@ public class Coordinates implements Serializable {
 	}
 
 	public LinkedHashMap<String, Object> getMap() {
-		LinkedHashMap<String, Object> coords = new LinkedHashMap<>();
+		LinkedHashMap<String, Object> coords = new LinkedHashMap<String, Object>();
 
 		if (l1 != null) {
 			coords.put("l1", l1.toString());
@@ -128,14 +128,14 @@ public class Coordinates implements Serializable {
 			coords.put("exit", exit.toString());
 		}
 		if (spawnpoints != null) {
-			LinkedHashMap<String, Object> spawnpoints = new LinkedHashMap<>();
+			LinkedHashMap<String, Object> spawnpoints = new LinkedHashMap<String, Object>();
 			for (String spawnpoint : this.spawnpoints.keySet()) {
 				spawnpoints.put(spawnpoint, this.spawnpoints.get(spawnpoint).toString());
 			}
 			coords.put("spawnpoints", spawnpoints);
 		}
 		if (containers != null) {
-			LinkedHashMap<String, Object> containers = new LinkedHashMap<>();
+			LinkedHashMap<String, Object> containers = new LinkedHashMap<String, Object>();
 			for (String container : this.containers.keySet()) {
 				containers.put(container, this.containers.get(container).toString());
 			}

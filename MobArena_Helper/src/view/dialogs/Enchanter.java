@@ -220,7 +220,7 @@ public class Enchanter extends JDialog {
 			enchant_list = EEnchantItem.getByItem(item.getItem());
 
 		enchant_list.removeAll(item.getEnchantements().getEEnchantmentList());
-		DefaultComboBoxModel<String> mod_enchant = new DefaultComboBoxModel<>();
+		DefaultComboBoxModel<String> mod_enchant = new DefaultComboBoxModel<String>();
 		for (int i = 0; i < enchant_list.size(); i++) {
 			mod_enchant.addElement(enchant_list.get(i).getName());
 		}
@@ -252,7 +252,7 @@ public class Enchanter extends JDialog {
 
 		enchant_list.removeAll(item.getEnchantements().getEEnchantmentList());
 		enchant_list.add(0, enchant.getEnchantement());
-		DefaultComboBoxModel<String> mod_enchant = new DefaultComboBoxModel<>();
+		DefaultComboBoxModel<String> mod_enchant = new DefaultComboBoxModel<String>();
 		for (int i = 0; i < enchant_list.size(); i++) {
 			mod_enchant.addElement(enchant_list.get(i).getName());
 		}
@@ -266,7 +266,7 @@ public class Enchanter extends JDialog {
 		EEnchantment e = EEnchantment.getByName(sEnchant);
 
 		int lvlmax = e.getLvlmax();
-		DefaultComboBoxModel<String> mod_lvl = new DefaultComboBoxModel<>();
+		DefaultComboBoxModel<String> mod_lvl = new DefaultComboBoxModel<String>();
 		for (int i = 1; i <= lvlmax; i++) {
 			switch (i) {
 			case 1:

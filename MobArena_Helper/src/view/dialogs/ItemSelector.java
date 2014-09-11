@@ -416,7 +416,7 @@ public class ItemSelector extends JDialog {
 	}
 
 	private void loadSelectable(ArrayList<EItem> values) {
-		DefaultListModel<CellListEItem> mod_ItemsSelectable = new DefaultListModel<>();
+		DefaultListModel<CellListEItem> mod_ItemsSelectable = new DefaultListModel<CellListEItem>();
 		for (int i = 0; i < values.size(); i++) {
 			mod_ItemsSelectable.addElement(new CellListEItem(values.get(i)));
 		}
@@ -430,7 +430,7 @@ public class ItemSelector extends JDialog {
 		else {
 			((ArmorList) values).sort();
 		}
-		DefaultListModel<CellListItem> mod_ItemsSelectable = new DefaultListModel<>();
+		DefaultListModel<CellListItem> mod_ItemsSelectable = new DefaultListModel<CellListItem>();
 		for (int i = 0; i < values.size(); i++) {
 			mod_ItemsSelectable.addElement(new CellListItem(values.get(i)));
 		}
@@ -445,7 +445,7 @@ public class ItemSelector extends JDialog {
 			values.remove(0);
 		}
 		else if (isArmor) {
-			values = new ArrayList<>();
+			values = new ArrayList<EItem>();
 			for (int i = 298; i <= 317; i++) {
 				values.add(EItem.searchBy(i, 0));
 			}

@@ -34,7 +34,7 @@ public class ClassLimitList extends ArrayList<ClassLimit> {
 	}
 
 	public LinkedHashMap<String, Object> getMap() {
-		LinkedHashMap<String, Object> map = new LinkedHashMap<>();
+		LinkedHashMap<String, Object> map = new LinkedHashMap<String, Object>();
 		for (int i = 0; i < size(); i++) {
 			ClassLimit cl = get(i);
 			map.put(cl.getClasse().getName(), cl.getLimit());

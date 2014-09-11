@@ -129,7 +129,7 @@ public class GestYaml {
 		Tag tag = getTag(key);
 
 		if (tag == Tag.INT) {
-			ret = (int) got;
+			ret = (Integer) got;
 		}
 		else if (tag == Tag.STR) {
 			try {
@@ -140,7 +140,7 @@ public class GestYaml {
 			}
 		}
 		else if (tag == Tag.FLOAT) {
-			ret = Double.valueOf((double)got).intValue();
+			ret = Double.valueOf((Double)got).intValue();
 		}
 		return ret;
 	}

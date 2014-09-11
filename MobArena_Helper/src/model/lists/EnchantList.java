@@ -64,7 +64,7 @@ public class EnchantList extends ArrayList<Enchantment> {
 	 * @return
 	 */
 	public ArrayList<EEnchantment> getEEnchantmentList() {
-		ArrayList<EEnchantment> eenchantment = new ArrayList<>();
+		ArrayList<EEnchantment> eenchantment = new ArrayList<EEnchantment>();
 		for (int i = 0; i < size(); i++) {
 			eenchantment.add(get(i).getEnchantement());
 		}

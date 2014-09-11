@@ -339,7 +339,7 @@ public enum EEnchantItem {
 	 * @return
 	 */
 	public static ArrayList<EItem> getByEnchant(EEnchantment enchant) {
-		ArrayList<EItem> items = new ArrayList<>();
+		ArrayList<EItem> items = new ArrayList<EItem>();
 		EEnchantItem[] values = values();
 
 		for (int i = 0; i < values.length; i++) {
@@ -357,7 +357,7 @@ public enum EEnchantItem {
 	 * @return
 	 */
 	public static ArrayList<EEnchantment> getByItem(EItem eitem) {
-		ArrayList<EEnchantment> enchants = new ArrayList<>();
+		ArrayList<EEnchantment> enchants = new ArrayList<EEnchantment>();
 		EEnchantItem[] values = values();
 
 		for (int i = 0; i < values.length; i++) {

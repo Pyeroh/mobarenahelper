@@ -19,7 +19,7 @@ public class Arenas implements Serializable {
 
 	private static final long serialVersionUID = -929527876390581159L;
 
-	private transient LinkedHashMap<String, Object> globalsettings = new LinkedHashMap<>();
+	private transient LinkedHashMap<String, Object> globalsettings = new LinkedHashMap<String, Object>();
 
 	private transient LinkedHashMap<String, Object> listclasses;
 
@@ -123,13 +123,13 @@ public class Arenas implements Serializable {
 	 * @throws ArenaException
 	 */
 	public LinkedHashMap<String, Object> getMap() throws ArenaException {
-		LinkedHashMap<String, Object> listarenas = new LinkedHashMap<>();
+		LinkedHashMap<String, Object> listarenas = new LinkedHashMap<String, Object>();
 		for (int i = 0; i < arraylistarenas.size(); i++) {
 			Arena lArene = arraylistarenas.get(i);
 			listarenas.put(lArene.getNom(), lArene.getMap());
 		}
 
-		LinkedHashMap<String, Object> listclasses = new LinkedHashMap<>();
+		LinkedHashMap<String, Object> listclasses = new LinkedHashMap<String, Object>();
 		for (int i = 0; i < getALclasses().size(); i++) {
 			Classe classe = getALclasses().get(i);
 			if (!classe.getName().equals("all")) {
@@ -137,7 +137,7 @@ public class Arenas implements Serializable {
 			}
 		}
 
-		LinkedHashMap<String, Object> file = new LinkedHashMap<>();
+		LinkedHashMap<String, Object> file = new LinkedHashMap<String, Object>();
 		file.put("global-settings", settings.getMap());
 
 		if (!listclasses.isEmpty()) {

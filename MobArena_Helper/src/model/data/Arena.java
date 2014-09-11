@@ -196,14 +196,14 @@ public class Arena implements Serializable {
 	 * @throws ArenaException
 	 */
 	public LinkedHashMap<String, Object> getMap() throws ArenaException {
-		LinkedHashMap<String, Object> arena = new LinkedHashMap<>();
+		LinkedHashMap<String, Object> arena = new LinkedHashMap<String, Object>();
 		arena.put("settings", config.getMap());
 
-		LinkedHashMap<String, Object> mapwaves = new LinkedHashMap<>();
+		LinkedHashMap<String, Object> mapwaves = new LinkedHashMap<String, Object>();
 		String[] catvague = { "recurrent", "single" };
 		for (int i = 0; i < 2; i++) {
 
-			LinkedHashMap<String, Object> wavesbycat = new LinkedHashMap<>();
+			LinkedHashMap<String, Object> wavesbycat = new LinkedHashMap<String, Object>();
 			for (int j = 0; j < waves[i].size(); j++) {
 
 				Wave wave = waves[i].get(j);
@@ -218,11 +218,11 @@ public class Arena implements Serializable {
 		if (!mapwaves.isEmpty())
 			arena.put("waves", mapwaves);
 
-		LinkedHashMap<String, Object> maprewards = new LinkedHashMap<>();
+		LinkedHashMap<String, Object> maprewards = new LinkedHashMap<String, Object>();
 		String[] typreward = { "every", "after" };
 		for (int i = 0; i < 2; i++) {
 
-			LinkedHashMap<String, Object> rewardsbytyp = new LinkedHashMap<>();
+			LinkedHashMap<String, Object> rewardsbytyp = new LinkedHashMap<String, Object>();
 			for (int j = 0; j < rewards[i].size(); j++) {
 
 				Reward reward = rewards[i].get(j);
@@ -235,7 +235,7 @@ public class Arena implements Serializable {
 
 		}
 		if (!maprewards.isEmpty()) {
-			LinkedHashMap<String, Object> r1 = new LinkedHashMap<>();
+			LinkedHashMap<String, Object> r1 = new LinkedHashMap<String, Object>();
 			r1.put("waves", maprewards);
 			arena.put("rewards", r1);
 		}

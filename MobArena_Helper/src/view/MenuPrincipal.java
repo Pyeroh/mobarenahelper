@@ -1197,7 +1197,7 @@ public class MenuPrincipal extends JFrame {
 						}
 						else {
 							MonsterList monsterlist = wave.getMonstres();
-							int proba = (int) ((long) sai_nb_carac_wave.getValue());
+							int proba = ((Long) sai_nb_carac_wave.getValue()).intValue();
 
 							if (monsterlist.contains(EMonsters.getByName(name))) {
 								JOptionPane.showMessageDialog(rootPane, Messages.getString("MenuPrincipal.message.doubleMonster"),
@@ -1580,7 +1580,7 @@ public class MenuPrincipal extends JFrame {
 				}
 				catch (ParseException e1) {
 				}
-				classe.setDog_number((int) ((long) sai_dogs.getValue()));
+				classe.setDog_number(((Long) sai_dogs.getValue()).intValue());
 			}
 		});
 		sai_dogs.setBackground(new Color(255, 255, 255));
@@ -1798,9 +1798,9 @@ public class MenuPrincipal extends JFrame {
 				Object olimit = sai_class_limit.getValue();
 				int limit;
 				if (olimit instanceof Long)
-					limit = (int) ((long) olimit);
+					limit = ((Long) olimit).intValue();
 				else
-					limit = (int) olimit;
+					limit = (Integer) olimit;
 				arenas.getALarenas().get(combo_arena.getSelectedIndex()).setClassLimit(classe, limit);
 			}
 		});
@@ -3154,39 +3154,36 @@ public class MenuPrincipal extends JFrame {
 		pan_coords.setVisible(true);
 		Coordinates coords = arenas.getALarenas().get(combo_arena.getSelectedIndex()).getCcoords();
 		Position pos = null;
-		switch (position) {
-		case "Coordinates":
-		case "spawnpoints":
-		case "containers":
-			break;
-		case "p1":
+		if (position.equals("Coordinates") || position.equals("spawnpoints") || position.equals("containers")) {
+		}
+		else if (position.equals("p1")) {
 			pos = coords.getP1();
-			break;
-		case "p2":
+		}
+		else if (position.equals("p2")) {
 			pos = coords.getP2();
-			break;
-		case "l1":
+		}
+		else if (position.equals("l1")) {
 			pos = coords.getL1();
-			break;
-		case "l2":
+		}
+		else if (position.equals("l2")) {
 			pos = coords.getL2();
-			break;
-		case "arena":
+		}
+		else if (position.equals("arena")) {
 			pos = coords.getArena();
-			break;
-		case "lobby":
+		}
+		else if (position.equals("lobby")) {
 			pos = coords.getLobby();
-			break;
-		case "spectator":
+		}
+		else if (position.equals("spectator")) {
 			pos = coords.getSpectator();
-			break;
-		case "leaderboard":
+		}
+		else if (position.equals("leaderboard")) {
 			pos = coords.getLeaderboard();
-			break;
-		case "exit":
+		}
+		else if (position.equals("exit")) {
 			pos = coords.getExit();
-			break;
-		default:
+		}
+		else {
 			pos = coords.getSpawnpoints().get(position);
 			if (coords.getSpawnpoints().containsKey(position)) {
 				pos = coords.getSpawnpoints().get(position);
@@ -3194,7 +3191,6 @@ public class MenuPrincipal extends JFrame {
 			else {
 				pos = coords.getContainers().get(position);
 			}
-			break;
 		}
 		if ((!position.equals("Coordinates") || !position.equals("spawnpoints") || !position.equals("containers")) && pos != null) {
 			sai_X.setText(pos.getX() + "");
@@ -3438,7 +3434,7 @@ public class MenuPrincipal extends JFrame {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void loadListCaracs_Arena(ArrayList listdata, JHoverList listview) {
 
-		DefaultListModel modW = new DefaultListModel<>();
+		DefaultListModel modW = new DefaultListModel<Object>();
 
 		if (listview == list_recurrent || listview == list_single) {
 			modW = new DefaultListModel<CellListWave>();
@@ -3544,7 +3540,7 @@ public class MenuPrincipal extends JFrame {
 	}
 
 	private void loadData_ClassConfig(ArrayList<Classe> aLclasses, int index) {
-		DefaultListModel<CellListClass> mod_Class = new DefaultListModel<>();
+		DefaultListModel<CellListClass> mod_Class = new DefaultListModel<CellListClass>();
 		for (int i = 0; i < aLclasses.size(); i++) {
 			Classe iclasse = aLclasses.get(i);
 			if (!iclasse.getName().equals("all")) {
@@ -3659,7 +3655,7 @@ public class MenuPrincipal extends JFrame {
 	}
 
 	private void loadCommands_GlobalSettings(ArrayList<String> commands) {
-		DefaultListModel<CellListCaracs> mod_commands = new DefaultListModel<>();
+		DefaultListModel<CellListCaracs> mod_commands = new DefaultListModel<CellListCaracs>();
 		for (int i = 0; i < commands.size(); i++) {
 			mod_commands.addElement(new CellListCaracs(commands.get(i)));
 		}
@@ -3732,14 +3728,14 @@ public class MenuPrincipal extends JFrame {
 		Arena arena = arenas.getALarenas().get(combo_arena.getSelectedIndex());
 
 		pan_reward_control.setVisible(false);
-		DefaultListModel<CellListReward> mod_every = new DefaultListModel<>();
+		DefaultListModel<CellListReward> mod_every = new DefaultListModel<CellListReward>();
 		RewardList rlist = arena.getRewardsType(ERewardType.every);
 		for (int i = 0; i < rlist.size(); i++) {
 			mod_every.addElement(new CellListReward(rlist.get(i)));
 		}
 		list_every.setModel(mod_every);
 
-		DefaultListModel<CellListReward> mod_after = new DefaultListModel<>();
+		DefaultListModel<CellListReward> mod_after = new DefaultListModel<CellListReward>();
 		rlist = arena.getRewardsType(ERewardType.after);
 		for (int i = 0; i < rlist.size(); i++) {
 			mod_after.addElement(new CellListReward(rlist.get(i)));

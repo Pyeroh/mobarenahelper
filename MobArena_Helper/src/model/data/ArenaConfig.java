@@ -245,7 +245,7 @@ public class ArenaConfig implements Serializable {
 	 */
 	public LinkedHashMap<String, Object> getMap() {
 
-		LinkedHashMap<String, Object> map = new LinkedHashMap<>();
+		LinkedHashMap<String, Object> map = new LinkedHashMap<String, Object>();
 
 		map.put("world", world);
 		map.put("enabled", enabled);

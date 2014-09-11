@@ -800,7 +800,7 @@ public enum EItem {
 	 * @return la liste des EItem correspondant au nom Minecraft passé en paramètre
 	 */
 	public static ArrayList<EItem> searchBy(String name) {
-		ArrayList<EItem> ret = new ArrayList<>();
+		ArrayList<EItem> ret = new ArrayList<EItem>();
 		EItem[] values = values();
 
 		if (name != null) {
