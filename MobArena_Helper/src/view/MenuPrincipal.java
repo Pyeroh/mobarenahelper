@@ -1571,10 +1571,10 @@ public class MenuPrincipal extends JFrame {
 		pan_caracs_class.add(lib_dogs);
 
 		sai_dogs = new JFormattedTextField(NumberFormat.getIntegerInstance());
-		sai_dogs.addMouseListener(new MouseAdapter() {
+		sai_dogs.addKeyListener(new KeyAdapter() {
 
 			@Override
-			public void mouseReleased(MouseEvent e) {
+			public void keyReleased(KeyEvent e) {
 				try {
 					sai_dogs.commitEdit();
 				}
@@ -1582,6 +1582,7 @@ public class MenuPrincipal extends JFrame {
 				}
 				classe.setDog_number((int) ((long) sai_dogs.getValue()));
 			}
+
 		});
 		sai_dogs.setBackground(new Color(255, 255, 255));
 		sai_dogs.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -2895,6 +2896,9 @@ public class MenuPrincipal extends JFrame {
 			catch (ArenaException e1) {
 			}
 		}
+		else {
+			changes = arenas != null && GestYaml.S_gestionnaire == null;
+		}
 
 		return changes;
 	}
@@ -3568,7 +3572,7 @@ public class MenuPrincipal extends JFrame {
 		pan_class_limit.setVisible(true);
 
 		String name = classe.getName();
-		if (!name.equals("New_class")) {
+		if (!name.equals("New_Class")) {
 			sai_class.setText(name);
 		}
 		else
