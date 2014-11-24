@@ -491,7 +491,8 @@ public class MenuPrincipal extends JFrame {
 
 				// la clause isFocusOwner() est spécifiée car la combo Amount change de valeur à l'initialisation
 				if (e.getStateChange() == ItemEvent.DESELECTED && ((JComponent) e.getSource()).isFocusOwner()) {
-					JHoverList<CellListWave> list_sel = combo_category.getSelectedItem().equals("Recurrent") ? list_recurrent : list_single;
+					JHoverList<CellListWave> list_sel = combo_category.getSelectedItem().equals(EnumName.getString("ECatW.0")) ? list_recurrent
+							: list_single;
 
 					@SuppressWarnings("unchecked")
 					JComboBox<String> combo_sel = (JComboBox<String>) e.getSource();
@@ -590,7 +591,8 @@ public class MenuPrincipal extends JFrame {
 					catch (Exception e1) {
 						e1.printStackTrace();
 
-						JOptionPane.showMessageDialog(rootPane,
+						JOptionPane.showMessageDialog(
+								rootPane,
 								Messages.getString("MenuPrincipal.message.incorrectFileFormat") + "\n\n" + e1.getMessage() + "\n"
 										+ e1.getStackTrace()[0], Messages.getString("Message.title.criticalError"), JOptionPane.ERROR_MESSAGE);
 						error_log(e1);
@@ -648,8 +650,10 @@ public class MenuPrincipal extends JFrame {
 						}
 						catch (Exception e1) {
 							e1.printStackTrace();
-							JOptionPane.showMessageDialog(rootPane, Messages.getString("MenuPrincipal.message.savingError") + "\n\n" + e1.getMessage()
-									+ "\n" + e1.getStackTrace()[0], Messages.getString("Message.title.savingError"), JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(
+									rootPane,
+									Messages.getString("MenuPrincipal.message.savingError") + "\n\n" + e1.getMessage() + "\n" + e1.getStackTrace()[0],
+									Messages.getString("Message.title.savingError"), JOptionPane.ERROR_MESSAGE);
 							error_log(e1);
 						}
 					}
@@ -2884,6 +2888,15 @@ public class MenuPrincipal extends JFrame {
 		list_single.setModel(new DefaultListModel<CellListWave>());
 		combo_arena.setModel(new DefaultComboBoxModel<String>());
 		setInvisibleComponents_Arena();
+
+		BossW bossW = new BossW("");
+		bossW.setCategory(ECatW.recurrent);
+		loadData_Arena(bossW);
+
+		SwarmW swarmW = new SwarmW("");
+		swarmW.setCategory(ECatW.recurrent);
+		loadData_Arena(swarmW);
+
 	}
 
 	private boolean hasConfigChanged() {
@@ -3735,7 +3748,6 @@ public class MenuPrincipal extends JFrame {
 	private void loadData_Rewards() {
 		Arena arena = arenas.getALarenas().get(combo_arena.getSelectedIndex());
 
-		pan_reward_control.setVisible(false);
 		DefaultListModel<CellListReward> mod_every = new DefaultListModel<>();
 		RewardList rlist = arena.getRewardsType(ERewardType.every);
 		for (int i = 0; i < rlist.size(); i++) {

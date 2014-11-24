@@ -151,7 +151,7 @@ public abstract class Wave implements Comparable<Wave>, Serializable {
 		wave.setNumwave(numwave);
 		wave.setPriority(priority);
 		wave.setFrequency(frequency);
-		wave.setMonstres(new MonsterList());
+//		wave.setMonstres(new MonsterList());
 
 		return wave;
 	}

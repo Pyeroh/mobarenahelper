@@ -47,6 +47,7 @@ public class BossW extends Wave {
 
 	public BossW(String nom) {
 		super(nom, ETypeW.Boss);
+		this.getMonstres().add(new Monstre(EMonsters.zombie, 0));
 	}
 
 	public String getBossName() {
