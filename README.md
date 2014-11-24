@@ -11,6 +11,7 @@ C'est un programme d'édition des fichiers de configuration pour le plugin MobAr
 - plein d'autres choses...
 
 Le programme est multilangue !
+Si vous avez besoin d'aide, commencez par chercher dans le tutoriel fourni avec le programme (Aide :arrow_forward: Tutoriel) et si vous n'avez rien trouvé, postez !
 
 Lien de téléchargement : http://goo.gl/QMa4tz
 
@@ -25,7 +26,7 @@ Enjoy =)
 
 
 MobArenaHelper (english version)
--------------
+==============
 
 It's an edition program for configuration files of the plugin MobArena, on Minecraft (for Bukkit servers). Second version ! Yay ! Fast description of features :
 - loading of config file
@@ -37,6 +38,7 @@ It's an edition program for configuration files of the plugin MobArena, on Minec
 - a lot more ...
  
 The program is multi-language !
+If you need help, start searching in the tutorial packed with the program (Help :arrow_forward: Tutorial) and if you didn't find anything, feel free to ask !
 
 Download link : http://goo.gl/QMa4tz
 
