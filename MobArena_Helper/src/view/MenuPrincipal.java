@@ -2924,7 +2924,7 @@ public class MenuPrincipal extends JFrame {
 			try {
 				Classe.classe_list.clear();
 				arenas = (Arenas) new ObjectInputStream(new FileInputStream(fchoose.getSelectedFile())).readObject();
-				file = (ConfigFile) Files.createTempFile("config", ".yml").toFile();
+				file = new ConfigFile(Files.createTempFile("config", ".yml").toFile().toURI());
 				if (!arenas.getALarenas().isEmpty()) {
 					loadConfig();
 				}

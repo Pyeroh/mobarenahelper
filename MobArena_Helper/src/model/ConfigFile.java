@@ -8,9 +8,6 @@ import java.util.*;
 
 public class ConfigFile extends File {
 
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = 1L;
 
 	private List<String> fileLines;
