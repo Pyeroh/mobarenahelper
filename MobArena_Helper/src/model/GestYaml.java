@@ -5,8 +5,7 @@ import java.util.*;
 
 import model.exceptions.ArenaException;
 
-import org.yaml.snakeyaml.DumperOptions;
-import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.*;
 import org.yaml.snakeyaml.nodes.Tag;
 
 /**
@@ -122,7 +121,7 @@ public class GestYaml {
 	 *            peut être composée de '.', chacun indiquant un niveau dans l'arborescence YAML
 	 * @return la valeur pour la clé passée en paramètre
 	 */
-	public int getInt(String key) throws ArenaException{
+	public int getInt(String key) throws ArenaException {
 
 		int ret = 0;
 		Object got = get(key);
@@ -140,9 +139,37 @@ public class GestYaml {
 			}
 		}
 		else if (tag == Tag.FLOAT) {
-			ret = Double.valueOf((double)got).intValue();
+			ret = Float.valueOf((float) got).intValue();
 		}
 		return ret;
+	}
+
+	/**
+	 * Renvoie un décimal à partir de la clé d'accès
+	 *
+	 * @param key
+	 *            peut être composée de '.', chacun indiquant un niveau dans l'arborescence YAML
+	 * @return la valeur pour la clé passée en paramètre
+	 */
+	public float getFloat(String key) throws ArenaException {
+
+		float ret = 0f;
+		Object got = get(key);
+		Tag tag = getTag(key);
+
+		if (tag == Tag.FLOAT || tag == Tag.INT) {
+			ret = Double.valueOf((double) got).floatValue();
+		}
+		else if (tag == Tag.STR) {
+			try {
+				ret = Integer.parseInt((String) got);
+			}
+			catch (NumberFormatException e) {
+				throw new ArenaException("Not a valid number : " + got);
+			}
+		}
+		return ret;
+
 	}
 
 	/**
@@ -154,6 +181,22 @@ public class GestYaml {
 	 */
 	public boolean getBool(String key) {
 		return Boolean.parseBoolean(get(key).toString());
+	}
+
+	/**
+	 * Renvoie un booléen à partir de la clé d'accès, ou la valeur par défaut si la clé n'existe pas
+	 *
+	 * @param key
+	 *            peut être composée de '.', chacun indiquant un niveau dans l'arborescence YAML
+	 * @param defaultValue
+	 * @return la valeur pour la clé passée en paramètre ou defaultValue
+	 */
+	public boolean getBool(String key, boolean defaultValue) {
+		boolean result = defaultValue;
+		if (get(key) != null) {
+			result = getBool(key);
+		}
+		return result;
 	}
 
 	/**

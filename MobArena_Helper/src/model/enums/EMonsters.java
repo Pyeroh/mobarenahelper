@@ -10,57 +10,70 @@ import model.EnumName;
  */
 public enum EMonsters {
 
-	zombie(EnumName.getString("EMonsters.0")), //$NON-NLS-1$
-	skeleton(EnumName.getString("EMonsters.1")), //$NON-NLS-1$
-	spider(EnumName.getString("EMonsters.2")), //$NON-NLS-1$
-	creeper(EnumName.getString("EMonsters.3")), //$NON-NLS-1$
-	wolf(EnumName.getString("EMonsters.4")), //$NON-NLS-1$
-	zombie_pigman(EnumName.getString("EMonsters.5")), //$NON-NLS-1$
-	powered_creeper(EnumName.getString("EMonsters.6")), //$NON-NLS-1$
-	angry_wolf(EnumName.getString("EMonsters.7")), //$NON-NLS-1$
-	giant(EnumName.getString("EMonsters.8")), //$NON-NLS-1$
-	ghast(EnumName.getString("EMonsters.9")), //$NON-NLS-1$
-	enderman(EnumName.getString("EMonsters.10")), //$NON-NLS-1$
-	silverfish(EnumName.getString("EMonsters.11")), //$NON-NLS-1$
-	cave_spider(EnumName.getString("EMonsters.12")), //$NON-NLS-1$
-	blaze(EnumName.getString("EMonsters.13")), //$NON-NLS-1$
-	snowman(EnumName.getString("EMonsters.14")), //$NON-NLS-1$
-	iron_golem(EnumName.getString("EMonsters.15")), //$NON-NLS-1$
-	witch(EnumName.getString("EMonsters.16")), //$NON-NLS-1$
-	wither(EnumName.getString("EMonsters.17")), //$NON-NLS-1$
-	wither_skeleton(EnumName.getString("EMonsters.18")), //$NON-NLS-1$
-	baby_zombie(EnumName.getString("EMonsters.19")), //$NON-NLS-1$
-	baby_pigman(EnumName.getString("EMonsters.20")), //$NON-NLS-1$
-	zombie_villager(EnumName.getString("EMonsters.21")), //$NON-NLS-1$
-	chicken(EnumName.getString("EMonsters.22")), //$NON-NLS-1$
-	cow(EnumName.getString("EMonsters.23")), //$NON-NLS-1$
-	mushroom_cow(EnumName.getString("EMonsters.24")), //$NON-NLS-1$
-	pig(EnumName.getString("EMonsters.25")), //$NON-NLS-1$
-	sheep(EnumName.getString("EMonsters.26")), //$NON-NLS-1$
-	squid(EnumName.getString("EMonsters.27")), //$NON-NLS-1$
-	villager(EnumName.getString("EMonsters.28")), //$NON-NLS-1$
-	ocelot(EnumName.getString("EMonsters.29")), //$NON-NLS-1$
-	bat(EnumName.getString("EMonsters.30")), //$NON-NLS-1$
-	exploding_sheep(EnumName.getString("EMonsters.31")), //$NON-NLS-1$
-	slime(EnumName.getString("EMonsters.32")), //$NON-NLS-1$
-	slime_tiny(EnumName.getString("EMonsters.33")), //$NON-NLS-1$
-	slime_small(EnumName.getString("EMonsters.34")), //$NON-NLS-1$
-	slime_big(EnumName.getString("EMonsters.35")), //$NON-NLS-1$
-	slime_huge(EnumName.getString("EMonsters.36")), //$NON-NLS-1$
-	magmacube(EnumName.getString("EMonsters.37")), //$NON-NLS-1$
-	magmacube_tiny(EnumName.getString("EMonsters.38")), //$NON-NLS-1$
-	magmacube_small(EnumName.getString("EMonsters.39")), //$NON-NLS-1$
-	magmacube_big(EnumName.getString("EMonsters.40")), //$NON-NLS-1$
-	magmacube_huge(EnumName.getString("EMonsters.41")); //$NON-NLS-1$
+	zombie(0), //$NON-NLS-1$
+	skeleton(1), //$NON-NLS-1$
+	spider(2), //$NON-NLS-1$
+	creeper(3), //$NON-NLS-1$
+	wolf(4), //$NON-NLS-1$
+	zombie_pigman(5), //$NON-NLS-1$
+	powered_creeper(6), //$NON-NLS-1$
+	angry_wolf(7), //$NON-NLS-1$
+	giant(8), //$NON-NLS-1$
+	ghast(9), //$NON-NLS-1$
+	enderman(10), //$NON-NLS-1$
+	silverfish(11), //$NON-NLS-1$
+	cave_spider(12), //$NON-NLS-1$
+	blaze(13), //$NON-NLS-1$
+	enderdragon(42),//$NON-NLS-1$
+	snowman(14), //$NON-NLS-1$
+	iron_golem(15), //$NON-NLS-1$
+	witch(16), //$NON-NLS-1$
+	wither(17), //$NON-NLS-1$
+	wither_skeleton(18), //$NON-NLS-1$
+	baby_zombie(19), //$NON-NLS-1$
+	baby_pigman(20), //$NON-NLS-1$
+	zombie_villager(21), //$NON-NLS-1$
+	baby_zombie_villager(43),//$NON-NLS-1$
+	chicken(22), //$NON-NLS-1$
+	cow(23), //$NON-NLS-1$
+	mushroom_cow(24), //$NON-NLS-1$
+	pig(25), //$NON-NLS-1$
+	sheep(26), //$NON-NLS-1$
+	squid(27), //$NON-NLS-1$
+	villager(28), //$NON-NLS-1$
+	ocelot(29), //$NON-NLS-1$
+	bat(30), //$NON-NLS-1$
+	horse(44),//$NON-NLS-1$
+	donkey(45),//$NON-NLS-1$
+	mule(46),//$NON-NLS-1$
+	skeleton_horse(47),//$NON-NLS-1$
+	undead_horse(48),//$NON-NLS-1$
+	exploding_sheep(31), //$NON-NLS-1$
+	slime(32), //$NON-NLS-1$
+	slime_tiny(33), //$NON-NLS-1$
+	slime_small(34), //$NON-NLS-1$
+	slime_big(35), //$NON-NLS-1$
+	slime_huge(36), //$NON-NLS-1$
+	magmacube(37), //$NON-NLS-1$
+	magmacube_tiny(38), //$NON-NLS-1$
+	magmacube_small(39), //$NON-NLS-1$
+	magmacube_big(40), //$NON-NLS-1$
+	magmacube_huge(41); //$NON-NLS-1$
 
 	private String nom;
 
-	EMonsters(String nom) {
-		this.nom = nom;
+	private int idLang;
+
+	EMonsters(int idLang) {
+		this.idLang = idLang;
 	}
 
 	public String getNom() {
 		return nom;
+	}
+
+	public int getIdLang() {
+		return idLang;
 	}
 
 	/**
@@ -72,7 +85,7 @@ public enum EMonsters {
 
 		EMonsters[] values = values();
 		String[] namevalues = new String[values.length];
-		for (int i = 0; i < namevalues.length; i++) {
+		for (int i = 0; i < values.length; i++) {
 			namevalues[i] = values[i].getNom();
 		}
 		return namevalues;
@@ -113,7 +126,7 @@ public enum EMonsters {
 	public static void load() {
 		EMonsters[] values = values();
 		for (int i = 0; i < values.length; i++) {
-			values[i].nom = EnumName.getString("EMonsters." + i);
+			values[i].nom = EnumName.getString("EMonsters." + values[i].idLang);
 		}
 	}
 

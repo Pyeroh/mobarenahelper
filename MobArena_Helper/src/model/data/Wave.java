@@ -3,6 +3,7 @@ package model.data;
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 
+import model.GestYaml;
 import model.enums.*;
 import model.exceptions.ArenaException;
 import model.lists.MonsterList;
@@ -28,6 +29,10 @@ public abstract class Wave implements Comparable<Wave>, Serializable {
 	private int priority = 1;
 
 	private int frequency = 1;
+
+	private float amount_multiplier = 1.0f;
+
+	private float health_multiplier = 1.0f;
 
 	private MonsterList monstres = new MonsterList();
 
@@ -92,6 +97,26 @@ public abstract class Wave implements Comparable<Wave>, Serializable {
 		this.monstres = monstres;
 	}
 
+	public float getAmount_multiplier() {
+		return amount_multiplier;
+	}
+
+	public void setAmount_multiplier(float amount_multiplier) {
+		if (amount_multiplier >= 0.1f) {
+			this.amount_multiplier = amount_multiplier;
+		}
+	}
+
+	public float getHealth_multiplier() {
+		return health_multiplier;
+	}
+
+	public void setHealth_multiplier(float health_multiplier) {
+		if (health_multiplier >= 0.1f) {
+			this.health_multiplier = health_multiplier;
+		}
+	}
+
 	/**
 	 * Change le type de la vague et la reconstruit, avec les informations basiques d'une vague
 	 *
@@ -151,7 +176,7 @@ public abstract class Wave implements Comparable<Wave>, Serializable {
 		wave.setNumwave(numwave);
 		wave.setPriority(priority);
 		wave.setFrequency(frequency);
-//		wave.setMonstres(new MonsterList());
+		// wave.setMonstres(new MonsterList());
 
 		return wave;
 	}
@@ -202,6 +227,12 @@ public abstract class Wave implements Comparable<Wave>, Serializable {
 		LinkedHashMap<String, Object> vague = new LinkedHashMap<>();
 
 		vague.put("type", type.name().toLowerCase());
+		if (health_multiplier != 1.0f) {
+			vague.put("health-multiplier", health_multiplier);
+		}
+		if (amount_multiplier != 1.0f) {
+			vague.put("amount-multiplier", amount_multiplier);
+		}
 
 		if (category == ECatW.recurrent) {
 			vague.put("priority", priority);
@@ -254,6 +285,7 @@ public abstract class Wave implements Comparable<Wave>, Serializable {
 	 */
 	public static Wave setWave(String nom, ECatW category, LinkedHashMap<String, Object> map) throws ArenaException {
 		Wave wave = null;
+		GestYaml g = new GestYaml(map);
 		StringBuffer type = new StringBuffer(map.get("type").toString());
 		type.replace(0, 1, type.substring(0, 1).toUpperCase());
 		ETypeW enumType;
@@ -285,6 +317,8 @@ public abstract class Wave implements Comparable<Wave>, Serializable {
 		}
 
 		wave.setCategory(category);
+		wave.setAmount_multiplier(g.containsKey("amount-multiplier") ? g.getFloat("amount-multiplier") : wave.getAmount_multiplier());
+		wave.setHealth_multiplier(g.containsKey("health-multiplier") ? g.getFloat("health-multiplier") : wave.getHealth_multiplier());
 
 		return wave;
 	}

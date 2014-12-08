@@ -139,6 +139,7 @@ public class BossW extends Wave {
 			}
 		}
 		try {
+			wave.getMonstres().clear();
 			wave.getMonstres().add(new Monstre(EMonsterAliases.getByName(g.getString("monster")).getMonstre(), 1));
 		}
 		catch (IllegalArgumentException e) {

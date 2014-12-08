@@ -32,9 +32,12 @@ public class Armor extends Item {
 		return getItem().getGuiName();
 	}
 
+	/**
+	 * Renvoie toutes les données pour la sauvegarde du fichier, au format texte (format numérique bientôt obsolète)
+	 */
 	@Override
 	public String getString() {
-		return getString(true);
+		return getString(false);
 	}
 
 	/**
@@ -43,8 +46,9 @@ public class Armor extends Item {
 	 * @param numberformat
 	 *            permet de spécifier si l'on désire voir le résultat au format numérique ou non.
 	 * @return la chaine correspondant aux informations de la pièce d'armure.
+	 * @deprecated Le format nombre pour les items est amené à disparaître
 	 */
-	public String getString(boolean numberformat) {
+	protected String getString(boolean numberformat) {
 
 		EItem thisitem = getItem();
 		int thisquantity = getQuantity();

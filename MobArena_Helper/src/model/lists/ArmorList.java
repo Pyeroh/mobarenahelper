@@ -84,28 +84,6 @@ public class ArmorList extends ItemList {
 		}
 	}
 
-	/**
-	 * Renvoie la chaine correspondant aux différents pièces d'armure de la liste
-	 *
-	 * @see ItemList
-	 */
-	@Override
-	public String getString() {
-		StringBuffer sArmor = new StringBuffer();
-		if (this.size() == 1) {
-			sArmor.append(((Armor) (this.get(0))).getString(false));
-		}
-		else if (this.size() > 1) {
-			for (int i = 0; i < this.size(); i++) {
-				sArmor.append(this.get(i).getString() + ",");
-			}
-			int length = sArmor.length();
-			sArmor.delete(length - 1, length);
-		}
-
-		return sArmor.toString().trim();
-	}
-
 	@Override
 	public void sort() {
 		int size = this.size();

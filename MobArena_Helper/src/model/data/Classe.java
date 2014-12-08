@@ -100,8 +100,8 @@ public class Classe implements Serializable {
 
 		this.permissions = g.getList("permissions");
 		this.lobby_permissions = g.getList("lobby-permissions");
-		this.unbreakable_armor = g.getString("unbreakable-armor") == null ? true : g.getBool("unbreakable-armor");
-		this.unbreakable_weapons = g.getString("unbreakable-weapons") == null ? true : g.getBool("unbreakable-weapons");
+		this.unbreakable_armor = g.getBool("unbreakable-armor", true);
+		this.unbreakable_weapons = g.getBool("unbreakable-weapons", true);
 
 	}
 
