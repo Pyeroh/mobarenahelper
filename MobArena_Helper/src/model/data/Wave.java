@@ -1,7 +1,7 @@
 package model.data;
 
 import java.io.Serializable;
-import java.util.LinkedHashMap;
+import java.util.*;
 
 import model.GestYaml;
 import model.enums.*;
@@ -33,6 +33,8 @@ public abstract class Wave implements Comparable<Wave>, Serializable {
 	private float amount_multiplier = 1.0f;
 
 	private float health_multiplier = 1.0f;
+
+	private ArrayList<Position> spawnpoints = new ArrayList<Position>();
 
 	private MonsterList monstres = new MonsterList();
 
@@ -115,6 +117,14 @@ public abstract class Wave implements Comparable<Wave>, Serializable {
 		if (health_multiplier >= 0.1f) {
 			this.health_multiplier = health_multiplier;
 		}
+	}
+
+	public ArrayList<Position> getSpawnpoints() {
+		return spawnpoints;
+	}
+
+	public void setSpawnpoints(ArrayList<Position> spawnpoints) {
+		this.spawnpoints = spawnpoints;
 	}
 
 	/**
@@ -227,10 +237,8 @@ public abstract class Wave implements Comparable<Wave>, Serializable {
 		LinkedHashMap<String, Object> vague = new LinkedHashMap<>();
 
 		vague.put("type", type.name().toLowerCase());
-		if (health_multiplier != 1.0f) {
+		if (health_multiplier != 1.0f || amount_multiplier != 1.0f) {
 			vague.put("health-multiplier", health_multiplier);
-		}
-		if (amount_multiplier != 1.0f) {
 			vague.put("amount-multiplier", amount_multiplier);
 		}
 
@@ -244,11 +252,23 @@ public abstract class Wave implements Comparable<Wave>, Serializable {
 			vague.put("wave", numwave);
 		}
 
+		if (!spawnpoints.isEmpty()) {
+			Collections.sort(spawnpoints);
+
+			StringBuffer sp = new StringBuffer();
+			for (Position position : spawnpoints) {
+				sp.append(position.getName());
+				sp.append("; ");
+			}
+			sp.replace(sp.length() - 2, sp.length(), "");
+			vague.put("spawnpoints", sp.toString());
+		}
+
 		if (this instanceof BossW || this instanceof SwarmW) {
 			Monstre monster = monstres.get(0);
 			vague.put("monster", monster.getMonstre().name());
 		}
-		else if (monstres.size() > 0) {
+		else if (!monstres.isEmpty()) {
 			LinkedHashMap<String, Object> mapmonstres = new LinkedHashMap<>();
 			if (monstres.size() == 1) {
 				Monstre mmonster = monstres.get(0);
@@ -319,7 +339,13 @@ public abstract class Wave implements Comparable<Wave>, Serializable {
 		wave.setCategory(category);
 		wave.setAmount_multiplier(g.containsKey("amount-multiplier") ? g.getFloat("amount-multiplier") : wave.getAmount_multiplier());
 		wave.setHealth_multiplier(g.containsKey("health-multiplier") ? g.getFloat("health-multiplier") : wave.getHealth_multiplier());
-
+		if (g.containsKey("spawnpoints")) {
+			String[] spawns = g.getString("spawnpoints").split(";");
+			for (String string : spawns) {
+				wave.getSpawnpoints().add(new Position(string.trim() + "0,0"));
+			}
+			Collections.sort(wave.getSpawnpoints());
+		}
 		return wave;
 	}
 

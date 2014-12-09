@@ -45,18 +45,13 @@ public class SupplyW extends Wave {
 				vague.put("monsters", vague.remove("monster"));
 		}
 
-		if (drops.size() == 1) {
-			vague.put("drops", "'" + drops.get(0).getString() + "'");
+		StringBuffer sItems = new StringBuffer();
+		for (int i = 0; i < drops.size(); i++) {
+			sItems.append(drops.get(i).getString() + ", ");
 		}
-		else {
-			StringBuffer sItems = new StringBuffer();
-			for (int i = 0; i < drops.size(); i++) {
-				sItems.append(drops.get(i).getString() + ", ");
-			}
-			int length = sItems.length();
-			sItems.delete(length - 2, length);
-			vague.put("drops", sItems.toString());
-		}
+		int length = sItems.length();
+		sItems.delete(length - 2, length);
+		vague.put("drops", sItems.toString());
 
 		return vague;
 	}

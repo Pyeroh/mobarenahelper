@@ -49,6 +49,8 @@ public class ItemSelector extends JDialog {
 
 	private JFormattedTextField sai_search;
 
+	private JScrollPane scrpan_selectable;
+
 	private JHoverList<CellListEItem> list_selectable;
 
 	private JButton btn_add;
@@ -164,7 +166,7 @@ public class ItemSelector extends JDialog {
 		values.removeAll(items.getEItemList());
 		loadSelectable(values);
 
-		JScrollPane scrpan_selectable = new JScrollPane(list_selectable);
+		scrpan_selectable = new JScrollPane(list_selectable);
 		scrpan_selectable.setBounds(6, 117, 350, 200);
 		getContentPane().add(scrpan_selectable);
 

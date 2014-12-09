@@ -100,17 +100,11 @@ public class ItemList extends ArrayList<AbstractItem> {
 	 */
 	public String getString() {
 		StringBuffer sItems = new StringBuffer();
-		if (this.size() == 1) {
-			String item = this.get(0).getString();
-			sItems.append(item);
+		for (int i = 0; i < this.size(); i++) {
+			sItems.append(this.get(i).getString() + ", ");
 		}
-		else if (this.size() > 1) {
-			for (int i = 0; i < this.size(); i++) {
-				sItems.append(this.get(i).getString() + ", ");
-			}
-			int length = sItems.length();
-			sItems.delete(length - 2, length);
-		}
+		int length = sItems.length();
+		sItems.delete(length - 2, length);
 
 		return sItems.toString().trim();
 	}

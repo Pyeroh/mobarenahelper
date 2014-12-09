@@ -1,8 +1,8 @@
 package model.data;
 
 import java.io.Serializable;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
+import java.util.*;
+import java.util.Map.Entry;
 
 import model.GestYaml;
 
@@ -13,6 +13,7 @@ public class Coordinates implements Serializable {
 	private Position p1 = null, p2 = null, l1 = null, l2 = null, arena = null, lobby = null, spectator = null, leaderboard = null, exit = null;
 
 	private LinkedHashMap<String, Position> spawnpoints = null;
+
 	private LinkedHashMap<String, Position> containers = null;
 
 	public Coordinates(GestYaml gcoords) throws Exception {
@@ -41,6 +42,7 @@ public class Coordinates implements Serializable {
 				String pos = (String) it.next();
 				spawnpoints.put(pos, new Position(gcoords.getString("spawnpoints." + pos)));
 			}
+			sortPositionMap(spawnpoints);
 		}
 		if (gcoords.containsKey("containers")) {
 			containers = new LinkedHashMap<>();
@@ -49,8 +51,25 @@ public class Coordinates implements Serializable {
 				String pos = (String) it.next();
 				containers.put(pos, new Position(gcoords.getString("containers." + pos)));
 			}
+			sortPositionMap(containers);
 		}
 
+	}
+
+	public static void sortPositionMap(Map<String, Position> map) {
+		ArrayList<Map.Entry<String, Position>> list = new ArrayList<Map.Entry<String, Position>>(map.entrySet());
+		Collections.sort(list, new Comparator<Map.Entry<String, Position>>() {
+
+			@Override
+			public int compare(Entry<String, Position> o1, Entry<String, Position> o2) {
+				return o1.getValue().compareTo(o2.getValue());
+			}
+		});
+		map.clear();
+		for (Iterator<Entry<String, Position>> it = list.iterator(); it.hasNext();) {
+			Entry<String, Position> entry = (Entry<String, Position>) it.next();
+			map.put(entry.getKey(), entry.getValue());
+		}
 	}
 
 	public Position getP1() {
@@ -89,7 +108,7 @@ public class Coordinates implements Serializable {
 		return exit;
 	}
 
-	public LinkedHashMap<String,Position> getSpawnpoints() {
+	public LinkedHashMap<String, Position> getSpawnpoints() {
 		return spawnpoints;
 	}
 

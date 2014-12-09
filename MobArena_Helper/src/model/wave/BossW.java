@@ -2,7 +2,7 @@ package model.wave;
 
 import java.util.*;
 
-import model.*;
+import model.GestYaml;
 import model.data.*;
 import model.enums.*;
 import model.exceptions.*;
@@ -44,6 +44,13 @@ public class BossW extends Wave {
 	};
 
 	private ItemList reward = new ItemList();
+
+	// TODO drops du boss
+	private ItemList drops = new ItemList();
+
+	// TODO effets de potion du boss
+	// TODO 
+//	private ItemList potions = new ItemList(); via EffectSelector ?
 
 	public BossW(String nom) {
 		super(nom, ETypeW.Boss);
@@ -159,11 +166,13 @@ public class BossW extends Wave {
 			vague.put("name", this.getBossName());
 		if (this.getHealth() != EHealth.medium)
 			vague.put("health", this.getHealth().name());
-		vague.put("abilities", this.getAbilities().toString());
-		if (!this.isAbility_announce())
-			vague.put("ability-announce", this.isAbility_announce());
-		if (this.getAbility_interval() != 3)
-			vague.put("ability-interval", this.getAbility_interval());
+		if (!this.getAbilities().isEmpty()) {
+			vague.put("abilities", this.getAbilities().toString());
+			if (!this.isAbility_announce())
+				vague.put("ability-announce", this.isAbility_announce());
+			if (this.getAbility_interval() != 3)
+				vague.put("ability-interval", this.getAbility_interval());
+		}
 		if (reward.size() != 0)
 			vague.put("reward", reward.getString());
 

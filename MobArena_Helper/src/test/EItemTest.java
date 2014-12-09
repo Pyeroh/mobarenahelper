@@ -1,15 +1,18 @@
 package test;
 
 import static org.junit.Assert.*;
+
 import java.util.ArrayList;
+
 import static model.enums.EItem.*;
 import model.enums.*;
+
 import org.junit.*;
 
 public class EItemTest {
-	
+
 	private static EItem[] values;
-	
+
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		values = values();
@@ -69,7 +72,7 @@ public class EItemTest {
 		assertNull(searchBy("ink_sack", 16));
 		assertNull(searchBy(null, 0));
 		assertNull(searchBy("inksack", -1));
-		
+
 	}
 
 	@Test

@@ -421,6 +421,17 @@ public class MenuPrincipal extends JFrame {
 
 	private JMenuItem mntmRestoreConfiguration;
 
+	private JTextArea lib_amount_mult;
+
+	private JTextArea lib_health_mult;
+
+	private JFormattedTextField sai_amount_mult;
+
+	private JFormattedTextField sai_health_mult;
+	private JTextArea lib_set_spawnp;
+	private JButton btn_set_spawnp;
+	private JLabel lib_credit;
+
 	public MenuPrincipal() throws ParseException {
 		super();
 		setTitle(Messages.getString("MenuPrincipal.this.title")); //$NON-NLS-1$
@@ -605,7 +616,7 @@ public class MenuPrincipal extends JFrame {
 		btn_load.setForeground(new Color(255, 255, 255));
 		btn_load.setBackground(new Color(100, 149, 237));
 		btn_load.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btn_load.setBounds(532, 554, 97, 23);
+		btn_load.setBounds(532, 679, 97, 23);
 		getContentPane().add(btn_load);
 
 		btn_save = new JButton(Messages.getString("MenuPrincipal.btn_save.text")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -668,12 +679,12 @@ public class MenuPrincipal extends JFrame {
 		btn_save.setForeground(Color.WHITE);
 		btn_save.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btn_save.setBackground(new Color(100, 149, 237));
-		btn_save.setBounds(639, 554, 115, 23);
+		btn_save.setBounds(639, 679, 115, 23);
 		getContentPane().add(btn_save);
 
 		tabpan_config = new JTabbedPane(JTabbedPane.TOP);
 		tabpan_config.setBorder(new MatteBorder(0, 0, 1, 0, (Color) UIManager.getColor("Tree.dropLineColor")));
-		tabpan_config.setBounds(0, 6, 754, 536);
+		tabpan_config.setBounds(0, 6, 754, 661);
 		getContentPane().add(tabpan_config);
 
 		pan_arena_wave = new JPanel();
@@ -811,7 +822,7 @@ public class MenuPrincipal extends JFrame {
 		pan_arena_wave.add(scrpan_single);
 
 		pan_conf = new JPanel();
-		pan_conf.setBounds(274, 8, 474, 467);
+		pan_conf.setBounds(274, 8, 474, 592);
 		pan_arena_wave.add(pan_conf);
 		pan_conf.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		pan_conf.setLayout(null);
@@ -1012,9 +1023,67 @@ public class MenuPrincipal extends JFrame {
 		sai_frequency.setBounds(104, 166, 105, 20);
 		pan_conf.add(sai_frequency);
 
+		lib_amount_mult = new JTextArea(Messages.getString("MenuPrincipal.lib_amount_mult.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_amount_mult.setWrapStyleWord(true);
+		lib_amount_mult.setLineWrap(true);
+		lib_amount_mult.setBackground(new Color(214, 217, 223));
+		lib_amount_mult.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lib_amount_mult.setEditable(false);
+		lib_amount_mult.setBorder(new EmptyBorder(0, 0, 0, 0));
+		lib_amount_mult.setBounds(10, 198, 84, 36);
+		pan_conf.add(lib_amount_mult);
+
+		sai_amount_mult = new JFormattedTextField(new DecimalFormat());
+		sai_amount_mult.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		sai_amount_mult.setBackground(new Color(255, 255, 255));
+		sai_amount_mult.addKeyListener(mask_numeric);
+		sai_amount_mult.setColumns(10);
+		sai_amount_mult.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		sai_amount_mult.setBounds(104, 206, 105, 20);
+		pan_conf.add(sai_amount_mult);
+
+		lib_health_mult = new JTextArea(Messages.getString("MenuPrincipal.lib_health_mult.text")); //$NON-NLS-1$
+		lib_health_mult.setWrapStyleWord(true);
+		lib_health_mult.setLineWrap(true);
+		lib_health_mult.setBackground(new Color(214, 217, 223));
+		lib_health_mult.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lib_health_mult.setEditable(false);
+		lib_health_mult.setBorder(new EmptyBorder(0, 0, 0, 0));
+		lib_health_mult.setBounds(10, 246, 84, 36);
+		pan_conf.add(lib_health_mult);
+
+		sai_health_mult = new JFormattedTextField(new DecimalFormat());
+		sai_health_mult.addKeyListener(mask_numeric);
+		sai_health_mult.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		sai_health_mult.setColumns(10);
+		sai_health_mult.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		sai_health_mult.setBackground(Color.WHITE);
+		sai_health_mult.setBounds(104, 254, 105, 20);
+		pan_conf.add(sai_health_mult);
+
+		lib_set_spawnp = new JTextArea(Messages.getString("MenuPrincipal.lblNewLabel.text")); //$NON-NLS-1$
+		lib_set_spawnp.setWrapStyleWord(true);
+		lib_set_spawnp.setLineWrap(true);
+		lib_set_spawnp.setBackground(new Color(214, 217, 223));
+		lib_set_spawnp.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lib_set_spawnp.setEditable(false);
+		lib_set_spawnp.setBorder(new EmptyBorder(0, 0, 0, 0));
+		lib_set_spawnp.setBounds(10, 286, 82, 28);
+		pan_conf.add(lib_set_spawnp);
+
+		btn_set_spawnp = new JButton(Messages.getString("MenuPrincipal.btnSet.text")); //$NON-NLS-1$
+		btn_set_spawnp.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				new WaveSpawnpointSelector(MenuPrincipal.this, wave, arenas.getALarenas().get(combo_arena.getSelectedIndex()).getCcoords());
+			}
+		});
+		btn_set_spawnp.setBounds(104, 286, 105, 28);
+		pan_conf.add(btn_set_spawnp);
+
 		lib_growth = new JLabel(Messages.getString("MenuPrincipal.lib_growth.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_growth.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lib_growth.setBounds(10, 197, 82, 20);
+		lib_growth.setBounds(10, 326, 82, 20);
 		pan_conf.add(lib_growth);
 
 		combo_growth = new JComboBox<String>();
@@ -1035,7 +1104,7 @@ public class MenuPrincipal extends JFrame {
 			}
 		});
 		combo_growth.setModel(new DefaultComboBoxModel<String>(EGrowth.namevalues()));
-		combo_growth.setBounds(104, 197, 105, 20);
+		combo_growth.setBounds(104, 326, 105, 20);
 		pan_conf.add(combo_growth);
 
 		lib_carac_wave = new JLabel(); //$NON-NLS-1$ //$NON-NLS-2$
@@ -1054,35 +1123,35 @@ public class MenuPrincipal extends JFrame {
 		list_carac_wave.addMouseListener(cellmouseadapter);
 
 		scrpan_carac_wave = new JScrollPane(list_carac_wave);
-		scrpan_carac_wave.setBounds(219, 42, 245, 389);
+		scrpan_carac_wave.setBounds(219, 42, 245, 510);
 		pan_conf.add(scrpan_carac_wave);
 
 		lib_monster = new JLabel(Messages.getString("MenuPrincipal.lib_monster.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_monster.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lib_monster.setBounds(10, 228, 82, 20);
+		lib_monster.setBounds(10, 357, 82, 20);
 		pan_conf.add(lib_monster);
 
 		combo_monster = new JWideComboBox();
 		combo_monster.addItemListener(itemListener_monster_amount);
 		combo_monster.setModel(new DefaultComboBoxModel<String>(EMonsters.namevalues()));
-		combo_monster.setBounds(104, 228, 105, 20);
+		combo_monster.setBounds(104, 357, 105, 20);
 		pan_conf.add(combo_monster);
 
 		lib_amount = new JLabel(Messages.getString("MenuPrincipal.lib_amount.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_amount.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lib_amount.setBounds(10, 259, 82, 20);
+		lib_amount.setBounds(10, 388, 82, 20);
 		pan_conf.add(lib_amount);
 
 		combo_amount = new JComboBox<String>();
 		combo_amount.addItemListener(itemListener_monster_amount);
 		combo_amount.setModel(new DefaultComboBoxModel<String>(EAmount.namevalues()));
 		combo_amount.setSelectedIndex(2);
-		combo_amount.setBounds(104, 259, 105, 20);
+		combo_amount.setBounds(104, 388, 105, 20);
 		pan_conf.add(combo_amount);
 
 		lib_health = new JLabel(Messages.getString("MenuPrincipal.lib_health.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_health.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lib_health.setBounds(10, 290, 82, 20);
+		lib_health.setBounds(10, 419, 82, 20);
 		pan_conf.add(lib_health);
 
 		combo_health = new JComboBox<String>();
@@ -1104,7 +1173,7 @@ public class MenuPrincipal extends JFrame {
 		});
 		combo_health.setModel(new DefaultComboBoxModel<String>(EHealth.namevalues()));
 		combo_health.setSelectedIndex(1);
-		combo_health.setBounds(104, 290, 105, 20);
+		combo_health.setBounds(104, 419, 105, 20);
 		pan_conf.add(combo_health);
 
 		lib_abi_announce = new JTextArea();
@@ -1114,7 +1183,7 @@ public class MenuPrincipal extends JFrame {
 		lib_abi_announce.setBackground(new Color(214, 217, 223));
 		lib_abi_announce.setBorder(new EmptyBorder(0, 0, 0, 0));
 		lib_abi_announce.setEditable(false);
-		lib_abi_announce.setBounds(10, 321, 82, 36);
+		lib_abi_announce.setBounds(10, 450, 82, 36);
 		pan_conf.add(lib_abi_announce);
 
 		chk_abi_announce = new JCheckBox();
@@ -1147,17 +1216,17 @@ public class MenuPrincipal extends JFrame {
 
 			}
 		});
-		chk_abi_announce.setBounds(104, 322, 105, 20);
+		chk_abi_announce.setBounds(104, 451, 105, 20);
 		pan_conf.add(chk_abi_announce);
 
 		lib_abi_interval = new JTextArea(Messages.getString("MenuPrincipal.lib_abi_interval.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_abi_interval.setWrapStyleWord(true);
 		lib_abi_interval.setLineWrap(true);
-		lib_abi_interval.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lib_abi_interval.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lib_abi_interval.setBackground(new Color(214, 217, 223));
 		lib_abi_interval.setBorder(new EmptyBorder(0, 0, 0, 0));
 		lib_abi_interval.setEditable(false);
-		lib_abi_interval.setBounds(10, 363, 92, 36);
+		lib_abi_interval.setBounds(10, 492, 92, 36);
 		pan_conf.add(lib_abi_interval);
 
 		sai_abi_interval = new JFormattedTextField(NumberFormat.getIntegerInstance());
@@ -1166,7 +1235,7 @@ public class MenuPrincipal extends JFrame {
 		sai_abi_interval.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		sai_abi_interval.setColumns(10);
 		sai_abi_interval.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		sai_abi_interval.setBounds(104, 369, 105, 20);
+		sai_abi_interval.setBounds(104, 498, 105, 20);
 		pan_conf.add(sai_abi_interval);
 
 		btn_add = new JButton(Messages.getString("MenuPrincipal.btn_add.text")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -1225,25 +1294,25 @@ public class MenuPrincipal extends JFrame {
 			}
 		});
 		btn_add.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btn_add.setBounds(219, 438, 58, 23);
+		btn_add.setBounds(219, 562, 58, 23);
 		pan_conf.add(btn_add);
 
 		combo_carac_wave = new JWideComboBox();
 		combo_carac_wave.setFont(new Font("SansSerif", Font.PLAIN, 12));
-		combo_carac_wave.setBounds(287, 439, 105, 20);
+		combo_carac_wave.setBounds(287, 563, 105, 20);
 		pan_conf.add(combo_carac_wave);
 
 		sai_nb_carac_wave = new JFormattedTextField(NumberFormat.getIntegerInstance());
 		sai_nb_carac_wave.setBackground(new Color(255, 255, 255));
 		sai_nb_carac_wave.addKeyListener(mask_numeric);
 		sai_nb_carac_wave.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		sai_nb_carac_wave.setBounds(402, 439, 62, 22);
+		sai_nb_carac_wave.setBounds(402, 563, 62, 22);
 		pan_conf.add(sai_nb_carac_wave);
 		sai_nb_carac_wave.setColumns(10);
 
 		lib_boss_name = new JLabel(Messages.getString("MenuPrincipal.lib_boss_name.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_boss_name.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lib_boss_name.setBounds(10, 401, 92, 20);
+		lib_boss_name.setBounds(10, 530, 92, 20);
 		pan_conf.add(lib_boss_name);
 
 		sai_boss_name = new JTextField();
@@ -1267,14 +1336,14 @@ public class MenuPrincipal extends JFrame {
 
 			}
 		});
-		sai_boss_name.setBounds(104, 401, 105, 20);
+		sai_boss_name.setBounds(104, 530, 105, 20);
 		sai_boss_name.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		pan_conf.add(sai_boss_name);
 		sai_boss_name.setColumns(10);
 
 		lib_set = new JLabel();
 		lib_set.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lib_set.setBounds(10, 433, 92, 28);
+		lib_set.setBounds(10, 557, 92, 28);
 		pan_conf.add(lib_set);
 
 		btn_set = new JButton(Messages.getString("MenuPrincipal.btn_set.text"));
@@ -1304,7 +1373,7 @@ public class MenuPrincipal extends JFrame {
 				}
 			}
 		});
-		btn_set.setBounds(104, 433, 105, 28);
+		btn_set.setBounds(104, 557, 105, 28);
 		pan_conf.add(btn_set);
 
 		menuBar = new JMenuBar();
@@ -1500,11 +1569,11 @@ public class MenuPrincipal extends JFrame {
 		pan_classes.add(btn_new_class);
 
 		scrpan_classes = new JScrollPane(list_classes);
-		scrpan_classes.setBounds(7, 33, 371, 188);
+		scrpan_classes.setBounds(7, 33, 371, 312);
 		pan_classes.add(scrpan_classes);
 
 		pan_caracs_class = new JPanel();
-		pan_caracs_class.setBounds(7, 233, 741, 246);
+		pan_caracs_class.setBounds(7, 357, 741, 246);
 		pan_caracs_class.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		pan_classes.add(pan_caracs_class);
 		pan_caracs_class.setLayout(null);
@@ -2150,7 +2219,7 @@ public class MenuPrincipal extends JFrame {
 		chk_auto_respawn.setToolTipText(Messages.getString("MenuPrincipal.chk_auto_respawn.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		chk_auto_respawn.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_auto_respawn.setFont(new Font("Tahoma", Font.BOLD, 14));
-		chk_auto_respawn.setBounds(307, 6, 149, 25);
+		chk_auto_respawn.setBounds(6, 487, 149, 25);
 		pan_arena_settings.add(chk_auto_respawn);
 
 		chk_share = new JCheckBox(Messages.getString("MenuPrincipal.chk_share.text")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -2158,13 +2227,13 @@ public class MenuPrincipal extends JFrame {
 		chk_share.setToolTipText(Messages.getString("MenuPrincipal.chk_share.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		chk_share.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_share.setFont(new Font("Tahoma", Font.BOLD, 14));
-		chk_share.setBounds(307, 43, 139, 25);
+		chk_share.setBounds(6, 524, 139, 25);
 		pan_arena_settings.add(chk_share);
 
 		lib_min_players = new JLabel(Messages.getString("MenuPrincipal.lib_min_players.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_min_players.setToolTipText(Messages.getString("MenuPrincipal.lib_min_players.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		lib_min_players.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lib_min_players.setBounds(307, 80, 95, 25);
+		lib_min_players.setBounds(307, 6, 95, 25);
 		pan_arena_settings.add(lib_min_players);
 
 		sai_min_players = new JFormattedTextField(NumberFormat.getIntegerInstance());
@@ -2173,13 +2242,13 @@ public class MenuPrincipal extends JFrame {
 		sai_min_players.setBackground(new Color(255, 255, 255));
 		sai_min_players.setColumns(10);
 		sai_min_players.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		sai_min_players.setBounds(438, 81, 50, 25);
+		sai_min_players.setBounds(438, 7, 50, 25);
 		pan_arena_settings.add(sai_min_players);
 
 		lib_max_players = new JLabel(Messages.getString("MenuPrincipal.lib_max_players.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_max_players.setToolTipText(Messages.getString("MenuPrincipal.lib_max_players.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		lib_max_players.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lib_max_players.setBounds(307, 117, 95, 25);
+		lib_max_players.setBounds(307, 43, 95, 25);
 		pan_arena_settings.add(lib_max_players);
 
 		sai_max_players = new JFormattedTextField(NumberFormat.getIntegerInstance());
@@ -2188,13 +2257,13 @@ public class MenuPrincipal extends JFrame {
 		sai_max_players.setBackground(new Color(255, 255, 255));
 		sai_max_players.setColumns(10);
 		sai_max_players.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		sai_max_players.setBounds(438, 118, 50, 25);
+		sai_max_players.setBounds(438, 44, 50, 25);
 		pan_arena_settings.add(sai_max_players);
 
 		lib_max_join_distance = new JLabel(Messages.getString("MenuPrincipal.lib_max_join_distance.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_max_join_distance.setToolTipText(Messages.getString("MenuPrincipal.lib_max_join_distance.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		lib_max_join_distance.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lib_max_join_distance.setBounds(307, 154, 119, 25);
+		lib_max_join_distance.setBounds(307, 80, 119, 25);
 		pan_arena_settings.add(lib_max_join_distance);
 
 		sai_max_join_distance = new JFormattedTextField(NumberFormat.getIntegerInstance());
@@ -2203,13 +2272,13 @@ public class MenuPrincipal extends JFrame {
 		sai_max_join_distance.setBackground(new Color(255, 255, 255));
 		sai_max_join_distance.setColumns(10);
 		sai_max_join_distance.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		sai_max_join_distance.setBounds(438, 155, 50, 25);
+		sai_max_join_distance.setBounds(438, 81, 50, 25);
 		pan_arena_settings.add(sai_max_join_distance);
 
 		lib_first_delay = new JLabel(Messages.getString("MenuPrincipal.lib_first_delay.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_first_delay.setToolTipText(Messages.getString("MenuPrincipal.lib_first_delay.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		lib_first_delay.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lib_first_delay.setBounds(307, 191, 119, 25);
+		lib_first_delay.setBounds(307, 117, 119, 25);
 		pan_arena_settings.add(lib_first_delay);
 
 		sai_first_delay = new JFormattedTextField(NumberFormat.getIntegerInstance());
@@ -2218,13 +2287,13 @@ public class MenuPrincipal extends JFrame {
 		sai_first_delay.setBackground(new Color(255, 255, 255));
 		sai_first_delay.setColumns(10);
 		sai_first_delay.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		sai_first_delay.setBounds(438, 192, 50, 25);
+		sai_first_delay.setBounds(438, 118, 50, 25);
 		pan_arena_settings.add(sai_first_delay);
 
 		lib_interval = new JLabel(Messages.getString("MenuPrincipal.lib_interval.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_interval.setToolTipText(Messages.getString("MenuPrincipal.lib_interval.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		lib_interval.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lib_interval.setBounds(307, 227, 119, 25);
+		lib_interval.setBounds(307, 153, 119, 25);
 		pan_arena_settings.add(lib_interval);
 
 		sai_interval = new JFormattedTextField(NumberFormat.getIntegerInstance());
@@ -2233,13 +2302,13 @@ public class MenuPrincipal extends JFrame {
 		sai_interval.setBackground(new Color(255, 255, 255));
 		sai_interval.setColumns(10);
 		sai_interval.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		sai_interval.setBounds(438, 228, 50, 25);
+		sai_interval.setBounds(438, 154, 50, 25);
 		pan_arena_settings.add(sai_interval);
 
 		lib_final_wave = new JLabel(Messages.getString("MenuPrincipal.lib_final_wave.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_final_wave.setToolTipText(Messages.getString("MenuPrincipal.lib_final_wave.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		lib_final_wave.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lib_final_wave.setBounds(307, 264, 119, 25);
+		lib_final_wave.setBounds(307, 190, 119, 25);
 		pan_arena_settings.add(lib_final_wave);
 
 		sai_final_wave = new JFormattedTextField(NumberFormat.getIntegerInstance());
@@ -2248,13 +2317,13 @@ public class MenuPrincipal extends JFrame {
 		sai_final_wave.setBackground(new Color(255, 255, 255));
 		sai_final_wave.setColumns(10);
 		sai_final_wave.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		sai_final_wave.setBounds(438, 266, 50, 25);
+		sai_final_wave.setBounds(438, 192, 50, 25);
 		pan_arena_settings.add(sai_final_wave);
 
 		lib_monster_limit = new JLabel(Messages.getString("MenuPrincipal.lib_monster_limit.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_monster_limit.setToolTipText(Messages.getString("MenuPrincipal.lib_monster_limit.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		lib_monster_limit.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lib_monster_limit.setBounds(307, 302, 127, 25);
+		lib_monster_limit.setBounds(307, 228, 127, 25);
 		pan_arena_settings.add(lib_monster_limit);
 
 		sai_monster_limit = new JFormattedTextField(NumberFormat.getIntegerInstance());
@@ -2263,7 +2332,7 @@ public class MenuPrincipal extends JFrame {
 		sai_monster_limit.setBackground(new Color(255, 255, 255));
 		sai_monster_limit.setColumns(10);
 		sai_monster_limit.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		sai_monster_limit.setBounds(438, 303, 50, 25);
+		sai_monster_limit.setBounds(438, 229, 50, 25);
 		pan_arena_settings.add(sai_monster_limit);
 
 		chk_monster_xp = new JCheckBox(Messages.getString("MenuPrincipal.chk_monster_xp.text")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -2271,7 +2340,7 @@ public class MenuPrincipal extends JFrame {
 		chk_monster_xp.setToolTipText(Messages.getString("MenuPrincipal.chk_monster_xp.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		chk_monster_xp.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_monster_xp.setFont(new Font("Tahoma", Font.BOLD, 14));
-		chk_monster_xp.setBounds(307, 339, 181, 25);
+		chk_monster_xp.setBounds(307, 265, 181, 25);
 		pan_arena_settings.add(chk_monster_xp);
 
 		chk_keep_xp = new JCheckBox(Messages.getString("MenuPrincipal.chk_keep_xp.text")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -2279,7 +2348,7 @@ public class MenuPrincipal extends JFrame {
 		chk_keep_xp.setToolTipText(Messages.getString("MenuPrincipal.chk_keep_xp.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		chk_keep_xp.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_keep_xp.setFont(new Font("Tahoma", Font.BOLD, 14));
-		chk_keep_xp.setBounds(307, 376, 95, 25);
+		chk_keep_xp.setBounds(307, 302, 95, 25);
 		pan_arena_settings.add(chk_keep_xp);
 
 		chk_food_regen = new JCheckBox(Messages.getString("MenuPrincipal.chk_food_regen.text")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -2287,7 +2356,7 @@ public class MenuPrincipal extends JFrame {
 		chk_food_regen.setToolTipText(Messages.getString("MenuPrincipal.chk_food_regen.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		chk_food_regen.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_food_regen.setFont(new Font("Tahoma", Font.BOLD, 14));
-		chk_food_regen.setBounds(307, 413, 150, 25);
+		chk_food_regen.setBounds(307, 339, 150, 25);
 		pan_arena_settings.add(chk_food_regen);
 
 		chk_lock_food = new JCheckBox(Messages.getString("MenuPrincipal.chk_lock_food.text")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -2295,13 +2364,13 @@ public class MenuPrincipal extends JFrame {
 		chk_lock_food.setToolTipText(Messages.getString("MenuPrincipal.chk_lock_food.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		chk_lock_food.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_lock_food.setFont(new Font("Tahoma", Font.BOLD, 14));
-		chk_lock_food.setBounds(307, 450, 170, 25);
+		chk_lock_food.setBounds(307, 376, 170, 25);
 		pan_arena_settings.add(chk_lock_food);
 
 		lib_player_time = new JLabel(Messages.getString("MenuPrincipal.lib_player_time.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_player_time.setToolTipText(Messages.getString("MenuPrincipal.lib_player_time.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		lib_player_time.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lib_player_time.setBounds(514, 43, 127, 25);
+		lib_player_time.setBounds(6, 561, 127, 25);
 		pan_arena_settings.add(lib_player_time);
 
 		combo_player_time = new JComboBox<String>();
@@ -2317,13 +2386,13 @@ public class MenuPrincipal extends JFrame {
 		combo_player_time.setToolTipText(Messages.getString("MenuPrincipal.lib_player_time.toolTipText")); //$NON-NLS-1$ //$NON-NLS-2$
 		combo_player_time.setModel(new DefaultComboBoxModel<String>(new String[] { "world", "dawn", "sunrise", "morning", "midday", "noon", "day",
 				"afternoon", "evening", "sunset", "dusk", "night", "midnight" }));
-		combo_player_time.setBounds(653, 43, 95, 26);
+		combo_player_time.setBounds(145, 561, 95, 26);
 		pan_arena_settings.add(combo_player_time);
 
 		lib_auto_start = new JLabel(Messages.getString("MenuPrincipal.lib_auto_start.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lib_auto_start.setToolTipText(Messages.getString("MenuPrincipal.lib_auto_start.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		lib_auto_start.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lib_auto_start.setBounds(514, 117, 147, 25);
+		lib_auto_start.setBounds(307, 487, 147, 25);
 		pan_arena_settings.add(lib_auto_start);
 
 		sai_auto_start = new JFormattedTextField(NumberFormat.getIntegerInstance());
@@ -2332,14 +2401,14 @@ public class MenuPrincipal extends JFrame {
 		sai_auto_start.setBackground(new Color(255, 255, 255));
 		sai_auto_start.setColumns(10);
 		sai_auto_start.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		sai_auto_start.setBounds(662, 118, 50, 25);
+		sai_auto_start.setBounds(455, 488, 50, 25);
 		pan_arena_settings.add(sai_auto_start);
 
 		chk_spout_class = new JCheckBox(Messages.getString("MenuPrincipal.chk_spout_class.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_spout_class.addItemListener(chkconfig_listener);
 		chk_spout_class.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_spout_class.setFont(new Font("Tahoma", Font.BOLD, 14));
-		chk_spout_class.setBounds(514, 6, 181, 25);
+		chk_spout_class.setBounds(307, 413, 181, 25);
 		pan_arena_settings.add(chk_spout_class);
 
 		chk_auto_ignite = new JCheckBox(Messages.getString("MenuPrincipal.chk_auto_ignite.text")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -2347,14 +2416,14 @@ public class MenuPrincipal extends JFrame {
 		chk_auto_ignite.setToolTipText(Messages.getString("MenuPrincipal.chk_auto_ignite.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		chk_auto_ignite.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_auto_ignite.setFont(new Font("Tahoma", Font.BOLD, 14));
-		chk_auto_ignite.setBounds(514, 80, 158, 25);
+		chk_auto_ignite.setBounds(307, 449, 158, 25);
 		pan_arena_settings.add(chk_auto_ignite);
 
 		chk_use_class_chest = new JCheckBox(Messages.getString("MenuPrincipal.chk_use_class_chest.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		chk_use_class_chest.addItemListener(chkconfig_listener);
 		chk_use_class_chest.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_use_class_chest.setFont(new Font("Tahoma", Font.BOLD, 14));
-		chk_use_class_chest.setBounds(514, 154, 147, 25);
+		chk_use_class_chest.setBounds(307, 524, 147, 25);
 		pan_arena_settings.add(chk_use_class_chest);
 
 		chk_display_waves = new JCheckBox(Messages.getString("MenuPrincipal.chk_display_waves.text")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -2362,7 +2431,7 @@ public class MenuPrincipal extends JFrame {
 		chk_display_waves.setToolTipText(Messages.getString("MenuPrincipal.chk_display_waves.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		chk_display_waves.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_display_waves.setFont(new Font("Tahoma", Font.BOLD, 14));
-		chk_display_waves.setBounds(514, 192, 170, 25);
+		chk_display_waves.setBounds(307, 561, 170, 25);
 		pan_arena_settings.add(chk_display_waves);
 
 		chk_display_timer = new JCheckBox(Messages.getString("MenuPrincipal.chk_display_timer.text")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -2370,7 +2439,7 @@ public class MenuPrincipal extends JFrame {
 		chk_display_timer.setToolTipText(Messages.getString("MenuPrincipal.chk_display_timer.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		chk_display_timer.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_display_timer.setFont(new Font("Tahoma", Font.BOLD, 14));
-		chk_display_timer.setBounds(514, 229, 170, 25);
+		chk_display_timer.setBounds(531, 191, 170, 25);
 		pan_arena_settings.add(chk_display_timer);
 
 		chk_auto_ready = new JCheckBox(Messages.getString("MenuPrincipal.chk_auto_ready.text")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -2378,7 +2447,7 @@ public class MenuPrincipal extends JFrame {
 		chk_auto_ready.setToolTipText(Messages.getString("MenuPrincipal.chk_auto_ready.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		chk_auto_ready.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_auto_ready.setFont(new Font("Tahoma", Font.BOLD, 14));
-		chk_auto_ready.setBounds(514, 266, 181, 25);
+		chk_auto_ready.setBounds(531, 228, 181, 25);
 		pan_arena_settings.add(chk_auto_ready);
 
 		chk_scoreboard = new JCheckBox(Messages.getString("MenuPrincipal.chk_scoreboard.text")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -2386,7 +2455,7 @@ public class MenuPrincipal extends JFrame {
 		chk_scoreboard.setToolTipText(Messages.getString("MenuPrincipal.chk_scoreboard.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		chk_scoreboard.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_scoreboard.setFont(new Font("Tahoma", Font.BOLD, 14));
-		chk_scoreboard.setBounds(514, 306, 139, 25);
+		chk_scoreboard.setBounds(531, 268, 139, 25);
 		pan_arena_settings.add(chk_scoreboard);
 
 		chk_isolated_chat = new JCheckBox(Messages.getString("MenuPrincipal.chk_isolated_chat.text")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -2394,7 +2463,7 @@ public class MenuPrincipal extends JFrame {
 		chk_isolated_chat.setToolTipText(Messages.getString("MenuPrincipal.chk_isolated_chat.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		chk_isolated_chat.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_isolated_chat.setFont(new Font("Tahoma", Font.BOLD, 14));
-		chk_isolated_chat.setBounds(514, 342, 119, 25);
+		chk_isolated_chat.setBounds(531, 304, 119, 25);
 		pan_arena_settings.add(chk_isolated_chat);
 
 		chk_global_join = new JCheckBox(Messages.getString("MenuPrincipal.chk_global_join.text")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -2402,7 +2471,7 @@ public class MenuPrincipal extends JFrame {
 		chk_global_join.setToolTipText(Messages.getString("MenuPrincipal.chk_global_join.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		chk_global_join.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_global_join.setFont(new Font("Tahoma", Font.BOLD, 14));
-		chk_global_join.setBounds(514, 376, 181, 25);
+		chk_global_join.setBounds(531, 338, 181, 25);
 		pan_arena_settings.add(chk_global_join);
 
 		chk_global_end = new JCheckBox(Messages.getString("MenuPrincipal.chk_global_end.text")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -2410,17 +2479,17 @@ public class MenuPrincipal extends JFrame {
 		chk_global_end.setToolTipText(Messages.getString("MenuPrincipal.chk_global_end.toolTipText")); //$NON-NLS-2$ //$NON-NLS-1$
 		chk_global_end.setHorizontalTextPosition(SwingConstants.LEFT);
 		chk_global_end.setFont(new Font("Tahoma", Font.BOLD, 14));
-		chk_global_end.setBounds(514, 413, 170, 25);
+		chk_global_end.setBounds(531, 375, 170, 25);
 		pan_arena_settings.add(chk_global_end);
 
 		JSeparator separator = new JSeparator();
 		separator.setOrientation(SwingConstants.VERTICAL);
-		separator.setBounds(293, 6, 2, 473);
+		separator.setBounds(293, 6, 2, 580);
 		pan_arena_settings.add(separator);
 
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setOrientation(SwingConstants.VERTICAL);
-		separator_1.setBounds(500, 6, 2, 473);
+		separator_1.setBounds(517, 6, 2, 580);
 		pan_arena_settings.add(separator_1);
 
 		pan_global_settings = new JPanel();
@@ -2795,9 +2864,14 @@ public class MenuPrincipal extends JFrame {
 		tabpan_config.addTab(Messages.getString("MenuPrincipal.pan_rewards.title"), pan_rewards); //$NON-NLS-2$ //$NON-NLS-1$
 		tabpan_config.addTab(Messages.getString("MenuPrincipal.pan_global_settings.title"), pan_global_settings); //$NON-NLS-1$
 
+		lib_credit = new JLabel(Messages.getString("MenuPrincipal.lblNewLabel.text_1")); //$NON-NLS-1$
+		lib_credit.setFont(new Font("Forte", Font.PLAIN, 14));
+		lib_credit.setBounds(10, 679, 153, 26);
+		getContentPane().add(lib_credit);
+
 		raz();
 
-		setSize(760, 637);
+		setSize(760, 762);
 
 		setLocationRelativeTo(null);
 		initializing = false;
@@ -3237,6 +3311,12 @@ public class MenuPrincipal extends JFrame {
 		combo_type.setVisible(true);
 		lib_wave.setVisible(true);
 		sai_wave.setVisible(true);
+		lib_amount_mult.setVisible(true);
+		sai_amount_mult.setVisible(true);
+		lib_health_mult.setVisible(true);
+		sai_health_mult.setVisible(true);
+		lib_set_spawnp.setVisible(true);
+		btn_set_spawnp.setVisible(true);
 
 		lib_carac_wave.setVisible(true);
 		scrpan_carac_wave.setVisible(true);
@@ -3276,6 +3356,10 @@ public class MenuPrincipal extends JFrame {
 			combo_carac_wave.setModel(new DefaultComboBoxModel<String>(EAbilities.namevalues()));
 			combo_carac_wave.setSelectedIndex(-1);
 			sai_nb_carac_wave.setVisible(false);
+			lib_amount_mult.setVisible(false);
+			sai_amount_mult.setVisible(false);
+			lib_health_mult.setVisible(false);
+			sai_health_mult.setVisible(false);
 			break;
 		case Special:
 			lib_carac_wave.setText(Messages.getString("MenuPrincipal.monsters"));
@@ -3316,6 +3400,12 @@ public class MenuPrincipal extends JFrame {
 			btn_add.setVisible(false);
 			scrpan_carac_wave.setVisible(false);
 			sai_nb_carac_wave.setVisible(false);
+			lib_amount_mult.setVisible(false);
+			sai_amount_mult.setVisible(false);
+			lib_health_mult.setVisible(false);
+			sai_health_mult.setVisible(false);
+			lib_set_spawnp.setVisible(false);
+			btn_set_spawnp.setVisible(false);
 			break;
 		default:
 			break;
@@ -3347,6 +3437,12 @@ public class MenuPrincipal extends JFrame {
 		sai_priority.setVisible(false);
 		lib_frequency.setVisible(false);
 		sai_frequency.setVisible(false);
+		lib_amount_mult.setVisible(false);
+		sai_amount_mult.setVisible(false);
+		lib_health_mult.setVisible(false);
+		sai_health_mult.setVisible(false);
+		lib_set_spawnp.setVisible(false);
+		btn_set_spawnp.setVisible(false);
 		lib_growth.setVisible(false);
 		combo_growth.setVisible(false);
 		lib_carac_wave.setVisible(false);
@@ -3402,6 +3498,8 @@ public class MenuPrincipal extends JFrame {
 
 		sai_priority.setValue(wave.getPriority());
 		sai_frequency.setValue(wave.getFrequency());
+		sai_amount_mult.setValue(wave.getAmount_multiplier());
+		sai_health_mult.setValue(wave.getHealth_multiplier());
 
 		switch (wave.getType()) {
 		case Default:
@@ -3509,9 +3607,11 @@ public class MenuPrincipal extends JFrame {
 		Wave wave = list_sel.getSelectedValue().getWave();
 		Arena lArene = arenas.getALarenas().get(combo_arena.getSelectedIndex());
 		ArrayList<Wave> waveList = lArene.getWavesType(list_sel == list_recurrent ? ECatW.recurrent : ECatW.single);
-		Integer val_src = ((Number) source.getValue()).intValue();
+		Number val_src = (Number) source.getValue();
 
 		if (source == sai_wave) {
+
+			val_src = val_src.intValue();
 
 			int numwave = (int) (val_src.equals("") ? 1 : val_src);
 
@@ -3520,17 +3620,15 @@ public class MenuPrincipal extends JFrame {
 			if (list_sel == list_single) {
 
 				Collections.sort(waveList);
-				int i = 0;
-				while (i < waveList.size() && waveList.get(i) != wave) {
-					i++;
-				}
 				loadListCaracs_Arena(waveList, list_sel);
-				list_sel.setSelectedIndex(i);
+				list_sel.setSelectedIndex(waveList.indexOf(wave));
 
 			}
 
 		}
 		else if (source == sai_priority || source == sai_frequency) {
+
+			val_src = val_src.intValue();
 
 			int numcarac = (int) (val_src.equals("") ? 1 : val_src);
 			if (source == sai_priority)
@@ -3539,19 +3637,22 @@ public class MenuPrincipal extends JFrame {
 				wave.setFrequency(numcarac);
 
 			Collections.sort(waveList);
-			int i = 0;
-			while (i < waveList.size() && waveList.get(i) != wave) {
-				i++;
-			}
 			loadListCaracs_Arena(waveList, list_sel);
-			list_sel.setSelectedIndex(i);
+			list_sel.setSelectedIndex(waveList.indexOf(wave));
 
 		}
 		else if (source == sai_abi_interval) {
+			val_src = val_src.intValue();
 			BossW bwave = (BossW) wave;
 			int abi_interval = (int) (val_src.equals("") ? 3 : val_src);
 			bwave.setAbility_interval(abi_interval);
 
+		}
+		else if (source == sai_amount_mult) {
+			wave.setAmount_multiplier(val_src.floatValue());
+		}
+		else if (source == sai_health_mult) {
+			wave.setHealth_multiplier(val_src.floatValue());
 		}
 
 	}
