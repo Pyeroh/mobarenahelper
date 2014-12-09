@@ -49,7 +49,7 @@ public class BossW extends Wave {
 	private ItemList drops = new ItemList();
 
 	// TODO effets de potion du boss
-	// TODO 
+	// TODO effets de potion génériques
 //	private ItemList potions = new ItemList(); via EffectSelector ?
 
 	public BossW(String nom) {

@@ -3613,7 +3613,7 @@ public class MenuPrincipal extends JFrame {
 
 			val_src = val_src.intValue();
 
-			int numwave = (int) (val_src.equals("") ? 1 : val_src);
+			int numwave = (Integer) (val_src.equals("") ? 1 : val_src);
 
 			wave.setNumwave(numwave);
 
@@ -3630,7 +3630,7 @@ public class MenuPrincipal extends JFrame {
 
 			val_src = val_src.intValue();
 
-			int numcarac = (int) (val_src.equals("") ? 1 : val_src);
+			int numcarac = (Integer) (val_src.equals("") ? 1 : val_src);
 			if (source == sai_priority)
 				wave.setPriority(numcarac);
 			else
@@ -3644,7 +3644,7 @@ public class MenuPrincipal extends JFrame {
 		else if (source == sai_abi_interval) {
 			val_src = val_src.intValue();
 			BossW bwave = (BossW) wave;
-			int abi_interval = (int) (val_src.equals("") ? 3 : val_src);
+			int abi_interval = (Integer) (val_src.equals("") ? 3 : val_src);
 			bwave.setAbility_interval(abi_interval);
 
 		}
