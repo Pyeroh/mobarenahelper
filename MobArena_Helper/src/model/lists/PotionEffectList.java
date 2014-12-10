@@ -20,7 +20,7 @@ public class PotionEffectList extends ArrayList<PotionEffect> {
 				potionEffect = EPotionEffect.searchById(Integer.parseInt(potionComponent[0]));
 			}
 			else {
-				potionEffect = EPotionEffect.valueOf(potionComponent[0]);
+				potionEffect = EPotionEffect.getByRealName(potionComponent[0]);
 			}
 			switch (potionComponent.length) {
 			case 1:
