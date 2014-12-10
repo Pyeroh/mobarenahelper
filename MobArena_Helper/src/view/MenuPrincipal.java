@@ -157,9 +157,9 @@ public class MenuPrincipal extends JFrame {
 
 	private JFormattedTextField sai_nb_carac_wave;
 
-	private JLabel lib_set;
+	private JLabel lib_set_drops;
 
-	private JButton btn_set;
+	private JButton btn_set_drops;
 
 	private JPanel pan_caracs_class;
 
@@ -428,9 +428,20 @@ public class MenuPrincipal extends JFrame {
 	private JFormattedTextField sai_amount_mult;
 
 	private JFormattedTextField sai_health_mult;
+
 	private JTextArea lib_set_spawnp;
+
 	private JButton btn_set_spawnp;
+
 	private JLabel lib_credit;
+
+	private JTextArea lib_set_potion_effects;
+
+	private JButton btn_set_potion_effects;
+
+	private JLabel lib_set;
+
+	private JButton btn_set;
 
 	public MenuPrincipal() throws ParseException {
 		super();
@@ -616,7 +627,7 @@ public class MenuPrincipal extends JFrame {
 		btn_load.setForeground(new Color(255, 255, 255));
 		btn_load.setBackground(new Color(100, 149, 237));
 		btn_load.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btn_load.setBounds(532, 679, 97, 23);
+		btn_load.setBounds(532, 707, 97, 23);
 		getContentPane().add(btn_load);
 
 		btn_save = new JButton(Messages.getString("MenuPrincipal.btn_save.text")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -679,12 +690,12 @@ public class MenuPrincipal extends JFrame {
 		btn_save.setForeground(Color.WHITE);
 		btn_save.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btn_save.setBackground(new Color(100, 149, 237));
-		btn_save.setBounds(639, 679, 115, 23);
+		btn_save.setBounds(639, 707, 115, 23);
 		getContentPane().add(btn_save);
 
 		tabpan_config = new JTabbedPane(JTabbedPane.TOP);
 		tabpan_config.setBorder(new MatteBorder(0, 0, 1, 0, (Color) UIManager.getColor("Tree.dropLineColor")));
-		tabpan_config.setBounds(0, 6, 754, 661);
+		tabpan_config.setBounds(0, 6, 754, 689);
 		getContentPane().add(tabpan_config);
 
 		pan_arena_wave = new JPanel();
@@ -692,9 +703,9 @@ public class MenuPrincipal extends JFrame {
 		pan_arena_wave.setLayout(null);
 
 		lib_arena = new JLabel(Messages.getString("MenuPrincipal.lib_arena.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lib_arena.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lib_arena.setBounds(9, 8, 46, 17);
 		pan_arena_wave.add(lib_arena);
-		lib_arena.setFont(new Font("Tahoma", Font.BOLD, 14));
 
 		combo_arena = new JWideComboBox();
 		combo_arena.addItemListener(new ItemListener() {
@@ -822,7 +833,7 @@ public class MenuPrincipal extends JFrame {
 		pan_arena_wave.add(scrpan_single);
 
 		pan_conf = new JPanel();
-		pan_conf.setBounds(274, 8, 474, 592);
+		pan_conf.setBounds(274, 8, 474, 639);
 		pan_arena_wave.add(pan_conf);
 		pan_conf.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		pan_conf.setLayout(null);
@@ -1061,7 +1072,7 @@ public class MenuPrincipal extends JFrame {
 		sai_health_mult.setBounds(104, 254, 105, 20);
 		pan_conf.add(sai_health_mult);
 
-		lib_set_spawnp = new JTextArea(Messages.getString("MenuPrincipal.lblNewLabel.text")); //$NON-NLS-1$
+		lib_set_spawnp = new JTextArea(Messages.getString("MenuPrincipal.lib_set_spawnp.text")); //$NON-NLS-1$
 		lib_set_spawnp.setWrapStyleWord(true);
 		lib_set_spawnp.setLineWrap(true);
 		lib_set_spawnp.setBackground(new Color(214, 217, 223));
@@ -1071,8 +1082,9 @@ public class MenuPrincipal extends JFrame {
 		lib_set_spawnp.setBounds(10, 286, 82, 28);
 		pan_conf.add(lib_set_spawnp);
 
-		btn_set_spawnp = new JButton(Messages.getString("MenuPrincipal.btnSet.text")); //$NON-NLS-1$
+		btn_set_spawnp = new JButton(Messages.getString("MenuPrincipal.btn_set_spawnp.text")); //$NON-NLS-1$
 		btn_set_spawnp.addMouseListener(new MouseAdapter() {
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				new WaveSpawnpointSelector(MenuPrincipal.this, wave, arenas.getALarenas().get(combo_arena.getSelectedIndex()).getCcoords());
@@ -1123,7 +1135,7 @@ public class MenuPrincipal extends JFrame {
 		list_carac_wave.addMouseListener(cellmouseadapter);
 
 		scrpan_carac_wave = new JScrollPane(list_carac_wave);
-		scrpan_carac_wave.setBounds(219, 42, 245, 510);
+		scrpan_carac_wave.setBounds(219, 42, 245, 476);
 		pan_conf.add(scrpan_carac_wave);
 
 		lib_monster = new JLabel(Messages.getString("MenuPrincipal.lib_monster.text")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -1294,19 +1306,19 @@ public class MenuPrincipal extends JFrame {
 			}
 		});
 		btn_add.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btn_add.setBounds(219, 562, 58, 23);
+		btn_add.setBounds(219, 527, 58, 23);
 		pan_conf.add(btn_add);
 
 		combo_carac_wave = new JWideComboBox();
 		combo_carac_wave.setFont(new Font("SansSerif", Font.PLAIN, 12));
-		combo_carac_wave.setBounds(287, 563, 105, 20);
+		combo_carac_wave.setBounds(287, 528, 105, 20);
 		pan_conf.add(combo_carac_wave);
 
 		sai_nb_carac_wave = new JFormattedTextField(NumberFormat.getIntegerInstance());
 		sai_nb_carac_wave.setBackground(new Color(255, 255, 255));
 		sai_nb_carac_wave.addKeyListener(mask_numeric);
 		sai_nb_carac_wave.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		sai_nb_carac_wave.setBounds(402, 563, 62, 22);
+		sai_nb_carac_wave.setBounds(402, 528, 62, 22);
 		pan_conf.add(sai_nb_carac_wave);
 		sai_nb_carac_wave.setColumns(10);
 
@@ -1330,7 +1342,7 @@ public class MenuPrincipal extends JFrame {
 
 				String bossname = sai_boss_name.getText();
 
-				((BossW) wave).setBossName(bossname);
+				((BossW) wave).setBossname(bossname);
 				loadListCaracs_Arena(waveList, list_sel);
 				list_sel.setSelectedIndex(index_sel);
 
@@ -1341,12 +1353,65 @@ public class MenuPrincipal extends JFrame {
 		pan_conf.add(sai_boss_name);
 		sai_boss_name.setColumns(10);
 
+		btn_set_drops = new JButton(Messages.getString("MenuPrincipal.btn_set_drops.text"));
+		btn_set_drops.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ETypeW type = wave.getType();
+				ItemList drops;
+
+				switch (type) {
+				case Supply:
+					SupplyW supw = (SupplyW) wave;
+					drops = new ItemSelector(MenuPrincipal.this, supw.getDrops(), -1, false).getItemList();
+					supw.setDrops(drops);
+					break;
+				case Boss:
+					BossW bwave = (BossW) wave;
+					drops = new ItemSelector(MenuPrincipal.this, bwave.getDrops(), -1, false).getItemList();
+					bwave.setDrops(drops);
+					break;
+				default:
+					break;
+				}
+			}
+		});
+
+		lib_set_drops = new JLabel(Messages.getString("MenuPrincipal.lib_set_drops.text"));
+		lib_set_drops.setBounds(10, 562, 92, 28);
+		pan_conf.add(lib_set_drops);
+		lib_set_drops.setFont(new Font("Tahoma", Font.BOLD, 13));
+		btn_set_drops.setBounds(104, 562, 105, 28);
+		pan_conf.add(btn_set_drops);
+
+		lib_set_potion_effects = new JTextArea(Messages.getString("MenuPrincipal.lib_set_potion_effects.text")); //$NON-NLS-1$
+		lib_set_potion_effects.setWrapStyleWord(true);
+		lib_set_potion_effects.setLineWrap(true);
+		lib_set_potion_effects.setBackground(new Color(214, 217, 223));
+		lib_set_potion_effects.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lib_set_potion_effects.setEditable(false);
+		lib_set_potion_effects.setBorder(new EmptyBorder(0, 0, 0, 0));
+		lib_set_potion_effects.setBounds(219, 562, 95, 30);
+		pan_conf.add(lib_set_potion_effects);
+
+		btn_set_potion_effects = new JButton(Messages.getString("MenuPrincipal.btn_set_potion_effects.text")); //$NON-NLS-1$
+		btn_set_potion_effects.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO potion selector
+			}
+		});
+		btn_set_potion_effects.setBounds(323, 560, 105, 30);
+		pan_conf.add(btn_set_potion_effects);
+
 		lib_set = new JLabel();
-		lib_set.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lib_set.setBounds(10, 557, 92, 28);
+		lib_set.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lib_set.setBounds(10, 602, 92, 28);
 		pan_conf.add(lib_set);
 
-		btn_set = new JButton(Messages.getString("MenuPrincipal.btn_set.text"));
+		btn_set = new JButton();
 		btn_set.addMouseListener(new MouseAdapter() {
 
 			@Override
@@ -1354,11 +1419,6 @@ public class MenuPrincipal extends JFrame {
 				ETypeW type = wave.getType();
 
 				switch (type) {
-				case Supply:
-					SupplyW supw = (SupplyW) wave;
-					ItemList drops = new ItemSelector(MenuPrincipal.this, supw.getDrops(), -1, false).getItemList();
-					supw.setDrops(drops);
-					break;
 				case Boss:
 					BossW bwave = (BossW) wave;
 					ItemList reward = new ItemSelector(MenuPrincipal.this, bwave.getReward(), 1, false).getItemList();
@@ -1371,9 +1431,10 @@ public class MenuPrincipal extends JFrame {
 				default:
 					break;
 				}
+
 			}
 		});
-		btn_set.setBounds(104, 557, 105, 28);
+		btn_set.setBounds(104, 602, 105, 30);
 		pan_conf.add(btn_set);
 
 		menuBar = new JMenuBar();
@@ -2864,14 +2925,14 @@ public class MenuPrincipal extends JFrame {
 		tabpan_config.addTab(Messages.getString("MenuPrincipal.pan_rewards.title"), pan_rewards); //$NON-NLS-2$ //$NON-NLS-1$
 		tabpan_config.addTab(Messages.getString("MenuPrincipal.pan_global_settings.title"), pan_global_settings); //$NON-NLS-1$
 
-		lib_credit = new JLabel(Messages.getString("MenuPrincipal.lblNewLabel.text_1")); //$NON-NLS-1$
+		lib_credit = new JLabel(Messages.getString("MenuPrincipal.lib_credit.text")); //$NON-NLS-1$
 		lib_credit.setFont(new Font("Forte", Font.PLAIN, 14));
-		lib_credit.setBounds(10, 679, 153, 26);
+		lib_credit.setBounds(10, 707, 153, 26);
 		getContentPane().add(lib_credit);
 
 		raz();
 
-		setSize(760, 762);
+		setSize(760, 788);
 
 		setLocationRelativeTo(null);
 		initializing = false;
@@ -3348,7 +3409,12 @@ public class MenuPrincipal extends JFrame {
 			lib_abi_interval.setVisible(true);
 			sai_abi_interval.setVisible(true);
 
-			lib_set.setText(Messages.getString("MenuPrincipal.reward"));
+			lib_set_drops.setVisible(true);
+			btn_set_drops.setVisible(true);
+			lib_set_potion_effects.setVisible(true);
+			btn_set_potion_effects.setVisible(true);
+			lib_set.setText(Messages.getString("MenuPrincipal.lib_set.reward"));
+			btn_set.setText(Messages.getString("MenuPrincipal.btn_set.reward"));
 			lib_set.setVisible(true);
 			btn_set.setVisible(true);
 
@@ -3383,16 +3449,17 @@ public class MenuPrincipal extends JFrame {
 			combo_carac_wave.setModel(new DefaultComboBoxModel<String>(EMonsters.namevalues()));
 			combo_carac_wave.setSelectedIndex(-1);
 
-			lib_set.setVisible(true);
-			lib_set.setText(Messages.getString("MenuPrincipal.drops"));
-			btn_set.setVisible(true);
+			lib_set_drops.setVisible(true);
+			btn_set_drops.setVisible(true);
 			break;
 		case Upgrade:
 			lib_abi_announce.setVisible(true);
 			lib_abi_announce.setText(Messages.getString("MenuPrincipal.give_all_items"));
 			chk_abi_announce.setVisible(true);
+
+			lib_set.setText(Messages.getString("MenuPrincipal.lib_set.upconfig"));
+			btn_set.setText(Messages.getString("MenuPrincipal.btn_set.upconfig"));
 			lib_set.setVisible(true);
-			lib_set.setText(Messages.getString("MenuPrincipal.configure"));
 			btn_set.setVisible(true);
 
 			lib_carac_wave.setVisible(false);
@@ -3463,13 +3530,15 @@ public class MenuPrincipal extends JFrame {
 		combo_carac_wave.setVisible(false);
 		sai_nb_carac_wave.setVisible(false);
 
+		lib_set_drops.setVisible(false);
+		btn_set_drops.setVisible(false);
+		lib_set_potion_effects.setVisible(false);
+		btn_set_potion_effects.setVisible(false);
 		lib_set.setVisible(false);
 		btn_set.setVisible(false);
 
 		lib_abi_announce.setText(Messages.getString("MenuPrincipal.lib_abi_announce.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		list_carac_wave.setModel(new DefaultListModel<CellListCaracs>());
-		lib_set.setText("");
-		btn_set.setText(Messages.getString("MenuPrincipal.btn_set.text")); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	private void deselectWaveLists_Arena(JHoverList<CellListWave> jList) {
@@ -3512,7 +3581,7 @@ public class MenuPrincipal extends JFrame {
 			break;
 		case Boss:
 			BossW bwave = (BossW) wave;
-			sai_boss_name.setText(bwave.getBossName());
+			sai_boss_name.setText(bwave.getBossname());
 			combo_health.setSelectedItem(bwave.getHealth().getNom());
 			chk_abi_announce.setSelected(bwave.isAbility_announce());
 			sai_abi_interval.setValue(bwave.getAbility_interval());

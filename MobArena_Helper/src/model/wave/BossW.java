@@ -6,7 +6,7 @@ import model.GestYaml;
 import model.data.*;
 import model.enums.*;
 import model.exceptions.*;
-import model.lists.ItemList;
+import model.lists.*;
 
 /**
  * Une vague de boss
@@ -45,23 +45,20 @@ public class BossW extends Wave {
 
 	private ItemList reward = new ItemList();
 
-	// TODO drops du boss
 	private ItemList drops = new ItemList();
 
-	// TODO effets de potion du boss
-	// TODO effets de potion génériques
-//	private ItemList potions = new ItemList(); via EffectSelector ?
+	private PotionEffectList potions = new PotionEffectList();
 
 	public BossW(String nom) {
 		super(nom, ETypeW.Boss);
 		this.getMonstres().add(new Monstre(EMonsters.zombie, 0));
 	}
 
-	public String getBossName() {
+	public String getBossname() {
 		return bossname;
 	}
 
-	public void setBossName(String name) {
+	public void setBossname(String name) {
 		this.bossname = name;
 	}
 
@@ -117,7 +114,7 @@ public class BossW extends Wave {
 			wave.setNumwave(g.getInt("wave"));
 		}
 		if (map.containsKey("name")) {
-			wave.setBossName(g.getString("name"));
+			wave.setBossname(g.getString("name"));
 		}
 		if (map.containsKey("health")) {
 			try {
@@ -155,6 +152,12 @@ public class BossW extends Wave {
 		if (map.containsKey("reward")) {
 			wave.getReward().fill(g.getString("reward"));
 		}
+		if (map.containsKey("drops")) {
+			wave.getDrops().fill(g.getString("drops"));
+		}
+		if (map.containsKey("potions")) {
+			wave.getPotions().fill(g.getString("potions"));
+		}
 
 		return wave;
 	}
@@ -162,25 +165,52 @@ public class BossW extends Wave {
 	public LinkedHashMap<String, Object> getMap() throws ArenaException {
 		LinkedHashMap<String, Object> vague = super.getMap();
 
-		if (!this.getBossName().equals(""))
-			vague.put("name", this.getBossName());
-		if (this.getHealth() != EHealth.medium)
+		if (!this.getBossname().equals("")) {
+			vague.put("name", this.getBossname());
+		}
+		if (this.getHealth() != EHealth.medium) {
 			vague.put("health", this.getHealth().name());
+		}
 		if (!this.getAbilities().isEmpty()) {
 			vague.put("abilities", this.getAbilities().toString());
-			if (!this.isAbility_announce())
+			if (!this.isAbility_announce()) {
 				vague.put("ability-announce", this.isAbility_announce());
-			if (this.getAbility_interval() != 3)
+			}
+			if (this.getAbility_interval() != 3) {
 				vague.put("ability-interval", this.getAbility_interval());
+			}
 		}
-		if (reward.size() != 0)
+		if (!reward.isEmpty()) {
 			vague.put("reward", reward.getString());
+		}
+		if (!drops.isEmpty()) {
+			vague.put("drops", drops.getString());
+		}
+		if (!potions.isEmpty()) {
+			vague.put("potions", potions.getString());
+		}
 
 		return vague;
 	}
 
 	public void setReward(ItemList reward) {
 		this.reward = reward;
+	}
+
+	public ItemList getDrops() {
+		return drops;
+	}
+
+	public void setDrops(ItemList drops) {
+		this.drops = drops;
+	}
+
+	public PotionEffectList getPotions() {
+		return potions;
+	}
+
+	public void setPotions(PotionEffectList potions) {
+		this.potions = potions;
 	}
 
 }

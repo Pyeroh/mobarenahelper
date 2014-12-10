@@ -30,6 +30,7 @@ public class ArmorList extends ItemList {
 	 *
 	 * @throws ArenaException
 	 */
+	@Override
 	public void fill(String armor) throws ArenaException {
 
 		if (!armor.trim().isEmpty()) {
