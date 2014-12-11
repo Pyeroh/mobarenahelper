@@ -817,16 +817,16 @@ public class MenuPrincipal extends JFrame {
 		list_recurrent = new JHoverList<CellListWave>();
 		list_recurrent.addMouseListener(cellmouseadapter);
 		scrpan_recurrent = new JScrollPane(list_recurrent);
-		scrpan_recurrent.setBounds(9, 84, 252, 180);
+		scrpan_recurrent.setBounds(9, 84, 252, 260);
 		pan_arena_wave.add(scrpan_recurrent);
 
 		lib_single = new JLabel(Messages.getString("MenuPrincipal.lib_single.text")); //$NON-NLS-1$ //$NON-NLS-2$
-		lib_single.setBounds(9, 276, 132, 17);
+		lib_single.setBounds(9, 367, 132, 17);
 		pan_arena_wave.add(lib_single);
 		lib_single.setFont(new Font("Tahoma", Font.BOLD, 14));
 
 		btn_newsingle = new JButton(Messages.getString("MenuPrincipal.btn_newsingle.text")); //$NON-NLS-1$ //$NON-NLS-2$
-		btn_newsingle.setBounds(167, 270, 91, 23);
+		btn_newsingle.setBounds(167, 361, 91, 23);
 		pan_arena_wave.add(btn_newsingle);
 		btn_newsingle.addMouseListener(newWave);
 		btn_newsingle.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -834,7 +834,7 @@ public class MenuPrincipal extends JFrame {
 		list_single = new JHoverList<CellListWave>();
 		list_single.addMouseListener(cellmouseadapter);
 		scrpan_single = new JScrollPane(list_single);
-		scrpan_single.setBounds(9, 295, 252, 180);
+		scrpan_single.setBounds(9, 387, 252, 260);
 		pan_arena_wave.add(scrpan_single);
 
 		pan_conf = new JPanel();
