@@ -54,7 +54,7 @@ public class PotionEffect implements Serializable {
 
 	public String getString() {
 		StringBuffer pe = new StringBuffer();
-		pe.append(potionEffect.name());
+		pe.append(potionEffect.getRealName());
 		if (amplifier != 0) {
 			pe.append(":");
 			pe.append(amplifier);
@@ -65,6 +65,11 @@ public class PotionEffect implements Serializable {
 		}
 
 		return pe.toString();
+	}
+
+	@Override
+	public String toString() {
+		return potionEffect.getGuiName() + " : " + amplifier + ", " + duration + "s";
 	}
 
 }

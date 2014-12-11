@@ -627,7 +627,7 @@ public class MenuPrincipal extends JFrame {
 		btn_load.setForeground(new Color(255, 255, 255));
 		btn_load.setBackground(new Color(100, 149, 237));
 		btn_load.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btn_load.setBounds(532, 707, 97, 23);
+		btn_load.setBounds(532, 725, 97, 23);
 		getContentPane().add(btn_load);
 
 		btn_save = new JButton(Messages.getString("MenuPrincipal.btn_save.text")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -690,12 +690,17 @@ public class MenuPrincipal extends JFrame {
 		btn_save.setForeground(Color.WHITE);
 		btn_save.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btn_save.setBackground(new Color(100, 149, 237));
-		btn_save.setBounds(639, 707, 115, 23);
+		btn_save.setBounds(639, 725, 115, 23);
 		getContentPane().add(btn_save);
+
+				lib_credit = new JLabel(Messages.getString("MenuPrincipal.lib_credit.text")); //$NON-NLS-1$
+				lib_credit.setFont(new Font("Forte", Font.PLAIN, 14));
+				lib_credit.setBounds(10, 725, 153, 26);
+				getContentPane().add(lib_credit);
 
 		tabpan_config = new JTabbedPane(JTabbedPane.TOP);
 		tabpan_config.setBorder(new MatteBorder(0, 0, 1, 0, (Color) UIManager.getColor("Tree.dropLineColor")));
-		tabpan_config.setBounds(0, 6, 754, 689);
+		tabpan_config.setBounds(0, 6, 754, 707);
 		getContentPane().add(tabpan_config);
 
 		pan_arena_wave = new JPanel();
@@ -1400,7 +1405,7 @@ public class MenuPrincipal extends JFrame {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// TODO potion selector
+				new PotionEffectSelector(MenuPrincipal.this, ((BossW) wave).getPotions());
 			}
 		});
 		btn_set_potion_effects.setBounds(323, 560, 105, 30);
@@ -2925,14 +2930,9 @@ public class MenuPrincipal extends JFrame {
 		tabpan_config.addTab(Messages.getString("MenuPrincipal.pan_rewards.title"), pan_rewards); //$NON-NLS-2$ //$NON-NLS-1$
 		tabpan_config.addTab(Messages.getString("MenuPrincipal.pan_global_settings.title"), pan_global_settings); //$NON-NLS-1$
 
-		lib_credit = new JLabel(Messages.getString("MenuPrincipal.lib_credit.text")); //$NON-NLS-1$
-		lib_credit.setFont(new Font("Forte", Font.PLAIN, 14));
-		lib_credit.setBounds(10, 707, 153, 26);
-		getContentPane().add(lib_credit);
-
 		raz();
 
-		setSize(760, 788);
+		setSize(760, 805);
 
 		setLocationRelativeTo(null);
 		initializing = false;

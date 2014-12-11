@@ -59,4 +59,50 @@ public class PotionEffectList extends ArrayList<PotionEffect> {
 		return index;
 	}
 
+	public ArrayList<EPotionEffect> getEPEList() {
+		ArrayList<EPotionEffect> list = new ArrayList<EPotionEffect>();
+		for (PotionEffect potionEffect : this) {
+			list.add(potionEffect.getPotionEffect());
+		}
+		return list;
+	}
+
+	/**
+	 * Permet de trier la liste
+	 */
+	public void sort() {
+		int size = this.size();
+		triRapide(this, 0, size - 1);
+	}
+
+	private int partition(PotionEffectList list, int deb, int fin) {
+		int compt = deb;
+		PotionEffect pivot = list.get(deb);
+
+		for (int i = deb + 1; i <= fin; i++) {
+			EPotionEffect litem = list.get(i).getPotionEffect();
+			EPotionEffect pivitem = pivot.getPotionEffect();
+			if ((litem.getId() < pivitem.getId())) {
+				compt++;
+				echanger(list, compt, i);
+			}
+		}
+		echanger(list, deb, compt);
+		return compt;
+	}
+
+	protected void triRapide(PotionEffectList list, int deb, int fin) {
+		if (deb < fin) {
+			int positionPivot = partition(list, deb, fin);
+			triRapide(list, deb, positionPivot - 1);
+			triRapide(list, positionPivot + 1, fin);
+		}
+	}
+
+	protected void echanger(PotionEffectList list, int deb, int fin) {
+		PotionEffect temp = list.get(deb);
+		list.set(deb, list.get(fin));
+		list.set(fin, temp);
+	}
+
 }

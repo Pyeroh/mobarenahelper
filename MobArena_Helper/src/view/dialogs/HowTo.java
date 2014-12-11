@@ -38,6 +38,8 @@ public class HowTo extends JDialog {
 	private JTextPane lib_howto8;
 
 	private JTextPane lib_howto9;
+	private JTextPane lib_howto10;
+	private JTextPane lib_howto11;
 
 	public HowTo(MenuPrincipal menu) {
 		setResizable(false);
@@ -101,6 +103,18 @@ public class HowTo extends JDialog {
 		lib_howto8.setText(Messages.getString("HowTo.lib_howto8.text")); //$NON-NLS-1$
 		lib_howto8.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		tab_howto5.addTab(Messages.getString("Enchanter.title"), null, lib_howto8, null); //$NON-NLS-1$
+
+		lib_howto10 = new JTextPane();
+		lib_howto10.setEditable(false);
+		lib_howto10.setText(Messages.getString("HowTo.lib_howto10.text")); //$NON-NLS-1$
+		lib_howto10.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		tab_howto5.addTab(Messages.getString("HowTo.tabpan_wavespselector"), null, lib_howto10, null);
+
+		lib_howto11 = new JTextPane();
+		lib_howto11.setText(Messages.getString("HowTo.lib_howto11.text")); //$NON-NLS-1$
+		lib_howto11.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lib_howto11.setEditable(false);
+		tab_howto5.addTab(Messages.getString("HowTo.tabpan_potionselector"), null, lib_howto11, null);
 
 		btn_ok = new JButton("OK");
 		btn_ok.setFont(new Font("Tahoma", Font.BOLD, 11));

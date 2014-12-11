@@ -90,7 +90,7 @@ public enum EPotionEffect {
 	public static EPotionEffect getByRealName(String realName) {
 		EPotionEffect[] values = values();
 		int i = 0;
-		while (i < values.length && values[i].realName != realName) {
+		while (i < values.length && !values[i].realName.equals(realName)) {
 			i++;
 		}
 		if (i < values.length) {
