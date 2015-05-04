@@ -39,6 +39,9 @@ public class Classe implements Serializable {
 
 	private boolean unbreakable_armor = true;
 
+	// TODO récupération et écriture du prix (format : $<price>)
+	private float price = 0f;
+
 	/**
 	 * La liste des classes actuellement en configuration
 	 */
@@ -175,6 +178,14 @@ public class Classe implements Serializable {
 
 	public void setUnbreakable_armor(boolean unbreakable_armor) {
 		this.unbreakable_armor = unbreakable_armor;
+	}
+
+	public float getPrice() {
+		return price;
+	}
+
+	public void setPrice(float price) {
+		this.price = price;
 	}
 
 	@Override

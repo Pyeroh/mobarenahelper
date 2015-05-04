@@ -4,11 +4,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="src/snakeyaml-1.13.jar" sourcepath="src/snakeyaml-sources.zip"/>
-	<classpathentry kind="lib" path="D:/Program Files/eclipse/plugins/org.junit_4.11.0.v201303080030/junit.jar" sourcepath="D:/Program Files/eclipse/plugins/org.junit.source_4.11.0.v201303080030.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="http://junit-team.github.io/junit/javadoc/latest/"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="miglayout15-swing.jar" sourcepath="miglayout-src.zip"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
