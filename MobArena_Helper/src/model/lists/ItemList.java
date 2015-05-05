@@ -104,8 +104,9 @@ public class ItemList extends ArrayList<AbstractItem> {
 			sItems.append(this.get(i).getString() + ", ");
 		}
 		int length = sItems.length();
-		sItems.delete(length - 2, length);
-
+		if (length > 2) {
+			sItems.delete(length - 2, length);
+		}
 		return sItems.toString().trim();
 	}
 

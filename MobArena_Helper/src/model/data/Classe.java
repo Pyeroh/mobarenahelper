@@ -7,6 +7,7 @@ import java.util.LinkedHashMap;
 import model.GestYaml;
 import model.enums.EItem;
 import model.exceptions.ArenaException;
+import model.item.Money;
 import model.lists.ArmorList;
 import model.lists.ItemList;
 
@@ -39,8 +40,7 @@ public class Classe implements Serializable {
 
 	private boolean unbreakable_armor = true;
 
-	// TODO récupération et écriture du prix (format : $<price>)
-	private float price = 0f;
+	private Money price = new Money(0);
 
 	/**
 	 * La liste des classes actuellement en configuration
@@ -99,6 +99,11 @@ public class Classe implements Serializable {
 		if (horse_index != -1) {
 			horse = items.get(horse_index).getQuantity();
 			items.remove(horse_index);
+		}
+
+		String price = g.getString("price");
+		if (price != null && price.matches("\\$ ?\\d+([,\\.]\\d+)?")) {
+			this.price.setMoney(Float.parseFloat(price.substring(1).trim()));
 		}
 
 		this.permissions = g.getList("permissions");
@@ -180,11 +185,11 @@ public class Classe implements Serializable {
 		this.unbreakable_armor = unbreakable_armor;
 	}
 
-	public float getPrice() {
+	public Money getPrice() {
 		return price;
 	}
 
-	public void setPrice(float price) {
+	public void setPrice(Money price) {
 		this.price = price;
 	}
 
@@ -230,6 +235,8 @@ public class Classe implements Serializable {
 			map.put("unbreakable-armor", unbreakable_armor);
 		if (!unbreakable_weapons)
 			map.put("unbreakable-weapons", unbreakable_weapons);
+		if (price.getMoney() != 0)
+			map.put("price", price.toString());
 
 		return map;
 	}

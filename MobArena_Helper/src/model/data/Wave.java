@@ -237,8 +237,10 @@ public abstract class Wave implements Comparable<Wave>, Serializable {
 		LinkedHashMap<String, Object> vague = new LinkedHashMap<>();
 
 		vague.put("type", type.name().toLowerCase());
-		if (health_multiplier != 1.0f || amount_multiplier != 1.0f) {
+		if (health_multiplier != 1.0f) {
 			vague.put("health-multiplier", health_multiplier);
+		}
+		if (amount_multiplier != 1.0f) {
 			vague.put("amount-multiplier", amount_multiplier);
 		}
 

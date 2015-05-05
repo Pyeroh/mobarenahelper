@@ -107,16 +107,8 @@ public class ArenaConfig implements Serializable {
 
 	private boolean global_join_announce = false;
 
-	// TODO If false, vanilla death messages will not be displayed when players die in MobArena. Defaults to true.
-	// (extraction/écriture/affichage)
 	private boolean show_death_message = true;
 
-	// TODO This timer starts when the first player joins the lobby of an arena, and the arena will not be able to start
-	// until the timer runs out. This is useful if you want to give players a bigger time window for joining (one player
-	// can't join and rush to the iron block until other players have had a chance to join). The timer works with or
-	// without the 'auto-start-timer' - if both are used, the 'start-delay-timer' will start the 'auto-start-timer' when
-	// it runs out, so it is possible to both force start an arena and still have a large time window for joining.
-	// (extraction/écriture/affichage)
 	private int start_delay_timer = 0;
 
 	private LinkedHashMap<String, Object> config;
@@ -247,6 +239,10 @@ public class ArenaConfig implements Serializable {
 			global_end_announce = g.getBool("global-end-announce");
 		if (g.containsKey("global-join-announce"))
 			global_join_announce = g.getBool("global-join-announce");
+		if (g.containsKey("show-death-message"))
+			show_death_message = g.getBool("show-death-message", true);
+		if (g.containsKey("start-delay-timer"))
+			start_delay_timer = g.getInt("start-delay-timer");
 
 	}
 
@@ -311,6 +307,8 @@ public class ArenaConfig implements Serializable {
 		map.put("isolated-chat", isolated_chat);
 		map.put("global-end-announce", global_end_announce);
 		map.put("global-join-announce", global_join_announce);
+		map.put("show-death-message", show_death_message);
+		map.put("start-delay-timer", start_delay_timer);
 
 		return map;
 	}
@@ -665,6 +663,22 @@ public class ArenaConfig implements Serializable {
 
 	public void setGlobal_join_announce(boolean global_join_announce) {
 		this.global_join_announce = global_join_announce;
+	}
+
+	public boolean getShow_death_message() {
+		return show_death_message;
+	}
+
+	public void setShow_death_message(boolean show_death_message) {
+		this.show_death_message = show_death_message;
+	}
+
+	public int getStart_delay_timer() {
+		return start_delay_timer;
+	}
+
+	public void setStart_delay_timer(int start_delay_timer) {
+		this.start_delay_timer = start_delay_timer;
 	}
 
 }

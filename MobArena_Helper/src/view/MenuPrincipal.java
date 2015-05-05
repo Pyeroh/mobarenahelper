@@ -543,6 +543,9 @@ public class MenuPrincipal extends JFrame {
 	private JButton btn_set;
 	private JLabel lib_price;
 	private JFormattedTextField sai_price;
+	private JCheckBox chk_show_death_message;
+	private JLabel lib_start_delay_timer;
+	private JFormattedTextField sai_start_delay_timer;
 
 	public MenuPrincipal() throws ParseException {
 		super();
@@ -959,6 +962,8 @@ public class MenuPrincipal extends JFrame {
 						config.setGlobal_join_announce(b);
 					else if (source == chk_global_end)
 						config.setGlobal_end_announce(b);
+					else if (source == chk_show_death_message)
+						config.setShow_death_message(b);
 					else if (source == chk_gs_enabled)
 						arenas.getGlobalSettings().setEnabled(b);
 					else if (source == chk_notifications)
@@ -1012,6 +1017,8 @@ public class MenuPrincipal extends JFrame {
 					config.setMonster_limit(value);
 				else if (source == sai_auto_start)
 					config.setAuto_start(value);
+				else if (source == sai_start_delay_timer)
+					config.setStart_delay_timer(value);
 			}
 		};
 
@@ -2010,7 +2017,7 @@ public class MenuPrincipal extends JFrame {
 				}
 				catch (ParseException e1) {
 				}
-				classe.setPrice(((Number)sai_price.getValue()).floatValue());
+				classe.getPrice().setMoney(((Number)sai_price.getValue()).floatValue());
 			}
 
 		});
@@ -2567,6 +2574,29 @@ public class MenuPrincipal extends JFrame {
 		chk_global_end.setFont(new Font("Tahoma", Font.BOLD, 14));
 		chk_global_end.setBounds(531, 227, 170, 25);
 		pan_arena_settings.add(chk_global_end);
+
+		chk_show_death_message = new JCheckBox(Messages.getString("MenuPrincipal.chk_show_death_message.text")); //$NON-NLS-1$
+		chk_show_death_message.addItemListener(chkconfig_listener);
+		chk_show_death_message.setToolTipText(Messages.getString("MenuPrincipal.chk_show_death_message.toolTipText")); //$NON-NLS-1$
+		chk_show_death_message.setHorizontalTextPosition(SwingConstants.LEFT);
+		chk_show_death_message.setFont(new Font("Tahoma", Font.BOLD, 14));
+		chk_show_death_message.setBounds(531, 306, 228, 25);
+		pan_arena_settings.add(chk_show_death_message);
+
+		lib_start_delay_timer = new JLabel(Messages.getString("MenuPrincipal.lib_start_delay_timer.text")); //$NON-NLS-1$
+		lib_start_delay_timer.setToolTipText(Messages.getString("MenuPrincipal.lib_start_delay_timer.toolTipText")); //$NON-NLS-1$
+		lib_start_delay_timer.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lib_start_delay_timer.setBounds(531, 343, 147, 25);
+		pan_arena_settings.add(lib_start_delay_timer);
+
+		sai_start_delay_timer = new JFormattedTextField(NumberFormat.getInstance());
+		sai_start_delay_timer.addKeyListener(int_config_adapter);
+		sai_start_delay_timer.setToolTipText(Messages.getString("MenuPrincipal.lib_start_delay_timer.toolTipText")); //$NON-NLS-1$
+		sai_start_delay_timer.setColumns(10);
+		sai_start_delay_timer.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		sai_start_delay_timer.setBackground(Color.WHITE);
+		sai_start_delay_timer.setBounds(679, 344, 50, 25);
+		pan_arena_settings.add(sai_start_delay_timer);
 
 		JSeparator separator = new JSeparator();
 		separator.setOrientation(SwingConstants.VERTICAL);
@@ -3904,6 +3934,8 @@ public class MenuPrincipal extends JFrame {
 		combo_horse.setSelectedIndex(horse);
 		combo_hArmor.setSelectedIndex(hArmor);
 
+		sai_price.setValue(classe.getPrice().getMoney());
+
 		ArrayList<String> perm_list = classe.getPermissions();
 		DefaultListModel<CellListCaracs> mod_perm = new DefaultListModel<CellListCaracs>();
 		if (perm_list != null) {
@@ -3972,6 +4004,8 @@ public class MenuPrincipal extends JFrame {
 		chk_isolated_chat.setSelected(config.getIsolated_chat());
 		chk_global_join.setSelected(config.getGlobal_join_announce());
 		chk_global_end.setSelected(config.getGlobal_end_announce());
+		chk_show_death_message.setSelected(config.getShow_death_message());
+		sai_start_delay_timer.setValue(config.getStart_delay_timer());
 	}
 
 	private void loadData_GlobalSettings() {
