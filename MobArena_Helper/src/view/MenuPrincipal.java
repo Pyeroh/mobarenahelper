@@ -3098,7 +3098,8 @@ public class MenuPrincipal extends JFrame {
 
 		raz();
 
-		setSize(1023, 700);
+		setSize(1023, 688);
+		setResizable(false);
 
 		setLocationRelativeTo(null);
 		initializing = false;

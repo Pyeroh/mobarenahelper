@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry excluding="src/" kind="src" path=""/>
-	<classpathentry kind="src" path="src"/>
+	<classpathentry excluding="**/.*|*.jar|*.xml|*.yml|*.zip|versions/" kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="src/snakeyaml-1.13.jar" sourcepath="src/snakeyaml-sources.zip"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>

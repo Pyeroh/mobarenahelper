@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="create_run_jar" name="Create Runnable Jar for Project MobArena_Helper with Jar-in-Jar Loader">
+	<!--this file was created by Eclipse Runnable JAR Export Wizard-->
+	<!--ANT 1.7 is required                                        -->
+	<target name="create_run_jar">
+		<property name="app.version" value="3.1" />
+		<replace file="../bin/gui/lang.properties" token="$${app.version}" value="${app.version}" />
+		<jar destfile="C:/Users/DENANTEUILQ/Documents/WS-eclipse-perso/git/mobarenahelper/MobArena_Helper/src/versions/MobArenaHelper_v${app.version}.jar">
+			<manifest>
+				<attribute name="Main-Class" value="org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader" />
+				<attribute name="Rsrc-Main-Class" value="view.Launch" />
+				<attribute name="Class-Path" value="." />
+				<attribute name="Rsrc-Class-Path" value="./ snakeyaml-1.13.jar" />
+			</manifest>
+			<zipfileset src="jar-in-jar-loader.zip" />
+			<fileset dir="C:/Users/DENANTEUILQ/Documents/WS-eclipse-perso/git/mobarenahelper/MobArena_Helper/bin">
+				<exclude name="/test/" />
+				<exclude name="/gui/demo/" />
+				<exclude name=".*" />
+				<exclude name=".settings/" />
+			</fileset>
+			<zipfileset dir="C:\Users\DENANTEUILQ\Documents\WS-eclipse-perso\git\mobarenahelper\MobArena_Helper\src" includes="snakeyaml-1.13.jar" />
+		</jar>
+	</target>
+</project>
